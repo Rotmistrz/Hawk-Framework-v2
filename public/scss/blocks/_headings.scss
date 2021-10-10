@@ -1,0 +1,34 @@
+.section-header {
+  padding: 0 0 32px 0;
+}
+
+.subsection-header {
+  padding: 0 0 20px 0;
+}
+
+.subsection-title {
+  font-size: $large-font-size;
+  font-weight: 700;
+}
+
+.subsection-subheader {
+  padding: 0 0 20px 0;
+}
+
+.subsection-subtitle {
+  font-size: $larger-font-size;
+  font-style: italic;
+}
+
+.small-title {
+  font-size: $small-font-size;
+  font-weight: 700;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $small-font-size-01;
+  }
+}
+
+@import '_section-title';
+
+@import '_simple-title';

@@ -1,0 +1,144 @@
+.text {
+  font-size: $main-font-size;
+  line-height: $main-font-size + 8px;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $main-font-size-01;
+    line-height: $main-font-size-01 + 10px;
+  }
+
+  p {
+    padding: 5px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  a {
+    color: $dark-color;
+
+    &:hover,
+    &:focus {
+      color: $primary-color;
+    }
+  }
+
+  ol {
+    list-style-type: none;
+    padding: 0 0 0 8px;
+    counter-reset: textOrderedList;
+
+    > li {
+      position: relative;
+      padding: 2px 0 2px 32px;
+
+      &:before {
+        content: counters(textOrderedList, '.') ".";
+        counter-increment: textOrderedList;
+        display: block;
+        position: absolute;
+        top: 2px;
+        left: 0;
+        width: 24px;
+        padding: 0;
+        text-align: right;
+      }
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0 0 0 24px;
+
+    > li {
+      position: relative;
+      padding: 2px 0 2px 16px;
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 6px;
+        height: 6px;
+        padding: 0;
+        background: $dark-color;
+        @include border-radius(50%);
+      }
+    }
+  }
+}
+
+.text--large {
+  font-size: $larger-font-size;
+  line-height: $larger-font-size + 8px;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $larger-font-size-01;
+    line-height: $larger-font-size-01 + 8px;
+  }
+
+  p {
+    padding: 8px 0;
+  }
+
+  ul {
+    padding: 0 0 0 24px;
+
+    > li {
+      padding: 2px 0 2px 16px;
+
+      &:before {
+        top: 12px;
+        width: 6px;
+        height: 6px;
+      }
+    }
+  }
+}
+
+.text--small {
+  font-size: $small-font-size;
+  line-height: $small-font-size + 8px;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $small-font-size-01;
+    line-height: $small-font-size-01 + 8px;
+  }
+
+  ol {
+    padding: 0 0 0 6px;
+
+    > li {
+      padding: 1px 0 1px 30px;
+
+      &:before {
+        top: 1px;
+      }
+    }
+  }
+
+  ul {
+    padding: 0 0 0 24px;
+
+    > li {
+      padding: 1px 0 1px 12px;
+
+      &:before {
+        top: 10px;
+        width: 4px;
+        height: 4px;
+      }
+    }
+  }
+}

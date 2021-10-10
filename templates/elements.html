@@ -1,0 +1,100 @@
+{% extends('index.html') %}
+
+{% block content %}
+
+<section class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper">
+            <div class="site-section__inner">
+                <ul class="presentation-list">
+                    <li>
+                        <h2 class="section-title section-title--large">
+                            Section title <code class="inline-code">section-title--large</code>
+                        </h2>
+                    </li>
+
+                    <li>
+                        <h2 class="section-title">
+                            Section title <code class="inline-code">section-title</code>
+                        </h2>
+                    </li>
+
+                    <li>
+                        <h2 class="section-title section-title--small">
+                            Section title <code class="inline-code">section-title--small</code>
+                        </h2>
+                    </li>
+                </ul>
+
+                <div class="site-section__row">
+                    <ul class="presentation-list presentation-list--more-space">
+                        <li>
+                            <section class="presentation-section">
+                                <div class="presentation-section__item">
+                                    {% include('listings/blocks/listing-button.html') with {
+                                        button: {
+                                            extraClass: ' button--large',
+                                            content: 'Large button'
+                                        }
+                                    } %}
+                                </div>
+
+                                <div class="presentation-section__listing">
+                                    <div class="listing">
+                                        {% autoescape false %}
+                                            {{ listings.button.large }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </section>
+                        </li>
+
+                        <li>
+                            <section class="presentation-section">
+                                <div class="presentation-section__item">
+                                    {% include('listings/blocks/listing-button.html') with {
+                                        button: {
+                                            extraClass: '',
+                                            content: 'Button'
+                                        }
+                                    } %}
+                                </div>
+
+                                <div class="presentation-section__listing">
+                                    <div class="listing">
+                                        {% autoescape false %}
+                                            {{ listings.button.regular }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </section>
+                        </li>
+
+                        <li>
+                            <section class="presentation-section">
+                                <div class="presentation-section__item">
+                                    {% include('listings/blocks/listing-button.html') with {
+                                        button: {
+                                            extraClass: ' button--small',
+                                            content: 'Small button'
+                                        }
+                                    } %}
+                                </div>
+
+                                <div class="presentation-section__listing">
+                                    <div class="listing">
+                                        {% autoescape false %}
+                                            {{ listings.button.small }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </section>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

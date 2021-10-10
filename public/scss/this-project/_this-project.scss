@@ -1,0 +1,167 @@
+.bounded-section {
+  max-width: 500px;
+}
+
+.presentation-list {
+  list-style-type: none;
+
+  > li {
+    padding: 20px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+.presentation-list--more-space {
+  > li {
+    padding: 32px 0;
+  }
+}
+
+.section-for-light-examples {
+  background: $dark-color-01;
+  padding: 32px 0;
+}
+
+.examples-list {
+  list-style-type: none;
+  padding: 0 0 0 20px;
+
+  > li {
+    padding: 20px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.subsections {
+  list-style-type: none;
+
+  > li {
+    padding: 32px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.listing {
+  border: 1px solid $light-color-07;
+  background: $light-color-02;
+  padding: 20px 16px;
+}
+
+.simple-listing {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 0 20px 0;
+}
+
+.figure {
+  &__header {
+    padding: 0 0 10px 0;
+  }
+}
+
+.caption-title {
+  font-weight: 400;
+  font-style: italic;
+  font-size: $main-font-size;
+
+  &__number {
+    font-weight: 700;
+    font-style: normal;
+
+    &:after {
+      content: ' –';
+      margin: 0 4px 0 4px;
+      font-weight: 400;
+    }
+  }
+}
+
+.inline-code {
+  color: $light-color-06;
+  font-style: italic;
+}
+
+.presentation-section {
+  &__listing {
+    padding: 20px 0 0 0;
+  }
+}
+
+.comparison-section {
+  position: relative;
+
+  &:before {
+    @media (min-width: $tablet-m) {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: $light-color-01;
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.comparison-row {
+  @media (min-width: $tablet-m) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &__result {
+    @media (min-width: $tablet-m) {
+      width: 50%;
+      @include box-sizing(border-box);
+    }
+  }
+
+  &__source {
+    background: $light-color-01;
+
+    @media (min-width: $tablet-m) {
+      width: 50%;
+      @include box-sizing(border-box);
+    }
+  }
+}
+
+.row {
+  padding: 40px 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}

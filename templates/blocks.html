@@ -1,0 +1,783 @@
+{% extends('index.html') %}
+
+{% block content %}
+
+<section class="comparison-section">
+    <div class="comparison-section__content">
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">What are Hawk Blocks?</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            Blocks are the most commonly used components of the website which can be placed in your project. They are constructed according to the BEM methodology, using SCSS and Hawk Variables set. Hawk Blocks are thoughtful to be as abstract as they should to be both universal and useful.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Section title</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Section title</em> is the main title of the section on the website as you can suppose. It has three variants: regular (default), large and small which are presented below.
+                                        </p>
+                                    </div>
+
+                                    <div class="row">
+                                        <ul class="examples-list">
+                                            <li>
+                                                <h2 class="section-title section-title--large">Large section title</h2>
+                                            </li>
+
+                                            <li>
+                                                <h2 class="section-title section-title--small">Small section title</h2>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.sectionTitle.regular }}
+                                        {% endautoescape %}
+                                    </div>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.sectionTitle }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Text</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em>Text</em> block is the basic component of the website. It exists just to present the paragraphs of content on the webpage.
+                                        </p>
+
+                                        <p>
+                                            It deals with following proper features:
+                                        </p>
+
+                                        <ol>
+                                            <li>font size</li>
+                                            <li>line height</li>
+                                            <li>font family</li>
+                                            <li>space between paragraphs</li>
+                                        </ol>
+
+                                        <p>
+                                            Moreover, <em>Text</em> component works with common elements:
+                                        </p>
+
+                                        <ul>
+                                            <li>ordered and unordered list</li>
+                                            <li><a href="/">links</a></li>
+                                            <li><em>emphasizes</em></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                <div class="text text--large">
+                                                    <p>
+                                                        <em>Large text</em> is a variant of basic <em>Text</em> component of the website. It exists just to present the paragraphs of content on the webpage.
+                                                    </p>
+
+                                                    <p>
+                                                        It deals with following proper features:
+                                                    </p>
+
+                                                    <ol>
+                                                        <li>font size</li>
+                                                        <li>line height</li>
+                                                        <li>font family</li>
+                                                        <li>space between paragraphs</li>
+                                                    </ol>
+
+                                                    <p>
+                                                        Moreover, <em>Text</em> component works with common elements:
+                                                    </p>
+
+                                                    <ul>
+                                                        <li>ordered and unordered list</li>
+                                                        <li><a href="/">links</a></li>
+                                                        <li><em>emphasizes</em></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div class="text text--small">
+                                                    <p>
+                                                        <em>Small text</em> is a variant of basic <em>Text</em> component of the website. It exists just to present the paragraphs of content on the webpage.
+                                                    </p>
+
+                                                    <p>
+                                                        It deals with following proper features:
+                                                    </p>
+
+                                                    <ol>
+                                                        <li>font size</li>
+                                                        <li>line height</li>
+                                                        <li>font family</li>
+                                                        <li>space between paragraphs</li>
+                                                    </ol>
+
+                                                    <p>
+                                                        Moreover, <em>Text</em> component works with common elements:
+                                                    </p>
+
+                                                    <ul>
+                                                        <li>ordered and unordered list</li>
+                                                        <li><a href="/">links</a></li>
+                                                        <li><em>emphasizes</em></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.text.regular }}
+                                        {% endautoescape %}
+                                    </div>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.text }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Buttons</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Buttons</em> are the main clickable blocks. They are filled or stroke, large, small or regular in some colours and can be freely extended and modified.
+                                        </p>
+                                    </div>
+
+                                    <div class="row">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--large',
+                                                        content: 'Large button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: '',
+                                                        content: 'Button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--small',
+                                                        content: 'Small button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--large button--stroke',
+                                                        content: 'Large stroke button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--stroke',
+                                                        content: 'Stroke button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--small button--stroke',
+                                                        content: 'Small stroke button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--large button--dark',
+                                                        content: 'Large dark button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--dark',
+                                                        content: 'Dark button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--small button--dark',
+                                                        content: 'Small dark button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--large button--dark button--stroke',
+                                                        content: 'Large dark button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--dark button--stroke',
+                                                        content: 'Dark button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/button.html') with {
+                                                    button: {
+                                                        extraClass: ' button--small button--dark button--stroke',
+                                                        content: 'Small dark button'
+                                                    }
+                                                } %}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="section-for-light-examples">
+                                        <div class="row">
+                                            <ul class="examples-list">
+                                                <li>
+                                                    {% include('blocks/button.html') with {
+                                                        button: {
+                                                            extraClass: ' button--large button--light',
+                                                            content: 'Large light button'
+                                                        }
+                                                    } %}
+                                                </li>
+
+                                                <li>
+                                                    {% include('blocks/button.html') with {
+                                                        button: {
+                                                            extraClass: ' button--light',
+                                                            content: 'Light button'
+                                                        }
+                                                    } %}
+                                                </li>
+
+                                                <li>
+                                                    {% include('blocks/button.html') with {
+                                                        button: {
+                                                            extraClass: ' button--small button--light',
+                                                            content: 'Small light button'
+                                                        }
+                                                    } %}
+                                                </li>
+
+                                                <li>
+                                                    {% include('blocks/button.html') with {
+                                                        button: {
+                                                            extraClass: ' button--large button--light button--stroke',
+                                                            content: 'Large stroke light button'
+                                                        }
+                                                    } %}
+                                                </li>
+
+                                                <li>
+                                                    {% include('blocks/button.html') with {
+                                                        button: {
+                                                            extraClass: ' button--light button--stroke',
+                                                            content: 'Light stroke button'
+                                                        }
+                                                    } %}
+                                                </li>
+
+                                                <li>
+                                                    {% include('blocks/button.html') with {
+                                                        button: {
+                                                            extraClass: ' button--small button--light button--stroke',
+                                                            content: 'Small stroke light button'
+                                                        }
+                                                    } %}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.button.regular }}
+                                        {% endautoescape %}
+                                    </div>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.button }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Tiles</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Buttons</em> are the main clickable blocks. They are filled or stroke, large, small or regular in some colours and can be freely extended and modified.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    {% include('blocks/tile.html') with {
+                                        tile: {
+                                            type: 'clear',
+                                            image: '/img/pictures/husaria.jpg'
+                                        }
+                                    } %}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                                         
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.tile.clear }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    {% include('blocks/tile.html') with {
+                                        tile: {
+                                            type: 'standard',
+                                            image: '/img/pictures/husaria.jpg',
+                                            content: {
+                                                title: 'The winged hussars arrived',
+                                                text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                            }
+                                        }
+                                    } %}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                                         
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.tile.standard }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    {% include('blocks/tile.html') with {
+                                        tile: {
+                                            type: '',
+                                            image: '/img/pictures/husaria.jpg',
+                                            content: {
+                                                title: 'The winged hussars arrived',
+                                                text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                            }
+                                        }
+                                    } %}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                                         
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.tile.standard }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    {% include('blocks/tile.html') with {
+                                        tile: {
+                                            type: '',
+                                            image: '/img/pictures/husaria.jpg',
+                                            content: {
+                                                title: 'The winged hussars arrived',
+                                                text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                            }
+                                        }
+                                    } %}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                                         
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.tile.standard }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <div class="row">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/tile.html') with {
+                                                    tile: {
+                                                        type: 'standard',
+                                                        image: '/img/pictures/husaria.jpg',
+                                                        content: {
+                                                            title: 'The winged hussars arrived',
+                                                            text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                                        }
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                <article class="tile">
+                                                    <div class="tile__wrapper">
+                                                        <div class="tile__base-layer" style="background-image: url('/img/pictures/husaria.jpg')">
+
+                                                        </div>
+
+                                                        <div class="tile__above-layer">
+
+                                                        </div>
+
+                                                        <div class="tile__content-layer">
+                                                            <div class="tile__inner">
+                                                                <header class="tile__header">
+                                                                    <h3 class="subsection-title">The winged hussars arrived</h3>
+                                                                </header>
+
+                                                                <div class="tile__content">
+                                                                    <div class="text">
+                                                                        <p>
+                                                                            The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </li>
+
+                                            <li>
+                                                <article class="tile">
+                                                    <div class="tile__wrapper">
+                                                        <div class="tile__base-layer" style="background-image: url('/img/pictures/husaria.jpg')">
+
+                                                        </div>
+
+                                                        <div class="tile__above-layer">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="tile__content-container">
+                                                        <header class="tile__header">
+                                                            <h3 class="subsection-title">The winged hussars arrived</h3>
+                                                        </header>
+
+                                                        <div class="tile__content">
+                                                            <div class="text">
+                                                                <p>
+                                                                    The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <div class="simple-listing">
+                                        {% autoescape false %}
+                                            {{ blocks.html.button.regular }}
+                                        {% endautoescape %}
+                                    </div>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.button }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

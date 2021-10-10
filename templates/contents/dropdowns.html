@@ -1,0 +1,83 @@
+<section class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper">
+            <div class="site-section__inner">
+                <header class="section-header">
+                    <h2 class="section-title">
+                        Dropdowns
+                    </h2>
+                </header>
+
+                <ul class="subsections">
+                    <li>
+                        <section class="subsection bounded-section">
+                            <header class="subsection-header">
+                                <h3 class="subsection-title">Examples</h3>
+                            </header>
+
+                            <ul class="presentation-list">
+                                <li>
+                                    <header class="subsection-subheader">
+                                        <h4 class="subsection-subtitle">Default dropdown</h4>
+                                    </header>
+
+                                    {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                                        dropdown: {
+                                            id: 'exemplary-dropdown',
+                                            title: 'Exemplary dropdown'
+                                        }
+                                    } %}
+                                </li>
+
+                                <li>
+                                    <header class="subsection-subheader">
+                                        <h4 class="subsection-subtitle">Expanding dropdown</h4>
+                                    </header>
+
+                                    {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                                        dropdown: {
+                                            id: 'expanding-dropdown',
+                                            title: 'Expanding dropdown'
+                                        }
+                                    } %}
+                                </li>
+                            </ul>
+
+                        </section>
+                    </li>
+
+                    <li>
+                        <section class="subsection">
+                            <header class="subsection-header">
+                                <h3 class="subsection-title">Use</h3>
+                            </header>
+
+                            <ul class="presentation-list">
+                                <li>
+                                    <header class="subsection-subheader">
+                                        <h4 class="subsection-subtitle">HTML</h4>
+                                    </header>
+
+                                    <article class="figure">
+                                        <header class="figure__header">
+                                            <h5 class="caption-title"><span class="caption-title__number">Listing 1</span> HTML code of exemplary dropdown containing choosable items</h5>
+                                        </header>
+
+                                        <div class="listing">
+                                            {% autoescape false %}
+                                            {{ listings.1 }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </article>
+
+
+                                </li>
+                            </ul>
+
+                        </section>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

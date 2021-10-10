@@ -1,0 +1,30 @@
+<article class="tile">
+    <div class="tile__wrapper">
+        <div class="tile__base-layer"
+             style="background-image: url('{{ tile.image }}')">
+
+        </div>
+
+        <div class="tile__above-layer">
+
+        </div>
+        {% if tile.content is defined and tile.content|length > 0 and tile.type == 'standard' %}
+
+        <div class="tile__content-layer">
+            <div class="tile__inner">
+                <header class="tile__header">
+                    <h3 class="subsection-title">{{ tile.content.title }}</h3>
+                </header>
+
+                <div class="tile__content">
+                    <div class="text">
+                        <p>
+                            {{ tile.content.text }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>{% endif %}
+
+    </div>
+</article>
