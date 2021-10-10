@@ -1,0 +1,251 @@
+$dark-color: #000;
+$dark-color-op60: rgba($dark-color, 0.6);
+$dark-color-op30: rgba($dark-color, 0.3);
+$dark-color-op20: rgba($dark-color, 0.2);
+
+$dark-color-01: #222222;
+$dark-color-02: #444444;
+$dark-color-03: #777777;
+
+$primary-color: #FA6900;
+$primary-color-02: #F38630;
+
+$secondary-color: #69D2E7;
+$secondary-color-02: #23AABA;
+
+$tertiary-color: #E9187C;
+$tertiary-color-02: #E9187C;
+
+$light-color: #fff;
+$light-color-op60: rgba($light-color, 0.6);
+$light-color-op30: rgba($light-color, 0.3);
+$light-color-01: #fafafa;
+$light-color-02: #f5f5f5;
+$light-color-03: #F5F5F5;
+$light-color-04: #E1E1E1;
+$light-color-05: #fefdfd;
+$light-color-06: #777;
+$light-color-07: #4b4b4b;
+$light-color-10: #E5E5E5; // leading grey
+$light-color-11: #fff2dd; // piaskowy jasniejszy
+$light-color-12: #ece1cb; // piaskowy ciemniejszy
+$light-color-13: #eee;
+
+$light-background: rgba(255, 255, 255, .8);
+
+$grey: #444;
+$error-color: #DB2B39;
+
+$success-color: #090;
+$green-color: #14d64b;
+
+$std-shadow: -3px 6px 20px rgba(0, 0, 0, 0.1);
+
+$sans-serif-font-family: 'Georama', sans-serif;
+$second-sans-serif-font-family: 'Georama', sans-serif;
+$third-sans-serif-font-family: Arial, sans-serif;
+
+$serif-font-family: serif;
+$second-serif-font-family: serif;
+$third-serif-font-family: serif;
+
+$main-font-size: 14px;
+$main-font-size-00: 15px;
+$main-font-size-01: 16px;
+$main-font-size-02: 18px;
+$main-font-size-03: 20px;
+$main-font-size-04: 22px;
+$main-font-size-05: 24px;
+$main-font-size-06: 26px;
+$main-font-size-07: 28px;
+$main-font-size-08: 30px;
+$main-font-size-09: 32px;
+$main-font-size-10: 34px;
+
+$very-small-font-size: 10px;
+$very-small-font-size-00: 11px;
+$very-small-font-size-01: 12px;
+$very-small-font-size-02: 13px;
+$very-small-font-size-03: 14px;
+
+$small-font-size: 12px;
+$small-font-size-00: 13px;
+$small-font-size-01: 14px;
+$small-font-size-02: 15px;
+$small-font-size-03: 16px;
+$small-font-size-04: 17px;
+$small-font-size-05: 18px;
+$small-font-size-06: 19px;
+$small-font-size-07: 20px;
+$small-font-size-08: 21px;
+$small-font-size-09: 22px;
+$small-font-size-10: 23px;
+
+$larger-font-size: 16px;
+$larger-font-size-00: 18px;
+$larger-font-size-01: 20px;
+$larger-font-size-02: 22px;
+$larger-font-size-03: 24px;
+$larger-font-size-04: 26px;
+$larger-font-size-05: 28px;
+$larger-font-size-06: 30px;
+$larger-font-size-07: 32px;
+$larger-font-size-08: 34px;
+$larger-font-size-09: 36px;
+$larger-font-size-10: 38px;
+
+$large-font-size: 20px;
+$large-font-size-00: 22px;
+$large-font-size-01: 24px;
+$large-font-size-02: 26px;
+$large-font-size-03: 28px;
+$large-font-size-04: 30px;
+$large-font-size-05: 32px;
+$large-font-size-06: 34px;
+$large-font-size-07: 36px;
+$large-font-size-08: 38px;
+$large-font-size-09: 40px;
+$large-font-size-10: 42px;
+$large-font-size-11: 44px;
+$large-font-size-12: 46px;
+$large-font-size-13: 48px;
+$large-font-size-14: 50px;
+$large-font-size-15: 52px;
+$large-font-size-16: 54px;
+$large-font-size-17: 56px;
+$large-font-size-18: 58px;
+$large-font-size-19: 60px;
+$large-font-size-20: 62px;
+
+$very-large-font-size: 24px;
+$very-large-font-size-00: 26px;
+$very-large-font-size-01: 28px;
+$very-large-font-size-02: 30px;
+$very-large-font-size-03: 32px;
+$very-large-font-size-04: 34px;
+$very-large-font-size-05: 36px;
+$very-large-font-size-06: 38px;
+$very-large-font-size-07: 40px;
+$very-large-font-size-08: 42px;
+$very-large-font-size-09: 44px;
+$very-large-font-size-10: 46px;
+$very-large-font-size-11: 48px;
+$very-large-font-size-12: 50px;
+$very-large-font-size-13: 52px;
+$very-large-font-size-14: 54px;
+$very-large-font-size-15: 56px;
+$very-large-font-size-16: 58px;
+$very-large-font-size-17: 60px;
+$very-large-font-size-18: 62px;
+$very-large-font-size-19: 64px;
+$very-large-font-size-20: 66px;
+$very-large-font-size-21: 68px;
+$very-large-font-size-22: 70px;
+$very-large-font-size-23: 72px;
+$very-large-font-size-24: 74px;
+
+$extra-large-font-size: 28px;
+$extra-large-font-size-00: 30px;
+$extra-large-font-size-01: 32px;
+$extra-large-font-size-02: 34px;
+$extra-large-font-size-03: 36px;
+$extra-large-font-size-04: 38px;
+$extra-large-font-size-05: 40px;
+$extra-large-font-size-06: 42px;
+$extra-large-font-size-07: 44px;
+$extra-large-font-size-08: 46px;
+$extra-large-font-size-09: 48px;
+$extra-large-font-size-10: 50px;
+$extra-large-font-size-11: 52px;
+$extra-large-font-size-12: 54px;
+$extra-large-font-size-13: 56px;
+$extra-large-font-size-14: 58px;
+$extra-large-font-size-15: 60px;
+$extra-large-font-size-16: 62px;
+$extra-large-font-size-17: 64px;
+$extra-large-font-size-18: 66px;
+$extra-large-font-size-19: 68px;
+$extra-large-font-size-20: 70px;
+$extra-large-font-size-21: 72px;
+$extra-large-font-size-22: 74px;
+$extra-large-font-size-23: 76px;
+$extra-large-font-size-24: 78px;
+$extra-large-font-size-25: 80px;
+$extra-large-font-size-26: 82px;
+$extra-large-font-size-27: 84px;
+$extra-large-font-size-28: 86px;
+$extra-large-font-size-29: 88px;
+$extra-large-font-size-30: 90px;
+
+$huge-font-size: 52px;
+$huge-font-size-00: 56px;
+$huge-font-size-01: 60px;
+$huge-font-size-02: 64px;
+$huge-font-size-03: 68px;
+$huge-font-size-04: 72px;
+$huge-font-size-05: 76px;
+$huge-font-size-06: 80px;
+$huge-font-size-07: 84px;
+$huge-font-size-08: 88px;
+$huge-font-size-09: 92px;
+$huge-font-size-10: 96px;
+$huge-font-size-11: 100px;
+$huge-font-size-12: 104px;
+$huge-font-size-13: 108px;
+$huge-font-size-14: 112px;
+$huge-font-size-15: 116px;
+$huge-font-size-16: 120px;
+$huge-font-size-17: 124px;
+
+$very-huge-font-size: 56px;
+$very-huge-font-size-00: 58px;
+$very-huge-font-size-01: 60px;
+$very-huge-font-size-02: 62px;
+$very-huge-font-size-03: 64px;
+$very-huge-font-size-04: 66px;
+$very-huge-font-size-05: 68px;
+$very-huge-font-size-06: 70px;
+$very-huge-font-size-07: 72px;
+$very-huge-font-size-08: 74px;
+$very-huge-font-size-09: 76px;
+$very-huge-font-size-10: 78px;
+$very-huge-font-size-11: 80px;
+$very-huge-font-size-12: 82px;
+$very-huge-font-size-13: 84px;
+$very-huge-font-size-14: 86px;
+$very-huge-font-size-15: 88px;
+$very-huge-font-size-16: 90px;
+$very-huge-font-size-17: 92px;
+$very-huge-font-size-18: 94px;
+$very-huge-font-size-19: 96px;
+$very-huge-font-size-20: 98px;
+$very-huge-font-size-21: 100px;
+$very-huge-font-size-22: 102px;
+$very-huge-font-size-23: 104px;
+$very-huge-font-size-24: 106px;
+$very-huge-font-size-25: 108px;
+$very-huge-font-size-26: 110px;
+$very-huge-font-size-27: 112px;
+$very-huge-font-size-28: 114px;
+$very-huge-font-size-29: 116px;
+$very-huge-font-size-30: 118px;
+
+
+
+/* RWD */
+
+$mobile-s :    380px;
+$mobile-m :    420px;
+$mobile-l :    480px;
+
+$tablet-xs :   550px;
+$tablet-s:     650px;
+$tablet-m :    768px;
+$tablet-l :    900px;
+$tablet-xl:    992px;
+
+$desktop-s :   1100px;
+$desktop-m :   1300px;
+$desktop-l :   1500px;
+$desktop-xl :  1700px;
+$desktop-xxl : 2000px;

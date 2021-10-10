@@ -1,0 +1,27 @@
+{
+  "name": "hawk",
+  "version": "1.0.0",
+  "description": "A simple, flexible, light JS framework",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "hawk"
+  },
+  "keywords": [
+    "framework",
+    "two-ways",
+    "binding",
+    "routing",
+    "bem"
+  ],
+  "author": "Filip J. Markiewicz",
+  "license": "MIT",
+  "devDependencies": {
+    "bundle-js": "^1.0.3"
+  },
+  "dependencies": {}
+}

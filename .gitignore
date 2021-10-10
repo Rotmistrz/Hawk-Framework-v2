@@ -50,3 +50,5 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+/public/Hawk-Framework-v2/js/node_modules

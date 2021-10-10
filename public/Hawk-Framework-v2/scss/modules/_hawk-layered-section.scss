@@ -1,0 +1,17 @@
+.hawk-layered-section {
+  position: relative;
+
+  &__above-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  &__above-layer-inner,
+  &__base-layer-inner {
+    @include transition(all .2s linear);
+  }
+}
