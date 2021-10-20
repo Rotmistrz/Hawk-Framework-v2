@@ -1,0 +1,36 @@
+{
+  "name": "hawk-framework-v2",
+  "version": "2.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "css:scss": "sass src/scss:dist/css --no-source-map",
+    "build:css": "npm run css:scss",
+    "watch:css": "onchange \"src/scss\" -- npm run build:css",
+    "build:js": "webpack --mode=production",
+    "watch:js": "onchange \"src/js\" -- webpack --mode=development",
+    "watch": "run-p watch:*",
+    "build": "run-p build:*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rotmistrz/Hawk-Framework-v2.git"
+  },
+  "author": "Filip J. Markiewicz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rotmistrz/Hawk-Framework-v2/issues"
+  },
+  "homepage": "https://github.com/Rotmistrz/Hawk-Framework-v2#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-loader": "^8.2.2",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "sass": "^1.43.2",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.1"
+  }
+}

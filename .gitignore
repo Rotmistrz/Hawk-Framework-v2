@@ -52,3 +52,4 @@
 /.web-server-pid
 
 /public/Hawk-Framework-v2/js/node_modules
+/public/node_modules

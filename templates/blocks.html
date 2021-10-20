@@ -580,7 +580,7 @@
                                 <div class="site-section__inner">
                                     {% include('blocks/tile.html') with {
                                         tile: {
-                                            type: '',
+                                            type: 'content-revealing',
                                             image: '/img/pictures/husaria.jpg',
                                             content: {
                                                 title: 'The winged hussars arrived',
@@ -605,7 +605,7 @@
 
                                     <div class="simple-listing">
                                         {% autoescape false %}
-                                            {{ blocks.html.tile.standard }}
+                                            {{ blocks.html.tile.contentRevealing }}
                                         {% endautoescape %}
                                     </div>
                                 </div>
@@ -623,7 +623,7 @@
                                 <div class="site-section__inner">
                                     {% include('blocks/tile.html') with {
                                         tile: {
-                                            type: '',
+                                            type: 'content-beneath',
                                             image: '/img/pictures/husaria.jpg',
                                             content: {
                                                 title: 'The winged hussars arrived',
@@ -648,127 +648,8 @@
 
                                     <div class="simple-listing">
                                         {% autoescape false %}
-                                            {{ blocks.html.tile.standard }}
+                                            {{ blocks.html.tile.contentBeneath }}
                                         {% endautoescape %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-
-            <section class="comparison-row">
-                <div class="comparison-row__result">
-                    <section class="site-section">
-                        <div class="site-section__layer">
-                            <div class="site-section__wrapper">
-                                <div class="site-section__inner">
-                                    <div class="row">
-                                        <ul class="examples-list">
-                                            <li>
-                                                {% include('blocks/tile.html') with {
-                                                    tile: {
-                                                        type: 'standard',
-                                                        image: '/img/pictures/husaria.jpg',
-                                                        content: {
-                                                            title: 'The winged hussars arrived',
-                                                            text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
-                                                        }
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                <article class="tile">
-                                                    <div class="tile__wrapper">
-                                                        <div class="tile__base-layer" style="background-image: url('/img/pictures/husaria.jpg')">
-
-                                                        </div>
-
-                                                        <div class="tile__above-layer">
-
-                                                        </div>
-
-                                                        <div class="tile__content-layer">
-                                                            <div class="tile__inner">
-                                                                <header class="tile__header">
-                                                                    <h3 class="subsection-title">The winged hussars arrived</h3>
-                                                                </header>
-
-                                                                <div class="tile__content">
-                                                                    <div class="text">
-                                                                        <p>
-                                                                            The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </li>
-
-                                            <li>
-                                                <article class="tile">
-                                                    <div class="tile__wrapper">
-                                                        <div class="tile__base-layer" style="background-image: url('/img/pictures/husaria.jpg')">
-
-                                                        </div>
-
-                                                        <div class="tile__above-layer">
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="tile__content-container">
-                                                        <header class="tile__header">
-                                                            <h3 class="subsection-title">The winged hussars arrived</h3>
-                                                        </header>
-
-                                                        <div class="tile__content">
-                                                            <div class="text">
-                                                                <p>
-                                                                    The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="comparison-row__source">
-                    <section class="site-section">
-                        <div class="site-section__layer">
-                            <div class="site-section__wrapper">
-                                <div class="site-section__inner">
-                                    <header class="subsection-header">
-                                        <h3 class="small-title">HTML</h3>
-                                    </header>
-
-                                    <div class="simple-listing">
-                                        {% autoescape false %}
-                                            {{ blocks.html.button.regular }}
-                                        {% endautoescape %}
-                                    </div>
-
-                                    <div class="row">
-                                        <header class="subsection-header">
-                                            <h3 class="small-title">SCSS</h3>
-                                        </header>
-
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.button }}
-                                            {% endautoescape %}
-                                        </div>
                                     </div>
                                 </div>
                             </div>

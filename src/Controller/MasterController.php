@@ -104,13 +104,33 @@ class MasterController extends AbstractController {
                                     'text' => "The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries."
                                 ]
                             ]
+                        ]), true),
+                        'contentRevealing' => highlight_string($this->renderView("blocks/tile.html", [
+                            'tile' => [
+                                'type' => "content-revealing",
+                                'image' => "/img/pictures/husaria.jpg",
+                                'content' => [
+                                    'title' => "The winged hussars arrived",
+                                    'text' => "The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries."
+                                ]
+                            ]
+                        ]), true),
+                        'contentBeneath' => highlight_string($this->renderView("blocks/tile.html", [
+                            'tile' => [
+                                'type' => "content-beneath",
+                                'image' => "/img/pictures/husaria.jpg",
+                                'content' => [
+                                    'title' => "The winged hussars arrived",
+                                    'text' => "The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries."
+                                ]
+                            ]
                         ]), true)
                     ]
                 ],
                 'scss' => [
-                    'sectionTitle' => highlight_string(file_get_contents(ROOT_DIR . '/public/scss/blocks/_section-title.scss'), true),
-                    'text' => highlight_string(file_get_contents(ROOT_DIR . '/public/scss/blocks/_text.scss'), true),
-                    'button' => highlight_string(file_get_contents(ROOT_DIR . '/public/scss/blocks/_buttons.scss'), true)
+                    'sectionTitle' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_section-title.scss'), true),
+                    'text' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_text.scss'), true),
+                    'button' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_buttons.scss'), true)
                 ]
             ]
         ]);
