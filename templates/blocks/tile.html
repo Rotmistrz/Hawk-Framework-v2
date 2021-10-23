@@ -1,4 +1,4 @@
-<article class="tile{% if tile.type|length > 0 %} tile--{{ tile.type }}{% endif %}">
+<article class="tile{% if tile.type|length > 0 %} tile--{{ tile.type }}{% endif %}{{ tile.extraClass }}">
     <div class="tile__wrapper">
         <div class="tile__base-layer"
              style="background-image: url('{{ tile.image }}')">

@@ -496,12 +496,26 @@
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
-                                    {% include('blocks/tile.html') with {
-                                        tile: {
-                                            type: 'clear',
-                                            image: '/img/pictures/husaria.jpg'
-                                        }
-                                    } %}
+                                    <ul class="examples-list">
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'clear',
+                                                    image: '/img/pictures/husaria.jpg'
+                                                }
+                                            } %}
+                                        </li>
+
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'clear',
+                                                    extraClass: ' tile--square',
+                                                    image: '/img/pictures/husaria.jpg'
+                                                }
+                                            } %}
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -535,16 +549,34 @@
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
-                                    {% include('blocks/tile.html') with {
-                                        tile: {
-                                            type: 'standard',
-                                            image: '/img/pictures/husaria.jpg',
-                                            content: {
-                                                title: 'The winged hussars arrived',
-                                                text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
-                                            }
-                                        }
-                                    } %}
+                                    <ul class="examples-list">
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'standard',
+                                                    image: '/img/pictures/husaria.jpg',
+                                                    content: {
+                                                        title: 'The winged hussars arrived',
+                                                        text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                                    }
+                                                }
+                                            } %}
+                                        </li>
+
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'standard',
+                                                    extraClass: ' tile--square',
+                                                    image: '/img/pictures/husaria.jpg',
+                                                    content: {
+                                                        title: 'The winged hussars arrived',
+                                                        text: 'The Polish hussars were one of the main types of cavalry in Poland.'
+                                                    }
+                                                }
+                                            } %}
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -578,16 +610,34 @@
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
-                                    {% include('blocks/tile.html') with {
-                                        tile: {
-                                            type: 'content-revealing',
-                                            image: '/img/pictures/husaria.jpg',
-                                            content: {
-                                                title: 'The winged hussars arrived',
-                                                text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
-                                            }
-                                        }
-                                    } %}
+                                    <ul class="examples-list">
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'content-revealing',
+                                                    image: '/img/pictures/husaria.jpg',
+                                                    content: {
+                                                        title: 'The winged hussars arrived',
+                                                        text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                                    }
+                                                }
+                                            } %}
+                                        </li>
+
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'content-revealing',
+                                                    extraClass: ' tile--square',
+                                                    image: '/img/pictures/husaria.jpg',
+                                                    content: {
+                                                        title: 'The winged hussars arrived',
+                                                        text: 'The Polish hussars were one of the main types of cavalry in Poland.'
+                                                    }
+                                                }
+                                            } %}
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -621,16 +671,34 @@
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
-                                    {% include('blocks/tile.html') with {
-                                        tile: {
-                                            type: 'content-beneath',
-                                            image: '/img/pictures/husaria.jpg',
-                                            content: {
-                                                title: 'The winged hussars arrived',
-                                                text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
-                                            }
-                                        }
-                                    } %}
+                                    <ul class="examples-list">
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'content-beneath',
+                                                    image: '/img/pictures/husaria.jpg',
+                                                    content: {
+                                                        title: 'The winged hussars arrived',
+                                                        text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                                    }
+                                                }
+                                            } %}
+                                        </li>
+
+                                        <li>
+                                            {% include('blocks/tile.html') with {
+                                                tile: {
+                                                    type: 'content-beneath',
+                                                    extraClass: ' tile--square',
+                                                    image: '/img/pictures/husaria.jpg',
+                                                    content: {
+                                                        title: 'The winged hussars arrived',
+                                                        text: 'The Polish hussars were one of the main types of Polish cavalry in Poland and in the Polish–Lithuanian Commonwealth between the 16th and 18th centuries.'
+                                                    }
+                                                }
+                                            } %}
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -650,6 +718,156 @@
                                         {% autoescape false %}
                                             {{ blocks.html.tile.contentBeneath }}
                                         {% endautoescape %}
+                                    </div>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.tile }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Form fields</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Form fields</em> are necessary to interact with user and obtain data from her. They might have title or placeholder, border or underline.
+                                        </p>
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        type: 'with-title',
+                                                        title: 'Form field with title'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        type: 'with-placeholder',
+                                                        title: 'Form field with placeholder'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--underline',
+                                                        type: 'with-title',
+                                                        title: 'Underlined form field with title'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--underline',
+                                                        type: 'with-placeholder',
+                                                        title: 'Underlined form field with placeholder'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--error',
+                                                        type: 'with-title',
+                                                        title: 'Form field with error'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--underline form-field--error',
+                                                        type: 'with-placeholder',
+                                                        title: 'Underlined form field with error'
+                                                    }
+                                                } %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.formField.regular }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.formField.placeholder }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.formField.underline }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.formField }}
+                                            {% endautoescape %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

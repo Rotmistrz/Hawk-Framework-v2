@@ -1,5 +1,6 @@
 .tile {
 	max-width: 460px;
+	cursor: pointer;
 
 	&__wrapper {
 		position: relative;
@@ -52,6 +53,13 @@
 		.tile__above-layer {
 			opacity: .3;
 		}
+	}
+}
+.tile--square {
+	max-width: 300px;
+
+	.tile__base-layer {
+		padding-bottom: 100%;
 	}
 }
 .tile--content-revealing {

@@ -1,0 +1,9 @@
+<label class="form-field{{ formField.extraClass }}">
+    <div class="form-field__wrapper">
+        {% if formField.type == 'with-title' %}<header class="form-field__header">
+            <h4 class="form-field__title">{{ formField.title }}</h4>
+        </header>
+        
+        {% endif %}<input class="form-field__core" type="text" name="exemplary-form-field"{% if formField.type == 'with-placeholder' %} placeholder="{{ formField.title }}"{% endif %} />
+    </div>
+</label>

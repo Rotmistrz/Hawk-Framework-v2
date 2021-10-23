@@ -125,12 +125,37 @@ class MasterController extends AbstractController {
                                 ]
                             ]
                         ]), true)
+                    ],
+                    'formField' => [
+                        'regular' => highlight_string($this->renderView("blocks/form-field.html", [
+                            'formField' => [
+                                'extraClass' => "",
+                                'type' => "with-title",
+                                'title' => "Form field with title"
+                            ]
+                        ]), true),
+                        'placeholder' => highlight_string($this->renderView("blocks/form-field.html", [
+                            'formField' => [
+                                'extraClass' => "",
+                                'type' => "with-placeholder",
+                                'title' => "Form field with placeholder"
+                            ]
+                        ]), true),
+                        'underline' => highlight_string($this->renderView("blocks/form-field.html", [
+                            'formField' => [
+                                'extraClass' => " form-field--underline",
+                                'type' => "with-placeholder",
+                                'title' => "Underlined form field with placeholder"
+                            ]
+                        ]), true)
                     ]
                 ],
                 'scss' => [
                     'sectionTitle' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_section-title.scss'), true),
                     'text' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_text.scss'), true),
-                    'button' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_buttons.scss'), true)
+                    'button' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_buttons.scss'), true),
+                    'tile' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_tiles.scss'), true),
+                    'formField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_form-fields.scss'), true)
                 ]
             ]
         ]);
