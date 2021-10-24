@@ -1,0 +1,15 @@
+<label class="choice-item">
+    <div class="choice-item__field">
+        <div class="choice-field{% if choiceField.type == 'radio' %} choice-field--radio{% endif %}">
+            <input class="choice-field__core" type="{{ choiceField.type }}" name="{{ choiceField.name }}" value="{{ choiceField.value }}" />
+
+            <div class="choice-field__field">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="choice-item__description">
+        {{ choiceField.description }}
+    </div>
+</label>

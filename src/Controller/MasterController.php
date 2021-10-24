@@ -148,6 +148,24 @@ class MasterController extends AbstractController {
                                 'title' => "Underlined form field with placeholder"
                             ]
                         ]), true)
+                    ],
+                    'choiceField' => [
+                        'checkbox' => highlight_string($this->renderView("blocks/choice-field.html", [
+                            'choiceField' => [
+                                'type' => "checkbox",
+                                'name' => 'exemplary-checkbox',
+                                'value' => 'Exemplary checkbox',
+                                'description' => 'Exemplary checkbox'
+                            ]
+                        ]), true),
+                        'radio' => highlight_string($this->renderView("blocks/choice-field.html", [
+                            'choiceField' => [
+                                'type' => "radio",
+                                'name' => 'exemplary-radio-button',
+                                'value' => 'Exemplary radio button',
+                                'description' => 'Exemplary radio button'
+                            ]
+                        ]), true)
                     ]
                 ],
                 'scss' => [
@@ -155,7 +173,8 @@ class MasterController extends AbstractController {
                     'text' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_text.scss'), true),
                     'button' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_buttons.scss'), true),
                     'tile' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_tiles.scss'), true),
-                    'formField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_form-fields.scss'), true)
+                    'formField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_form-fields.scss'), true),
+                    'choiceField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_choice-fields.scss'), true)
                 ]
             ]
         ]);

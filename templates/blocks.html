@@ -244,7 +244,7 @@
                 <div class="comparison-row__result">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-top">
                                 <div class="site-section__inner">
                                     <header class="section-header">
                                         <h2 class="section-title">Buttons</h2>
@@ -367,8 +367,16 @@
                                             </li>
                                         </ul>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-                                    <div class="section-for-light-examples">
+                    <section class="site-section">
+                        <div class="site-section__wrapper">
+                            <div class="section-for-light-examples">
+                                <div class="site-section__layer">
+                                    <div class="site-section__inner">
                                         <div class="row">
                                             <ul class="examples-list">
                                                 <li>
@@ -494,7 +502,7 @@
                 <div class="comparison-row__result">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <ul class="examples-list">
                                         <li>
@@ -525,7 +533,7 @@
                 <div class="comparison-row__source">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <header class="subsection-header">
                                         <h3 class="small-title">HTML</h3>
@@ -547,7 +555,7 @@
                 <div class="comparison-row__result">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <ul class="examples-list">
                                         <li>
@@ -586,7 +594,7 @@
                 <div class="comparison-row__source">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <header class="subsection-header">
                                         <h3 class="small-title">HTML</h3>
@@ -608,7 +616,7 @@
                 <div class="comparison-row__result">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <ul class="examples-list">
                                         <li>
@@ -647,7 +655,7 @@
                 <div class="comparison-row__source">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <header class="subsection-header">
                                         <h3 class="small-title">HTML</h3>
@@ -669,7 +677,7 @@
                 <div class="comparison-row__result">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <ul class="examples-list">
                                         <li>
@@ -708,7 +716,7 @@
                 <div class="comparison-row__source">
                     <section class="site-section">
                         <div class="site-section__layer">
-                            <div class="site-section__wrapper">
+                            <div class="site-section__wrapper site-section__wrapper--only-bottom">
                                 <div class="site-section__inner">
                                     <header class="subsection-header">
                                         <h3 class="small-title">HTML</h3>
@@ -866,6 +874,122 @@
                                         <div class="simple-listing">
                                             {% autoescape false %}
                                                 {{ blocks.scss.formField }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Choice fields (checkboxes, radio buttons)</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <!-- <p>
+                                            <em class="text__em">Choice fields</em> are 
+                                        </p> -->
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'checkbox',
+                                                        name: 'exemplary-checkbox',
+                                                        value: 'Exemplary choice field',
+                                                        description: 'Exemplary checkbox'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'checkbox',
+                                                        name: 'exemplary-checkbox',
+                                                        value: 'Exemplary checkbox',
+                                                        description: 'Exemplary choice field with long description. Lorem ipsum dolor sit amet mauris. Nullam justo non tincidunt hendrerit id, ullamcorper in, augue. Aenean massa volutpat a, ligula. Nunc leo. In tempus ornare eu, tortor. Integer tincidunt molestie.'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'radio',
+                                                        name: 'exemplary-radio-button',
+                                                        value: 'Exemplary choice field',
+                                                        description: 'Exemplary radio button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'radio',
+                                                        name: 'exemplary-radio-button',
+                                                        value: 'Exemplary radio button',
+                                                        description: 'Exemplary radio button with long description. Lorem ipsum dolor sit amet mauris. Nullam justo non tincidunt hendrerit id, ullamcorper in, augue. Aenean massa volutpat a, ligula. Nunc leo. In tempus ornare eu, tortor. Integer tincidunt molestie.'
+                                                    }
+                                                } %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.choiceField.checkbox }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.choiceField.radio }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.choiceField }}
                                             {% endautoescape %}
                                         </div>
                                     </div>

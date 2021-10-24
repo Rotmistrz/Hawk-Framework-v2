@@ -7,6 +7,7 @@
 *Blocks:*
 - Tile
 - Form field
+- Choice fields
 
 ##### Earlier #####
 

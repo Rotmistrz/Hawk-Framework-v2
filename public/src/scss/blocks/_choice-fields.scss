@@ -1,0 +1,64 @@
+.choice-field {
+	position: relative;
+	width: 16px;
+	height: 16px;
+	display: block;
+
+	&__core {
+		width: 0;
+		height: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -100;
+		opacity: 0;
+	}
+
+	&__field {
+		border: 1px solid $dark-color-op20;
+		padding: 2px;
+		@include transition(all .2s linear);
+
+		&:before {
+			content: '';
+			display: block;
+			width: 10px;
+			height: 10px;
+			@include transition(all .2s linear);
+		}
+	}
+
+	&__core:checked ~ &__field {
+		border-color: $dark-color;
+
+		&:before {
+			background: $primary-color;
+		}
+	}
+
+	&.choice-field--radio {
+		.choice-field__field {
+			@include border-radius(50%);
+
+			&:before {
+				@include border-radius(50%);
+			}
+		}
+	}
+}
+
+.choice-item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+
+	&__field {
+		padding: 2px 0 0 0;
+	}
+
+	&__description {
+		padding: 0 0 0 12px;
+		font-size: $main-font-size;
+		line-height: $main-font-size + 6px;
+	}
+}
