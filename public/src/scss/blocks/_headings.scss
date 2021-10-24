@@ -15,15 +15,4 @@
   font-style: italic;
 }
 
-.small-title {
-  font-size: $small-font-size;
-  font-weight: 700;
-
-  @media (min-width: $desktop-xl) {
-    font-size: $small-font-size-01;
-  }
-}
-
 @import '_titles';
-
-@import '_simple-title';

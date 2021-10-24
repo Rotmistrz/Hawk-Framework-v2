@@ -96,6 +96,18 @@
                                             </li>
                                         </ul>
                                     </div>
+
+                                    <div class="row">
+                                        <ul class="examples-list">
+                                            <li>
+                                                <h2 class="simple-title">Simple title</h2>
+                                            </li>
+
+                                            <li>
+                                                <h2 class="small-title">Small title</h2>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1090,6 +1102,88 @@
                                         <div class="simple-listing">
                                             {% autoescape false %}
                                                 {{ blocks.scss.iconItem }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Icon label</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <!-- <p>
+                                            <em class="text__em">Choice fields</em> are 
+                                        </p> -->
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/icon-label.html') with {
+                                                    iconLabel: {
+                                                        description: 'Lorem ipsum dolor sit amet',
+                                                        extraClass: ''
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/icon-label.html') with {
+                                                    iconLabel: {
+                                                        description: 'Lorem ipsum dolor sit amet',
+                                                        extraClass: ' icon-label--decorated'
+                                                    }
+                                                } %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.iconLabel.regular }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.iconLabel }}
                                             {% endautoescape %}
                                         </div>
                                     </div>

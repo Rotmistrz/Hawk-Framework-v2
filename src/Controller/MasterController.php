@@ -167,7 +167,20 @@ class MasterController extends AbstractController {
                             ]
                         ]), true)
                     ],
-                    'iconItem' => highlight_string($this->renderView("blocks/icon-item.html", []), true)
+                    'iconItem' => highlight_string($this->renderView("blocks/icon-item.html", []), true),
+                    'iconLabel' => [
+                        'regular' => highlight_string($this->renderView("blocks/icon-label.html", [
+                                'iconLabel' => [
+                                    'description' => "Lorem ipsum dolor sit amet"
+                                ]
+                            ]), true),
+                        'decorated' => highlight_string($this->renderView("blocks/icon-label.html", [
+                                'iconLabel' => [
+                                    'extraClass' => " icon-label--decorated",
+                                    'description' => "Lorem ipsum dolor sit amet"
+                                ]
+                            ]), true)
+                    ]
                 ],
                 'scss' => [
                     'sectionTitle' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_titles.scss'), true),
@@ -176,7 +189,8 @@ class MasterController extends AbstractController {
                     'tile' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_tiles.scss'), true),
                     'formField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_form-fields.scss'), true),
                     'choiceField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_choice-fields.scss'), true),
-                    'iconItem' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-item.scss'), true)
+                    'iconItem' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-item.scss'), true),
+                    'iconLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-label.scss'), true)
                 ]
             ]
         ]);

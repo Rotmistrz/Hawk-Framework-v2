@@ -182,3 +182,20 @@
     font-size: $main-font-size-04;
   }
 }
+
+.simple-title {
+  font-size: $large-font-size;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $large-font-size-01;
+  }
+}
+
+.small-title {
+  font-size: $small-font-size;
+  font-weight: 700;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $small-font-size-01;
+  }
+}
