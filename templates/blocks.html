@@ -40,12 +40,12 @@
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
                                     <header class="section-header">
-                                        <h2 class="section-title">Section title</h2>
+                                        <h2 class="section-title">Titles</h2>
                                     </header>
 
                                     <div class="text bounded-section">
                                         <p>
-                                            <em class="text__em">Section title</em> is the main title of the section on the website as you can suppose. It has three variants: regular (default), large and small which are presented below.
+                                            <em class="text__em">Titles</em> are the main part of the website's content as you can suppose. They have three variants: regular (default), large and small which are presented below.
                                         </p>
                                     </div>
 
@@ -56,7 +56,43 @@
                                             </li>
 
                                             <li>
+                                                <h2 class="section-title">Section title</h2>
+                                            </li>
+
+                                            <li>
                                                 <h2 class="section-title section-title--small">Small section title</h2>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="row">
+                                        <ul class="examples-list">
+                                            <li>
+                                                <h2 class="section-subtitle section-subtitle--large">Large section subtitle</h2>
+                                            </li>
+
+                                            <li>
+                                                <h2 class="section-subtitle">Section subtitle</h2>
+                                            </li>
+
+                                            <li>
+                                                <h2 class="section-subtitle section-subtitle--small">Small section subtitle</h2>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="row">
+                                        <ul class="examples-list">
+                                            <li>
+                                                <h2 class="subsection-title subsection-title--large">Large subsection title</h2>
+                                            </li>
+
+                                            <li>
+                                                <h2 class="subsection-title">Subsection title</h2>
+                                            </li>
+
+                                            <li>
+                                                <h2 class="subsection-title subsection-title--small">Small subsection title</h2>
                                             </li>
                                         </ul>
                                     </div>
@@ -990,6 +1026,70 @@
                                         <div class="simple-listing">
                                             {% autoescape false %}
                                                 {{ blocks.scss.choiceField }}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Icon item</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <!-- <p>
+                                            <em class="text__em">Choice fields</em> are 
+                                        </p> -->
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        {% include('blocks/icon-item.html') %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.iconItem }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="simple-listing">
+                                            {% autoescape false %}
+                                                {{ blocks.scss.iconItem }}
                                             {% endautoescape %}
                                         </div>
                                     </div>

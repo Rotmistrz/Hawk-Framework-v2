@@ -6,11 +6,6 @@
   padding: 0 0 20px 0;
 }
 
-.subsection-title {
-  font-size: $large-font-size;
-  font-weight: 700;
-}
-
 .subsection-subheader {
   padding: 0 0 20px 0;
 }
@@ -29,6 +24,6 @@
   }
 }
 
-@import '_section-title';
+@import '_titles';
 
 @import '_simple-title';
