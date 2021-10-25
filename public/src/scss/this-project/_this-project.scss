@@ -165,3 +165,48 @@
     padding-bottom: 0;
   }
 }
+
+.descripted-items-section {
+  padding: 0 240px 0 0;
+
+  &__item {
+    position: relative;
+  }
+
+  &__item-description {
+    position: absolute;
+    left: 100%;
+    text-align: right;
+    top: 0;
+    width: 240px;
+    border-top: 1px dashed $light-color-06;
+    border-right: 1px dashed $light-color-06;
+    padding: 8px 12px 0 0;
+    font-size: $small-font-size;
+    color: $light-color-06;
+    @include box-sizing(border-box);
+
+  }
+
+  &__item-description--second {
+    top: 40px;
+    width: 200px;
+  }
+}
+
+.article {
+  &__introduction {
+    padding: 0 0 20px 0;
+  }
+
+  &__row {
+    padding: 32px 0 0 0;
+  }
+
+  &__footer {
+    margin: 40px 0 0 0;
+    padding: 32px;
+    position: relative;
+    background: $light-color-03;
+  }
+}

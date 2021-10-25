@@ -190,7 +190,8 @@ class MasterController extends AbstractController {
                     'formField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_form-fields.scss'), true),
                     'choiceField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_choice-fields.scss'), true),
                     'iconItem' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-item.scss'), true),
-                    'iconLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-label.scss'), true)
+                    'iconLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-label.scss'), true),
+                    'headings' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_headings.scss'), true)
                 ]
             ]
         ]);

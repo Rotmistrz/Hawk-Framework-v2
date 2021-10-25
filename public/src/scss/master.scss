@@ -31,17 +31,19 @@ a {
 
 /***** HEADERS *****/
 
-@import 'blocks/headings.scss';
+@import 'blocks/_headings';
+
+@import 'blocks/_titles';
 
 /***** TEXT *****/
 
-@import 'blocks/text.scss';
+@import 'blocks/_text';
 
 /** END-HEADERS **/
 
 /***** BUTTONS *****/
 
-@import 'blocks/buttons.scss';
+@import 'blocks/_buttons';
 
 /***** SECTIONS *****/
 

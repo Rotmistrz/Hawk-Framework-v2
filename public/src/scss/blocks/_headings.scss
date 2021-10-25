@@ -2,17 +2,14 @@
   padding: 0 0 32px 0;
 }
 
-.subsection-header {
+.section-subheader {
   padding: 0 0 20px 0;
+}
+
+.subsection-header {
+  padding: 0 0 16px 0;
 }
 
 .subsection-subheader {
   padding: 0 0 20px 0;
 }
-
-.subsection-subtitle {
-  font-size: $larger-font-size;
-  font-style: italic;
-}
-
-@import '_titles';
