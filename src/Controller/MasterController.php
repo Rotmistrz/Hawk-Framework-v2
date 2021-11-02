@@ -180,7 +180,13 @@ class MasterController extends AbstractController {
                                     'description' => "Lorem ipsum dolor sit amet"
                                 ]
                             ]), true)
-                    ]
+                    ],
+                    'titledLabel' => highlight_string($this->renderView("blocks/titled-label.html", [
+                        'titledLabel' => [
+                            'title' => "Helpline",
+                            'content' => "+48 723 917 812"
+                        ]
+                    ]), true)
                 ],
                 'scss' => [
                     'sectionTitle' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_titles.scss'), true),
@@ -191,6 +197,7 @@ class MasterController extends AbstractController {
                     'choiceField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_choice-fields.scss'), true),
                     'iconItem' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-item.scss'), true),
                     'iconLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-label.scss'), true),
+                    'titledLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_titled-label.scss'), true),
                     'headings' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_headings.scss'), true)
                 ]
             ]

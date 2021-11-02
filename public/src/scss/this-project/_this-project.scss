@@ -61,6 +61,11 @@
   }
 }
 
+.subsection {
+  padding: 32px;
+  background: $light-color-03;
+}
+
 .listing {
   border: 1px solid $light-color-07;
   background: $light-color-02;
@@ -205,8 +210,5 @@
 
   &__footer {
     margin: 40px 0 0 0;
-    padding: 32px;
-    position: relative;
-    background: $light-color-03;
   }
 }
