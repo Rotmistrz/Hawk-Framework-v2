@@ -1,0 +1,80 @@
+{% extends('index.html') %}
+
+{% block header %}
+<h1 class="section-pretitle">Hawk Framework v2</h1>
+<h2 class="site-title">Variables</h2>
+{% endblock %}
+
+{% block content %}
+	<section class="site-section">
+        <div class="site-section__layer">
+            <div class="site-section__wrapper">
+                <div class="site-section__inner">
+                	<form class="form">
+	                    <header class="section-header">
+	                        <h2 class="section-title">Resolutions</h2>
+	                    </header>
+
+	                    <div class="flex-container">
+	                    	{% for resolutionsColumn in resolutions %}
+	                    	<div class="flex-column flex-column--4 flex-column--space">
+	                    		{% for resolution in resolutionsColumn %}
+	                    		<div class="form__field-container">
+	                				<label class="form-field form-field--horizontal">
+									    <div class="form-field__wrapper">
+									        <header class="form-field__header">
+									            <h4 class="code">{{ resolution.name }}</h4>
+									        </header>
+									        
+									        <div class="form-field__field-container">
+										        <input class="form-field__core" type="text" name="resolutions[{{ resolution.name }}]" value="{{ resolution.value }}" />
+
+										        <div class="form-field__suffix">
+										        	px
+										        </div>
+										    </div>
+									    </div>
+									</label>
+	                			</div>
+	                			{% endfor %}
+	                    	</div>
+	                    	{% endfor %}
+	                    </div>
+
+	                    <div class="site-section__row">
+	                    	<div class="flex-container colors-section">
+	                    		{% for colorsColumn in colors %}
+		                    	<div class="flex-column flex-column--6 flex-column--space">
+		                    		{% for color in colorsColumn %}
+		                    		<div class="form__field-container">
+		                				<label class="form-field form-field--horizontal">
+										    <div class="form-field__wrapper">
+										        <header class="form-field__header">
+										        	<div class="icon-label">
+										        		<div class="icon-label__icon-container">
+										        			<div class="color-sample{% if color.colorSampleExtraClass is defined %} {{ color.colorSampleExtraClass }}{% endif %}" style="background: {{ color.value }};"></div>
+										        		</div>
+
+										        		<div class="icon-label__description-container">
+										        			<h4 class="code">{{ color.name }}</h4>
+										        		</div>
+										        	</div>
+										        </header>
+										        
+										        <div class="form-field__field-container">
+											        <input class="form-field__core form-field__core--code" type="text" name="colors[{{ color.name }}]" value="{{ color.value }}" />
+											    </div>
+										    </div>
+										</label>
+		                			</div>
+		                			{% endfor %}
+		                    	</div>
+		                    	{% endfor %}
+		                    </div>
+	                    </div>
+	                </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

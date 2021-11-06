@@ -36,17 +36,17 @@ $(document).ready(function() {
     HawkExamples.layeredSection = new Hawk.LayeredSection($('#exemplary-layered-section'));
     HawkExamples.layeredSection.run();
 
-    const mycar = new Car("Opel Vectra", 2005);
+    const colorFieldsController = new Hawk.FieldController($('.colors-section input'), {
+        onChange: function(field, value) {
+            console.log(field, value);
 
-    console.log(mycar);
-    console.log(mycar.getModel());
-    console.log("blabla");
+            const label = field.parents('.form-field');
 
-    const opel = new Opel(2007, "benzyna");
-    console.log(opel);
-    console.log(opel.getModel());
-    console.log(opel.year);
-    opel.printEngine();
+            console.log(label);
 
+            label.find('.color-sample').css({ backgroundColor: value });
+        }
+    });
+    colorFieldsController.run();
     // blabla
 });

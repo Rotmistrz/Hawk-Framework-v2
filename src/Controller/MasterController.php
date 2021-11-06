@@ -61,6 +61,192 @@ class MasterController extends AbstractController {
     }
 
     /**
+     * @Route("/variables")
+     */
+    public function variables() {
+        return $this->render('variables.html', [
+            'resolutions' => [
+                [
+                    [
+                        'name' => 'mobile-s',
+                        'value' => '380'
+                    ],
+                    [
+                        'name' => 'mobile-m',
+                        'value' => '420'
+                    ],
+                    [
+                        'name' => 'mobile-l',
+                        'value' => '480'
+                    ],
+                    [
+                        'name' => 'mobile-xl',
+                        'value' => '550'
+                    ]
+                ],
+                [
+                    [
+                        'name' => 'tablet-s',
+                        'value' => '650'
+                    ],
+                    [
+                        'name' => 'tablet-m',
+                        'value' => '768'
+                    ],
+                    [
+                        'name' => 'tablet-l',
+                        'value' => '900'
+                    ],
+                    [
+                        'name' => 'tablet-xl',
+                        'value' => '992'
+                    ]
+                ],
+                [
+                    [
+                        'name' => 'desktop-s',
+                        'value' => '1100'
+                    ],
+                    [
+                        'name' => 'desktop-m',
+                        'value' => '1300'
+                    ],
+                    [
+                        'name' => 'desktop-l',
+                        'value' => '1500'
+                    ],
+                    [
+                        'name' => 'desktop-xl',
+                        'value' => '1700'
+                    ]
+                ]
+            ],
+
+            'colors' => [
+                [
+                    [
+                        'name' => 'dark-color',
+                        'value' => '#000000'
+                    ],
+                    [
+                        'name' => 'dark-color-op80',
+                        'value' => 'rgba(0, 0, 0, 0.8)',
+                    ],
+                    [
+                        'name' => 'dark-color-op60',
+                        'value' => 'rgba(0, 0, 0, 0.6)',
+                    ],
+                    [
+                        'name' => 'dark-color-op40',
+                        'value' => 'rgba(0, 0, 0, 0.4)',
+                    ],
+
+                    [
+                        'name' => 'dark-color-01',
+                        'value' => '#222222'
+                    ],
+                    [
+                        'name' => 'dark-color-02',
+                        'value' => '#3D3D3D'
+                    ],
+                    [
+                        'name' => 'dark-color-03',
+                        'value' => '#444444'
+                    ],
+                    [
+                        'name' => 'dark-color-04',
+                        'value' => '#4B4B4B'
+                    ],
+                    [
+                        'name' => 'dark-color-05',
+                        'value' => '#777777'
+                    ],
+
+                    [
+                        'name' => 'primary-color',
+                        'value' => '#F38630'
+                    ],
+                    [
+                        'name' => 'primary-color-01',
+                        'value' => '#FA6900'
+                    ]
+                ],
+
+                [
+                    [
+                        'name' => 'light-color',
+                        'value' => '#FFFFFF',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-op80',
+                        'value' => 'rgba(255, 255, 255, .8)',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-op60',
+                        'value' => 'rgba(255, 255, 255, .6)',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-op40',
+                        'value' => 'rgba(255, 255, 255, .4)',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+
+                    [
+                        'name' => 'light-color-01',
+                        'value' => '#FAFAFA',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-02',
+                        'value' => '#F5F5F5',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-03',
+                        'value' => '#EEEEEE',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-04',
+                        'value' => '#E5E5E5',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+                    [
+                        'name' => 'light-color-05',
+                        'value' => '#C4C4C4',
+                        'colorSampleExtraClass' => " color-sample--bright"
+                    ],
+
+                    [
+                        'name' => 'secondary-color',
+                        'value' => '#69D2E7'
+                    ],
+                    [
+                        'name' => 'secondary-color-01',
+                        'value' => '#23AABA'
+                    ]
+
+
+
+
+                    /***
+                     * $light-color-op60: rgba($light-color, 0.6);
+$light-color-op30: rgba($light-color, 0.3);
+$light-color-01: #fafafa;
+$light-color-02: #f5f5f5;
+$light-color-03: #F5F5F5;
+$light-color-04: #E1E1E1;
+$light-color-05: #fefdfd;
+**/
+                ]
+            ]
+        ]);
+    }
+
+    /**
      * @Route("/blocks")
      */
     public function blocks() {

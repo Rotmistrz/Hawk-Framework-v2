@@ -25,6 +25,8 @@
   &__header {
     padding: 0 0 5px 0;
     text-align: left;
+    white-space: nowrap;
+    font-size: $main-font-size;
 
     @media (min-width: $mobile-m) {
       padding: 0 0 8px 0;
@@ -33,18 +35,17 @@
     @media (min-width: $tablet-m) {
       text-align: left;
     }
+
+    @media (min-width: $desktop-xl) {
+      font-size: $main-font-size-01;
+    }
   }
 
   &__title {
     color: $dark-color;
     position: relative;
     font-weight: 500;
-    font-size: $main-font-size;
     @include transition(all .2s linear);
-
-    @media (min-width: $desktop-xl) {
-      font-size: $main-font-size-01;
-    }
   }
 
   &__core {
@@ -77,6 +78,9 @@
       border-color: $dark-color;
     }
   }
+  &__core--code {
+    font-family: $monospace-font-family;
+  }
 
   &__core::-webkit-input-placeholder,
   &__core:-moz-placeholder,
@@ -89,6 +93,16 @@
     @media (min-width: $tablet-m) {
       text-align: left;
     }
+  }
+
+  &__field-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__suffix {
+    padding: 0 0 0 12px;
   }
 
   &.form-field--error {
@@ -117,5 +131,21 @@
     border-right: 0;
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+.form-field--horizontal {
+  .form-field__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-field__header {
+    padding: 0 12px 0 0;
+  }
+
+  .form-field__field-container {
+    width: 100%;
   }
 }

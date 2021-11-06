@@ -19,10 +19,24 @@ a {
 .site-header {
   padding: 64px 40px;
   background: $secondary-color;
+
+  @media (min-width: $desktop-l) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  @media (min-width: $desktop-xl) {
+    padding-left: 140px;
+    padding-right: 140px;
+  }
 }
 
 .site-title {
   font-size: 42px;
+
+  @media (min-width: $desktop-xl) {
+    font-size: 52px;
+  }
 }
 
 .site-content {
@@ -34,6 +48,12 @@ a {
 @import 'blocks/_headings';
 
 @import 'blocks/_titles';
+
+/***** CONTAINERS *****/
+
+@import 'containers/_flex-container';
+
+/** END-CONTAINERS **/
 
 /***** TEXT *****/
 
