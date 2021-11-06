@@ -1,6 +1,5 @@
-@import '../../Hawk-Framework-v2/scss/_hawk-variables';
-@import '../../Hawk-Framework-v2/scss/_hawk-mixins';
-@import 'this-project/_this-project';
+@import 'hawk/_hawk-variables';
+@import 'hawk/_hawk-mixins';
 
 * {
   margin: 0;
@@ -43,27 +42,6 @@ a {
   padding: 0;
 }
 
-/***** HEADERS *****/
-
-@import 'blocks/_headings';
-
-@import 'blocks/_titles';
-
-/***** CONTAINERS *****/
-
-@import 'containers/_flex-container';
-
-/** END-CONTAINERS **/
-
-/***** TEXT *****/
-
-@import 'blocks/_text';
-
-/** END-HEADERS **/
-
-/***** BUTTONS *****/
-
-@import 'blocks/_buttons';
 
 /***** SECTIONS *****/
 
@@ -125,93 +103,8 @@ a {
 
 /** END_SECTIONS **/
 
-/***** FORMS *****/
 
-@import 'blocks/forms.scss';
-
-@import 'blocks/form-fields.scss';
-
-@import 'blocks/choice-fields.scss';
-
-/** END-FORMS **/
-
-/***** MODULES *****/
-
-.std-dropdown {
-  &__header {
-    @extend .form-field__core;
-    //@include transition(none);
-
-    &:hover,
-    &:focus {
-      border-color: $dark-color;
-    }
-  }
-
-  &__title {
-    font-size: $main-font-size;
-    font-weight: 500;
-  }
-
-  &__list {
-    border: 1px solid $dark-color-op20;
-    background: $light-color;
-    border-top: 0;
-    padding: 8px 0;
-    @include transition(all .2s linear);
-  }
-
-  &.hawk-dropdown--open {
-    .std-dropdown__header {
-      border-color: $primary-color;
-      border-bottom-color: transparent;
-    }
-
-    .std-dropdown__list {
-      border-color: $primary-color;
-    }
-  }
-}
-
-.dropdown-item {
-  cursor: pointer;
-  position: relative;
-
-  &__description {
-    padding: 4px 12px;
-    @include transition(all .2s linear);
-  }
-
-  &__description:hover,
-  &__field:focus ~ .dropdown-item__description {
-    background: $primary-color-02;
-    color: $light-color;
-  }
-
-  &__field:checked ~ .dropdown-item__description {
-    background: $secondary-color;
-  }
-
-  &__field {
-    width: 0;
-    height: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-}
-
-@import 'blocks/_tiles';
-
-@import 'blocks/_icon-item';
-
-@import 'blocks/_icon-label';
-
-@import 'blocks/_titled-label';
-
-/** END_MODULES **/
 
 /***** THIS PROJECT *****/
 
-@import 'this-project/this-project.scss';
+@import 'this-project/_this-project';

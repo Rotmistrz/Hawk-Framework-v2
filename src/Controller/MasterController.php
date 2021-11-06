@@ -375,16 +375,16 @@ $light-color-05: #fefdfd;
                     ]), true)
                 ],
                 'scss' => [
-                    'sectionTitle' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_titles.scss'), true),
-                    'text' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_text.scss'), true),
-                    'button' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_buttons.scss'), true),
-                    'tile' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_tiles.scss'), true),
-                    'formField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_form-fields.scss'), true),
-                    'choiceField' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_choice-fields.scss'), true),
-                    'iconItem' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-item.scss'), true),
-                    'iconLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_icon-label.scss'), true),
-                    'titledLabel' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_titled-label.scss'), true),
-                    'headings' => highlight_string(file_get_contents(ROOT_DIR . '/public/src/scss/blocks/_headings.scss'), true)
+                    'sectionTitle' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_titles.scss'), true),
+                    'text' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_text.scss'), true),
+                    'button' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_buttons.scss'), true),
+                    'tile' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_tiles.scss'), true),
+                    'formField' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_form-fields.scss'), true),
+                    'choiceField' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_choice-fields.scss'), true),
+                    'iconItem' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_icon-item.scss'), true),
+                    'iconLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_icon-label.scss'), true),
+                    'titledLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_titled-label.scss'), true),
+                    'headings' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_headings.scss'), true)
                 ]
             ]
         ]);

@@ -1,4 +1,3 @@
 <?php
 
-
-define('ROOT_DIR', dirname($_SERVER['DOCUMENT_ROOT']));
+require_once dirname(__DIR__).'/config/config.php';
