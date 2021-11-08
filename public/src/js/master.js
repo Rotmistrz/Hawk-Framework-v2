@@ -36,7 +36,12 @@ $(document).ready(function() {
     HawkExamples.layeredSection = new Hawk.LayeredSection($('#exemplary-layered-section'));
     HawkExamples.layeredSection.run();
 
-    const colorFieldsController = new Hawk.FieldController($('.colors-section input'), {
+    HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
+    HawkExamples.moreContentManager.run();
+
+    var HawkVariables = {};
+
+    HawkVariables.colorFieldsController = new Hawk.FieldController($('.colors-section input'), {
         onChange: function(field, value) {
             console.log(field, value);
 
@@ -47,6 +52,6 @@ $(document).ready(function() {
             label.find('.color-sample').css({ backgroundColor: value });
         }
     });
-    colorFieldsController.run();
+    HawkVariables.colorFieldsController.run();
     // blabla
 });

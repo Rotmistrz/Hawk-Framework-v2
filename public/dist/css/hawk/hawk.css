@@ -1112,6 +1112,10 @@
   transition: all 0.2s linear;
 }
 
+.hawk-more-content {
+  display: none;
+}
+
 .std-dropdown__header:hover, .std-dropdown__header:focus {
   border-color: #000;
 }
