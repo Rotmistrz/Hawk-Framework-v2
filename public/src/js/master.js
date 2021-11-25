@@ -39,6 +39,23 @@ $(document).ready(function() {
     HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
     HawkExamples.moreContentManager.run();
 
+    $('.scrollable-section').mCustomScrollbar({
+                axis: "y",
+                setTop: 0
+            });
+
+    HawkExamples.slidingLayerManager = new Hawk.SlidingLayerManager(1, {
+        onShow: function(slm, button, layer) {
+            var content = layer.find('.edge-section__content');
+            var currentHeight = parseInt(content.innerHeight()) - parseInt(content.css('paddingTop')) - parseInt(content.css('paddingBottom'));
+
+            layer.find('.scrollable-section').css({ height: currentHeight + "px" }).mCustomScrollbar({
+                axis: "y"
+            });
+        }
+    });
+    HawkExamples.slidingLayerManager.run();
+
     var HawkVariables = {};
 
     HawkVariables.colorFieldsController = new Hawk.FieldController($('.colors-section input'), {

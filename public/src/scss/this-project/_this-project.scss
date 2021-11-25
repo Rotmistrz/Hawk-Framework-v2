@@ -79,6 +79,8 @@
   border: 1px solid $light-color-07;
   background: $light-color-02;
   padding: 20px 16px;
+  white-space: normal;
+  overflow-x: auto;
 }
 
 .simple-listing {
@@ -87,11 +89,30 @@
   white-space: nowrap;
   padding: 0 0 20px 0;
 }
+.simple-listing--bounded {
+  white-space: normal;
+  overflow: visible;
+}
 
 .figure {
   &__header {
     padding: 0 0 10px 0;
   }
+}
+
+.scrollable-section {
+  max-height: 320px;
+
+  .mCSB_scrollTools {
+    .mCSB_dragger {
+      .mCSB_dragger_bar {
+        background: $dark-color-01;
+      }
+    }
+  }
+}
+.scrollable-section--unbounded {
+  max-height: 100%;
 }
 
 .caption-title {
@@ -248,5 +269,39 @@
     height: 100%;
     z-index: -100;
     background: $dark-color;
+  }
+}
+
+.edge-section {
+  position: relative;
+  height: 100%;
+  padding: 0 0 0 54px;
+  background: $light-color-01;
+
+  &__edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary-color;
+    cursor: pointer;
+  }
+
+  &__edge-inner {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    @include transform((rotate(-90deg) translate3d(-50%, 0, 0)));
+    transform-origin: left top;
+  }
+
+  &__content {
+    padding: 40px;
+    max-height: 100%;
+    @include box-sizing(border-box);
   }
 }

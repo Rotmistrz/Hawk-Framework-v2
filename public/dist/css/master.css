@@ -172,6 +172,8 @@ a {
   border: 1px solid #4b4b4b;
   background: #f5f5f5;
   padding: 20px 16px;
+  white-space: normal;
+  overflow-x: auto;
 }
 
 .simple-listing {
@@ -181,8 +183,24 @@ a {
   padding: 0 0 20px 0;
 }
 
+.simple-listing--bounded {
+  white-space: normal;
+  overflow: visible;
+}
+
 .figure__header {
   padding: 0 0 10px 0;
+}
+
+.scrollable-section {
+  max-height: 320px;
+}
+.scrollable-section .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background: #222222;
+}
+
+.scrollable-section--unbounded {
+  max-height: 100%;
 }
 
 .caption-title {
@@ -334,4 +352,39 @@ a {
   height: 100%;
   z-index: -100;
   background: #000;
+}
+
+.edge-section {
+  position: relative;
+  height: 100%;
+  padding: 0 0 0 54px;
+  background: #fafafa;
+}
+.edge-section__edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FA6900;
+  cursor: pointer;
+}
+.edge-section__edge-inner {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: rotate(-90deg) translate3d(-50%, 0, 0);
+  -moz-transform: rotate(-90deg) translate3d(-50%, 0, 0);
+  transform: rotate(-90deg) translate3d(-50%, 0, 0);
+  transform-origin: left top;
+}
+.edge-section__content {
+  padding: 40px;
+  max-height: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }

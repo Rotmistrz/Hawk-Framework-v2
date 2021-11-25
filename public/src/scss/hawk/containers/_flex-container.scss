@@ -19,6 +19,35 @@
 		padding-top: 0;
 	}
 }
+
+.flex-column--8 {
+	@media (min-width: $tablet-m) {
+		min-width: 66.66%;
+		max-width: 66.66%;
+	}
+}
+.flex-column--8.flex-column--space {
+	@media (min-width: $tablet-m) {
+		&:nth-child(1) {
+			padding-right: 12px;
+		}
+
+		&:nth-child(2) {
+			padding-left: 12px;
+		}
+	}
+
+	@media (min-width: $desktop-m) {
+		&:nth-child(1) {
+			padding-right: 20px;
+		}
+
+		&:nth-child(2) {
+			padding-left: 20px;
+		}
+	}
+}
+
 .flex-column--6 {
 	@media (min-width: $tablet-m) {
 		min-width: 50%;

@@ -17,13 +17,20 @@ class MasterController extends AbstractController {
     public function index() {
         return $this->render('home.html', [
             'listings' => [
-                1 => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.html", [
+                'dropdown' => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.html", [
                     'dropdown' => [
                         'id' => "exemplary-dropdown",
                         'title' => "Exemplary dropdown"
                     ],
                     'autoescapeFalse' => false
-                ]), true)
+                ]), true),
+
+                'slidingLayerManager' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/hawk-sliding-layer-manager.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/sliding-layer-manager.js", [
+                    ]), true)
+                ]
             ]
         ]);
     }

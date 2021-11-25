@@ -1,0 +1,21 @@
+.hawk-sliding-layer-section {
+	position: relative;
+	overflow: hidden;
+
+	&__layer {
+		position: absolute;
+		top: 0;
+		right: -50%;
+		width: 50%;
+		height: 100%;
+		margin: 0 40px 0 0;
+		@include transition(all .3s ease-in-out);
+		@include transform(translate3d(0, 0, 0));
+	}
+}
+.hawk-sliding-layer-section--active {
+	.hawk-sliding-layer-section__layer {
+		right: 0;
+		margin: 0;
+	}
+}
