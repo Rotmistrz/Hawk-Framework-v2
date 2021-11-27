@@ -140,6 +140,7 @@ Hawk.Dropdown = function(container, options) {
             var description = radio.parent().find('.dropdown-item__description').html();
             dropdown.title.html(description);
             dropdown.hide();
+            return true;
         }
     };
     this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -183,6 +184,23 @@ Hawk.Dropdown = function(container, options) {
         this.setClosed();
         return this;
     }
+    this.select = function(field) {
+        if (field.length > 0) {
+            return this.options.onRadioSelected(this, field);
+        } else {
+            return false;
+        }
+    }
+    this.selectByIndex = function(index) {
+        const field = this.fields.eq(index);
+        return this.select(field);
+    }
+    this.selectByValue = function(value) {
+        const field = this.fields.filter(function() {
+            return $(this).val() == value;
+        });
+        return this.select(field);
+    }
     this.createSensor = function(className) {
         var sensor = $('<input type="checkbox" />');
         sensor.addClass(className);
@@ -202,7 +220,7 @@ Hawk.Dropdown = function(container, options) {
         this.container.append(this.endSensor); //.find('.' + this.options.endSensorClass);
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor); //.find('.' + this.options.escapeSensorClass);
-        this.fields = this.list.find('input[type="radio"]');
+        this.fields = this.list.find('input');
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
         }
@@ -473,12 +491,8 @@ Hawk.SlidingLayerManager = class {
             actionHide: function(slm, section, layer) {
                 section.removeClass(slm.options.activeClass);
             },
-            onShow: function(slm, button, layer) {
-                console.log(button, "showing");
-            },
-            onHide: function(slm, button, layer) {
-                console.log(button, "hiding");
-            }
+            onShow: function(slm, button, layer) {},
+            onHide: function(slm, button, layer) {}
         };
         this.id = id;
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -508,7 +522,10 @@ Hawk.SlidingLayerManager = class {
         this.section = this.getSection(id);
         this.layer = this.section.find('.' + this.options.layerClass);
         this.options.actionShow(this, this.section, this.layer);
-        this.options.onShow(this, this.button, this.layer);
+        const that = this;
+        setTimeout(function() {
+            that.options.onShow(that, that.button, that.layer);
+        }, 400);
     }
     hide(id) {
         this.button = this.getButton(id);
@@ -518,10 +535,10 @@ Hawk.SlidingLayerManager = class {
         this.options.onHide(this, this.button, this.layer);
     }
     refreshDependencies() {
+        const that = this;
         if (this.buttons !== null) {
             this.buttons.unbind(this.options.eventName);
         }
-        const that = this;
         this.buttons = this.getButtons();
         this.buttons.bind(this.options.eventName, function() {
             let id = $(this).attr(that.options.IDAttrName);

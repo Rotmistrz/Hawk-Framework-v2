@@ -67,6 +67,8 @@ Hawk.Dropdown = function(container, options) {
             dropdown.title.html(description);
 
             dropdown.hide();
+
+            return true;
         }
     };
 
@@ -127,6 +129,28 @@ Hawk.Dropdown = function(container, options) {
         return this;
     }
 
+    this.select = function(field) {
+        if (field.length > 0) {
+            return this.options.onRadioSelected(this, field);
+        } else {
+            return false;
+        }
+    }
+
+    this.selectByIndex = function(index) {
+        const field = this.fields.eq(index);
+
+        return this.select(field);
+    }
+
+    this.selectByValue = function(value) {
+        const field = this.fields.filter(function() {
+            return $(this).val() == value;
+        });
+
+        return this.select(field);
+    }
+
     this.createSensor = function(className) {
         var sensor = $('<input type="checkbox" />');
         sensor.addClass(className);
@@ -153,7 +177,7 @@ Hawk.Dropdown = function(container, options) {
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor);   //.find('.' + this.options.escapeSensorClass);
 
-        this.fields = this.list.find('input[type="radio"]');
+        this.fields = this.list.find('input');
 
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);

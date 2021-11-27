@@ -27,6 +27,7 @@ $(document).ready(function() {
 
     HawkExamples.exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'));
     HawkExamples.exemplaryDropdown.run();
+    console.log(HawkExamples.exemplaryDropdown.selectByValue(2));
 
     HawkExamples.expandingDropdown = new Hawk.Dropdown($('#expanding-dropdown'), {
         type: Hawk.DropdownConstants.Types.EXPANDING
