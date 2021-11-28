@@ -106,6 +106,100 @@ class MasterController extends AbstractController {
                         'default' => "hawk-dropdown__list-container",
                         'description' => "-"
                     ]
+                ],
+
+                'callbacks' => [
+                    [
+                        'name' => "onShow",
+                        'description' => "Is being executed immediately after the dropdown's list is shown.",
+                        'parameters' => [
+                            [
+                                'name' => "dropdown",
+                                'type' => "Hawk.Dropdown",
+                                'description' => "current dropdown"
+                            ]
+                        ]
+                    ],
+
+                    [
+                        'name' => "onHide",
+                        'description' => "Is being executed immediately after the dropdown's list is hidden.",
+                        'parameters' => [
+                            [
+                                'name' => "dropdown",
+                                'type' => "Hawk.Dropdown",
+                                'description' => "current dropdown"
+                            ]
+                        ]
+                    ],
+
+                    [
+                        'name' => "onRadioSelected",
+                        'description' => "Is being executed immediately after one of the options is selected. It refers only to radio fields.",
+                        'parameters' => [
+                            [
+                                'name' => "dropdown",
+                                'type' => "Hawk.Dropdown",
+                                'description' => "current dropdown"
+                            ],
+                            [
+                                'name' => "radio",
+                                'type' => "DOM.Input",
+                                'description' => "selected field"
+                            ]
+                        ]
+                    ]
+                ],
+
+                'methods' => [
+                    [
+                        'name' => "show",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Opens the dropdown.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "hide",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Closes the dropdown.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "isOpen",
+                        'type' => "boolean",
+                        'description' => "-",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "run",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Launches the dropdown and  binds the DOM elements with necessary events.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "selectByIndex",
+                        'type' => "boolean",
+                        'description' => "Selects the option by the position on the list. 0 is the first index. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "selectByValue",
+                        'type' => "boolean",
+                        'description' => "Selects the option by the value of the field. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
+                        'parameters' => [
+                            
+                        ]
+                    ]
                 ]
             ],
 

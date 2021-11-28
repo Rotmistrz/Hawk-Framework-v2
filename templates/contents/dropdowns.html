@@ -14,7 +14,11 @@
                         <section class="subsection bounded-section">
                             <div class="text">
                                 <p>
-                                    Dropdowns are
+                                    <strong>Dropdown</strong> allows to select one (or more) options from the list that is visible when it is needed. It is commonly used as an elegant alternative to native <code class="inline-code">select</code> form field but can also work as a list of links or just custom component in application.
+                                </p>
+
+                                <p>
+                                    <strong>Dropdown</strong> has variants of working type: overlaying nearby content or expending and moving it. Direction of opening can be downwards or upwards.
                                 </p>
                             </div>
 
@@ -23,7 +27,7 @@
                                     <ul class="presentation-list">
                                         <li>
                                             <header class="subsection-subheader">
-                                                <h4 class="subsection-subtitle">Default dropdown</h4>
+                                                <h4 class="subsection-subtitle">Overlaying dropdown (default)</h4>
                                             </header>
 
                                             {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
@@ -47,6 +51,14 @@
                                             } %}
                                         </li>
                                     </ul>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="text">
+                                    <p>
+                                        The tables below show many more options of customization.
+                                    </p>
                                 </div>
                             </div>
                         </section>
@@ -91,36 +103,39 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row row--more-space">
                     <header class="subsection-header">
                         <h3 class="subsection-title">Properties</h3>
                     </header>
 
                     <section class="subsection">
-                        <table class="std-table">
-                            <tr class="std-table__header">
-                                <th class="std-table__cell std-table__cell--header">Name</th>
-                                <th class="std-table__cell std-table__cell--header">Default value</th>
-                                <th class="std-table__cell std-table__cell--header">Description</th>
-                            </tr>
+                        {% include('this-project/elements/table-properties.html') with {
+                            properties: dropdown.properties
+                        } %}
+                    </section>
+                </div>
 
-                            {% for property in dropdown.properties %}
-                            <tr class="std-table__row">
-                                <td class="std-table__cell">
-                                    <div class="property">
-                                        <div class="property__name">{{ property.name }}</div>
-                                        <div class="property__type">{{ property.type }}</div>
-                                    </div>
-                                </td>
-                                <td class="std-table__cell">
-                                    <code class="code">{{ property.default }}</code>
-                                </td>
-                                <td class="std-table__cell">
-                                    {{ property.description }}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
+                <div class="row row--more-space">
+                    <header class="subsection-header">
+                        <h3 class="subsection-title">Callbacks</h3>
+                    </header>
+
+                    <section class="subsection">
+                        {% include('this-project/elements/table-callbacks.html') with {
+                            callbacks: dropdown.callbacks
+                        } %}
+                    </section>
+                </div>
+
+                <div class="row row--more-space">
+                    <header class="subsection-header">
+                        <h3 class="subsection-title">Public methods</h3>
+                    </header>
+
+                    <section class="subsection">
+                        {% include('this-project/elements/table-methods.html') with {
+                            methods: dropdown.methods
+                        } %}
                     </section>
                 </div>
             </div>

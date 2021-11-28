@@ -136,6 +136,16 @@ a {
   display: block;
 }
 
+.plain-list--more-space > li {
+  padding: 8px 0;
+}
+.plain-list--more-space > li:first-child {
+  padding-top: 0;
+}
+.plain-list--more-space > li:last-child {
+  padding-bottom: 0;
+}
+
 .section-for-light-examples {
   background: #222222;
   padding: 32px 0;
@@ -223,7 +233,6 @@ a {
 }
 
 .inline-code {
-  color: #777;
   font-style: italic;
   font-weight: 400;
 }
@@ -285,13 +294,17 @@ a {
 }
 
 .row {
-  padding: 40px 0;
+  padding: 40px 0 0 0;
 }
 .row:first-child {
   padding-top: 0;
 }
 .row:last-child {
   padding-bottom: 0;
+}
+
+.row--more-space {
+  padding-top: 80px;
 }
 
 .descripted-items-section {
@@ -406,6 +419,7 @@ a {
   vertical-align: top;
   border-bottom: 1px solid #E5E5E5;
   border-collapse: collapse;
+  max-width: 400px;
 }
 .std-table__cell:first-child {
   padding-left: 0;
@@ -425,4 +439,15 @@ a {
 .property__type {
   padding: 4px 0 0 0;
   font-style: italic;
+}
+
+.parameter__name {
+  font-weight: 700;
+}
+.parameter__type {
+  padding: 4px 0 0 0;
+  font-style: italic;
+}
+.parameter__description {
+  padding: 4px 0 0 0;
 }

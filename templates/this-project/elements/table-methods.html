@@ -1,0 +1,47 @@
+                        <table class="std-table">
+                            <tr class="std-table__header">
+                                <th class="std-table__cell std-table__cell--header">Name</th>
+                                <th class="std-table__cell std-table__cell--header">Arguments</th>
+                                <th class="std-table__cell std-table__cell--header">Description</th>
+                            </tr>
+
+                            {% for method in methods %}
+                            <tr class="std-table__row">
+                                <td class="std-table__cell">
+                                    <div class="property">
+                                        <div class="property__name">{{ method.name }}</div>
+
+                                        <div class="property__type">
+                                            {{ method.type }}
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="std-table__cell">
+                                    <ul class="plain-list plain-list--more-space">
+                                        {% for parameter in method.parameters %}
+                                        <li>
+                                            <div class="parameter">
+                                                <div class="parameter__name">
+                                                {{ parameter.name }}
+                                                </div>
+
+                                                <div class="parameter__type">
+                                                   {{ parameter.type }}
+                                                </div>
+
+                                                <div class="parameter__description">
+                                                {{ parameter.description }}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+
+                                <td class="std-table__cell">
+                                    {{ method.description }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>

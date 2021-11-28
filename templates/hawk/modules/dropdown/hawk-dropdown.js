@@ -1,4 +1,4 @@
 var exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'), {
-    // options
+    // options and callbacks
 });
 exemplaryDropdown.run();
