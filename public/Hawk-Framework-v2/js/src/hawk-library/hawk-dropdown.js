@@ -40,13 +40,11 @@ Hawk.Dropdown = function(container, options) {
     this.defaultOptions = {
         slideSpeed: 200,
 
-        mode: Hawk.DropdownConstants.Modes.PLAIN,
         type: Hawk.DropdownConstants.Types.OVERLAYER,
         direction: Hawk.DropdownConstants.Directions.DOWNWARDS,
 
         containerClass: 'hawk-dropdown',
         expandingTypeClass: 'hawk-dropdown--expanding',
-        choosableModeClass: 'hawk-dropdown--choosable',
         upwardsDirectionClass: 'hawk-dropdown--upwards',
         openClass: 'hawk-dropdown--open',
         headerClass: 'hawk-dropdown__header',
@@ -181,10 +179,6 @@ Hawk.Dropdown = function(container, options) {
 
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
-        }
-
-        if (this.options.mode === Hawk.DropdownConstants.Modes.CHOOSABLE) {
-            this.container.addClass(this.options.choosableModeClass);
         }
 
         if (this.options.direction === Hawk.DropdownConstants.Directions.UPWARDS) {

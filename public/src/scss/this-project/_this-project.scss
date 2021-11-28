@@ -71,8 +71,7 @@
 }
 
 .subsection {
-  // padding: 32px;
-  // background: $light-color-03;
+  padding: 0 0 0 32px;
 }
 
 .listing {
@@ -303,5 +302,50 @@
     padding: 40px;
     max-height: 100%;
     @include box-sizing(border-box);
+  }
+}
+
+.std-table {
+  text-align: left;
+  border-collapse: collapse;
+
+  &__row {
+
+  }
+
+  &__header {
+    font-size: $larger-font-size;
+    font-weight: 700;
+  }
+
+  &__cell {
+    padding: 16px 32px;
+    vertical-align: top;
+    border-bottom: 1px solid $light-color-10;
+    border-collapse: collapse;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  &__cell--header {
+    border-color: $dark-color;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.property {
+  &__name {
+    font-weight: 700;
+  }
+
+  &__type {
+    padding: 4px 0 0 0;
+    font-style: italic;
   }
 }

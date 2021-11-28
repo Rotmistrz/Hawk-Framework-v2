@@ -8,75 +8,121 @@
                     </h2>
                 </header>
 
-                <ul class="subsections">
-                    <li>
+
+                <div class="flex-container">
+                    <div class="flex-column flex-column--4 flex-column--space">
                         <section class="subsection bounded-section">
-                            <header class="subsection-header">
-                                <h3 class="subsection-title">Examples</h3>
-                            </header>
+                            <div class="text">
+                                <p>
+                                    Dropdowns are
+                                </p>
+                            </div>
 
-                            <ul class="presentation-list">
-                                <li>
-                                    <header class="subsection-subheader">
-                                        <h4 class="subsection-subtitle">Default dropdown</h4>
-                                    </header>
+                            <div class="row">
+                                <div class="subsection__content">
+                                    <ul class="presentation-list">
+                                        <li>
+                                            <header class="subsection-subheader">
+                                                <h4 class="subsection-subtitle">Default dropdown</h4>
+                                            </header>
 
-                                    {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
-                                        dropdown: {
-                                            id: 'exemplary-dropdown',
-                                            title: 'Exemplary dropdown'
-                                        }
-                                    } %}
-                                </li>
+                                            {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                                                dropdown: {
+                                                    id: 'exemplary-dropdown',
+                                                    title: 'Exemplary dropdown'
+                                                }
+                                            } %}
+                                        </li>
 
-                                <li>
-                                    <header class="subsection-subheader">
-                                        <h4 class="subsection-subtitle">Expanding dropdown</h4>
-                                    </header>
+                                        <li>
+                                            <header class="subsection-subheader">
+                                                <h4 class="subsection-subtitle">Expanding dropdown</h4>
+                                            </header>
 
-                                    {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
-                                        dropdown: {
-                                            id: 'expanding-dropdown',
-                                            title: 'Expanding dropdown'
-                                        }
-                                    } %}
-                                </li>
-                            </ul>
-
+                                            {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                                                dropdown: {
+                                                    id: 'expanding-dropdown',
+                                                    title: 'Expanding dropdown'
+                                                }
+                                            } %}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </section>
-                    </li>
+                    </div>
 
-                    <li>
+                    <div class="flex-column flex-column--8 flex-column--space">
                         <section class="subsection">
-                            <header class="subsection-header">
-                                <h3 class="subsection-title">Use</h3>
-                            </header>
+                            <div class="subsection__content">
+                                <ul class="presentation-list">
+                                    <li>
+                                        <!-- <header class="subsection-subheader">
+                                            <h4 class="subsection-subtitle">HTML</h4>
+                                        </header> -->
 
-                            <ul class="presentation-list">
-                                <li>
-                                    <header class="subsection-subheader">
-                                        <h4 class="subsection-subtitle">HTML</h4>
-                                    </header>
+<!--                                         <article class="figure">
+                                            <header class="figure__header">
+                                                <h5 class="caption-title"><span class="caption-title__number">Listing 1</span> HTML code of exemplary dropdown containing choosable items</h5>
+                                            </header> -->
 
-                                    <article class="figure">
-                                        <header class="figure__header">
-                                            <h5 class="caption-title"><span class="caption-title__number">Listing 1</span> HTML code of exemplary dropdown containing choosable items</h5>
-                                        </header>
+                                            <div class="listing">
+                                                <div class="scrollable-section">
+                                                {% autoescape false %}
+                                                {{ dropdown.listings.html }}
+                                                {% endautoescape %}
+                                                </div>
+                                            </div>
+                                        <!--</article>-->
+                                    </li>
 
+                                    <li>
                                         <div class="listing">
+                                   
                                             {% autoescape false %}
-                                            {{ listings.dropdown }}
+                                            {{ dropdown.listings.js }}
                                             {% endautoescape %}
+                                   
                                         </div>
-                                    </article>
-
-
-                                </li>
-                            </ul>
-
+                                    </li>
+                                </ul>
+                            </div>
                         </section>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <header class="subsection-header">
+                        <h3 class="subsection-title">Properties</h3>
+                    </header>
+
+                    <section class="subsection">
+                        <table class="std-table">
+                            <tr class="std-table__header">
+                                <th class="std-table__cell std-table__cell--header">Name</th>
+                                <th class="std-table__cell std-table__cell--header">Default value</th>
+                                <th class="std-table__cell std-table__cell--header">Description</th>
+                            </tr>
+
+                            {% for property in dropdown.properties %}
+                            <tr class="std-table__row">
+                                <td class="std-table__cell">
+                                    <div class="property">
+                                        <div class="property__name">{{ property.name }}</div>
+                                        <div class="property__type">{{ property.type }}</div>
+                                    </div>
+                                </td>
+                                <td class="std-table__cell">
+                                    <code class="code">{{ property.default }}</code>
+                                </td>
+                                <td class="std-table__cell">
+                                    {{ property.description }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </section>
+                </div>
             </div>
         </div>
     </div>

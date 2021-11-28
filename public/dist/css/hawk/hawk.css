@@ -9,7 +9,7 @@
 }
 
 .subsection-header {
-  padding: 0 0 16px 0;
+  padding: 0 0 32px 0;
 }
 
 .subsection-subheader {
@@ -26,6 +26,10 @@
   .section-pretitle {
     font-size: 16px;
   }
+}
+
+.simple-header {
+  padding: 0 0 16px 0;
 }
 
 .section-title {

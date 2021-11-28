@@ -16,16 +16,101 @@ class MasterController extends AbstractController {
      */
     public function index() {
         return $this->render('home.html', [
-            'listings' => [
-                'dropdown' => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.html", [
-                    'dropdown' => [
-                        'id' => "exemplary-dropdown",
-                        'title' => "Exemplary dropdown"
+            'dropdown' => [
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.html", [
+                        'dropdown' => [
+                            'id' => "exemplary-dropdown",
+                            'title' => "Exemplary dropdown"
+                        ],
+                        'autoescapeFalse' => false
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.js", [
+                    ]), true)
+                ],
+                
+                'properties' => [
+                    [
+                        'name' => "slideSpeed",
+                        'type' => "integer",
+                        'default' => 200,
+                        'description' => "Speed of expanding the dropdown (in miliseconds)"
                     ],
-                    'autoescapeFalse' => false
-                ]), true),
 
-                'slidingLayerManager' => [
+                    [
+                        'name' => "type",
+                        'type' => "Hawk.DropdownConstants.Types",
+                        'default' => "OVERLAYER",
+                        'description' => "Working type."
+                    ],
+
+                    [
+                        'name' => "direction",
+                        'type' => "Hawk.DropdownConstants.Directions",
+                        'default' => "DOWNWARDS",
+                        'description' => "Opening direction kind."
+                    ],
+
+                    [
+                        'name' => "containerClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "expandingTypeClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown--expanding",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "upwardsDirectionClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown--upwards",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "openClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown--open",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "headerClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown__header",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "titleClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown__title",
+                        'description' => "Class name of the element where selected value is displayed."
+                    ],
+
+                    [
+                        'name' => "listClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown__list",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "listContainerClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown__list-container",
+                        'description' => "-"
+                    ]
+                ]
+            ],
+
+            'slidingLayerManager' => [
+                'listings' => [
                     'html' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/hawk-sliding-layer-manager.html", [
                     ]), true),
                     'js' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/sliding-layer-manager.js", [

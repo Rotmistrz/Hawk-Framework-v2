@@ -7,7 +7,7 @@
 }
 
 .subsection-header {
-  padding: 0 0 16px 0;
+  padding: 0 0 32px 0;
 }
 
 .subsection-subheader {
@@ -23,4 +23,8 @@
   @media (min-width: $desktop-m) {
     font-size: $larger-font-size;
   }
+}
+
+.simple-header {
+  padding: 0 0 16px 0;
 }
