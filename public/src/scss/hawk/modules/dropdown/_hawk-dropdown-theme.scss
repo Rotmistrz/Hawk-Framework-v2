@@ -1,0 +1,64 @@
+.std-dropdown {
+  &__header {
+    @extend .form-field__core;
+    //@include transition(none);
+
+    &:hover,
+    &:focus {
+      border-color: $dark-color;
+    }
+  }
+
+  &__title {
+    font-size: $main-font-size;
+    font-weight: 500;
+  }
+
+  &__list {
+    border: 1px solid $dark-color-op20;
+    background: $light-color;
+    border-top: 0;
+    padding: 8px 0;
+    @include transition(all .2s linear);
+  }
+
+  &.hawk-dropdown--open {
+    .std-dropdown__header {
+      border-color: $primary-color;
+      border-bottom-color: transparent;
+    }
+
+    .std-dropdown__list {
+      border-color: $primary-color;
+    }
+  }
+}
+
+.dropdown-item {
+  cursor: pointer;
+  position: relative;
+
+  &__description {
+    padding: 4px 12px;
+    @include transition(all .2s linear);
+  }
+
+  &__description:hover,
+  &__field:focus ~ .dropdown-item__description {
+    background: $primary-color-02;
+    color: $light-color;
+  }
+
+  &__field:checked ~ .dropdown-item__description {
+    background: $secondary-color;
+  }
+
+  &__field {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

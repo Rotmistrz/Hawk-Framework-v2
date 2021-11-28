@@ -118,12 +118,10 @@ Hawk.Dropdown = function(container, options) {
     }
     this.defaultOptions = {
         slideSpeed: 200,
-        mode: Hawk.DropdownConstants.Modes.PLAIN,
         type: Hawk.DropdownConstants.Types.OVERLAYER,
         direction: Hawk.DropdownConstants.Directions.DOWNWARDS,
         containerClass: 'hawk-dropdown',
         expandingTypeClass: 'hawk-dropdown--expanding',
-        choosableModeClass: 'hawk-dropdown--choosable',
         upwardsDirectionClass: 'hawk-dropdown--upwards',
         openClass: 'hawk-dropdown--open',
         headerClass: 'hawk-dropdown__header',
@@ -136,8 +134,8 @@ Hawk.Dropdown = function(container, options) {
         escapeSensorClass: 'hawk-dropdown__escape-sensor',
         onShow: function(dropdown) {},
         onHide: function(dropdown) {},
-        onRadioSelected: function(dropdown, radio) {
-            var description = radio.parent().find('.dropdown-item__description').html();
+        onRadioSelected: function(dropdown, field) {
+            var description = field.parent().find('.dropdown-item__description').html();
             dropdown.title.html(description);
             dropdown.hide();
             return true;
@@ -220,12 +218,9 @@ Hawk.Dropdown = function(container, options) {
         this.container.append(this.endSensor); //.find('.' + this.options.endSensorClass);
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor); //.find('.' + this.options.escapeSensorClass);
-        this.fields = this.list.find('input');
+        this.fields = this.list.find('input[type="radio"]');
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
-        }
-        if (this.options.mode === Hawk.DropdownConstants.Modes.CHOOSABLE) {
-            this.container.addClass(this.options.choosableModeClass);
         }
         if (this.options.direction === Hawk.DropdownConstants.Directions.UPWARDS) {
             this.container.addClass(this.options.upwardsDirectionClass);

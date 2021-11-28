@@ -18,6 +18,7 @@ a {
 .site-header {
   padding: 64px 40px;
   background: $secondary-color;
+  position: relative;
 
   @media (min-width: $desktop-l) {
     padding-left: 100px;
@@ -27,6 +28,13 @@ a {
   @media (min-width: $desktop-xl) {
     padding-left: 140px;
     padding-right: 140px;
+  }
+
+  &__bar {
+    position: absolute;
+    top: 0;
+    right: 120px;
+    padding: 20px 0 0 0;
   }
 }
 

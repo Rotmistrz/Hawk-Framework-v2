@@ -21,6 +21,24 @@
 
     <body>
         <header class="site-header">
+            <div class="site-header__bar">
+                <nav class="horizontal-menu">
+                    <ul class="horizontal-menu__core">
+                        <li>
+                            <a class="menu-item" href="/">Components</a>
+                        </li>
+
+                        <li>
+                            <a class="menu-item" href="/blocks">Blocks</a>
+                        </li>
+
+                        <li>
+                            <a class="menu-item" href="/variables">Variables</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
             {% block header %}
             <h1 class="site-title">Hawk Framework v2</h1>
             {% endblock %}

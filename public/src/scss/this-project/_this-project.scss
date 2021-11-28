@@ -381,3 +381,21 @@
     padding: 4px 0 0 0;
   }
 }
+
+.horizontal-menu {
+  &__core {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none; 
+  
+    > li {
+      padding: 0 12px;
+    }
+  }
+}
+
+.menu-item {
+  color: $dark-color;
+  text-decoration: none;
+}
