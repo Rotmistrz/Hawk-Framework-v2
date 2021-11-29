@@ -203,6 +203,15 @@ class MasterController extends AbstractController {
                 ]
             ],
 
+            'layeredSection' => [
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/layered-section/hawk-layered-section.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/layered-section/hawk-layered-section.js", [
+                    ]), true)
+                ]
+            ],
+
             'slidingLayerManager' => [
                 'listings' => [
                     'html' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/hawk-sliding-layer-manager.html", [
