@@ -1,3 +1,4 @@
+import Hawk from './Hawk-v2';
 
 class Car {
     constructor(model, year) {
@@ -21,6 +22,8 @@ class Opel extends Car {
         console.log(this.engine);
     }
 }
+
+console.log("no i teraz mozna jechac dalej z tematem");
 
 $(document).ready(function() {
     var HawkExamples = {};

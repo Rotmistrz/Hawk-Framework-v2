@@ -7,8 +7,11 @@
     "css:scss": "sass src/scss:dist/css --no-source-map",
     "build:css": "npm run css:scss",
     "watch:css": "onchange \"src/scss\" -- npm run build:css",
-    "build:js": "webpack --mode=production",
-    "watch:js": "onchange \"src/js\" -- webpack --mode=development",
+    "build:js": "node src/js/build.js && webpack --mode=production",
+
+    "parse:js": "node src/js/build.js && webpack --mode=development",
+    "watch:js": "onchange \"src/js/master.js\" \"src/js/hawk\" -- npm run parse:js",
+
     "watch": "run-p watch:*",
     "build": "run-p build:*",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,7 +34,8 @@
     "onchange": "^7.1.0",
     "sass": "^1.43.2",
     "webpack": "^5.58.2",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "bundle-js": "^1.0.3"
   },
   "dependencies": {}
 }

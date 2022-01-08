@@ -296,7 +296,6 @@ Hawk.LayeredSection = function(container, options) {
     this.baseLayer;
     this.baseLayerInner;
     this.defaultOptions = {
-        slideSpeed: 200,
         containerClass: 'hawk-layered-section',
         baseLayerClass: 'hawk-layered-section__base-layer',
         baseLayerInnerClass: 'hawk-layered-section__base-layer-inner',
@@ -318,6 +317,7 @@ Hawk.LayeredSection = function(container, options) {
                 });
             }
         });
+        return this;
     }
     this.showBaseLayer = function() {
         this.hideLayers();
@@ -327,22 +327,29 @@ Hawk.LayeredSection = function(container, options) {
         this.baseLayerInner.velocity({
             opacity: 1
         }, {});
+        return this;
     }
     this.hideLayers = function(except) {
         this.aboveLayers.not('[' + that.options.nameAttribute + '="' + except + '"]').velocity("fadeOut");
+        return this;
     }
     this.showLayer = function(name) {
         this.hideBaseLayer();
         this.hideLayers(name);
         var currentLayer = that.aboveLayers.filter('[' + that.options.nameAttribute + '="' + name + '"]');
-        currentLayer.velocity("fadeIn", {
-            complete: function() {
-                // currentLayer.find('.' + that.options.aboveLayerInnerClass).css({
-                //     opacity: 1
-                // });
-                that.options.onAboveLayerShow(that, currentLayer);
-            }
-        });
+        if (currentLayer.length > 0) {
+            currentLayer.velocity("fadeIn", {
+                complete: function() {
+                    // currentLayer.find('.' + that.options.aboveLayerInnerClass).css({
+                    //     opacity: 1
+                    // });
+                    that.options.onAboveLayerShow(that, currentLayer);
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
     this.run = function() {
         this.buttons = this.container.find('.' + this.options.buttonClass);
@@ -357,6 +364,7 @@ Hawk.LayeredSection = function(container, options) {
                 that.showBaseLayer();
             }
         });
+        return this;
     }
 }
 Hawk.FieldController = class {
@@ -456,7 +464,6 @@ Hawk.MoreContentManager = class {
         }
         const that = this;
         this.buttons = this.getButtons();
-        console.log(this.buttons);
         this.buttons.bind(this.options.eventName, function() {
             let id = $(this).attr(that.options.IDAttrName);
             if (!that.isContentVisible(id)) {
@@ -548,3 +555,72 @@ Hawk.SlidingLayerManager = class {
         this.refreshDependencies();
     }
 }
+Hawk.AjaxLoadingItemsManager = class {
+    constructor(container, options) {
+        this.container = $(container);
+        this.offset = 0;
+        this.done = false;
+        this.filters = {};
+        this.buttons;
+        this.contentContainer;
+        this.loadingLayer;
+        this.defaultOptions = {
+            itemsPerLoading: 6,
+            path: "ajax/load-items",
+            itemClass: "ajax-loading-items-manager__item",
+            buttonClass: "ajax-loading-items-manager__button",
+            contentContainerClass: "ajax-loading-items-manager__content-container",
+            slideSpeed: 400,
+            fadeSpeed: 400,
+            appendItems: function(contentContainer, items) {
+                contentContainer.html(items);
+            },
+            onLoad: function(buttons, contentContainer) {},
+            onDone: function(buttons, contentContainer) {
+                buttons.velocity({
+                    opacity: 0
+                }, {
+                    complete: function() {
+                        buttons.css({
+                            visibility: "hidden"
+                        });
+                    }
+                });
+            },
+            onError: function(buttons, contentContainer) {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    isDone() {
+        return this.done;
+    }
+    setFilter(name, value) {
+        this.filters[name] = value;
+        return this;
+    }
+    load(offset) {
+        console.log("lalalaa i co cyk");
+    }
+    appendContent(items) {
+        const that = this;
+        items.css({
+            opacity: 0
+        });
+        this.options.appendItems(this.contentContainer, items);
+        items.velocity("slideDown", {
+            duration: that.options.slideSpeed,
+            complete: function() {
+                items.velocity({
+                    opacity: 1
+                }, {
+                    duration: that.options.fadeSpeed
+                });
+            }
+        });
+    }
+    run() {
+        this.buttons = this.container.find('.' + this.options.buttonClass);
+        this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
+    }
+}
+export default Hawk;

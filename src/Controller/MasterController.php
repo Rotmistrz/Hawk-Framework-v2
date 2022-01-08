@@ -209,7 +209,254 @@ class MasterController extends AbstractController {
                     ]), true),
                     'js' => highlight_string($this->renderView("hawk/modules/layered-section/hawk-layered-section.js", [
                     ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "containerClass",
+                        'type' => "string",
+                        'default' => "hawk-layered-section",
+                        'description' => "-"
+                    ],
+                    [
+                        'name' => "baseLayerClass",
+                        'type' => "string",
+                        'default' => "hawk-layered-section__base-layer",
+                        'description' => "-"
+                    ],
+                    [
+                        'name' => "baseLayerInnerClass",
+                        'type' => "string",
+                        'default' => "hawk-layered-section__base-layer-inner",
+                        'description' => "-"
+                    ],
+                    [
+                        'name' => "aboveLayerClass",
+                        'type' => "string",
+                        'default' => "hawk-layered-section__above-layer",
+                        'description' => "-"
+                    ],
+                    [
+                        'name' => "aboveLayerInnerClass",
+                        'type' => "string",
+                        'default' => "hawk-layered-section__above-layer-inner",
+                        'description' => "-"
+                    ],
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "hawk-layered-section__button",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "nameAttribute",
+                        'type' => "string",
+                        'default' => "data-name",
+                        'description' => "Layer-pointing attribute's name."
+                    ],
+
+                    [
+                        'name' => "baseLayerName",
+                        'type' => "string",
+                        'default' => "base",
+                        'description' => "Name of the base layer."
+                    ]
+                ],
+
+                'callbacks' => [
+                    [
+                        'name' => "onAboveLayerShow",
+                        'description' => "Is being executed immediately after the layer is shown.",
+                        'parameters' => [
+                            [
+                                'name' => "layeredSection",
+                                'type' => "Hawk.LayeredSection",
+                                'description' => "current Layered Section instance"
+                            ],
+                            [
+                                'name' => "aboveLayer",
+                                'type' => "jQuery object",
+                                'description' => "current layer"
+                            ]
+                        ]
+                    ]
+                ],
+
+                'methods' => [
+                    [
+                        'name' => "showBaseLayer",
+                        'type' => "Hawk.LayeredSection",
+                        'description' => "Shows the base layer.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "hideBaseLayer",
+                        'type' => "Hawk.LayeredSection",
+                        'description' => "Hides the base layer.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "hideLayers",
+                        'type' => "Hawk.LayeredSection",
+                        'description' => "Hides all the layers.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "showLayer",
+                        'type' => "boolean",
+                        'description' => "Shows the indicated layer. Returns <code class=\"inline-code\">true</code> when the layer exists and may be shown or <code class=\"inline-code\">false</code> otherwise.",
+                        'parameters' => [
+                            [
+                                'name' => "name",
+                                'type' => "string",
+                                'description' => "Layer's name."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "run",
+                        'type' => "Hawk.LayeredSection",
+                        'description' => "Launches the Layered Section and binds the DOM elements with&nbsp;necessary events.",
+                        'parameters' => [
+                            
+                        ]
+                    ]
                 ]
+            ],
+
+            'moreContentManager' => [
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/more-content-manager/hawk-more-content-manager.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/more-content-manager/hawk-more-content-manager.js", [
+                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "hawk-more-content-button",
+                        'description' => "Classname of the button which works with the hidable content."
+                    ],
+
+                    [
+                        'name' => "buttonContentClass",
+                        'type' => "string",
+                        'default' => "hawk-more-content-button__content",
+                        'description' => "Classname of the button's element where the text should be changed after the content is toggled."
+                    ],
+
+                    [
+                        'name' => "contentClass",
+                        'type' => "string",
+                        'default' => "hawk-more-content",
+                        'description' => "Classname of the content which is being toggled by clicking the button."
+                    ],
+
+                    [
+                        'name' => "IDAttrName",
+                        'type' => "string",
+                        'default' => "data-id",
+                        'description' => "Name of the binding button with content attribute. "
+                    ],
+
+                    [
+                        'name' => "managerIDAttrName",
+                        'type' => "string",
+                        'default' => "data-more-content-manager",
+                        'description' => "Name of the attribute that indicates the Hawk.MoreContentManager instance which should handle the action. Binded to the button."
+                    ],
+
+                    [
+                        'name' => "buttonOppositeTextAttr",
+                        'type' => "string",
+                        'default' => "data-opposite-text",
+                        'description' => "Name of the attribute which contains the text that is placed in the button when the content is shown."
+                    ],
+
+                    [
+                        'name' => "eventName",
+                        'type' => "string",
+                        'default' => "click.moreContent",
+                        'description' => "Name of the button click event."
+                    ]
+                ],
+                'callbacks' => [
+                    [
+                        'name' => "actionShow",
+                        'description' => "Makes the content visible. Velocity's <span class=\"inline-code\">slideDown</span> by default.",
+                        'parameters' => [
+                            [
+                                'name' => "content",
+                                'type' => "jQuery object",
+                                'description' => "current content to display"
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "actionHide",
+                        'description' => "Makes the content hidden. Velocity's <span class=\"inline-code\">slideUp</span> by default.",
+                        'parameters' => [
+                            [
+                                'name' => "content",
+                                'type' => "jQuery object",
+                                'description' => "current content to disappear"
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "onShow",
+                        'description' => "Is being executed immediately when the content starts to show. Changes the button's text to the one from <span class=\"inline-code\">buttonOppositeTextAttr</span> attribute by default.",
+                        'parameters' => [
+                            [
+                                'name' => "mcm",
+                                'type' => "Hawk.MoreContentManager",
+                                'description' => "current manager instance"
+                            ],
+                            [
+                                'name' => "button",
+                                'type' => "jQuery object",
+                                'description' => "-"
+                            ],
+                            [
+                                'name' => "content",
+                                'type' => "jQuery object",
+                                'description' => "-"
+                            ]
+                        ]
+                    ],
+
+                    [
+                        'name' => "onHide",
+                        'description' => "Is being executed immediately when the content starts to hide. Changes the button's text to the initial value by default.",
+                        'parameters' => [
+                            [
+                                'name' => "mcm",
+                                'type' => "Hawk.MoreContentManager",
+                                'description' => "current manager instance"
+                            ],
+                            [
+                                'name' => "button",
+                                'type' => "jQuery object",
+                                'description' => "-"
+                            ],
+                            [
+                                'name' => "content",
+                                'type' => "jQuery object",
+                                'description' => "-"
+                            ]
+                        ]
+                    ]
+                ],
+                'methods' => []
             ],
 
             'slidingLayerManager' => [

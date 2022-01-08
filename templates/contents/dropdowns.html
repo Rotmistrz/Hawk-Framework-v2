@@ -1,190 +1,84 @@
-<section class="site-section">
-    <div class="site-section__layer">
-        <div class="site-section__wrapper">
-            <div class="site-section__inner">
-                <header class="section-header">
-                    <h2 class="section-title">
-                        Dropdowns
-                    </h2>
+{% set presentationSection = {
+    title: 'Dropdowns',
+    listings: {
+        html: dropdown.listings.html,
+        js: dropdown.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/Dropdown.Hawk.js',
+            type: 'js',
+            title: 'Dropdown.Hawk.js'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown.scss',
+            type: 'css',
+            title: 'hawk-dropdown.scss'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown-theme.scss',
+            type: 'css',
+            title: 'hawk-dropdown-theme.scss'
+        }
+    ],
+
+    properties: dropdown.properties,
+    callbacks: dropdown.callbacks,
+    methods: dropdown.methods
+} %}
+
+{% extends 'contents/_presentation-section.html' %}
+
+{% block exampleAndDescription %}
+<section class="subsection bounded-section">
+    <div class="text">
+        <p>
+            <strong>Dropdown</strong> allows to select one (or more) options from the list that is visible when it is needed. It is commonly used as an elegant alternative to native <code class="inline-code">select</code> form field but can also work as a list of links or just custom component in application.
+        </p>
+
+        <p>
+            <strong>Dropdown</strong> has variants of working type: overlaying nearby content or expending and moving it. Direction of opening can be downwards or upwards.
+        </p>
+    </div>
+
+    <div class="row">
+
+        <ul class="presentation-list">
+            <li>
+                <header class="subsection-subheader">
+                    <h4 class="subsection-subtitle">Overlaying dropdown (default)</h4>
                 </header>
 
+                {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                    dropdown: {
+                        id: 'exemplary-dropdown',
+                        title: 'Exemplary dropdown'
+                    }
+                } %}
+            </li>
 
-                <div class="flex-container">
-                    <div class="flex-column flex-column--4 flex-column--space">
-                        <section class="subsection bounded-section">
-                            <div class="text">
-                                <p>
-                                    <strong>Dropdown</strong> allows to select one (or more) options from the list that is visible when it is needed. It is commonly used as an elegant alternative to native <code class="inline-code">select</code> form field but can also work as a list of links or just custom component in application.
-                                </p>
+            <li>
+                <header class="subsection-subheader">
+                    <h4 class="subsection-subtitle">Expanding dropdown</h4>
+                </header>
 
-                                <p>
-                                    <strong>Dropdown</strong> has variants of working type: overlaying nearby content or expending and moving it. Direction of opening can be downwards or upwards.
-                                </p>
-                            </div>
+                {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                    dropdown: {
+                        id: 'expanding-dropdown',
+                        title: 'Expanding dropdown'
+                    }
+                } %}
+            </li>
+        </ul>
+  
+    </div>
 
-                            <div class="row">
-                     
-                                <ul class="presentation-list">
-                                    <li>
-                                        <header class="subsection-subheader">
-                                            <h4 class="subsection-subtitle">Overlaying dropdown (default)</h4>
-                                        </header>
-
-                                        {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
-                                            dropdown: {
-                                                id: 'exemplary-dropdown',
-                                                title: 'Exemplary dropdown'
-                                            }
-                                        } %}
-                                    </li>
-
-                                    <li>
-                                        <header class="subsection-subheader">
-                                            <h4 class="subsection-subtitle">Expanding dropdown</h4>
-                                        </header>
-
-                                        {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
-                                            dropdown: {
-                                                id: 'expanding-dropdown',
-                                                title: 'Expanding dropdown'
-                                            }
-                                        } %}
-                                    </li>
-                                </ul>
-                          
-                            </div>
-
-                            <div class="row">
-                                <div class="text">
-                                    <p>
-                                        The tables below show many more options of customization.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    <div class="flex-column flex-column--8 flex-column--space">
-                        <section class="subsection">
-                            <div class="subsection__content">
-                                <ul class="presentation-list">
-                                    <li>
-                                        <!-- <header class="subsection-subheader">
-                                            <h4 class="subsection-subtitle">HTML</h4>
-                                        </header> -->
-
-<!--                                         <article class="figure">
-                                            <header class="figure__header">
-                                                <h5 class="caption-title"><span class="caption-title__number">Listing 1</span> HTML code of exemplary dropdown containing choosable items</h5>
-                                            </header> -->
-
-                                            <div class="listing">
-                                                <div class="scrollable-section">
-                                                {% autoescape false %}
-                                                {{ dropdown.listings.html }}
-                                                {% endautoescape %}
-                                                </div>
-                                            </div>
-                                        <!--</article>-->
-                                    </li>
-
-                                    <li>
-                                        <div class="listing">
-                                   
-                                            {% autoescape false %}
-                                            {{ dropdown.listings.js }}
-                                            {% endautoescape %}
-                                   
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <ul class="plain-list plain-list--more-space">
-                                            <li>
-                                                <a class="icon-label std-link" href="https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/Dropdown.Hawk.js" target="_blank">
-                                                    <div class="icon-label__icon-container">
-                                                        <img class="icon-label__icon icon-label__icon--small" src="/img/icons/files/icon-js-color.svg" alt="JS" />
-                                                    </div>
-
-                                                    <div class="icon-label__description-container">
-                                                        <p class="text">
-                                                            Dropdown.Hawk.js
-                                                        </p>
-                                                    </div>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a class="icon-label std-link" href="https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown.scss" target="_blank">
-                                                    <div class="icon-label__icon-container">
-                                                        <img class="icon-label__icon icon-label__icon--small" src="/img/icons/files/icon-css-01.svg" alt="CSS" />
-                                                    </div>
-
-                                                    <div class="icon-label__description-container">
-                                                        <p class="text">
-                                                            hawk-dropdown.scss
-                                                        </p>
-                                                    </div>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a class="icon-label std-link" href="https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown-theme.scss" target="_blank">
-                                                    <div class="icon-label__icon-container">
-                                                        <img class="icon-label__icon icon-label__icon--small" src="/img/icons/files/icon-css-01.svg" alt="CSS" />
-                                                    </div>
-
-                                                    <div class="icon-label__description-container">
-                                                        <p class="text">
-                                                            hawk-dropdown-theme.scss
-                                                        </p>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Properties</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-properties.html') with {
-                            properties: dropdown.properties
-                        } %}
-                    </section>
-                </div>
-
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Callbacks</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-callbacks.html') with {
-                            callbacks: dropdown.callbacks
-                        } %}
-                    </section>
-                </div>
-
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Public methods</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-methods.html') with {
-                            methods: dropdown.methods
-                        } %}
-                    </section>
-                </div>
-            </div>
+    <div class="row">
+        <div class="text">
+            <p>
+                The tables below show many more options of customization.
+            </p>
         </div>
     </div>
 </section>
+{% endblock %}

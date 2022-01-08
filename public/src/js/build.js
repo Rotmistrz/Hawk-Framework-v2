@@ -1,8 +1,8 @@
 const bundle = require('bundle-js');
 
 let output = bundle({
-    entry : './src/index.js',
-    dest: './dist/jHawk-v2.js',
+    entry : './src/js//hawk/HawkBundle.js',
+    dest: './src/js//Hawk-v2.js',
     print: false
 });
 

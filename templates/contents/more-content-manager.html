@@ -1,35 +1,33 @@
-<section class="site-section">
-    <div class="site-section__layer">
-        <div class="site-section__wrapper">
-            <div class="site-section__inner">
-                <header class="section-header">
-                    <h2 class="section-title">
-                        More content manager
-                    </h2>
-                </header>
+{% set presentationSection = {
+    title: 'More content manager',
+    listings: {
+        html: moreContentManager.listings.html,
+        js: moreContentManager.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
+            type: 'js',
+            title: 'MoreContentManager.Hawk.js'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-more-content-manager.scss',
+            type: 'css',
+            title: 'hawk-more-content-manager.scss'
+        }
+    ],
 
-                <div class="bounded-section">
-                    <div class="text">
-                        <p>
-                        Vestibulum tortor at libero. Pellentesque habitant morbi tristique purus. Integer egestas, nunc faucibus sem pede eget elit. 
-                        </p>
+    properties: moreContentManager.properties,
+    callbacks: moreContentManager.callbacks,
+    methods: moreContentManager.methods
+} %}
 
-                        <p class="hawk-more-content" data-more-content-manager="1" data-id="1">
-                            Aliquam tellus tortor, hendrerit magna sit amet, elementum consequat. Cum sociis natoque penatibus et ultrices posuere quis, porttitor sem luctus metus nonummy enim quis dui. Class aptent taciti sociosqu ad litora torquent per inceptos hymenaeos. Fusce nisl eros, varius egestas, orci ac dolor. Vestibulum dignissim dapibus dui, porta elementum. Nunc arcu nunc pede ac augue nec pede tortor nibh, dignissim massa. Duis luctus
-                        </p>
-                    </div>
+{% extends 'contents/_presentation-section.html' %}
 
-                    <div class="button-container">
-                        <button class="button hawk-more-content-button" data-more-content-manager="1" data-id="1" data-opposite-text="Read less" type="button">
-                            <div class="button__wrapper">
-                                <div class="button__inner hawk-more-content-button__content">
-                                Read more
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{% block exampleAndDescription %}
+<section class="subsection bounded-section">     
+
+    {% include('hawk/modules/more-content-manager/hawk-more-content-manager.html') %}
+
 </section>
+{% endblock %}

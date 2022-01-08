@@ -1,8 +1,11 @@
 module.exports = {
-    entry: './src/js/master.js',
+    entry: {
+        //'Hawk-v2': __dirname + '/src/js/Hawk-v2.js',
+        master: __dirname + '/src/js/master.js'
+    },
     output: {
         path: __dirname + '/dist/js',
-        filename: 'master.js'
+        filename: '[name].js'
     },
     module: {
         rules: [{

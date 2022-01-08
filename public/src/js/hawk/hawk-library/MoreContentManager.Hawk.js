@@ -102,8 +102,6 @@ Hawk.MoreContentManager = class {
 
 		this.buttons = this.getButtons();
 
-		console.log(this.buttons);
-
 		this.buttons.bind(this.options.eventName, function() {
 			let id = $(this).attr(that.options.IDAttrName);
 

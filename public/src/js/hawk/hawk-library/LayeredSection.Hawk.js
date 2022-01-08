@@ -10,8 +10,6 @@ Hawk.LayeredSection = function(container, options) {
     this.baseLayerInner;
 
     this.defaultOptions = {
-        slideSpeed: 200,
-
         containerClass: 'hawk-layered-section',
 
         baseLayerClass: 'hawk-layered-section__base-layer',
@@ -37,6 +35,8 @@ Hawk.LayeredSection = function(container, options) {
                that.baseLayer.css({ visibility: 'hidden' });
            }
         });
+
+        return this;
     }
 
     this.showBaseLayer = function() {
@@ -47,10 +47,14 @@ Hawk.LayeredSection = function(container, options) {
         this.baseLayerInner.velocity({ opacity: 1 }, {
 
         });
+
+        return this;
     }
 
     this.hideLayers = function(except) {
         this.aboveLayers.not('[' + that.options.nameAttribute + '="' + except + '"]').velocity("fadeOut");
+    
+        return this;
     }
 
     this.showLayer = function(name) {
@@ -60,15 +64,21 @@ Hawk.LayeredSection = function(container, options) {
 
         var currentLayer = that.aboveLayers.filter('[' + that.options.nameAttribute + '="' + name + '"]');
 
-        currentLayer.velocity("fadeIn", {
-            complete: function() {
-                // currentLayer.find('.' + that.options.aboveLayerInnerClass).css({
-                //     opacity: 1
-                // });
+        if (currentLayer.length > 0) {
+            currentLayer.velocity("fadeIn", {
+                complete: function() {
+                    // currentLayer.find('.' + that.options.aboveLayerInnerClass).css({
+                    //     opacity: 1
+                    // });
 
-                that.options.onAboveLayerShow(that, currentLayer);
-            }
-        });
+                    that.options.onAboveLayerShow(that, currentLayer);
+                }
+            });
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     this.run = function() {
@@ -88,5 +98,7 @@ Hawk.LayeredSection = function(container, options) {
                that.showBaseLayer();
            }
         });
+
+        return this;
     }
 }
