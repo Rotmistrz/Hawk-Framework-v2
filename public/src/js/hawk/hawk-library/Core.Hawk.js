@@ -118,3 +118,9 @@ Hawk.addZeros = function (number, digits) {
 
     return number;
 }
+
+Hawk.jQueryFromString = function(html) {
+    return $(html).filter(function() {
+        return this.nodeType != 3; // Node.TEXT_NODE
+    });
+}

@@ -4,6 +4,8 @@
 // require ./hawk-library/FieldController.Hawk.js
 // require ./hawk-library/MoreContentManager.Hawk.js
 // require ./hawk-library/SlidingLayerManager.Hawk.js
+
+// require ./hawk-library/basements/AjaxRequestBasement.Hawk.js
 // require ./hawk-library/AjaxLoadingItemsManager.Hawk.js
 
 export default Hawk;

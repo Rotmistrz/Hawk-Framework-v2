@@ -74,5 +74,9 @@ $(document).ready(function() {
         }
     });
     HawkVariables.colorFieldsController.run();
+
+
+    HawkVariables.ajaxLoadingItemsManager = new Hawk.AjaxLoadingItemsManager($("#ajax-loading-items-manager"));
+    HawkVariables.ajaxLoadingItemsManager.run();
     // blabla
 });

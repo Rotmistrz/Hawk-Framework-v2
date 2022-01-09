@@ -1,5 +1,7 @@
-Hawk.AjaxLoadingItemsManager = class {
+Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
 	constructor(container, options) {
+		super();
+
 		this.container = $(container);
 		this.offset = 0;
 		this.done = false;
@@ -50,21 +52,49 @@ Hawk.AjaxLoadingItemsManager = class {
 	}
 
 	load(offset) {
-		console.log("lalalaa i co cyk");
+
+
+		if (!this.ajaxRequestWorking) {
+			this.ajaxRequestWorking = true;
+
+			this.ajaxRequest = $.ajax({
+	            type: "POST",
+	            url: this.options.path,
+	            dataType: "json",
+	            data: { offset: offset, itemsPerLoading: this.options.itemsPerLoading },
+	            success: (result) => {
+	            	console.log(result);
+
+	                this.appendContent(result.items);
+	            },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                // here should appear error layer
+	                //alert(errorThrown);
+
+	                console.log(jqXHR.responseText);
+
+
+
+	            },
+	            complete: () => {
+	                this.ajaxRequestWorking = false;
+	            }
+	        });
+		}
 	}
 
-	appendContent(items) {
-		const that = this;
+	appendContent(rawItems) {
+		const items = Hawk.jQueryFromString(rawItems);
 
 		items.css({ opacity: 0 });
 
 		this.options.appendItems(this.contentContainer, items);
 
 		items.velocity("slideDown", {
-			duration: that.options.slideSpeed,
-			complete: function() {
+			duration: this.options.slideSpeed,
+			complete: () => {
 				items.velocity({ opacity: 1 }, {
-					duration: that.options.fadeSpeed
+					duration: this.options.fadeSpeed
 				});
 			}
 		});
@@ -73,5 +103,9 @@ Hawk.AjaxLoadingItemsManager = class {
 	run() {
 		this.buttons = this.container.find('.' + this.options.buttonClass);
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
+
+		this.buttons.click(() => {
+			this.load(0);
+		});
 	}
 }
