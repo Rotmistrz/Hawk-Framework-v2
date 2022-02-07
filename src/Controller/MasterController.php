@@ -466,6 +466,24 @@ class MasterController extends AbstractController {
                     'js' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/sliding-layer-manager.js", [
                     ]), true)
                 ]
+            ],
+
+            'formSender' => [
+                'staticFormSender' => [
+                    'listings' => [
+                        'html' => highlight_string($this->renderView("hawk/modules/more-content-manager/hawk-more-content-manager.html", [
+                        ]), true),
+                        'js' => highlight_string($this->renderView("hawk/modules/form-sender/static-form-sender.js", [
+                        ]), true)
+                    ]
+                ]
+            ],
+
+            'ajaxRequestManager' => [
+                'listings' => [
+                    'js' => highlight_string($this->renderView("hawk/modules/ajax-request-manager/ajax-request-manager.js", [
+                    ]), true)
+                ]
             ]
         ]);
     }

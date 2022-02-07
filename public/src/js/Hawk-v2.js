@@ -91,6 +91,122 @@ Hawk.jQueryFromString = function(html) {
         return this.nodeType != 3; // Node.TEXT_NODE
     });
 }
+Hawk.Validator = {};
+Hawk.Validator.isEmail = function(email) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+Hawk.Validator.isPhoneNumber = function(number) {
+    if (/^\+?[0-9]+[0-9\s]+$/.test(number)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+Hawk.Validator.isNumber = function(number) {
+    if (/^[0-9]+$/.test(number)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+Hawk.Validator.isShortPhoneNumber = function(number) {
+    if (/^[0-9\s]+$/.test(number)) {
+        number = number.replace("\s", "");
+        return number.length == 9;
+    } else {
+        return false;
+    }
+}
+Hawk.Validator.isNotEmpty = function(value) {
+    if (value.trim().length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+Hawk.Validator.longerThan = function(str, length) {
+    if (str.trim().length > length) {
+        return true;
+    } else {
+        return false;
+    }
+}
+Hawk.Validator.isSomethingChecked = function(field) {
+    if (field.is(':checked')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+Hawk.RequestStatus = {
+    SUCCESS: 0,
+    ERROR: 1,
+    EXCEPTION: 2
+};
+Hawk.RequestType = {
+    GET: 'GET',
+    POST: 'POST',
+};
+Hawk.AjaxRequestManager = function(options) {
+    const that = this;
+    this.ajaxRequest;
+    this.ajaxRequestWorking = false;
+    this.defaultOptions = {
+        onSuccess: function() {},
+        onError: function() {},
+        onException: function() {},
+        onComplete: function() {}
+    };
+    this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    this.post = function(path, bundle, callbacks) {
+        this.sendRequest(path, Hawk.RequestType.POST, bundle, callbacks);
+    }
+    this.get = function(path, callbacks) {
+        this.sendRequest(path, Hawk.RequestType.GET, {}, callbacks);
+    }
+    this.sendRequest = function(path, type, bundle, callbacks) {
+        if (this.ajaxRequestWorking) {
+            return false;
+        }
+        this.ajaxRequestWorking = true;
+        const onSuccess = callbacks.onSuccess || this.options.onSuccess;
+        const onFailure = callbacks.onFailure || this.options.onFailure;
+        const onError = callbacks.onError || this.options.onError;
+        const onComplete = callbacks.onComplete || this.options.onComplete;
+        this.ajaxRequest = $.ajax({
+            type: type,
+            url: path,
+            dataType: "json",
+            data: bundle,
+            success: function(result) {
+                console.log(result);
+                if (typeof result.status != 'undefined' && result.status == Hawk.RequestStatus.SUCCESS) {
+                    console.log("SUCCESS");
+                    onSuccess(result);
+                } else if (typeof result.status != 'undefined' && result.status == Hawk.RequestStatus.ERROR) {
+                    console.log("ERROR");
+                    onError(result);
+                } else {
+                    console.log("EXCEPTION");
+                    onException(result);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseText);
+                onException(jqXHR.responseText);
+            },
+            complete: function() {
+                that.ajaxRequestWorking = false;
+                onComplete();
+            }
+        });
+        return this;
+    }
+}
 Hawk.DropdownConstants = {
     Modes: {
         PLAIN: 0,
@@ -560,13 +676,33 @@ Hawk.SlidingLayerManager = class {
         this.refreshDependencies();
     }
 }
-Hawk.AjaxRequestBasement = class {
+Hawk.SingleThreadClass = class {
     constructor() {
-        this.ajaxRequest = null;
-        this.ajaxRequestWorking = false;
+        this.request = null;
+        this.requestWorking = false;
+    }
+    setRequest(request) {
+        this.request = request;
+        return this;
+    }
+    getRequest() {
+        return this.request;
+    }
+    clearRequest() {
+        this.request = null;
+        return this;
+    }
+    isWorking() {
+        return this.requestWorking;
+    }
+    startWorking() {
+        this.requestWorking = true;
+    }
+    finishWorking() {
+        this.requestWorking = false;
     }
 }
-Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
+Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
     constructor(container, options) {
         super();
         this.container = $(container);
@@ -585,7 +721,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
             slideSpeed: 400,
             fadeSpeed: 400,
             appendItems: function(contentContainer, items) {
-                contentContainer.html(items);
+                contentContainer.append(items);
             },
             onLoad: function(buttons, contentContainer) {},
             onDone: function(buttons, contentContainer) {
@@ -611,9 +747,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
         return this;
     }
     load(offset) {
-        if (!this.ajaxRequestWorking) {
-            this.ajaxRequestWorking = true;
-            this.ajaxRequest = $.ajax({
+        if (!this.isWorking()) {
+            this.startWorking();
+            this.setRequest($.ajax({
                 type: "POST",
                 url: this.options.path,
                 dataType: "json",
@@ -624,6 +760,11 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
                 success: (result) => {
                     console.log(result);
                     this.appendContent(result.items);
+                    this.offset = result.offset;
+                    this.done = result.isDone;
+                    if (this.isDone()) {
+                        this.options.onDone(this.buttons, this.contentContainer);
+                    }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     // here should appear error layer
@@ -631,9 +772,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
                     console.log(jqXHR.responseText);
                 },
                 complete: () => {
-                    this.ajaxRequestWorking = false;
+                    this.finishWorking();
                 }
-            });
+            }));
         }
     }
     appendContent(rawItems) {
@@ -653,11 +794,343 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
             }
         });
     }
+    clear() {
+        this.contentContainer.children().velocity("slideUp", {
+            complete: function(elements) {
+                $(elements).remove();
+            }
+        });
+        this.buttons.css({
+            visibility: 'visible'
+        }).velocity({
+            opacity: 1
+        });
+        this.offset = 0;
+        this.done = false;
+    }
     run() {
         this.buttons = this.container.find('.' + this.options.buttonClass);
         this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
         this.buttons.click(() => {
-            this.load(0);
+            if (!this.isDone()) {
+                this.load(this.offset);
+            }
+        });
+    }
+}
+Hawk.FormField = class {
+    constructor(name, options) {
+        this.name = name;
+        this.field = null;
+        this.wrapper = null;
+        this.defaultOptions = {
+            obtainWrapper: function(field) {
+                return field.parents('.form-field');
+            },
+            required: true,
+            validate: function(field) {
+                return true;
+            },
+            errorClass: "error"
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    getName() {
+        return this.name;
+    }
+    getValue() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    validate() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    bind(form) {
+        this.field = $(form).find('input[name="' + this.getName() + '"]');
+        this.wrapper = this.options.obtainWrapper(this.field);
+        return this.isBinded();
+    }
+    initializeObserving() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    checkField() {
+        if (this.validate()) {
+            this.clear();
+        } else {
+            this.markAsIncorrect();
+        }
+    }
+    isBinded() {
+        return this.wrapper !== null && this.field !== null;
+    }
+    disable() {
+        if (this.isBinded()) {
+            this.field.attr('disabled', 'disabled');
+        }
+        return this;
+    }
+    markAsIncorrect() {
+        this.wrapper.addClass(this.options.errorClass);
+        return this;
+    }
+    clear() {
+        this.wrapper.removeClass(this.options.errorClass);
+        return this;
+    }
+    run(form) {
+        this.bind(form);
+        this.initializeObserving();
+    }
+}
+Hawk.TextFormField = class extends Hawk.FormField {
+    constructor(name, options) {
+        super(name, options);
+    }
+    getValue() {
+        return this.field.val();
+    }
+    validate() {
+        return this.options.validate(this.getValue());
+    }
+    initializeObserving() {
+        this.field.keydown(() => {
+            setTimeout(() => {
+                this.checkField();
+            }, 10);
+        });
+    }
+}
+Hawk.FormSender = class extends Hawk.SingleThreadClass {
+    constructor(form, fields, options) {
+        super();
+        this.form = $(form);
+        this.fields = {};
+        for (let i in fields) {
+            const field = fields[i];
+            this.fields[field.getName()] = field;
+        }
+        this.defaultOptions = {
+            autoDisable: true,
+            fadeSpeed: 200,
+            slideSpeed: 200,
+            infoContainerClass: "form__info-container",
+            infoWrapperClass: "form__info-wrapper",
+            infoClass: "form__info",
+            spinnerClass: "form__spinner",
+            obtainButton: (form) => {
+                return form.find('button[type="submit"]');
+            },
+            obtainCancelButton: (form) => {
+                return form.find('.form__cancel-button');
+            },
+            onCorrect: (result) => {
+                this.defaultResultCallback(result);
+            },
+            onError: (result) => {
+                this.defaultResultCallback(result);
+            },
+            onException: (result) => {
+                this.defaultResultCallback(result);
+            },
+            onComplete: (result) => {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+        this.infoContainer = this.form.find('.' + this.options.infoContainerClass);
+        this.infoWrapper = this.form.find('.' + this.options.infoWrapperClass);
+        this.info = this.form.find('.' + this.options.infoClass);
+        this.spinner = this.form.find('.' + this.options.spinnerClass);
+        this.button = this.options.obtainButton(this.form);
+        this.cancelButton = this.options.obtainCancelButton(this.form);
+    }
+    defaultResultCallback(result) {
+        this.changeMessage(result.message);
+    }
+    getField(name) {
+        return this.fields[name];
+    }
+    checkFields(incorrectFields) {
+        for (let i in this.fields) {
+            const current = this.fields[i];
+            if (Hawk.isInObject(current.name, incorrectFields)) {
+                current.markAsIncorrect();
+            } else {
+                current.clear();
+            }
+        }
+        return this;
+    }
+    validate() {
+        let result = [];
+        for (let i in this.fields) {
+            const current = this.fields[i];
+            if (current.validate()) {
+                current.clear();
+            } else {
+                current.markAsIncorrect();
+                result.push(current.getName());
+            }
+        }
+        return result;
+    }
+    bindFields() {
+        for (let i in this.fields) {
+            const current = this.fields[i];
+            current.run(this.form);
+        }
+        return this;
+    }
+    hasMessageBeenShown() {
+        return this.infoWrapper.is(':visible');
+    }
+    changeMessage(message) {
+        if (this.hasMessageBeenShown()) {
+            this.slideMessage(message);
+        } else {
+            this.hideMessage(() => {
+                this.slideMessage(message);
+            });
+        }
+    }
+    slideMessage(message) {
+        this.info.html(message);
+        this.infoWrapper.velocity("slideDown", {
+            duration: this.options.slideSpeed,
+            complete: () => {
+                this.showMessage();
+            }
+        });
+    }
+    showMessage() {
+        this.info.velocity({
+            opacity: 1
+        }, {
+            duration: 200
+        });
+    }
+    hideMessage(callback) {
+        this.info.velocity({
+            opacity: 0
+        }, {
+            duration: this.options.fadeSpeed,
+            complete: () => {
+                if (typeof callback != 'undefined') {
+                    callback();
+                }
+            }
+        });
+    }
+    showSpinner() {
+        this.spinner.css({
+            opacity: 1
+        });
+        return this;
+    }
+    hideSpinner() {
+        this.spinner.css({
+            opacity: 0
+        });
+        return this;
+    }
+    collectData(form) {
+        const data = new FormData(form);
+        for (let key in this.options.extraData) {
+            if (typeof this.options.extraData[key] == 'function') {
+                data.append(key, this.options.extraData[key]());
+            } else {
+                data.append(key, this.options.extraData[key]);
+            }
+        }
+        return data;
+    }
+    disable() {
+        this.form.attr('disabled', 'disabled');
+        this.form.find('input, textarea').attr('disabled', 'disabled');
+        return this;
+    }
+    hideButton() {
+        this.button.velocity({
+            opacity: 0
+        }, {
+            duration: this.options.fadeSpeed,
+            complete: () => {
+                this.button.css({
+                    visibility: 'hidden'
+                });
+            }
+        });
+    }
+    clear() {
+        for (let i in this.fields) {
+            const current = this.fields[i];
+            current.clear();
+        }
+        return this;
+    }
+    run() {
+        this.bindFields();
+        this.form.submit((e) => {
+            e.preventDefault();
+            if (!this.isWorking()) {
+                this.startWorking();
+                this.showSpinner();
+                this.send();
+            }
+        })
+    }
+    send() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+}
+Hawk.StaticFormSender = class extends Hawk.FormSender {
+    constructor(form, fields, callback, options) {
+        super(form, fields, options);
+        this.callback = callback;
+    }
+    send() {
+        this.callback(this);
+    }
+}
+Hawk.AjaxFormSender = class extends Hawk.FormSender {
+    constructor(form, fields, path, options) {
+        super(form, fields, options);
+        this.path = path;
+    }
+    send() {
+        const data = this.collectData(this.form.get(0));
+        $.ajax({
+            url: this.path,
+            type: 'POST',
+            data: data,
+            cache: false,
+            processData: false, // Don't process the files
+            contentType: false,
+            dataType: 'json',
+            success: (result) => {
+                //console.log(result);
+                if (result.status == Hawk.RequestStatus.SUCCESS) {
+                    this.clear();
+                    if (this.options.autoDisable) {
+                        this.hideButton();
+                        this.disable();
+                    }
+                    this.options.onCorrect(result);
+                } else if (result.status == Hawk.RequestStatus.ERROR) {
+                    this.options.onError(result);
+                } else {
+                    this.options.onException(result);
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                //console.log(jqXHR.responseText);
+                that.changeMessage("There occurred an unexpected error during processing the form. Please try again later.");
+                //console.log(errorThrown);
+                if (typeof this.options.onException == 'function') {
+                    this.options.onException();
+                }
+            },
+            complete: (jqXHR) => {
+                this.spinner.hide();
+                this.finishWorking();
+            }
         });
     }
 }

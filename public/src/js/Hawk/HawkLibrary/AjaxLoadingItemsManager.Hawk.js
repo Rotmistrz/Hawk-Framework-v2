@@ -1,4 +1,4 @@
-Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
+Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 	constructor(container, options) {
 		super();
 
@@ -23,7 +23,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
 			fadeSpeed: 400,
 
 			appendItems: function(contentContainer, items) {
-				contentContainer.html(items);
+				contentContainer.append(items);
 			},
 
 			onLoad: function(buttons, contentContainer) {},
@@ -52,12 +52,10 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
 	}
 
 	load(offset) {
+		if (!this.isWorking()) {
+			this.startWorking();
 
-
-		if (!this.ajaxRequestWorking) {
-			this.ajaxRequestWorking = true;
-
-			this.ajaxRequest = $.ajax({
+			this.setRequest($.ajax({
 	            type: "POST",
 	            url: this.options.path,
 	            dataType: "json",
@@ -66,6 +64,13 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
 	            	console.log(result);
 
 	                this.appendContent(result.items);
+	                this.offset = result.offset;
+
+	                this.done = result.isDone;
+
+	                if (this.isDone()) {
+	                	this.options.onDone(this.buttons, this.contentContainer);
+	                }
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
 	                // here should appear error layer
@@ -77,9 +82,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
 
 	            },
 	            complete: () => {
-	                this.ajaxRequestWorking = false;
+	                this.finishWorking();
 	            }
-	        });
+	        }));
 		}
 	}
 
@@ -100,12 +105,27 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.AjaxRequestBasement {
 		});
 	}
 
+	clear() {
+		this.contentContainer.children().velocity("slideUp", {
+			complete: function(elements) {
+				$(elements).remove();
+			}
+		});
+
+		this.buttons.css({ visibility: 'visible' }).velocity({ opacity: 1 });
+
+		this.offset = 0;
+		this.done = false;
+	}
+
 	run() {
 		this.buttons = this.container.find('.' + this.options.buttonClass);
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
 
 		this.buttons.click(() => {
-			this.load(0);
+			if (!this.isDone()) {
+				this.load(this.offset);
+			}
 		});
 	}
 }

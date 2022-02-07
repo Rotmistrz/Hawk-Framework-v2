@@ -8,27 +8,160 @@
                     </h2>
                 </header>
 
-                <form class="form">
-                    <div class="form__field-container">
-                        <label class="form-field">
-                            <div class="form-field__wrapper">
-                                <header class="form-field__header">
-                                    <h4 class="form-field__title">Exemplary form field</h4>
+
+                <div class="flex-container">
+                    <div class="flex-column flex-column--4 flex-column--space">
+                        <section class="subsection">
+                            <header class="section-subheader">
+                                <h3 class="section-subtitle">Static Form Sender</h3>
+                            </header>
+
+                            <div class="bounded-section">
+                                <form id="exemplary-static-form" class="form">
+                                    <div class="form__field-container">
+                                        <label class="form-field">
+                                            <div class="form-field__wrapper">
+                                                <input class="form-field__core" type="text" name="chess-figure-name" placeholder="Type a chess figure name" />
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="form__info-container">
+                                        <div class="form__info-wrapper">
+                                            <div class="form__info"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-container">
+                                        <button class="button" type="submit">
+                                            <div class="button__wrapper">
+                                                <div class="button__inner">
+                                                    Validate
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="flex-column flex-column--8 flex-column--space">
+                        <article class="figure">
+                            <header class="figure__header">
+                                <h5 class="caption-title"><span class="caption-title__number">Listing 8</span> sample JS code use of the Hawk.StaticFormSender</h5>
+                            </header>
+
+                            <div class="listing">
+                                <div class="scrollable-section">
+                                {% autoescape false %}
+                                    {{ formSender.staticFormSender.listings.js }}
+                                {% endautoescape %}
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="flex-container">
+                        <div class="flex-column flex-column--4 flex-column--space">
+                            <section class="subsection">
+                                <header class="section-subheader">
+                                    <h3 class="section-subtitle">Ajax Form Sender</h3>
                                 </header>
 
-                                <input class="form-field__core" type="text" name="exemplary-form-field" />
-                            </div>
-                        </label>
-                    </div>
+                                <div class="bounded-section">
+                                    <form id="exemplary-ajax-form" class="form">
+                                        <div class="form__field-container">
+                                            <label class="form-field">
+                                                <div class="form-field__wrapper">
+                                                    <input class="form-field__core" type="text" name="name" placeholder="Type Your name" />
+                                                </div>
+                                            </label>
+                                        </div>
 
-                    <div class="form__field-container">
-                        <label class="form-field">
-                            <div class="form-field__wrapper">
-                                <input class="form-field__core" type="text" name="exemplary-form-field" placeholder="Exemplary form field" />
-                            </div>
-                        </label>
+                                        <div class="form__field-container">
+                                            <header class="plain-header">
+                                                <h3 class="text-title">Choose your favourite light figure</h3>
+                                            </header>
+
+                                            <ul class="choice-list">
+                                                <li>
+                                                    <label class="choice-item">
+                                                        <div class="choice-item__field">
+                                                            <div class="choice-field">
+                                                                <input class="choice-field__core" type="checkbox" name="favourite-figure[]" value="1" />
+
+                                                                <div class="choice-field__field">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="choice-item__description">
+                                                            Bishop
+                                                        </div>
+                                                    </label>
+                                                </li>
+
+                                                <li>
+                                                    <label class="choice-item">
+                                                        <div class="choice-item__field">
+                                                            <div class="choice-field">
+                                                                <input class="choice-field__core" type="checkbox" name="ajax-form-sender-checkbox[]" value="2" />
+
+                                                                <div class="choice-field__field">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="choice-item__description">
+                                                            Knight
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="form__info-container">
+                                            <div class="form__info-wrapper">
+                                                <div class="form__info"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="button-container">
+                                            <button class="button" type="submit">
+                                                <div class="button__wrapper">
+                                                    <div class="button__inner">
+                                                        Send
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="flex-column flex-column--8 flex-column--space">
+                            <article class="figure">
+                                <header class="figure__header">
+                                    <h5 class="caption-title"><span class="caption-title__number">Listing 8</span> sample JS code use of the Hawk.StaticFormSender</h5>
+                                </header>
+
+                                <div class="listing">
+                                    <div class="scrollable-section">
+                                    {% autoescape false %}
+                                        {{ formSender.staticFormSender.listings.js }}
+                                    {% endautoescape %}
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

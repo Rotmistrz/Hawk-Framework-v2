@@ -19,6 +19,7 @@
                         <section class="subsection">
                             <div class="subsection__content">
                                 <ul class="presentation-list">
+                                    {% if presentationSection.listings.html is defined %}
                                     <li>
                                         <div class="listing">
                                             <div class="scrollable-section">
@@ -28,6 +29,7 @@
                                             </div>
                                         </div>
                                     </li>
+                                    {% endif %}
 
                                     <li>
                                         <div class="listing">

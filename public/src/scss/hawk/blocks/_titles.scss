@@ -200,6 +200,11 @@
   }
 }
 
+.text-title {
+  @extend .text;
+  font-weight: 700;
+}
+
 .subsection-subtitle {
   font-size: $larger-font-size;
   font-style: italic;

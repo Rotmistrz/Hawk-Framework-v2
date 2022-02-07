@@ -108,6 +108,10 @@
                                             </li>
 
                                             <li>
+                                                <h2 class="text-title">Text title</h2>
+                                            </li>
+
+                                            <li>
                                                 <h2 class="small-title">Small title</h2>
                                             </li>
                                         </ul>
@@ -859,7 +863,7 @@
                                             <li>
                                                 {% include('blocks/form-field.html') with {
                                                     formField: {
-                                                        extraClass: ' form-field--error',
+                                                        extraClass: ' error',
                                                         type: 'with-title',
                                                         title: 'Form field with error'
                                                     }
@@ -869,7 +873,7 @@
                                             <li>
                                                 {% include('blocks/form-field.html') with {
                                                     formField: {
-                                                        extraClass: ' form-field--underline form-field--error',
+                                                        extraClass: ' form-field--underline error',
                                                         type: 'with-placeholder',
                                                         title: 'Underlined form field with error'
                                                     }

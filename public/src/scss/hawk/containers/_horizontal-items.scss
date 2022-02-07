@@ -1,0 +1,21 @@
+.horizontal-items {
+	list-style-type: none;
+
+	@media (min-width: $mobile-m) {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	> li {
+		padding: 0 20px;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
+	}
+}

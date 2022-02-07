@@ -78,3 +78,19 @@
 		}
 	}
 }
+
+.choice-list {
+	list-style-type: none;
+
+	> li {
+		padding: 4px 0;
+
+		&:first-child {
+			padding-top: 0;
+		}
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+}

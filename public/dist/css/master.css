@@ -480,3 +480,54 @@ a {
 .std-link:hover, .std-link:focus {
   color: #000;
 }
+
+@media (min-width: 768px) {
+  .tiles-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}
+.tiles-list > li {
+  padding: 20px 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .tiles-list > li {
+    width: 33.33%;
+  }
+}
+.tiles-list > li:first-child {
+  padding-top: 0;
+}
+@media (min-width: 768px) {
+  .tiles-list > li:nth-child(2), .tiles-list > li:nth-child(3) {
+    padding-top: 0;
+  }
+}
+.tiles-list > li:last-child {
+  padding-bottom: 0;
+}
+@media (min-width: 768px) {
+  .tiles-list > li:nth-child(3n+1) {
+    padding-right: 2%;
+  }
+}
+@media (min-width: 768px) {
+  .tiles-list > li:nth-child(3n+2) {
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+}
+@media (min-width: 768px) {
+  .tiles-list > li:nth-child(3n+3) {
+    padding-left: 2%;
+  }
+}
+
+.simple-ajax-request-container__result {
+  padding: 32px 0 0 0;
+}

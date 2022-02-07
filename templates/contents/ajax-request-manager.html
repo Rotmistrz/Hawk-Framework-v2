@@ -1,0 +1,39 @@
+{% set presentationSection = {
+    title: 'Ajax request manager',
+    listings: {
+        js: ajaxRequestManager.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
+            type: 'js',
+            title: 'AjaxRequestManager.Hawk.js'
+        }
+    ],
+
+    properties: ajaxRequestManager.properties,
+    callbacks: ajaxRequestManager.callbacks,
+    methods: ajaxRequestManager.methods
+} %}
+
+{% extends 'contents/_presentation-section.html' %}
+
+{% block exampleAndDescription %}
+<section class="subsection bounded-section">
+
+    <div id="exemplary-ajax-request-manager" class="simple-ajax-request-container">
+        <button class="button simple-ajax-request-container__button" type="button">
+            <div class="button__wrapper">
+                <div class="button__inner">
+                    Draw a colour
+                </div>
+            </div>
+        </button>
+
+        <div class="simple-ajax-request-container__result">
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}

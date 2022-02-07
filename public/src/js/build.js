@@ -1,7 +1,7 @@
 const bundle = require('bundle-js');
 
 let output = bundle({
-    entry : './src/js//hawk/HawkBundle.js',
+    entry : './src/js//Hawk/HawkBundle.js',
     dest: './src/js//Hawk-v2.js',
     print: false
 });

@@ -10,7 +10,7 @@
     "build:js": "node src/js/build.js && webpack --mode=production",
 
     "parse:js": "node src/js/build.js && webpack --mode=development",
-    "watch:js": "onchange \"src/js/master.js\" \"src/js/hawk\" -- npm run parse:js",
+    "watch:js": "onchange \"src/js/master.js\" \"src/js/Hawk\" -- npm run parse:js",
 
     "watch": "run-p watch:*",
     "build": "run-p build:*",
