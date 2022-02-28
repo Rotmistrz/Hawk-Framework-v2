@@ -17,7 +17,7 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
             contentType: false,
             dataType: 'json',
             success: (result) => {
-                //console.log(result);
+                console.log(result);
 
                 if (result.status == Hawk.RequestStatus.SUCCESS) {
                     this.clear();
@@ -28,7 +28,7 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
                     	this.disable();
                     }
 
-                    this.options.onCorrect(result);
+                    this.options.onSuccess(result);
                 } else if (result.status == Hawk.RequestStatus.ERROR) {
                 	this.options.onError(result);
                 } else {
@@ -36,9 +36,9 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
-                //console.log(jqXHR.responseText);
+                console.log(jqXHR.responseText);
 
-                that.changeMessage("There occurred an unexpected error during processing the form. Please try again later.");
+                this.changeMessage("There occurred an unexpected error during processing the form. Please try again later.");
 
                 //console.log(errorThrown);
 

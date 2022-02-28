@@ -143,8 +143,6 @@ $(document).ready(function() {
     App.Blocks.ajaxRequestContainer.button.click(function(e) {
         e.preventDefault();
 
-        console.log("lalla");
-
         App.Examples.ajaxRequestManager.get("/ajax/draw-a-colour", {
             onSuccess: function(result) {
                 App.Blocks.ajaxRequestContainer.result.html(result.colour);
@@ -157,5 +155,10 @@ $(document).ready(function() {
             }
         });
     });
+
+    App.Examples.AjaxOverlayerManager = new Hawk.AjaxOverlayerManager($('#overlayer'), {
+        // options and callbacks
+    });
+    App.Examples.AjaxOverlayerManager.run();
 
 });

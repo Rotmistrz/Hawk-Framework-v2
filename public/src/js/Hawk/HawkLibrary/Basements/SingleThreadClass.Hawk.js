@@ -14,6 +14,14 @@ Hawk.SingleThreadClass = class {
 		return this.request;
 	}
 
+	abortRequest() {
+		if (typeof this.request != 'undefined') {
+			this.request.abort();
+		}
+
+		return this;
+	}
+
 	clearRequest() {
 		this.request = null;
 

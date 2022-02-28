@@ -1,0 +1,31 @@
+{% set presentationSection = {
+    title: 'Ajax overlayer manager',
+    listings: {
+        js: ajaxOverlayerManager.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
+            type: 'js',
+            title: 'AjaxOverlayerManager.Hawk.js'
+        }
+    ],
+
+    properties: ajaxOverlayerManager.properties,
+    callbacks: ajaxOverlayerManager.callbacks,
+    methods: ajaxOverlayerManager.methods
+} %}
+
+{% extends 'contents/_presentation-section.html' %}
+
+{% block exampleAndDescription %}
+<section class="subsection bounded-section">
+    <button class="button ajax-overlayer-button" type="button" data-overlayer-id="1" data-id="1">
+        <div class="button__wrapper">
+            <div class="button__inner">
+                See overlayer
+            </div>
+        </div>
+    </button>
+</section>
+{% endblock %}

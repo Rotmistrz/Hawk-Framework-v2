@@ -21,4 +21,10 @@
 // require ./HawkLibrary/Forms/StaticFormSender.Hawk.js
 // require ./HawkLibrary/Forms/AjaxFormSender.Hawk.js
 
+// require ./HawkLibrary/Components/ComponentConstants.Hawk.js
+// require ./HawkLibrary/Components/Component.Hawk.js
+// require ./HawkLibrary/Components/ComponentClass.Hawk.js
+
+// require ./HawkLibrary/AjaxOverlayerManager.Hawk.js
+
 export default Hawk;

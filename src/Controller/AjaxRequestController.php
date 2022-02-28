@@ -104,7 +104,7 @@ class AjaxRequestController extends AbstractController {
         if (count($messages) > 0) {
             $result['message'] = implode('<br />', $messages);
         } else {
-            $result['message'] = "Ok, ";
+            $result['message'] = "Ok, " . $name;
         }
         
 
@@ -123,6 +123,21 @@ class AjaxRequestController extends AbstractController {
 
         $result['status'] = RequestStatus::SUCCESS;
         $result['colour'] = $colour;
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/ajax/load-overlayer")
+     */
+    public function loadOverlayer(Request $request) {
+        sleep(2);
+
+        $id = $request->get('id');
+
+        $result['status'] = RequestStatus::SUCCESS;
+        $result['html'] = "Lorem ipsum dolor sit amet.";
+        $result['id'] = $id;
 
         return new JsonResponse($result);
     }

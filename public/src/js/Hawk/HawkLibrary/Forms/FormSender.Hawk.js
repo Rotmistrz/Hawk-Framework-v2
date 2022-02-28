@@ -28,7 +28,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 				return form.find('.form__cancel-button');
 			},
 
-			onCorrect: (result) => {
+			onSuccess: (result) => {
 				this.defaultResultCallback(result);
 			},
 			onError: (result) => {

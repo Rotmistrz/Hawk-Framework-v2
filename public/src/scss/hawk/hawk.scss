@@ -44,6 +44,10 @@
 @import 'blocks/_titled-label';
 
 
+/***** ICONS *****/
+
+@import 'icons/_hawk-icons';
+
 /***** MODULES *****/
 
 @import 'modules/dropdown/_hawk-dropdown';
@@ -53,5 +57,8 @@
 @import 'modules/_hawk-layered-section';
 @import 'modules/_hawk-more-content-manager';
 @import 'modules/_hawk-sliding-layer-section';
+
+@import 'modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager';
+@import 'modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager-theme';
 
 /** END_MODULES **/
