@@ -294,6 +294,10 @@
   }
 }
 
+.flex-container--horizontally-center {
+  align-items: center;
+}
+
 .flex-column {
   min-height: 1px;
   padding: 20px 0 0 0;
@@ -1146,6 +1150,52 @@
   background: #fff;
 }
 
+.icon-arrow {
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
+  width: 12px;
+  height: 12px;
+}
+
+.icon-arrow--small {
+  width: 8px;
+  height: 8px;
+}
+
+.icon-arrow--large {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-arrow--huge {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-arrow--west {
+  -webkit-transform: rotate(225deg);
+  -moz-transform: rotate(225deg);
+  transform: rotate(225deg);
+}
+
+.icon-arrow--north {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.icon-arrow--east {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.icon-arrow--south {
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
 /***** MODULES *****/
 .hawk-dropdown {
   position: relative;
@@ -1268,6 +1318,57 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.std-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.std-pager__pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+}
+.std-pager__item {
+  padding: 0 4px;
+}
+.std-pager__separator {
+  padding: 0 10px;
+}
+.std-pager__previous, .std-pager__next {
+  cursor: pointer;
+}
+.std-pager__previous {
+  padding: 0 12px 0 0;
+}
+.std-pager__next {
+  padding: 0 0 0 12px;
+}
+
+.pager-item {
+  cursor: pointer;
+  position: relative;
+}
+.pager-item:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: #FA6900;
+  opacity: 0;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.pager-item.active:before {
+  opacity: 1;
 }
 
 .form__info-wrapper {

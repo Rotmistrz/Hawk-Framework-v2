@@ -12,7 +12,11 @@
 // require ./HawkLibrary/SlidingLayerManager.Hawk.js
 
 // require ./HawkLibrary/Basements/SingleThreadClass.Hawk.js
-// require ./HawkLibrary/AjaxLoadingItemsManager.Hawk.js
+
+// require ./HawkLibrary/Pageable/Pager.Hawk.js
+
+// require ./HawkLibrary/ItemsManagers/AjaxLoadingItemsManager.Hawk.js
+// require ./HawkLibrary/ItemsManagers/AjaxItemsManager.Hawk.js
 
 // require ./HawkLibrary/Forms/FormField.Hawk.js
 // require ./HawkLibrary/Forms/TextFormField.Hawk.js

@@ -36,3 +36,35 @@
 		background: $light-color;
 	}
 }
+
+.icon-arrow {
+	border-top: 2px solid $dark-color;
+	border-right: 2px solid $dark-color;
+	width: 12px;
+	height: 12px;
+}
+.icon-arrow--small {
+	width: 8px;
+	height: 8px;
+}
+.icon-arrow--large {
+	width: 16px;
+	height: 16px;
+}
+.icon-arrow--huge {
+	width: 20px;
+	height: 20px;
+}
+
+.icon-arrow--west {
+	@include transform(rotate(225deg));
+}
+.icon-arrow--north {
+	@include transform(rotate(-45deg));
+}
+.icon-arrow--east {
+	@include transform(rotate(45deg));
+}
+.icon-arrow--south {
+	@include transform(rotate(135deg));
+}

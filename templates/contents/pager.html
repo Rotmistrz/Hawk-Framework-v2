@@ -1,0 +1,41 @@
+{% set presentationSection = {
+    title: 'Pager',
+    listings: {
+        js: pager.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
+            type: 'js',
+            title: 'Pager.Hawk.js'
+        }
+    ],
+
+    properties: pager.properties,
+    callbacks: pager.callbacks,
+    methods: pager.methods
+} %}
+
+{% extends 'contents/_presentation-section.html' %}
+
+{% block exampleAndDescription %}
+<section class="subsection bounded-section">
+
+    <div class="bounded-section">
+        <div id="exemplary-pager" class="hawk-pager std-pager">
+            <div class="hawk-pager__previous std-pager__previous">
+                <div class="icon-arrow icon-arrow--small icon-arrow--west"></div>
+            </div>
+
+            <ol class="hawk-pager__pages std-pager__pages">
+
+            </ol>
+
+            <div class="hawk-pager__next std-pager__next">
+                <div class="icon-arrow icon-arrow--small icon-arrow--east"></div>
+            </div>
+        </div>
+    </div>
+                   
+</section>
+{% endblock %}

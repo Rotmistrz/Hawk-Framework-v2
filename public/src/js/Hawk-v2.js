@@ -708,6 +708,168 @@ Hawk.SingleThreadClass = class {
         this.requestWorking = false;
     }
 }
+Hawk.Pager = class {
+    constructor(container, options) {
+        this.defaultOptions = {
+            pagesVisibilityLimit: 8,
+            visiblePagesNumber: 5,
+            edgeVisiblePagesNumber: 4,
+            activeClass: "active",
+            pagesContainerClass: "hawk-pager__pages",
+            previousButtonClass: "hawk-pager__previous",
+            nextButtonClass: "hawk-pager__next",
+            pagerItemClass: "pager-item",
+            clickEventName: "click.pager",
+            pageNrAttr: "data-page-nr",
+            createItem: function(nr) {
+                return $("<li class=\"std-pager__item\"><div class=\"pager-item\" data-page-nr=\"" + nr + "\">" + nr + "</div></li>");
+            },
+            createSeparator: function() {
+                return $("<li class=\"std-pager__separator\"><div class=\"pager-item-separator\">...</div></li>");
+            },
+            onClick: function(nr) {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+        this.container = $(container);
+        this.pagesContainer;
+        this.controls = {};
+        this.pagesNumber = 1;
+        this.page = 1;
+        this.pages;
+    }
+    getPage() {
+        return this.page;
+    }
+    setPage(page) {
+        this.page = page;
+        return this;
+    }
+    updatePage(page) {
+        this.setPage(page);
+        this.markAsActive(page);
+        if (this.shouldBeRebuilt(page)) {
+            this.rebuild();
+        } else {
+            this.checkControls();
+        }
+        return this;
+    }
+    getPagesNumber() {
+        return this.pagesNumber;
+    }
+    setPagesNumber(pagesNumber) {
+        this.pagesNumber = pagesNumber;
+        return this;
+    }
+    checkControls() {
+        if (this.isFirstPage()) {
+            this.controls.previous.css({
+                visibility: "hidden"
+            });
+        } else {
+            this.controls.previous.css({
+                visibility: "visible"
+            });
+        }
+        if (this.isLastPage()) {
+            this.controls.next.css({
+                visibility: "hidden"
+            });
+        } else {
+            this.controls.next.css({
+                visibility: "visible"
+            });
+        }
+    }
+    previous() {
+        return this.updatePage(this.getPage() - 1);
+    }
+    next() {
+        return this.updatePage(this.getPage() + 1);
+    }
+    create(pagesNumber) {
+        let pages = $();
+        const page = this.getPage();
+        if (pagesNumber <= this.options.pagesVisibilityLimit) {
+            for (let i = 1; i <= pagesNumber; i++) {
+                pages = pages.add(this.options.createItem(i));
+            }
+        } else if (this.isOnEdge(page)) {
+            for (let i = 1; i <= this.options.edgeVisiblePagesNumber; i++) {
+                pages = pages.add(this.options.createItem(i));
+            }
+            pages = pages.add(this.options.createSeparator());
+            for (let i = pagesNumber - this.options.edgeVisiblePagesNumber + 1; i <= pagesNumber; i++) {
+                pages = pages.add(this.options.createItem(i));
+            }
+        } else {
+            pages = pages.add(this.options.createSeparator());
+            let previousBound = page - Math.floor(this.options.visiblePagesNumber / 2);
+            let rangeEnd = previousBound + this.options.visiblePagesNumber;
+            for (let i = previousBound; i < rangeEnd; i++) {
+                pages = pages.add(this.options.createItem(i));
+            }
+            pages = pages.add(this.options.createSeparator());
+        }
+        return pages;
+    }
+    isOnEdge(page) {
+        return (page < this.options.edgeVisiblePagesNumber) || (page > (this.getPagesNumber() - this.options.edgeVisiblePagesNumber + 1));
+    }
+    isFirstPage() {
+        return this.getPage() == 1;
+    }
+    isLastPage() {
+        return this.getPage() == this.getPagesNumber();
+    }
+    isPageVisible(page) {
+        return this.pages.find("[" + this.options.pageNrAttr + "=\"" + page + "\"]").length > 0;
+    }
+    shouldBeRebuilt(page) {
+        return !this.isPageVisible(page) || !this.isPageVisible(page - 1) || !this.isPageVisible(page + 1);
+    }
+    build(pagesNumber) {
+        this.setPagesNumber(pagesNumber);
+        if (typeof this.pages != 'undefined') {
+            this.pages.unbind(this.options.clickEventName);
+        }
+        this.pages = this.create(pagesNumber);
+        this.pagesContainer.html('');
+        this.pagesContainer.append(this.pages);
+        this.pages.find('.' + this.options.pagerItemClass).bind('click', (e) => {
+            e.preventDefault();
+            const jQueryThis = $(e.currentTarget);
+            const page = jQueryThis.attr(this.options.pageNrAttr);
+            if (typeof this.options.onClick == 'function') {
+                this.options.onClick(this, page);
+            }
+        });
+        this.checkControls();
+    }
+    rebuild() {
+        this.build(this.getPagesNumber());
+        this.markAsActive(this.getPage());
+    }
+    markAsActive(nr) {
+        this.pages.find('.' + this.options.pagerItemClass).removeClass(this.options.activeClass);
+        this.pages.find('.' + this.options.pagerItemClass + "[" + this.options.pageNrAttr + "=\"" + nr + "\"]").addClass(this.options.activeClass);
+    }
+    run(pagesNumber) {
+        this.pagesContainer = this.container.find('.' + this.options.pagesContainerClass);
+        this.controls = {
+            previous: this.container.find('.' + this.options.previousButtonClass),
+            next: this.container.find('.' + this.options.nextButtonClass)
+        };
+        this.build(pagesNumber);
+        this.markAsActive(this.getPage());
+        this.controls.previous.click((e) => {
+            this.previous();
+        });
+        this.controls.next.click((e) => {
+            this.next();
+        });
+    }
+}
 Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
     constructor(container, options) {
         super();
@@ -824,6 +986,46 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
         });
     }
 }
+Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
+    constructor(container, options) {
+        super();
+        this.container = $(container);
+        this.contentContainer;
+        this.page = 1;
+        this.pagesNumber = 1;
+        this.filters = {};
+        this.categories = [];
+        this.buttons;
+        this.contentContainer;
+        this.loadingLayer;
+        this.defaultOptions = {
+            itemsPerLoading: 6,
+            path: "ajax/load-items",
+            itemClass: "ajax-loading-items-manager__item",
+            buttonClass: "ajax-loading-items-manager__button",
+            contentContainerClass: "ajax-loading-items-manager__content-container",
+            slideSpeed: 400,
+            fadeSpeed: 400,
+            appendItems: function(contentContainer, items) {
+                contentContainer.append(items);
+            },
+            onLoad: function(buttons, contentContainer) {},
+            onDone: function(buttons, contentContainer) {
+                buttons.velocity({
+                    opacity: 0
+                }, {
+                    complete: function() {
+                        buttons.css({
+                            visibility: "hidden"
+                        });
+                    }
+                });
+            },
+            onError: function(buttons, contentContainer) {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+}
 Hawk.FormField = class {
     constructor(name, options) {
         this.name = name;
@@ -928,7 +1130,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
             obtainCancelButton: (form) => {
                 return form.find('.form__cancel-button');
             },
-            onCorrect: (result) => {
+            onSuccess: (result) => {
                 this.defaultResultCallback(result);
             },
             onError: (result) => {
@@ -1111,14 +1313,14 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
             contentType: false,
             dataType: 'json',
             success: (result) => {
-                //console.log(result);
+                console.log(result);
                 if (result.status == Hawk.RequestStatus.SUCCESS) {
                     this.clear();
                     if (this.options.autoDisable) {
                         this.hideButton();
                         this.disable();
                     }
-                    this.options.onCorrect(result);
+                    this.options.onSuccess(result);
                 } else if (result.status == Hawk.RequestStatus.ERROR) {
                     this.options.onError(result);
                 } else {
@@ -1126,8 +1328,8 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
-                //console.log(jqXHR.responseText);
-                that.changeMessage("There occurred an unexpected error during processing the form. Please try again later.");
+                console.log(jqXHR.responseText);
+                this.changeMessage("There occurred an unexpected error during processing the form. Please try again later.");
                 //console.log(errorThrown);
                 if (typeof this.options.onException == 'function') {
                     this.options.onException();
@@ -1136,6 +1338,197 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
             complete: (jqXHR) => {
                 this.spinner.hide();
                 this.finishWorking();
+            }
+        });
+    }
+}
+Hawk.ComponentsConstants = {
+    COMPONENT_ID_ATTRIBUTE: "data-hawk-component-id"
+}
+Hawk.Component = class {
+    constructor(classname, values, options, id) {
+        this.classname = classname;
+        this.container;
+        this.values = values;
+        this.properties = options.properties || {};
+        this.methods = options.methods || {};
+        this.id = id || -1;
+        this.onRefresh = options.onRefresh || function() {};
+        this.onClick = options.onClick || function(component) {};
+        this.onCreateFromDOM = options.onCreateFromDOM || function(container, values) {
+            return values;
+        };
+    }
+    getID() {
+        return this.id;
+    }
+    getClassname() {
+        return this.classname;
+    }
+    set(key, value) {
+        this.values[key] = value;
+        return this;
+    }
+    get(key) {
+        return this.values[key];
+    }
+    update(key, value) {
+        this.set(key, value);
+        this.refreshView();
+        this.onRefresh(key, value, this);
+        return this;
+    }
+    getProperty(key) {
+        var property = this.properties[key];
+        return property(this);
+    }
+    getContainer() {
+        if (this.getID() != -1) {
+            return $('.' + this.getClassname() + '[' + Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE + '="' + this.getID() + '"]');
+        } else {
+            return $('.' + this.getClassname());
+        }
+    }
+    getElement(name) {
+        return this.getContainer().find('.' + this.getClassname() + '__' + name);
+    }
+    refreshView() {
+        let element = this.getElement("id");
+        element.html(this.getID());
+        for (const i in this.values) {
+            element = this.getElement(i);
+            element.html(this.values[i]);
+        }
+        for (const i in this.properties) {
+            element = this.getElement(i);
+            element.html(this.getProperty(i));
+        }
+        // for (var i in this.subcomponents) {
+        //
+        //     for (let j in this.subcomponents[i]) {
+        //         if (this.subcomponents[i][j].hasOwnProperty('refreshView')) {
+        //             this.subcomponents[i][j].refreshView();
+        //         }
+        //
+        //     }
+        // }
+        for (const i in this.methods) {
+            this.methods[i](this);
+        }
+    }
+    remove() {
+        const container = this.getContainer();
+        container.velocity("slideUp", {
+            complete: function() {
+                container.remove();
+            }
+        });
+    }
+    run() {
+        var allComponentBindings = {};
+        this.container = this.getContainer();
+    }
+}
+Hawk.ComponentClass = class {
+    constructor(classname, values, options) {
+        this.classname = classname;
+        this.values = values;
+        this.options = options;
+        this.clearInstances();
+    }
+    // this.parseJSON = parseJSON || function(json) {
+    //     return {
+    //         id: -1,
+    //         values: {},
+    //         subcomponents: {}
+    //     };
+    // };
+    getOptions() {
+        return this.options;
+    }
+    getValues() {
+        return this.values;
+    }
+    newInstance(id, values) {
+        let certainValues = this.getValues();
+        if (typeof values != 'undefined') {
+            certainValues = this.parseValues(values);
+        }
+        const instance = new Hawk.Component(this.getClassname(), certainValues, this.getOptions(), id);
+        instance.run();
+        instance.refreshView();
+        this.instances[instance.getID()] = instance;
+        return instance;
+    }
+    instanceExists(index) {
+        return typeof this.instances[index] != 'undefined';
+    }
+    parseValues(certainValues) {
+        const resultValues = {};
+        for (let i in this.values) {
+            if (typeof certainValues[i] != 'undefined') {
+                resultValues[i] = certainValues[i];
+            }
+        }
+        return resultValues;
+    }
+    getInstance(index) {
+        if (this.instanceExists(index)) {
+            return this.instances[index];
+        } else {
+            return null;
+        }
+    }
+    getValueFromDOM(container, name) {
+        const element = container.find('.' + this.getClassname() + "__" + name);
+        if (element.length > 0) {
+            return element.html();
+        } else {
+            return null;
+        }
+    }
+    createInstanceFromDOM(container, id) {
+        let currentValues = {};
+        for (let name in this.values) {
+            currentValues[name] = this.getValueFromDOM(container, name);
+        }
+        currentValues = this.options.onCreateFromDOM(container, currentValues);
+        this.newInstance(id, currentValues);
+    }
+    getAllInstances() {
+        return this.instances;
+    }
+    updateAll(key, value) {
+        for (var i in this.instances) {
+            this.instances[i].update(key, value);
+        }
+    }
+    removeInstance(index) {
+        if (this.instanceExists(index)) {
+            const current = this.instances[index];
+            current.remove();
+            delete this.instances[index];
+        }
+    }
+    refreshView() {
+        for (let i in this.instances) {
+            this.instances[i].refreshView();
+        }
+    }
+    clearInstances() {
+        this.instances = {};
+    }
+    getClassname() {
+        return this.classname;
+    }
+    initialize() {
+        const components = $('.' + this.getClassname());
+        let currentID = -1;
+        const that = this;
+        components.each(function() {
+            currentID = $(this).attr(Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE);
+            if (currentID > 0) {
+                that.createInstanceFromDOM($(this), currentID);
             }
         });
     }
@@ -1160,7 +1553,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
             contentContainerClass: 'overlayer__content-container',
             contentClass: 'overlayer__content',
             loadingLayerClass: 'overlayer__loading-layer',
-            closeButtonClass: 'overlayer__close',
+            closeButtonClass: 'ajax-overlayer-close',
             onLoad: (aom, id, bundle) => {}
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -1216,7 +1609,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                     lang: this.getLang()
                 },
                 success: (result) => {
-                    console.log(result);
+                    //console.log(result);
                     if (result.status == Hawk.RequestStatus.SUCCESS) {
                         let finalCallback = () => {};
                         if (typeof this.options.onLoad == 'function') {
@@ -1266,8 +1659,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         e.stopPropagation();
         const jQueryThis = $(e.target);
         const id = jQueryThis.attr('data-id');
-        const bundleString = jQueryThis.attr('data-bundle');
-        this.load(id);
+        const bundleString = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));
+        this.load(id, bundleString);
     }
     initializeClosePreventer() {
         this.container.on('click', '.' + this.options.contentContainerClass + ', .' + this.options.contentContainerClass + ':not(.' + this.options.closeButtonClass + ')', (e) => {
@@ -1286,7 +1679,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.container.click((e) => {
             this.hide();
         });
-        this.closeButton.click((e) => {
+        this.container.on('click', '.' + this.options.closeButtonClass, (e) => {
             this.hide();
         });
         this.initializeClosePreventer();

@@ -161,4 +161,14 @@ $(document).ready(function() {
     });
     App.Examples.AjaxOverlayerManager.run();
 
+
+
+    App.Examples.Pager = new Hawk.Pager($('#exemplary-pager'), {
+        onClick: (pager, nr) => {
+            console.log(nr);
+            pager.updatePage(nr);
+        }
+    });
+    App.Examples.Pager.run(10);
+
 });

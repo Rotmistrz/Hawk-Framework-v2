@@ -521,6 +521,15 @@ class MasterController extends AbstractController {
     }
 
     /**
+     * @Route("/icons")
+     */
+    public function icons() {
+        return $this->render('icons.html', [
+
+        ]);
+    }
+
+    /**
      * @Route("/variables")
      */
     public function variables() {
