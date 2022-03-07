@@ -727,7 +727,7 @@ Hawk.Pager = class {
             createSeparator: function() {
                 return $("<li class=\"std-pager__separator\"><div class=\"pager-item-separator\">...</div></li>");
             },
-            onClick: function(nr) {}
+            onPageChanged: function(pager, nr) {}
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
         this.container = $(container);
@@ -750,7 +750,7 @@ Hawk.Pager = class {
         if (this.shouldBeRebuilt(page)) {
             this.rebuild();
         } else {
-            this.checkControls();
+            this.checkDependencies();
         }
         return this;
     }
@@ -761,7 +761,7 @@ Hawk.Pager = class {
         this.pagesNumber = pagesNumber;
         return this;
     }
-    checkControls() {
+    checkDependencies() {
         if (this.isFirstPage()) {
             this.controls.previous.css({
                 visibility: "hidden"
@@ -779,6 +779,9 @@ Hawk.Pager = class {
             this.controls.next.css({
                 visibility: "visible"
             });
+        }
+        if (typeof this.options.onPageChanged == 'function') {
+            this.options.onPageChanged(this, this.getPage());
         }
     }
     previous() {
@@ -840,11 +843,9 @@ Hawk.Pager = class {
             e.preventDefault();
             const jQueryThis = $(e.currentTarget);
             const page = jQueryThis.attr(this.options.pageNrAttr);
-            if (typeof this.options.onClick == 'function') {
-                this.options.onClick(this, page);
-            }
+            this.updatePage(page);
         });
-        this.checkControls();
+        this.checkDependencies();
     }
     rebuild() {
         this.build(this.getPagesNumber());
@@ -991,39 +992,99 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
         super();
         this.container = $(container);
         this.contentContainer;
+        this.loadingLayer;
         this.page = 1;
-        this.pagesNumber = 1;
+        this.allItemsAmount = 0;
         this.filters = {};
         this.categories = [];
-        this.buttons;
-        this.contentContainer;
-        this.loadingLayer;
+        this.pagers = [];
         this.defaultOptions = {
-            itemsPerLoading: 6,
-            path: "ajax/load-items",
-            itemClass: "ajax-loading-items-manager__item",
-            buttonClass: "ajax-loading-items-manager__button",
-            contentContainerClass: "ajax-loading-items-manager__content-container",
+            path: "ajax/load-page",
+            itemsPerPage: 12,
+            itemClass: "ajax-items-manager__item",
+            contentContainerClass: "ajax-items-manager__content-container",
             slideSpeed: 400,
             fadeSpeed: 400,
-            appendItems: function(contentContainer, items) {
-                contentContainer.append(items);
+            updateContent: function(contentContainer, items) {
+                contentContainer.html(items);
             },
-            onLoad: function(buttons, contentContainer) {},
-            onDone: function(buttons, contentContainer) {
-                buttons.velocity({
-                    opacity: 0
-                }, {
-                    complete: function() {
-                        buttons.css({
-                            visibility: "hidden"
-                        });
-                    }
-                });
-            },
-            onError: function(buttons, contentContainer) {}
+            onLoad: function(contentContainer) {},
+            onError: function(contentContainer) {}
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    setPage(page) {
+        this.page = page;
+        return this;
+    }
+    getPage() {
+        return this.page;
+    }
+    setAllItemsAmount(allItemsAmount) {
+        this.allItemsAmount = allItemsAmount;
+        return this;
+    }
+    getAllItemsAmount() {
+        return this.allItemsAmount;
+    }
+    getPagesNumber() {
+        return Math.ceil(this.allItemsAmount / this.options.itemsPerPage);
+    }
+    addPager(pager) {
+        this.pagers.push(pager);
+        return this;
+    }
+    doPagersAction(action) {
+        for (const pager of this.pagers) {
+            action(pager);
+        }
+    }
+    refreshPagers() {
+        this.doPagersAction((pager) => {
+            pager.setPagesNumber(this.getPagesNumber());
+            pager.updatePage(this.getPage());
+        });
+    }
+    updateContent(content) {
+        this.options.updateContent(this.contentContainer, content);
+    }
+    load(page) {
+        this.setPage(page);
+        if (!this.isWorking()) {
+            this.startWorking();
+            this.setRequest($.ajax({
+                type: "POST",
+                url: this.options.path,
+                dataType: "json",
+                data: {
+                    'page': this.page,
+                    'itemsPerPage': this.options.itemsPerPage
+                },
+                success: (result) => {
+                    console.log(result);
+                    if (result.status == Hawk.RequestStatus.SUCCESS) {
+                        this.setAllItemsAmount(result.allItemsAmount);
+                        this.setPage(result.page);
+                        this.refreshPagers();
+                        //this.makePageActive(this.getPage());
+                        this.updateContent(result.html);
+                    }
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    console.warn(jqXHR.responseText);
+                },
+                complete: () => {
+                    this.finishWorking();
+                }
+            }));
+        }
+    }
+    run(page) {
+        if (typeof page == 'undefined') {
+            page = 1;
+        }
+        this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
+        this.load(page);
     }
 }
 Hawk.FormField = class {

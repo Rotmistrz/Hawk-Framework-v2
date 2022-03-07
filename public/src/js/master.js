@@ -171,4 +171,21 @@ $(document).ready(function() {
     });
     App.Examples.Pager.run(10);
 
+    App.Examples.AjaxItemsManager = new Hawk.AjaxItemsManager($('#ajax-items-manager'), {
+
+    });
+
+    App.Examples.AjaxItemsManagerPager = new Hawk.Pager($('#ajax-items-manager .hawk-pager'), {
+        onPageChanged: (pager, nr) => {
+            console.log(nr);
+
+            App.Examples.AjaxItemsManager.load(nr);
+        }
+    });
+    App.Examples.AjaxItemsManagerPager.run();
+
+    App.Examples.AjaxItemsManager.addPager(App.Examples.AjaxItemsManagerPager);
+
+    App.Examples.AjaxItemsManager.run(1);
+
 });

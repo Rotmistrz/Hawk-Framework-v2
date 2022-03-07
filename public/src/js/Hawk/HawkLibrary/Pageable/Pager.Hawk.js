@@ -21,7 +21,7 @@ Hawk.Pager = class {
 	            return $("<li class=\"std-pager__separator\"><div class=\"pager-item-separator\">...</div></li>");
 	        },
 
-			onClick: function(nr) {
+			onPageChanged: function(pager, nr) {
 			}
 		};
 
@@ -56,7 +56,7 @@ Hawk.Pager = class {
 		if (this.shouldBeRebuilt(page)) {
 			this.rebuild();
 		} else {
-			this.checkControls();
+			this.checkDependencies();
 		}
 
 		return this;
@@ -72,7 +72,7 @@ Hawk.Pager = class {
 		return this;
 	}
 
-	checkControls() {
+	checkDependencies() {
 		if (this.isFirstPage()) {
 			this.controls.previous.css({ visibility: "hidden" });
 		} else {
@@ -83,6 +83,10 @@ Hawk.Pager = class {
 			this.controls.next.css({ visibility: "hidden" });
 		} else {
 			this.controls.next.css({ visibility: "visible" });
+		}
+
+		if (typeof this.options.onPageChanged == 'function') {
+			this.options.onPageChanged(this, this.getPage());
 		}
 	}
 
@@ -167,12 +171,10 @@ Hawk.Pager = class {
 			const jQueryThis = $(e.currentTarget);
 			const page = jQueryThis.attr(this.options.pageNrAttr);
 
-			if (typeof this.options.onClick == 'function') {
-				this.options.onClick(this, page);
-			}
+			this.updatePage(page);
 		});
 
-		this.checkControls();
+		this.checkDependencies();
 	}
 
 	rebuild() {
