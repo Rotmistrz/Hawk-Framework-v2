@@ -15,3 +15,12 @@
 - Section title
 - Text
 - Button
+
+## License ##
+
+MIT
+
+## Author ##
+
+Filip J. Markiewicz\
+www.filipmarkiewicz.pl

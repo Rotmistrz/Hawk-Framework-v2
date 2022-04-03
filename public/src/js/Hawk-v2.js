@@ -1338,12 +1338,15 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
         this.bindFields();
         this.form.submit((e) => {
             e.preventDefault();
-            if (!this.isWorking()) {
-                this.startWorking();
-                this.showSpinner();
-                this.send();
-            }
+            this.submit();
         })
+    }
+    submit() {
+        if (!this.isWorking()) {
+            this.startWorking();
+            this.showSpinner();
+            this.send();
+        }
     }
     send() {
         throw new Error("This method should be overwritten in the subclass.");
@@ -1720,8 +1723,11 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         e.stopPropagation();
         const jQueryThis = $(e.target);
         const id = jQueryThis.attr('data-id');
-        const bundleString = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));
-        this.load(id, bundleString);
+        var bundle = {};
+        if (typeof jQueryThis.attr('data-bundle') !== 'undefined' && jQueryThis.attr('data-bundle') !== false) {
+            bundle = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));
+        }
+        this.load(id, bundle);
     }
     initializeClosePreventer() {
         this.container.on('click', '.' + this.options.contentContainerClass + ', .' + this.options.contentContainerClass + ':not(.' + this.options.closeButtonClass + ')', (e) => {

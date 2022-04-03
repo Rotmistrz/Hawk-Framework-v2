@@ -139,10 +139,16 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const jQueryThis = $(e.target);
+		const jQueryThis = $(e.currentTarget);
 
 		const id = jQueryThis.attr('data-id');
-		const bundleString = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));
+		var bundleString;
+
+		if (typeof jQueryThis.attr('data-bundle') != 'undefined') {
+			bundleString = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));
+		} else {
+			bundleString = {};
+		}
 
 		this.load(id, bundleString);
 	}

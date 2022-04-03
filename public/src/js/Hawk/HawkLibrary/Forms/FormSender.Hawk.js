@@ -202,14 +202,18 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 		this.form.submit((e) => {
 			e.preventDefault();
 
-			if (!this.isWorking()) {
-				this.startWorking();
-
-				this.showSpinner();
-
-				this.send();
-			}
+			this.submit();
 		})
+	}
+
+	submit() {
+		if (!this.isWorking()) {
+			this.startWorking();
+
+			this.showSpinner();
+
+			this.send();
+		}
 	}
 
 	send() {

@@ -42,6 +42,7 @@
 	border-right: 2px solid $dark-color;
 	width: 12px;
 	height: 12px;
+	@include box-sizing(content-box);
 }
 .icon-arrow--small {
 	width: 8px;
