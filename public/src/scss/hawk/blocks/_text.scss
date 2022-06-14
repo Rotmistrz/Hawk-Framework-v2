@@ -78,6 +78,11 @@
     }
   }
 }
+.text--light {
+  a {
+    color: $light-color;
+  }
+}
 
 .text--large {
   font-size: $larger-font-size;

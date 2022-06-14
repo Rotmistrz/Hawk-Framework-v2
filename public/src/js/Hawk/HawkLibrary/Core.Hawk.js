@@ -124,3 +124,24 @@ Hawk.jQueryFromString = function(html) {
         return this.nodeType != 3; // Node.TEXT_NODE
     });
 }
+
+Hawk.scrollToElement = function(options) {
+    const defaultOptions = {
+        container: window,
+        anchor: '#top' + Hawk.anchorSuffix,
+        callback: function() {},
+        delay: 0,
+        duration: 800,
+        offset: 0
+    };
+
+    options = Hawk.mergeObjects(defaultOptions, options);
+
+    const offset = (typeof options.offset == 'function') ? options.offset() : options.offset;
+
+    setTimeout(function(){
+        $(options.container).scrollTo(options.anchor, options.duration, {'axis': 'y', 'offset': offset, onAfter: function() { options.callback(); } });
+    }, options.delay);
+
+    return this;
+}

@@ -5,6 +5,7 @@
 
 // require ./HawkLibrary/Requests/AjaxRequestManager.Hawk.js
 
+// require ./HawkLibrary/AnchorsManager.Hawk.js
 // require ./HawkLibrary/Dropdown.Hawk.js
 // require ./HawkLibrary/LayeredSection.Hawk.js
 // require ./HawkLibrary/FieldController.Hawk.js

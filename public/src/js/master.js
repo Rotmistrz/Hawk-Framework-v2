@@ -33,6 +33,10 @@ $(document).ready(function() {
 
     var HawkExamples = {};
 
+
+    HawkExamples.anchorsManager = new Hawk.AnchorsManager();
+    HawkExamples.anchorsManager.run();
+
     HawkExamples.exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'));
     HawkExamples.exemplaryDropdown.run();
     //console.log(HawkExamples.exemplaryDropdown.selectByValue(2));

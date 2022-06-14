@@ -459,6 +459,38 @@ class MasterController extends AbstractController {
                 'methods' => []
             ],
 
+            'ajaxOverlayerManager' => [
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/ajax-overlayer-manager/hawk-ajax-overlayer-manager.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/ajax-overlayer-manager/hawk-ajax-overlayer-manager.js", [
+                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "path",
+                        'type' => "string",
+                        'default' => "/ajax/load-overlayer",
+                        'description' => "An endpoint where the request is being sent."
+                    ]
+                ],
+                'callbacks' => [
+                    [
+                        'name' => "onLoad",
+                        'description' => "Makes the content visible. Velocity's <span class=\"inline-code\">slideDown</span> by default.",
+                        'parameters' => [
+                            [
+                                'name' => "ajaxOverlayerManager",
+                                'type' => "Hawk.AjaxOverlayerManager",
+                                'description' => "current instance of Hawk.AjaxOverlayerManager"
+                            ]
+                        ]
+                    ]
+                ],
+                'methods' => []
+            ],
+
             'slidingLayerManager' => [
                 'listings' => [
                     'html' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/hawk-sliding-layer-manager.html", [

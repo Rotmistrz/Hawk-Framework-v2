@@ -466,3 +466,31 @@
     padding: 32px 0 0 0;
   }
 }
+
+.site-footer {
+  &__layer {
+    background: $dark-color-01;
+    color: $light-color-01;
+    padding: 0 20px;
+
+    @media (min-width: $mobile-l) {
+      padding: 0 40px;
+    }
+
+    @media (min-width: $desktop-l) {
+      padding: 0 100px;
+    }
+
+    @media (min-width: $desktop-xl) {
+      padding: 0 140px;
+    }
+  }
+
+  &__wrapper {
+    padding: 32px 0;
+
+    @media (min-width: $desktop-xl) {
+      padding: 48px 0;
+    }
+  }
+}

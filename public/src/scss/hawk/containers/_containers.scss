@@ -1,9 +1,24 @@
+@use "sass:math";
+
+.container {
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
 .flex-container {
 	@media (min-width: $tablet-m) {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
 	}
+}
+.flex-container--immediately {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
 }
 .flex-container--horizontally-center {
 	align-items: center;
@@ -51,11 +66,23 @@
 	}
 }
 
+.flex-column--7 {
+	@media (min-width: $tablet-m) {
+		min-width: math.div(7, 12) * 100%;
+		max-width: math.div(7, 12) * 100%;
+	}
+}
+
 .flex-column--6 {
 	@media (min-width: $tablet-m) {
 		min-width: 50%;
 		max-width: 50%;
 	}
+}
+.flex-column--6.flex-column--immediately {
+	min-width: 50%;
+	max-width: 50%;
+	padding: 0;
 }
 .flex-column--6.flex-column--space {
 	@media (min-width: $tablet-m) {
@@ -76,6 +103,44 @@
 		&:nth-child(2) {
 			padding-left: 30px;
 		}
+	}
+}
+.flex-column--6.flex-column--big-space {
+	@media (min-width: $tablet-m) {
+		&:nth-child(1) {
+			padding-right: 40px;
+		}
+
+		&:nth-child(2) {
+			padding-left: 40px;
+		}
+	}
+
+	@media (min-width: $desktop-l) {
+		&:nth-child(1) {
+			padding-right: 60px;
+		}
+
+		&:nth-child(2) {
+			padding-left: 60px;
+		}
+	}
+
+	@media (min-width: $desktop-xl) {
+		&:nth-child(1) {
+			padding-right: 80px;
+		}
+
+		&:nth-child(2) {
+			padding-left: 80px;
+		}
+	}
+}
+
+.flex-column--5 {
+	@media (min-width: $tablet-m) {
+		min-width: math.div(5, 12) * 100%;
+		max-width: math.div(5, 12) * 100%;
 	}
 }
 

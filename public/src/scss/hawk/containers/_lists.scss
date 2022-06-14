@@ -1,0 +1,8 @@
+.simple-list {
+	list-style-type: none;
+
+	> li {
+		display: block;
+		padding: 4px 0;
+	}
+}
