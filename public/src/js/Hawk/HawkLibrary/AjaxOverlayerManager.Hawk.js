@@ -20,13 +20,12 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			fadeSpeed: 200,
 			slideSpeed: 200,
 
-			wrapperClass: 'overlayer__wrapper',
-			innerClass: 'overlayer__inner',
 			contentContainerClass: 'overlayer__content-container',
 			contentClass: 'overlayer__content',
 
 			loadingLayerClass: 'overlayer__loading-layer',
 			closeButtonClass: 'ajax-overlayer-close',
+			buttonClass: 'ajax-overlayer-button',
 
 			onLoad: (aom, id, bundle) => {}
 		};
@@ -43,7 +42,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	getButtonsSelector() {
-		return '.ajax-overlayer-button[data-overlayer-id="' + this.getOverlayerID() + '"]';
+		return '.' + this.options.buttonClass + '[data-overlayer-id="' + this.getOverlayerID() + '"]';
 	}
 
 	hide() {
@@ -90,6 +89,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            	//console.log(result);
 
 	            	if (result.status == Hawk.RequestStatus.SUCCESS) {
+	            		this.changeContent(result.html, finalCallback);
+	            		
 	            		let finalCallback = () => {};
 
 	            		if (typeof this.options.onLoad == 'function') {
@@ -97,9 +98,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            				this.options.onLoad(this, id, result);
 	            			}
 	            		}
-
-	            		this.changeContent(result.html, finalCallback);
-	            		
 	            	} else {
 	            		this.hide();
 	            	}

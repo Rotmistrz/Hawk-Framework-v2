@@ -34,8 +34,7 @@ $(document).ready(function() {
     var HawkExamples = {};
 
 
-    HawkExamples.anchorsManager = new Hawk.AnchorsManager();
-    HawkExamples.anchorsManager.run();
+    
 
     HawkExamples.exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'));
     HawkExamples.exemplaryDropdown.run();
@@ -85,7 +84,7 @@ $(document).ready(function() {
     HawkVariables.colorFieldsController.run();
 
 
-    HawkVariables.ajaxLoadingItemsManager = new Hawk.AjaxLoadingItemsManager($("#ajax-loading-items-manager"), {
+    HawkVariables.ajaxLoadingItemsManager = new Hawk.AjaxLoadingItemsManager($("#exemplary-ajax-loading-items-manager"), {
         itemsPerLoading: 3
     });
     HawkVariables.ajaxLoadingItemsManager.run();
@@ -175,11 +174,11 @@ $(document).ready(function() {
     });
     App.Examples.Pager.run(10);
 
-    App.Examples.AjaxItemsManager = new Hawk.AjaxItemsManager($('#ajax-items-manager'), {
+    App.Examples.AjaxItemsManager = new Hawk.AjaxItemsManager($('#exemplary-ajax-items-manager'), {
 
     });
 
-    App.Examples.AjaxItemsManagerPager = new Hawk.Pager($('#ajax-items-manager .hawk-pager'), {
+    App.Examples.AjaxItemsManagerPager = new Hawk.Pager($('#exemplary-ajax-items-manager .hawk-pager'), {
         onPageChanged: (pager, nr) => {
             console.log(nr);
 
@@ -191,5 +190,14 @@ $(document).ready(function() {
     App.Examples.AjaxItemsManager.addPager(App.Examples.AjaxItemsManagerPager);
 
     App.Examples.AjaxItemsManager.run(1);
+
+
+
+
+    setTimeout(function() {
+        HawkExamples.anchorsManager = new Hawk.AnchorsManager();
+        HawkExamples.anchorsManager.run();
+    }, 1000);
+    
 
 });

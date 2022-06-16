@@ -2,7 +2,6 @@ var Hawk = {};
 Hawk = {
     w: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
     h: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-    hash: window.location.hash,
     anchorSuffix: '-anchor',
 }
 Hawk.RequestStatus = {
@@ -10,12 +9,15 @@ Hawk.RequestStatus = {
     ERROR: 1,
     EXCEPTION: 2
 };
+Hawk.getHash = function() {
+    return window.location.hash;
+}
 Hawk.anchorRegex = new RegExp("^[^\/]+$");
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
     if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
-        return this.hash.replaceAll('/', '');
+        return this.getHash().replaceAll('/', '');
     } else {
-        return this.hash.substring(1).replaceAll('/', '');
+        return this.getHash().substring(1).replaceAll('/', '');
     }
 }
 Hawk.isInObject = function(value, obj) {
@@ -233,6 +235,7 @@ Hawk.AnchorsManager = class {
     constructor(options) {
         this.defaultOptions = {
             delay: 100,
+            loadingDelay: 500,
             menu: undefined,
             anchorSuffix: Hawk.anchorSuffix,
             eventName: "click.anchorsManager",
@@ -247,6 +250,9 @@ Hawk.AnchorsManager = class {
     }
     getAnchorSuffix() {
         return this.options.anchorSuffix;
+    }
+    getAnchorOfHash(hash) {
+        return hash + this.getAnchorSuffix();
     }
     goTo(anchor) {
         Hawk.scrollToElement({
@@ -290,6 +296,15 @@ Hawk.AnchorsManager = class {
     }
     run() {
         this.refresh();
+        const currentHash = Hawk.getHash();
+        if (currentHash.length > 0) {
+            const preparedAnchor = this.getAnchorOfHash(currentHash);
+            if ($(preparedAnchor).length > 0) {
+                setTimeout(() => {
+                    this.goTo(currentHash);
+                }, this.options.loadingDelay);
+            }
+        }
     }
 }
 // Hawk.OldAnchorsManager = function(options) {
@@ -1743,12 +1758,11 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
             path: "/ajax/load-overlayer",
             fadeSpeed: 200,
             slideSpeed: 200,
-            wrapperClass: 'overlayer__wrapper',
-            innerClass: 'overlayer__inner',
             contentContainerClass: 'overlayer__content-container',
             contentClass: 'overlayer__content',
             loadingLayerClass: 'overlayer__loading-layer',
             closeButtonClass: 'ajax-overlayer-close',
+            buttonClass: 'ajax-overlayer-button',
             onLoad: (aom, id, bundle) => {}
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -1760,7 +1774,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         return this.lang;
     }
     getButtonsSelector() {
-        return '.ajax-overlayer-button[data-overlayer-id="' + this.getOverlayerID() + '"]';
+        return '.' + this.options.buttonClass + '[data-overlayer-id="' + this.getOverlayerID() + '"]';
     }
     hide() {
         if (this.isWorking()) {
@@ -1806,13 +1820,13 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                 success: (result) => {
                     //console.log(result);
                     if (result.status == Hawk.RequestStatus.SUCCESS) {
+                        this.changeContent(result.html, finalCallback);
                         let finalCallback = () => {};
                         if (typeof this.options.onLoad == 'function') {
                             finalCallback = () => {
                                 this.options.onLoad(this, id, result);
                             }
                         }
-                        this.changeContent(result.html, finalCallback);
                     } else {
                         this.hide();
                     }

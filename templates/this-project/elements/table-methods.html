@@ -17,7 +17,7 @@
                                     </div>
                                 </td>
 
-                                <td class="std-table__cell">
+                                <td class="std-table__cell std-table__cell--parameter">
                                     <ul class="plain-list plain-list--more-space">
                                         {% for parameter in method.parameters %}
                                         <li>
@@ -30,7 +30,7 @@
                                                    {{ parameter.type }}
                                                 </div>
 
-                                                <div class="parameter__description">
+                                                <div class="parameter__description text">
                                                 {{ parameter.description }}
                                                 </div>
                                             </div>
@@ -39,7 +39,7 @@
                                     </ul>
                                 </td>
 
-                                <td class="std-table__cell">
+                                <td class="std-table__cell text">
                                     {{ method.description }}
                                 </td>
                             </tr>

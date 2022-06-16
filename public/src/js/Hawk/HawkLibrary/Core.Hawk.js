@@ -4,7 +4,6 @@ Hawk = {
     w: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
     h: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
 
-    hash: window.location.hash,
     anchorSuffix: '-anchor',
 }
 
@@ -14,13 +13,17 @@ Hawk.RequestStatus = {
     EXCEPTION: 2
 };
 
+Hawk.getHash = function() {
+    return window.location.hash;
+}
+
 Hawk.anchorRegex = new RegExp("^[^\/]+$");
 
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
     if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
-        return this.hash.replaceAll('/', '');
+        return this.getHash().replaceAll('/', '');
     } else {
-        return this.hash.substring(1).replaceAll('/', '');
+        return this.getHash().substring(1).replaceAll('/', '');
     }
 }
 

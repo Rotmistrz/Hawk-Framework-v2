@@ -439,6 +439,9 @@ a {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.std-table__cell--parameter {
+  width: 25%;
+}
 
 .property__name {
   font-weight: 700;

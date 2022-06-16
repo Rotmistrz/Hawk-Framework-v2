@@ -2,6 +2,7 @@ Hawk.AnchorsManager = class {
     constructor(options) {
         this.defaultOptions = {
             delay: 100,
+            loadingDelay: 500,
             menu: undefined,
             anchorSuffix: Hawk.anchorSuffix,
             eventName: "click.anchorsManager",
@@ -20,6 +21,10 @@ Hawk.AnchorsManager = class {
 
     getAnchorSuffix() {
         return this.options.anchorSuffix;
+    }
+
+    getAnchorOfHash(hash) {
+        return hash + this.getAnchorSuffix();
     }
 
     goTo(anchor) {
@@ -69,6 +74,18 @@ Hawk.AnchorsManager = class {
 
     run() {
         this.refresh();
+
+        const currentHash = Hawk.getHash();
+
+        if (currentHash.length > 0) {
+            const preparedAnchor = this.getAnchorOfHash(currentHash);
+
+            if ($(preparedAnchor).length > 0) {
+                setTimeout(() => {
+                    this.goTo(currentHash);
+                }, this.options.loadingDelay);
+            }
+        }
     }
 }
 

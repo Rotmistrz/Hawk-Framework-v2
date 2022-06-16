@@ -171,7 +171,7 @@ class MasterController extends AbstractController {
                     [
                         'name' => "isOpen",
                         'type' => "boolean",
-                        'description' => "-",
+                        'description' => "Informs if the dropdown is open or not.",
                         'parameters' => [
                             
                         ]
@@ -472,23 +472,158 @@ class MasterController extends AbstractController {
                         'name' => "path",
                         'type' => "string",
                         'default' => "/ajax/load-overlayer",
-                        'description' => "An endpoint where the request is being sent."
+                        'description' => "Path to the endpoint which processes the Request and returns a JSON Response with the content that is going to be shown on the layer. The Request and Response structure is descripted <a href=\"\">here</a>."
+                    ],
+                    [
+                        'name' => "fadeSpeed",
+                        'type' => "integer",
+                        'default' => 200,
+                        'description' => "The speed of the overlayer's appearing and disappearing (in miliseconds)."
+                    ],
+                    [
+                        'name' => "slideSpeed",
+                        'type' => "integer",
+                        'default' => 200,
+                        'description' => "The speed of expanding the content on the layer (in miliseconds)."
+                    ],
+
+                    [
+                        'name' => "contentContainerClass",
+                        'type' => "string",
+                        'default' => "overlayer__content-container",
+                        'description' => "The class' name of the content's container."
+                    ],
+                    [
+                        'name' => "contentClass",
+                        'type' => "string",
+                        'default' => "overlayer__content",
+                        'description' => "The class' name of the content element."
+                    ],
+                    [
+                        'name' => "loadingLayerClass",
+                        'type' => "string",
+                        'default' => "overlayer__loading-layer",
+                        'description' => "The class' name of the layer which is visible when the content is loading."
+                    ],
+
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "ajax-overlayer-button",
+                        'description' => "The class' name of the elements which open the overlayer. They are descripted wider above."
+                    ],
+                    [
+                        'name' => "closeButtonClass",
+                        'type' => "string",
+                        'default' => "ajax-overlayer-close",
+                        'description' => "The class' name of the element which closes the overlayer. This element needs to be inside the overlayer container (may be in the loaded part, though)."
                     ]
                 ],
                 'callbacks' => [
                     [
                         'name' => "onLoad",
-                        'description' => "Makes the content visible. Velocity's <span class=\"inline-code\">slideDown</span> by default.",
+                        'description' => "It is invoked when the content has been loaded.",
                         'parameters' => [
                             [
                                 'name' => "ajaxOverlayerManager",
                                 'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "current instance of Hawk.AjaxOverlayerManager"
+                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                            ],
+                            [
+                                'name' => "id",
+                                'type' => "string",
+                                'description' => "ID of the loaded content."
+                            ],
+                            [
+                                'name' => "result",
+                                'type' => "object",
+                                'description' => "The whole result object returned by the server."
                             ]
                         ]
                     ]
                 ],
-                'methods' => []
+                'methods' => [
+                    [
+                        'name' => "getOverlayerID",
+                        'type' => "integer",
+                        'description' => "Returns the overlayer's id number.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "getLang",
+                        'type' => "string",
+                        'description' => "Returns the language code which is inferred from the <code class=\"inline-code\">lang</code> attribute of the <code class=\"inline-code\">html</code> element.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+
+                    [
+                        'name' => "hide",
+                        'type' => "void",
+                        'description' => "Closes the overlayer.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+                    [
+                        'name' => "show",
+                        'type' => "void",
+                        'description' => "Shows the overlayer.",
+                        'parameters' => [
+                            
+                        ]
+                    ],
+
+                    [
+                        'name' => "load",
+                        'type' => "void",
+                        'description' => "Loads the content. Sends the Request to the endpoint defined in the options and shows the overlayer with the already loaded content.",
+                        'parameters' => [
+                            [
+                                'name' => "id",
+                                'type' => "string",
+                                'default' => "-",
+                                'description' => "The ID of the content that should be loaded (sent with the Request). Helps the server to return the appropriate result."
+                            ],
+                            [
+                                'name' => "bundle",
+                                'type' => "object",
+                                'default' => "{}",
+                                'description' => "The extra parameters that can be used by the backend service."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "changeContent",
+                        'type' => "void",
+                        'description' => "Changes the content inside the overlayer.",
+                        'parameters' => [
+                            [
+                                'name' => "content",
+                                'type' => "string",
+                                'default' => "-",
+                                'description' => "The string containing the HTML code that is going to be shown in the overlayer."
+                            ],
+                            [
+                                'name' => "callback",
+                                'type' => "function",
+                                'default' => "null",
+                                'description' => "The callback that is being invoked after the content is changed."
+                            ]
+                        ]
+                    ],
+
+                    [
+                        'name' => "run",
+                        'type' => "void",
+                        'description' => "Launches the Ajax Overlayer Manager and binds the DOM elements with necessary events. ",
+                        'parameters' => [
+                        ]
+                    ]
+                ]
             ],
 
             'slidingLayerManager' => [
