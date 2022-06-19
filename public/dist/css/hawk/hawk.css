@@ -1,4 +1,16 @@
 /* RWD */
+@keyframes Rotate {
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
 /***** HEADERS *****/
 .section-header {
   padding: 0 0 32px 0;
@@ -1282,6 +1294,24 @@
   transform: rotate(135deg);
 }
 
+.icon-loader {
+  width: 32px;
+  height: 32px;
+  display: block;
+  background: url("/img/icons/icon-loader.svg") no-repeat center;
+  background-size: contain;
+}
+
+.icon-loader--light {
+  background-image: url("/img/icons/icon-loader-light.svg");
+}
+
+.icon-loader--animated {
+  -webkit-animation: Rotate 2s infinite linear;
+  -moz-animation: Rotate 2s infinite linear;
+  animation: Rotate 2s infinite linear;
+}
+
 /***** MODULES *****/
 .hawk-dropdown {
   position: relative;
@@ -1545,6 +1575,16 @@
   top: 20px;
   right: 20px;
   cursor: pointer;
+}
+.std-overlayer__loading-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }
 
 /** END_MODULES **/

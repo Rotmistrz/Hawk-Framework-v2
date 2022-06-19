@@ -1,19 +1,31 @@
-<div class="text">
-    <p>
-    Vestibulum tortor at libero. Pellentesque habitant morbi tristique purus. Integer egestas, nunc faucibus sem pede eget elit. 
-    </p>
+<button class="button ajax-overlayer-button" type="button" data-overlayer-id="1" data-id="1">
+    <div class="button__wrapper">
+        <div class="button__inner">
+            See the overlayer
+        </div>
+    </div>
+</button>
 
-    <p class="hawk-more-content" data-more-content-manager="1" data-id="1">
-        Aliquam tellus tortor, hendrerit magna sit amet, elementum consequat. Cum sociis natoque penatibus et ultrices posuere quis, porttitor sem luctus metus nonummy enim quis dui. Class aptent taciti sociosqu ad litora torquent per inceptos hymenaeos. Fusce nisl eros, varius egestas, orci ac dolor. Vestibulum dignissim dapibus dui, porta elementum. Nunc arcu nunc pede ac augue nec pede tortor nibh, dignissim massa. Duis luctus
-    </p>
-</div>
+<!-- (...) page's structure goes on -->
 
-<div class="button-container">
-    <button class="button hawk-more-content-button" data-more-content-manager="1" data-id="1" data-opposite-text="Read less" type="button">
-        <div class="button__wrapper">
-            <div class="button__inner hawk-more-content-button__content">
-            Read more
+<!-- ...and the overlayer's structure at the end of the body -->
+
+<section id="overlayer" class="overlayer std-overlayer" data-overlayer-id="1">
+    <div class="std-overlayer__wrapper">
+        <div class="overlayer__content-container std-overlayer__inner">
+            <div class="overlayer__content">
+
             </div>
         </div>
-    </button>
-</div>
+
+        <div class="overlayer__close std-overlayer__close">
+            <div class="icon-plus icon-plus--rotated icon-plus--light">
+            </div>
+        </div>
+    </div>
+
+    <div class="overlayer__loading-layer std-overlayer__loading-layer">
+        <div class="icon-loader icon-loader--light icon-loader--animated">
+        </div>
+    </div>
+</section>

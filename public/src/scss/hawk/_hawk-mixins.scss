@@ -66,6 +66,12 @@
   animation-timing-function: $timing-function;
 }
 
+@mixin animation($animation) {
+  -webkit-animation: $animation;
+  -moz-animation: $animation;
+  animation: $animation;
+}
+
 @mixin background-gradient-right($color-01, $color-02, $color-03) {
   -moz-background: -moz-linear-gradient(left, $color-01, $color-02, $color-03);
   -webkit-background: -webkit-linear-gradient(left, $color-01, $color-02, $color-03);

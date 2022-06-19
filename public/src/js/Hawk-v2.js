@@ -1754,6 +1754,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.contentContainer;
         this.content;
         this.closeButton;
+        this.loadingLayer;
         this.defaultOptions = {
             path: "/ajax/load-overlayer",
             fadeSpeed: 200,
@@ -1805,6 +1806,10 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         if (!this.isWorking()) {
             this.startWorking();
             this.show();
+            this.loadingLayer.velocity("fadeIn", {
+                display: 'flex',
+                duration: this.options.fadeSpeed
+            });
             if (typeof bundle == 'undefined') {
                 bundle = {};
             }
@@ -1838,6 +1843,9 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                 },
                 complete: () => {
                     this.finishWorking();
+                    this.loadingLayer.velocity("fadeOut", {
+                        duration: this.options.fadeSpeed
+                    });
                 }
             }));
         }
@@ -1889,6 +1897,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
         this.content = this.container.find('.' + this.options.contentClass);
         this.closeButton = this.container.find('.' + this.options.closeButtonClass);
+        this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
         this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
         this.container.click((e) => {
             this.hide();

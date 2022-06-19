@@ -467,12 +467,48 @@ class MasterController extends AbstractController {
                     ]), true)
                 ],
 
+                'request' => [
+                    [
+                        'name' => "id",
+                        'type' => "string",
+                        'description' => "The ID of the content that is going to be loaded."
+                    ],
+                    [
+                        'name' => "bundle",
+                        'type' => "array",
+                        'description' => "A bundle of extra values that can be required to load the&nbsp;appropriate content."
+                    ],
+                    [
+                        'name' => "lang",
+                        'type' => "string",
+                        'description' => "The language code that is taken from the <code class=\"inline-code\">lang</code> attribute of <code class=\"inline-code\">html</code> element."
+                    ]
+                ],
+
+                'response' => [
+                    [
+                        'name' => "status",
+                        'type' => "Hawk.RequestStatus (integer)",
+                        'description' => "The status of the processed response. <a href=\"#ajax-communication\">See more</a>"
+                    ],
+                    [
+                        'name' => "html",
+                        'type' => "string",
+                        'description' => "The HTML content that should be displayed on the overlayer."
+                    ],
+                    [
+                        'name' => "id",
+                        'type' => "string",
+                        'description' => "The ID of the content that is loaded (should be the same as in the Request)."
+                    ]
+                ],
+
                 'properties' => [
                     [
                         'name' => "path",
                         'type' => "string",
                         'default' => "/ajax/load-overlayer",
-                        'description' => "Path to the endpoint which processes the Request and returns a JSON Response with the content that is going to be shown on the layer. The Request and Response structure is descripted <a href=\"\">here</a>."
+                        'description' => "Path to the endpoint which processes the Request and returns a JSON Response with the content that is going to be shown on the layer. The Request and Response structure is descripted below."
                     ],
                     [
                         'name' => "fadeSpeed",

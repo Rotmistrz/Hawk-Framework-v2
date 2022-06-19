@@ -1,0 +1,20 @@
+                        <table class="std-table">
+                            <tr class="std-table__header">
+                                <th class="std-table__cell std-table__cell--header">Name</th>
+                                <th class="std-table__cell std-table__cell--header">Description</th>
+                            </tr>
+
+                            {% for property in response %}
+                            <tr class="std-table__row">
+                                <td class="std-table__cell">
+                                    <div class="property">
+                                        <div class="property__name">{{ property.name }}</div>
+                                        <div class="property__type">{{ property.type }}</div>
+                                    </div>
+                                </td>
+                                <td class="std-table__cell text">
+                                    {{ property.description }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>

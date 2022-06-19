@@ -115,6 +115,34 @@
                     </section>
                 </div>
                 {% endif %}
+
+                {% if presentationSection.request|length > 0 %}
+                <div class="row row--more-space">
+                    <header class="subsection-header">
+                        <h3 class="subsection-title">Request</h3>
+                    </header>
+
+                    <section class="subsection">
+                        {% include('this-project/elements/table-request.html') with {
+                            request: presentationSection.request
+                        } %}
+                    </section>
+                </div>
+                {% endif %}
+
+                {% if presentationSection.response|length > 0 %}
+                <div class="row row--more-space">
+                    <header class="subsection-header">
+                        <h3 class="subsection-title">Response</h3>
+                    </header>
+
+                    <section class="subsection">
+                        {% include('this-project/elements/table-response.html') with {
+                            response: presentationSection.response
+                        } %}
+                    </section>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,32 +1,57 @@
 {% set presentationSection = {
-    title: 'Ajax overlayer manager',
+    title: 'Ajax Overlayer Manager',
     anchor: 'ajax-overlayer-manager',
     listings: {
+        html: ajaxOverlayerManager.listings.html,
         js: ajaxOverlayerManager.listings.js
     },
     links: [
         {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/AjaxOverlayerManager.Hawk.js',
             type: 'js',
             title: 'AjaxOverlayerManager.Hawk.js'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager.scss',
+            type: 'css',
+            title: 'hawk-ajax-overlayer-manager.scss'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager-theme.scss',
+            type: 'css',
+            title: 'hawk-ajax-overlayer-manager-theme.scss'
         }
     ],
 
     properties: ajaxOverlayerManager.properties,
     callbacks: ajaxOverlayerManager.callbacks,
-    methods: ajaxOverlayerManager.methods
+    methods: ajaxOverlayerManager.methods,
+    request: ajaxOverlayerManager.request,
+    response: ajaxOverlayerManager.response
 } %}
 
 {% extends 'contents/_presentation-section.html' %}
 
 {% block exampleAndDescription %}
 <section class="subsection bounded-section">
-    <button class="button ajax-overlayer-button" type="button" data-overlayer-id="1" data-id="1">
-        <div class="button__wrapper">
-            <div class="button__inner">
-                See overlayer
+    <div class="text">
+        <p>
+            <strong>Ajax Overlayer Manager</strong> allows to show some content above the page, i.e. some details about things presented in the text which don't need to be visible all the time. The content that should be displayed on the overlayer is being loaded from the server using the AJAX technology.
+        </p>
+
+        <p>
+            This Component needs the special HTML structure at the end of the document. The buttons that launch the mechanism should have the certain form as well. They need to have the <code class="inline-code">ajax-overlayer-button</code> classname (could be changed in the options), the <code class="inline-code">data-id</code> attribute whose value indicates the content to load and the <code class="inline-code">data-overlayer-id</code> that contains the ID of the Ajax Overlayer Manager which should handle the request. They can also have the <code class="inline-code">data-bundle</code> attribute which keeps the extra values being sent to the server. The Bundle is in the inline <code class="inline-code">key=value</code> shape.
+        </p>
+    </div>
+
+    <div class="row">
+        <button class="button ajax-overlayer-button" type="button" data-overlayer-id="1" data-id="1">
+            <div class="button__wrapper">
+                <div class="button__inner">
+                    See the overlayer
+                </div>
             </div>
-        </div>
-    </button>
+        </button>
+    </div>
 </section>
 {% endblock %}

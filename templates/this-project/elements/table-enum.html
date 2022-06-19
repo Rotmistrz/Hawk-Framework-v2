@@ -1,0 +1,23 @@
+                        <table class="std-table">
+                            <tr class="std-table__header">
+                                <th class="std-table__cell std-table__cell--header">Name</th>
+                                <th class="std-table__cell std-table__cell--header">Value</th>
+                                <th class="std-table__cell std-table__cell--header">Description</th>
+                            </tr>
+
+                            {% for value in values %}
+                            <tr class="std-table__row">
+                                <td class="std-table__cell">
+                                    <code class="code">
+                                        {{ value.name }}
+                                    </code>
+                                </td>
+                                <td class="std-table__cell text">
+                                    {{ value.value }}
+                                </td>
+                                <td class="std-table__cell text">
+                                    {{ value.description }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>

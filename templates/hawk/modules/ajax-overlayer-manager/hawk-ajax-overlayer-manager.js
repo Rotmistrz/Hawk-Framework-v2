@@ -1,4 +1,4 @@
-var ajaxOverlayerManager = new Hawk.AjaxOverlayerManager($('#overlayer'), {
+App.Components.DefaultAjaxOverlayerManager = new Hawk.AjaxOverlayerManager($('#overlayer'), {
     // options and callbacks
 });
-ajaxOverlayerManager.run();
+App.Components.DefaultAjaxOverlayerManager.run();
