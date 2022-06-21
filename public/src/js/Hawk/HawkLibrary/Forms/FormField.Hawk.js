@@ -18,6 +18,10 @@ Hawk.FormField = class {
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
 	}
 
+	getField() {
+		return this.field;
+	}
+
 	getName() {
 		return this.name;
 	}
