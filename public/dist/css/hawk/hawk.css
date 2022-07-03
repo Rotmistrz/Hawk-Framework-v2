@@ -394,6 +394,10 @@
   }
 }
 
+.flex-column--no-top-space {
+  padding-top: 0;
+}
+
 @media (min-width: 768px) {
   .flex-column--8 {
     min-width: 66.66%;
@@ -485,6 +489,39 @@
   }
   .flex-column--6.flex-column--big-space:nth-child(2) {
     padding-left: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .flex-column--6.flex-column--huge-space:nth-child(1) {
+    padding-right: 32px;
+  }
+  .flex-column--6.flex-column--huge-space:nth-child(2) {
+    padding-left: 32px;
+  }
+}
+@media (min-width: 1300px) {
+  .flex-column--6.flex-column--huge-space:nth-child(1) {
+    padding-right: 48px;
+  }
+  .flex-column--6.flex-column--huge-space:nth-child(2) {
+    padding-left: 48px;
+  }
+}
+@media (min-width: 1500px) {
+  .flex-column--6.flex-column--huge-space:nth-child(1) {
+    padding-right: 80px;
+  }
+  .flex-column--6.flex-column--huge-space:nth-child(2) {
+    padding-left: 80px;
+  }
+}
+@media (min-width: 1700px) {
+  .flex-column--6.flex-column--huge-space:nth-child(1) {
+    padding-right: 100px;
+  }
+  .flex-column--6.flex-column--huge-space:nth-child(2) {
+    padding-left: 100px;
   }
 }
 
@@ -861,6 +898,21 @@
 
 .form--bounded {
   max-width: 400px;
+}
+
+.horizontal-form__row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.horizontal-form__item {
+  padding: 0 16px;
+}
+.horizontal-form__item:first-child {
+  padding-left: 0;
+}
+.horizontal-form__item:last-child {
+  padding-right: 0;
 }
 
 .form-field {
@@ -1703,13 +1755,6 @@
   padding: 20px 0;
   border-top: 1px solid #E5E5E5;
 }
-.details-list-item:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-.details-list-item:last-child {
-  padding-bottom: 0;
-}
 .details-list-item__header {
   display: flex;
   justify-content: space-between;
@@ -1720,6 +1765,18 @@
 }
 .details-list-item__content-container {
   padding: 20px 0 0 0;
+}
+
+@media (min-width: 768px) {
+  .details-list-item--lose-the-separator-on-desktop {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+.details-list-item--lose-the-separator-always {
+  padding-top: 0;
+  border-top: 0;
 }
 
 /** END_MODULES **/
