@@ -13,7 +13,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.contentContainer;
 		this.content;
 		this.closeButton;
-		this.loadingLayer;
 
 		this.defaultOptions = {
 			path: "/ajax/load-overlayer",
@@ -21,14 +20,17 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			fadeSpeed: 200,
 			slideSpeed: 200,
 
+			wrapperClass: 'overlayer__wrapper',
+			innerClass: 'overlayer__inner',
 			contentContainerClass: 'overlayer__content-container',
 			contentClass: 'overlayer__content',
 
 			loadingLayerClass: 'overlayer__loading-layer',
 			closeButtonClass: 'ajax-overlayer-close',
-			buttonClass: 'ajax-overlayer-button',
 
-			onLoad: (aom, id, bundle) => {}
+			onLoad: (aom, id, bundle) => {},
+			onShow: (aom) => {},
+			onHide: (aom) => {}
 		};
 
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -43,13 +45,15 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	getButtonsSelector() {
-		return '.' + this.options.buttonClass + '[data-overlayer-id="' + this.getOverlayerID() + '"]';
+		return '.ajax-overlayer-button[data-overlayer-id="' + this.getOverlayerID() + '"]';
 	}
 
 	hide() {
 		if (this.isWorking()) {
 			this.abortRequest();
 		}
+
+		this.options.onHide(this);
 
 		this.container.velocity("fadeOut", {
 			duration: this.options.fadeSpeed,
@@ -63,6 +67,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	show() {
+		this.options.onShow(this);
+
 		this.container.velocity("fadeIn", {
 			duration: this.options.fadeSpeed,
 			complete: () => {
@@ -76,10 +82,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			this.startWorking();
 
 			this.show();
-			this.loadingLayer.velocity("fadeIn", {
-				display: 'flex',
-				duration: this.options.fadeSpeed
-			});
 
 			if (typeof bundle == 'undefined') {
 				bundle = {};
@@ -91,11 +93,9 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            dataType: "json",
 	            data: { id: id, bundle: bundle, lang: this.getLang() },
 	            success: (result) => {
-	            	//console.log(result);
+	            	console.log(result);
 
 	            	if (result.status == Hawk.RequestStatus.SUCCESS) {
-	            		this.changeContent(result.html, finalCallback);
-	            		
 	            		let finalCallback = () => {};
 
 	            		if (typeof this.options.onLoad == 'function') {
@@ -103,6 +103,9 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            				this.options.onLoad(this, id, result);
 	            			}
 	            		}
+
+	            		this.changeContent(result.html, finalCallback);
+	            		
 	            	} else {
 	            		this.hide();
 	            	}
@@ -115,10 +118,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            },
 	            complete: () => {
 	                this.finishWorking();
-
-	                this.loadingLayer.velocity("fadeOut", {
-	                	duration: this.options.fadeSpeed
-					});
 	            }
 	        }));
 		}
@@ -177,7 +176,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
 		this.content = this.container.find('.' + this.options.contentClass);
 		this.closeButton = this.container.find('.' + this.options.closeButtonClass);
-		this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
 
 		this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
 

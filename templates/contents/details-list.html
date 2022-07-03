@@ -1,0 +1,87 @@
+{% set presentationSection = {
+    title: 'Details List',
+    anchor: 'details-list',
+    listings: {
+        html: detailsList.listings.html,
+        js: detailsList.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/AjaxOverlayerManager.Hawk.js',
+            type: 'js',
+            title: 'AjaxOverlayerManager.Hawk.js'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager.scss',
+            type: 'css',
+            title: 'hawk-ajax-overlayer-manager.scss'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager-theme.scss',
+            type: 'css',
+            title: 'hawk-ajax-overlayer-manager-theme.scss'
+        }
+    ],
+
+    properties: detailsList.properties,
+    callbacks: detailsList.callbacks,
+    methods: detailsList.methods,
+    request: detailsList.request,
+    response: detailsList.response
+} %}
+
+{% extends 'contents/_presentation-section.html' %}
+
+{% block exampleAndDescription %}
+<section class="subsection bounded-section">
+    <div class="text">
+        <p>
+            <strong>Details List</strong> is very useful to show the detailed content on demand.
+        </p>
+    </div>
+
+    <div class="row">
+        <ul id="exemplary-details-list" class="hawk-details-list">
+            <li class="hawk-details-list__item details-list-item">
+                <header class="hawk-details-list__header details-list-item__header">
+                    <h3 class="simple-title simple-title--small">Quisque iaculis, metus vitae lobortis posuere, purus elit mattis felis?</h3>
+
+                    <div class="details-list-item__icon-container">
+                        <div class="details-list-item__icon icon-arrow icon-arrow--primary icon-arrow--south"></div>
+                    </div>
+                </header>
+
+                <div class="hawk-details-list__content-container details-list-item__content-container">
+                    <div class="hawk-details-list__content">
+                        <div class="text">
+                            <p>
+                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas facilisis mi sed lorem posuere, id auctor purus mollis. Quisque iaculis, metus vitae lobortis posuere, purus elit mattis felis, at gravida leo urna sagittis lectus.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="hawk-details-list__item details-list-item">
+                <header class="hawk-details-list__header details-list-item__header">
+                    <h3 class="simple-title simple-title--small">Suspendisse sollicitudin, lorem in luctus vulputate, dolor nibh venenatis elit?</h3>
+
+                    <div class="details-list-item__icon-container">
+                        <div class="details-list-item__icon icon-arrow icon-arrow--primary icon-arrow--south"></div>
+                    </div>
+                </header>
+
+                <div class="hawk-details-list__content-container details-list-item__content-container">
+                    <div class="hawk-details-list__content">
+                        <div class="text">
+                            <p>
+                            Praesent tellus nibh, consequat a euismod ut, malesuada vel nulla. Praesent eu feugiat dui. Curabitur ac aliquam ipsum. Quisque ornare hendrerit augue, sit amet tincidunt tellus porttitor et. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce aliquam nibh ligula, at ultricies nunc aliquet non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+{% endblock %}

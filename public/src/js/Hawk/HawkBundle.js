@@ -30,6 +30,7 @@
 // require ./HawkLibrary/Components/Component.Hawk.js
 // require ./HawkLibrary/Components/ComponentClass.Hawk.js
 
+// require ./HawkLibrary/DetailsList.Hawk.js
 // require ./HawkLibrary/AjaxOverlayerManager.Hawk.js
 
 export default Hawk;

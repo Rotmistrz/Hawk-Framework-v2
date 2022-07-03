@@ -1,3 +1,30 @@
+.extended-icon {
+	display: block;
+	overflow: hidden;
+	position: relative;
+	text-indent: -10000px;
+	text-align: left;
+
+	&:before,
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		@include transition(all .2s linear);
+	}
+
+	&:after {
+		opacity: 0;
+	}
+}
+
 .icon-plus {
 	width: 16px;
 	height: 16px;
@@ -43,6 +70,8 @@
 	width: 12px;
 	height: 12px;
 	@include box-sizing(content-box);
+	@include transition(all .2s linear);
+	position: relative;
 }
 .icon-arrow--small {
 	width: 8px;
@@ -62,12 +91,16 @@
 }
 .icon-arrow--north {
 	@include transform(rotate(-45deg));
+	top: -2px;
 }
 .icon-arrow--east {
 	@include transform(rotate(45deg));
 }
 .icon-arrow--south {
 	@include transform(rotate(135deg));
+}
+.icon-arrow--primary {
+	border-color: $primary-color;
 }
 
 .icon-loader {

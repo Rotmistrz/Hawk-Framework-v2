@@ -1,0 +1,27 @@
+.details-list-item {
+	padding: 20px 0;
+	border-top: 1px solid $light-color-10;
+
+	&:first-child {
+		padding-top: 0;
+		border-top: 0;
+	}
+
+	&:last-child {
+		padding-bottom: 0;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__icon-container {
+		padding: 0 0 0 32px;
+	}
+
+	&__content-container {
+		padding: 20px 0 0 0;
+	}
+}

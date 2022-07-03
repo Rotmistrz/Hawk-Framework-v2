@@ -265,16 +265,16 @@ Hawk.AnchorsManager = class {
     }
     movingAction(e) {
         const regex = /#{1}.+$/;
-        const link = $(e.target);
+        const link = $(e.currentTarget);
         const href = link.attr('href');
         let anchor;
         let extraDelay = 0;
-        const rawAnchor = href + this.getAnchorSuffix();
         if (anchor = regex.exec(href)) {
+            const rawAnchor = anchor[0] + this.getAnchorSuffix();
             if ($(rawAnchor).length > 0) {
                 e.preventDefault();
                 if (typeof this.options.menu !== 'undefined' && link.parents().is(this.options.menu.menu)) {
-                    extraDelay = that.options.menu.totalDuration();
+                    extraDelay = this.options.menu.totalDuration();
                     this.options.menu.hide();
                 }
                 const finalDelay = this.options.delay + extraDelay;
@@ -1250,6 +1250,9 @@ Hawk.FormField = class {
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
     }
+    getField() {
+        return this.field;
+    }
     getName() {
         return this.name;
     }
@@ -1743,6 +1746,73 @@ Hawk.ComponentClass = class {
         });
     }
 }
+Hawk.DetailsList = class extends Hawk.SingleThreadClass {
+    constructor(container, options) {
+        super();
+        this.container = $(container);
+        this.current = null;
+        this.headers = null;
+        this.options = {};
+        this.defaultOptions = {
+            itemClass: "hawk-details-list__item",
+            headerClass: "hawk-details-list__header",
+            contentContainerClass: "hawk-details-list__content-container",
+            contentClass: "hawk-details-list__content",
+            eventName: "click.detailsList",
+            autoHide: true,
+            getContentContainer: (header) => {
+                return header.siblings('.' + this.options.contentContainerClass);
+            },
+            slideSpeed: 200,
+            fadeSpeed: 200,
+            onShow: (dl, header, contentContainer) => {
+                header.find('.details-list-item__icon').removeClass('icon-arrow--south').addClass('icon-arrow--north');
+            },
+            onHide: (dl, header, contentContainer) => {
+                header.find('.details-list-item__icon').removeClass('icon-arrow--north').addClass('icon-arrow--south');
+            }
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    show(header) {
+        if (this.options.autoHide && this.current != null) {
+            this.hide(this.current);
+        }
+        this.current = header;
+        const contentContainer = this.options.getContentContainer(header);
+        contentContainer.velocity("slideDown", {
+            duration: this.options.slideSpeed
+        });
+        this.options.onShow(this, header, contentContainer);
+    }
+    showByIndex(index) {}
+    hide(header) {
+        const contentContainer = this.options.getContentContainer(header);
+        contentContainer.velocity("slideUp", {
+            duration: this.options.slideSpeed
+        });
+        this.options.onHide(this, header, contentContainer);
+    }
+    refreshDependencies() {
+        if (this.headers !== null) {
+            this.headers.unbind(this.options.eventName);
+        }
+        const that = this;
+        this.headers = this.container.find('.' + this.options.headerClass);
+        this.headers.bind(this.options.eventName, function() {
+            const header = $(this);
+            const contentContainer = that.options.getContentContainer(header);
+            if (contentContainer.is(':visible')) {
+                that.hide(header);
+            } else {
+                that.show(header);
+            }
+        });
+    }
+    run() {
+        this.refreshDependencies();
+    }
+}
 Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
     constructor(container, options) {
         super();
@@ -1754,17 +1824,19 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.contentContainer;
         this.content;
         this.closeButton;
-        this.loadingLayer;
         this.defaultOptions = {
             path: "/ajax/load-overlayer",
             fadeSpeed: 200,
             slideSpeed: 200,
+            wrapperClass: 'overlayer__wrapper',
+            innerClass: 'overlayer__inner',
             contentContainerClass: 'overlayer__content-container',
             contentClass: 'overlayer__content',
             loadingLayerClass: 'overlayer__loading-layer',
             closeButtonClass: 'ajax-overlayer-close',
-            buttonClass: 'ajax-overlayer-button',
-            onLoad: (aom, id, bundle) => {}
+            onLoad: (aom, id, bundle) => {},
+            onShow: (aom) => {},
+            onHide: (aom) => {}
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
     }
@@ -1775,12 +1847,13 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         return this.lang;
     }
     getButtonsSelector() {
-        return '.' + this.options.buttonClass + '[data-overlayer-id="' + this.getOverlayerID() + '"]';
+        return '.ajax-overlayer-button[data-overlayer-id="' + this.getOverlayerID() + '"]';
     }
     hide() {
         if (this.isWorking()) {
             this.abortRequest();
         }
+        this.options.onHide(this);
         this.container.velocity("fadeOut", {
             duration: this.options.fadeSpeed,
             complete: () => {
@@ -1793,6 +1866,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         });
     }
     show() {
+        this.options.onShow(this);
         this.container.velocity("fadeIn", {
             duration: this.options.fadeSpeed,
             complete: () => {
@@ -1806,10 +1880,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         if (!this.isWorking()) {
             this.startWorking();
             this.show();
-            this.loadingLayer.velocity("fadeIn", {
-                display: 'flex',
-                duration: this.options.fadeSpeed
-            });
             if (typeof bundle == 'undefined') {
                 bundle = {};
             }
@@ -1823,15 +1893,15 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                     lang: this.getLang()
                 },
                 success: (result) => {
-                    //console.log(result);
+                    console.log(result);
                     if (result.status == Hawk.RequestStatus.SUCCESS) {
-                        this.changeContent(result.html, finalCallback);
                         let finalCallback = () => {};
                         if (typeof this.options.onLoad == 'function') {
                             finalCallback = () => {
                                 this.options.onLoad(this, id, result);
                             }
                         }
+                        this.changeContent(result.html, finalCallback);
                     } else {
                         this.hide();
                     }
@@ -1843,9 +1913,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                 },
                 complete: () => {
                     this.finishWorking();
-                    this.loadingLayer.velocity("fadeOut", {
-                        duration: this.options.fadeSpeed
-                    });
                 }
             }));
         }
@@ -1897,7 +1964,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
         this.content = this.container.find('.' + this.options.contentClass);
         this.closeButton = this.container.find('.' + this.options.closeButtonClass);
-        this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
         this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
         this.container.click((e) => {
             this.hide();

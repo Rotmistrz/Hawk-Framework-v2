@@ -1,0 +1,11 @@
+.hawk-details-list {
+	list-style-type: none;
+
+	&__header {
+		cursor: pointer;
+	}
+
+	&__content-container {
+		display: none;
+	}
+}

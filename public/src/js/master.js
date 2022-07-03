@@ -51,6 +51,9 @@ $(document).ready(function() {
     HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
     HawkExamples.moreContentManager.run();
 
+    HawkExamples.detailsList = new Hawk.DetailsList($('#exemplary-details-list'), {});
+    HawkExamples.detailsList.run();
+
     $('.scrollable-section').mCustomScrollbar({
                 axis: "y",
                 setTop: 0

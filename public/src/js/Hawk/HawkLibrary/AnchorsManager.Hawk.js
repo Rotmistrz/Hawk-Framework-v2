@@ -37,20 +37,20 @@ Hawk.AnchorsManager = class {
 
     movingAction(e) {
         const regex = /#{1}.+$/;
-        const link = $(e.target);
+        const link = $(e.currentTarget);
 
         const href = link.attr('href');
         let anchor;
         let extraDelay = 0;
 
-        const rawAnchor = href + this.getAnchorSuffix();
-
         if (anchor = regex.exec(href)) {
+            const rawAnchor = anchor[0] + this.getAnchorSuffix();
+
             if ($(rawAnchor).length > 0) {
                 e.preventDefault();
 
                 if (typeof this.options.menu !== 'undefined' && link.parents().is(this.options.menu.menu)) {
-                    extraDelay = that.options.menu.totalDuration();
+                    extraDelay = this.options.menu.totalDuration();
 
                     this.options.menu.hide();
                 }

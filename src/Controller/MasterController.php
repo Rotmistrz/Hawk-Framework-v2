@@ -662,6 +662,62 @@ class MasterController extends AbstractController {
                 ]
             ],
 
+            'detailsList' => [
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/details-list/details-list.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/details-list/details-list.js", [
+                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "autoHide",
+                        'type' => "boolean",
+                        'default' => "true",
+                        'description' => "Indicates whether to hide all the currently displayed contents when the new one is going to be visible."
+                    ]
+                ],
+                'callbacks' => [
+                    [
+                        'name' => "onShow",
+                        'description' => "It is invoked when the content is going to be displayed.",
+                        'parameters' => [
+                            [
+                                'name' => "detailsList",
+                                'type' => "Hawk.DetailsList",
+                                'description' => "Current instance of Hawk.DetailsList"
+                            ],
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                            ]
+                        ]
+                    ]
+                ],
+                'methods' => [
+                    [
+                        'name' => "show",
+                        'type' => "void",
+                        'description' => "Shows the content.",
+                        'parameters' => [
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "The header which the content is related with."
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+
             'slidingLayerManager' => [
                 'listings' => [
                     'html' => highlight_string($this->renderView("hawk/modules/sliding-layer-manager/hawk-sliding-layer-manager.html", [
