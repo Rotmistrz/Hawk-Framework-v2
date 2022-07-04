@@ -32,5 +32,6 @@
 
 // require ./HawkLibrary/DetailsList.Hawk.js
 // require ./HawkLibrary/AjaxOverlayerManager.Hawk.js
+// require ./HawkLibrary/SectionDetector.Hawk.js
 
 export default Hawk;
