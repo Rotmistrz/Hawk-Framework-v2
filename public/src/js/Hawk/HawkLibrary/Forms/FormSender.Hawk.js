@@ -32,6 +32,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 				this.defaultResultCallback(result);
 			},
 			onError: (result) => {
+				this.checkFields(result.errorFields);
 				this.defaultResultCallback(result);
 			},
 			onException: (result) => {

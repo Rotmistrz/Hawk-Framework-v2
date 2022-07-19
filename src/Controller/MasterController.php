@@ -1100,6 +1100,12 @@ $light-color-05: #fefdfd;
                             'title' => "Helpline",
                             'content' => "+48 723 917 812"
                         ]
+                    ]), true),
+                    'extendedIcon' => highlight_string($this->renderView("blocks/extended-icon.html", [
+                    
+                    ]), true),
+                    'plainExtendedIcon' => highlight_string($this->renderView("blocks/plain-extended-icon.html", [
+                    
                     ]), true)
                 ],
                 'scss' => [
@@ -1112,6 +1118,8 @@ $light-color-05: #fefdfd;
                     'iconItem' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_icon-item.scss'), true),
                     'iconLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_icon-label.scss'), true),
                     'titledLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_titled-label.scss'), true),
+                    'extendedIcon' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_extended-icon.scss'), true),
+                    'plainExtendedIcon' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_plain-extended-icon.scss'), true),
                     'headings' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_headings.scss'), true)
                 ]
             ]

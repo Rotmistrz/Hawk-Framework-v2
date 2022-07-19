@@ -15,6 +15,12 @@ a {
   @include transition(all .2s linear);
 }
 
+/***** THIS PROJECT *****/
+
+@import 'this-project/_this-project';
+
+/***** HEADERS *****/
+
 .site-header {
   padding: 64px 40px;
   background: $secondary-color;
@@ -46,12 +52,43 @@ a {
   }
 }
 
-.site-content {
-  padding: 0;
+/***** FOOTER *****/
+
+.site-footer {
+  &__layer {
+    background: $dark-color-01;
+    color: $light-color-01;
+    padding: 0 20px;
+
+    @media (min-width: $mobile-l) {
+      padding: 0 40px;
+    }
+
+    @media (min-width: $desktop-l) {
+      padding: 0 100px;
+    }
+
+    @media (min-width: $desktop-xl) {
+      padding: 0 140px;
+    }
+  }
+
+  &__wrapper {
+    padding: 32px 0;
+
+    @media (min-width: $desktop-xl) {
+      padding: 48px 0;
+    }
+  }
 }
 
 
 /***** SECTIONS *****/
+
+.site-content {
+  padding: 0;
+  overflow: hidden;
+}
 
 .site-section {
   &__layer {
@@ -110,9 +147,3 @@ a {
 }
 
 /** END_SECTIONS **/
-
-
-
-/***** THIS PROJECT *****/
-
-@import 'this-project/_this-project';

@@ -1326,14 +1326,14 @@
 }
 
 /***** ICONS *****/
-.extended-icon {
+.extended-icon, .icon-email {
   display: block;
   overflow: hidden;
   position: relative;
   text-indent: -10000px;
   text-align: left;
 }
-.extended-icon:before, .extended-icon:after {
+.extended-icon:before, .icon-email:before, .extended-icon:after, .icon-email:after {
   content: "";
   display: block;
   position: absolute;
@@ -1349,8 +1349,57 @@
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
-.extended-icon:after {
+.extended-icon:after, .icon-email:after {
   opacity: 0;
+}
+
+.extended-icon--interactive, .icon-email {
+  cursor: pointer;
+}
+.extended-icon--interactive:hover:after, .icon-email:hover:after, .extended-icon--interactive:focus:after, .icon-email:focus:after {
+  opacity: 1;
+}
+
+.icon-email {
+  width: 48px;
+  height: 48px;
+}
+.icon-email:before {
+  background-image: url("/img/icons/medium/icon-email.svg");
+}
+.icon-email:after {
+  background-image: url("/img/icons/medium/icon-email-primary.svg");
+}
+
+.plain-extended-icon {
+  display: inline-block;
+  position: relative;
+}
+.plain-extended-icon__base-layer {
+  position: relative;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.plain-extended-icon__above-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.plain-extended-icon--interactive {
+  cursor: pointer;
+}
+.plain-extended-icon--interactive:hover .plain-extended-icon__above-layer, .plain-extended-icon--interactive:focus .plain-extended-icon__above-layer {
+  opacity: 1;
 }
 
 .icon-plus {

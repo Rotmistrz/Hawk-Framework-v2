@@ -20,6 +20,30 @@
                                             Blocks are the most commonly used components of the website which can be placed in your project. They are constructed according to the BEM methodology, using SCSS and Hawk Variables set. Hawk Blocks are thoughtful to be as abstract as they should to be both universal and useful.
                                         </p>
                                     </div>
+                                    
+                                    <div class="row">
+                                        <header class="section-subheader">
+                                            <h2 class="section-subtitle">
+                                                List of blocks
+                                            </h2>
+                                        </header>
+
+                                        <section class="subsection">
+                                            <ul class="simple-list text">
+                                                <li><a class="std-link" href="#titles">Titles</a></li>
+                                                <li><a class="std-link" href="#texts">Texts</a></li>
+                                                <li><a class="std-link" href="#buttons">Buttons</a></li>
+                                                <li><a class="std-link" href="#form-fields">Form fields</a></li>
+                                                <li><a class="std-link" href="#choice-fields">Choice fields</a></li>
+                                                <li><a class="std-link" href="#tiles">Tiles</a></li>
+                                                <li><a class="std-link" href="#icon-item">Icon item</a></li>
+                                                <li><a class="std-link" href="#icon-label">Icon label</a></li>
+                                                <li><a class="std-link" href="#titled-label">Titled label</a></li>
+                                                <li><a class="std-link" href="#extended-icon">Extended icon</a></li>
+                                                <li><a class="std-link" href="#plain-extended-icon">Plain extended icon</a></li>
+                                            </ul>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +59,7 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
-                    <section class="site-section">
+                    <section id="titles-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
@@ -142,10 +166,12 @@
                                             <h3 class="small-title">SCSS</h3>
                                         </header>
 
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.sectionTitle }}
-                                            {% endautoescape %}
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.scss.sectionTitle }}
+                                                {% endautoescape %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +185,7 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
-                    <section class="site-section">
+                    <section id="texts-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
@@ -281,10 +307,12 @@
                                             <h3 class="small-title">SCSS</h3>
                                         </header>
 
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.text }}
-                                            {% endautoescape %}
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.scss.text }}
+                                                {% endautoescape %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -298,7 +326,7 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
-                    <section class="site-section">
+                    <section id="buttons-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper site-section__wrapper--only-top">
                                 <div class="site-section__inner">
@@ -517,10 +545,12 @@
                                             <h3 class="small-title">SCSS</h3>
                                         </header>
 
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.button }}
-                                            {% endautoescape %}
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.scss.button }}
+                                                {% endautoescape %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -534,7 +564,265 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
+                    <section id="form-fields-anchor" class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Form fields</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Form fields</em> are necessary to interact with user and obtain data from her. They might have title or placeholder, border or underline.
+                                        </p>
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        type: 'with-title',
+                                                        title: 'Form field with title'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        type: 'with-placeholder',
+                                                        title: 'Form field with placeholder'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--underline',
+                                                        type: 'with-title',
+                                                        title: 'Underlined form field with title'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--underline',
+                                                        type: 'with-placeholder',
+                                                        title: 'Underlined form field with placeholder'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' error',
+                                                        type: 'with-title',
+                                                        title: 'Form field with error'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/form-field.html') with {
+                                                    formField: {
+                                                        extraClass: ' form-field--underline error',
+                                                        type: 'with-placeholder',
+                                                        title: 'Underlined form field with error'
+                                                    }
+                                                } %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
                     <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.formField.regular }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.formField.placeholder }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.formField.underline }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.scss.formField }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section id="choice-fields-anchor" class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Choice fields (checkboxes, radio buttons)</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <!-- <p>
+                                            <em class="text__em">Choice fields</em> are 
+                                        </p> -->
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'checkbox',
+                                                        name: 'exemplary-checkbox',
+                                                        value: 'Exemplary choice field',
+                                                        description: 'Exemplary checkbox'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'checkbox',
+                                                        name: 'exemplary-checkbox',
+                                                        value: 'Exemplary checkbox',
+                                                        description: 'Exemplary choice field with long description. Lorem ipsum dolor sit amet mauris. Nullam justo non tincidunt hendrerit id, ullamcorper in, augue. Aenean massa volutpat a, ligula. Nunc leo. In tempus ornare eu, tortor. Integer tincidunt molestie.'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'radio',
+                                                        name: 'exemplary-radio-button',
+                                                        value: 'Exemplary choice field',
+                                                        description: 'Exemplary radio button'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/choice-field.html') with {
+                                                    choiceField: {
+                                                        type: 'radio',
+                                                        name: 'exemplary-radio-button',
+                                                        value: 'Exemplary radio button',
+                                                        description: 'Exemplary radio button with long description. Lorem ipsum dolor sit amet mauris. Nullam justo non tincidunt hendrerit id, ullamcorper in, augue. Aenean massa volutpat a, ligula. Nunc leo. In tempus ornare eu, tortor. Integer tincidunt molestie.'
+                                                    }
+                                                } %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.choiceField.checkbox }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.html.choiceField.radio }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.scss.choiceField }}
+                                                {% endautoescape %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section id="tiles-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
@@ -789,10 +1077,12 @@
                                             <h3 class="small-title">SCSS</h3>
                                         </header>
 
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.tile }}
-                                            {% endautoescape %}
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {% autoescape false %}
+                                                    {{ blocks.scss.tile }}
+                                                {% endautoescape %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -806,261 +1096,7 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
-                    <section class="site-section">
-                        <div class="site-section__layer">
-                            <div class="site-section__wrapper">
-                                <div class="site-section__inner">
-                                    <header class="section-header">
-                                        <h2 class="section-title">Form fields</h2>
-                                    </header>
-
-                                    <div class="text bounded-section">
-                                        <p>
-                                            <em class="text__em">Form fields</em> are necessary to interact with user and obtain data from her. They might have title or placeholder, border or underline.
-                                        </p>
-                                    </div>
-
-                                    <div class="row bounded-section">
-                                        <ul class="examples-list">
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
-                                                    formField: {
-                                                        type: 'with-title',
-                                                        title: 'Form field with title'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
-                                                    formField: {
-                                                        type: 'with-placeholder',
-                                                        title: 'Form field with placeholder'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
-                                                    formField: {
-                                                        extraClass: ' form-field--underline',
-                                                        type: 'with-title',
-                                                        title: 'Underlined form field with title'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
-                                                    formField: {
-                                                        extraClass: ' form-field--underline',
-                                                        type: 'with-placeholder',
-                                                        title: 'Underlined form field with placeholder'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
-                                                    formField: {
-                                                        extraClass: ' error',
-                                                        type: 'with-title',
-                                                        title: 'Form field with error'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
-                                                    formField: {
-                                                        extraClass: ' form-field--underline error',
-                                                        type: 'with-placeholder',
-                                                        title: 'Underlined form field with error'
-                                                    }
-                                                } %}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="comparison-row__source">
-                    <section class="site-section">
-                        <div class="site-section__layer">
-                            <div class="site-section__wrapper">
-                                <div class="site-section__inner">
-                                    <header class="subsection-header">
-                                        <h3 class="small-title">HTML</h3>
-                                    </header>
-
-                                    <ul class="examples-list">
-                                        <li>
-                                            <div class="simple-listing">
-                                                {% autoescape false %}
-                                                    {{ blocks.html.formField.regular }}
-                                                {% endautoescape %}
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="simple-listing">
-                                                {% autoescape false %}
-                                                    {{ blocks.html.formField.placeholder }}
-                                                {% endautoescape %}
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="simple-listing">
-                                                {% autoescape false %}
-                                                    {{ blocks.html.formField.underline }}
-                                                {% endautoescape %}
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                    <div class="row">
-                                        <header class="subsection-header">
-                                            <h3 class="small-title">SCSS</h3>
-                                        </header>
-
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.formField }}
-                                            {% endautoescape %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-        </div>
-
-        <div class="comparison-section__row">
-            <section class="comparison-row">
-                <div class="comparison-row__result">
-                    <section class="site-section">
-                        <div class="site-section__layer">
-                            <div class="site-section__wrapper">
-                                <div class="site-section__inner">
-                                    <header class="section-header">
-                                        <h2 class="section-title">Choice fields (checkboxes, radio buttons)</h2>
-                                    </header>
-
-                                    <div class="text bounded-section">
-                                        <!-- <p>
-                                            <em class="text__em">Choice fields</em> are 
-                                        </p> -->
-                                    </div>
-
-                                    <div class="row bounded-section">
-                                        <ul class="examples-list">
-                                            <li>
-                                                {% include('blocks/choice-field.html') with {
-                                                    choiceField: {
-                                                        type: 'checkbox',
-                                                        name: 'exemplary-checkbox',
-                                                        value: 'Exemplary choice field',
-                                                        description: 'Exemplary checkbox'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/choice-field.html') with {
-                                                    choiceField: {
-                                                        type: 'checkbox',
-                                                        name: 'exemplary-checkbox',
-                                                        value: 'Exemplary checkbox',
-                                                        description: 'Exemplary choice field with long description. Lorem ipsum dolor sit amet mauris. Nullam justo non tincidunt hendrerit id, ullamcorper in, augue. Aenean massa volutpat a, ligula. Nunc leo. In tempus ornare eu, tortor. Integer tincidunt molestie.'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/choice-field.html') with {
-                                                    choiceField: {
-                                                        type: 'radio',
-                                                        name: 'exemplary-radio-button',
-                                                        value: 'Exemplary choice field',
-                                                        description: 'Exemplary radio button'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/choice-field.html') with {
-                                                    choiceField: {
-                                                        type: 'radio',
-                                                        name: 'exemplary-radio-button',
-                                                        value: 'Exemplary radio button',
-                                                        description: 'Exemplary radio button with long description. Lorem ipsum dolor sit amet mauris. Nullam justo non tincidunt hendrerit id, ullamcorper in, augue. Aenean massa volutpat a, ligula. Nunc leo. In tempus ornare eu, tortor. Integer tincidunt molestie.'
-                                                    }
-                                                } %}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="comparison-row__source">
-                    <section class="site-section">
-                        <div class="site-section__layer">
-                            <div class="site-section__wrapper">
-                                <div class="site-section__inner">
-                                    <header class="subsection-header">
-                                        <h3 class="small-title">HTML</h3>
-                                    </header>
-
-                                    <ul class="examples-list">
-                                        <li>
-                                            <div class="simple-listing">
-                                                {% autoescape false %}
-                                                    {{ blocks.html.choiceField.checkbox }}
-                                                {% endautoescape %}
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="simple-listing">
-                                                {% autoescape false %}
-                                                    {{ blocks.html.choiceField.radio }}
-                                                {% endautoescape %}
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                    <div class="row">
-                                        <header class="subsection-header">
-                                            <h3 class="small-title">SCSS</h3>
-                                        </header>
-
-                                        <div class="simple-listing">
-                                            {% autoescape false %}
-                                                {{ blocks.scss.choiceField }}
-                                            {% endautoescape %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-        </div>
-
-        <div class="comparison-section__row">
-            <section class="comparison-row">
-                <div class="comparison-row__result">
-                    <section class="site-section">
+                    <section id="icon-item-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
@@ -1124,7 +1160,7 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
-                    <section class="site-section">
+                    <section id="icon-label-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
@@ -1206,7 +1242,7 @@
         <div class="comparison-section__row">
             <section class="comparison-row">
                 <div class="comparison-row__result">
-                    <section class="site-section">
+                    <section id="titled-label-anchor" class="site-section">
                         <div class="site-section__layer">
                             <div class="site-section__wrapper">
                                 <div class="site-section__inner">
@@ -1262,6 +1298,150 @@
 
                                         <div class="simple-listing">
                                             {{ blocks.scss.titledLabel }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section id="extended-icon-anchor" class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Extended icon</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Extended icon</em> is an abstract class which other icons can extend. It's constructed as a block with <code class="inline-code">:before</code> and <code class="inline-code">:after</code> pseudoelements laying on each other (<code class="inline-code">:after</code> is above the <code class="inline-code">:before</code>). <code class="inline-code">:before</code> is visible by default and <code class="inline-code">:after</code> could be displayed on hover or when the icon is active.
+                                        </p>
+
+                                        <p>
+                                            When the icon extends <code class="inline-code">extended-icon</code>, it should have dimensions and appropriate pictures for <code class="inline-code">:before</code> and <code class="inline-code">:after</code> set. 
+                                        </p>
+
+                                        <p>
+                                            <em class="text__em">Extended icon</em> is very useful to construct interface icons that should be defined once. For icons, which should rather use regular <code class="inline-code">img</code> elements (i.e. icons changed in CMS system), consider using the <a class="std-link" href="#plain-extended-icon">Plain extended icon</a>.
+                                        </p>
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                <div class="icon-email"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {{ blocks.html.extendedIcon }}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {{ blocks.scss.extendedIcon }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+        <div class="comparison-section__row">
+            <section class="comparison-row">
+                <div class="comparison-row__result">
+                    <section id="plain-extended-icon-anchor" class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="section-header">
+                                        <h2 class="section-title">Plain extended icon</h2>
+                                    </header>
+
+                                    <div class="text bounded-section">
+                                        <p>
+                                            <em class="text__em">Plain extended icon</em> is a container for icon which changes its appearance on some actions (hover or state of the object) and needs two images to work properly and can't be a structure extending the <code class="inline-code">extended-icon</code> because it can't be defined in CSS stylesheet and needs to be changable for example in the CMS system.
+
+                                        </p>
+                                        <p>
+                                            It is constructed as a block with <code class="inline-code">base-layer</code> and <code class="inline-code">above-layer</code> elements laying on each other. <code class="inline-code">Base-layer</code> is visible by default and sets up the object's dimensions.
+                                        </p>
+                                    </div>
+
+                                    <div class="row bounded-section">
+                                        <ul class="examples-list">
+                                            <li>
+                                                {% include('blocks/plain-extended-icon.html') %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="comparison-row__source">
+                    <section class="site-section">
+                        <div class="site-section__layer">
+                            <div class="site-section__wrapper">
+                                <div class="site-section__inner">
+                                    <header class="subsection-header">
+                                        <h3 class="small-title">HTML</h3>
+                                    </header>
+
+                                    <ul class="examples-list">
+                                        <li>
+                                            <div class="simple-listing">
+                                                {{ blocks.html.plainExtendedIcon }}
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <header class="subsection-header">
+                                            <h3 class="small-title">SCSS</h3>
+                                        </header>
+
+                                        <div class="scrollable-section scrollable-section--higher">
+                                            <div class="simple-listing">
+                                                {{ blocks.scss.plainExtendedIcon }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -21,6 +21,7 @@
 
 // require ./HawkLibrary/Forms/FormField.Hawk.js
 // require ./HawkLibrary/Forms/TextFormField.Hawk.js
+// require ./HawkLibrary/Forms/TextareaFormField.Hawk.js
 
 // require ./HawkLibrary/Forms/FormSender.Hawk.js
 // require ./HawkLibrary/Forms/StaticFormSender.Hawk.js
@@ -33,5 +34,8 @@
 // require ./HawkLibrary/DetailsList.Hawk.js
 // require ./HawkLibrary/AjaxOverlayerManager.Hawk.js
 // require ./HawkLibrary/SectionDetector.Hawk.js
+// require ./HawkLibrary/BookmarksManager.Hawk.js
+// require ./HawkLibrary/SlideMenu.Hawk.js
+
 
 export default Hawk;
