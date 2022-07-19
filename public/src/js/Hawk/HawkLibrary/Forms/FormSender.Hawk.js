@@ -32,11 +32,10 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 				this.defaultResultCallback(result);
 			},
 			onError: (result) => {
-				this.checkFields(result.errorFields);
 				this.defaultResultCallback(result);
 			},
 			onException: (result) => {
-				this.defaultResultCallback(result);
+
 			},
 			onComplete: (result) => {}
 		};
@@ -53,6 +52,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 	}
 
 	defaultResultCallback(result) {
+		this.checkFields(result.errorFields);
 		this.changeMessage(result.message);
 	}
 
@@ -204,7 +204,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 			e.preventDefault();
 
 			this.submit();
-		})
+		});
 	}
 
 	submit() {

@@ -12,6 +12,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 
 		this.contentContainer;
 		this.content;
+
+		this.buttons;
 		this.closeButton;
 
 		this.defaultOptions = {
@@ -19,6 +21,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 
 			fadeSpeed: 200,
 			slideSpeed: 200,
+
+			eventName: 'click.ajaxOverlayerManager',
 
 			wrapperClass: 'overlayer__wrapper',
 			innerClass: 'overlayer__inner',
@@ -77,12 +81,21 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		});
 	}
 
+	isOpen() {
+		return this.container.is(":visible");
+	}
+
 	load(id, bundle) {
+		if (!this.isOpen()) {
+			this.show();
+		}
+
+		this.loadContent(id, bundle);
+	}
+
+	loadContent(id, bundle) {
 		if (!this.isWorking()) {
 			this.startWorking();
-
-			this.show();
-
 			if (typeof bundle == 'undefined') {
 				bundle = {};
 			}
@@ -169,6 +182,16 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		return this;
 	}
 
+	refreshDependencies() {
+		if (typeof this.buttons != 'undefined') {
+			this.buttons.unbind(this.options.eventName);
+		}
+
+		this.buttons = $(this.getButtonsSelector());
+
+		this.buttons.bind(this.options.eventName, this.onButtonClick.bind(this));
+	}
+
 	run() {
 		this.body = $('body');
 		this.lang = $('html').attr('lang');
@@ -177,7 +200,9 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.content = this.container.find('.' + this.options.contentClass);
 		this.closeButton = this.container.find('.' + this.options.closeButtonClass);
 
-		this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
+		//this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
+
+		this.refreshDependencies();
 
 		this.container.click((e) => {
 			this.hide();

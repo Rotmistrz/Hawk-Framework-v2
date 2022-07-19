@@ -47,7 +47,7 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
                 }
             },
             complete: (jqXHR) => {
-                this.spinner.hide();
+                this.hideSpinner();
 
                 this.finishWorking();
             }

@@ -64,7 +64,7 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 	}
 
 	refreshDependencies() {
-		if (this.headers !== null) {
+		if (this.headers != null) {
 			this.headers.unbind(this.options.eventName);
 		}
 
