@@ -17,6 +17,10 @@ Hawk.TextareaFormField = class extends Hawk.FormField {
 				this.checkField();
 			}, 10);
 		});
+
+		this.field.change(() => {
+			this.checkField();
+		});
 	}
 
 	bind(form) {

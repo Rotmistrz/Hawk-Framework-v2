@@ -5,7 +5,7 @@ Hawk.AjaxOverlayerManagerConstants = {
 	},
 
 	getDefaultHashPattern: () => {
-		return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+\/(([a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
+		return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+\/(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
 	}
 };
 
@@ -131,31 +131,11 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	load(id, bundle) {
 		if (!this.isOpen()) {
 			this.show();
+		} else {
+			$(window).unbind(this.options.popstateEventName);
 		}
 
 		this.loadContent(id, bundle);
-	}
-
-	clearHash() {
-		//history.pushState("", document.title, window.location.pathname + window.location.search);
-	}
-
-	setHash(hash) {
-		//history.pushState("", document.title, window.location.pathname + window.location.search);
-
-		window.location.hash = '#' + hash;
-
-		return this;
-	}
-
-	createAnchor(anchor, bundle) {
-		let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
-
-		if (typeof bundle != 'undefined') {
-			 resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
-		}
-
-		return resultAnchor;
 	}
 
 	loadContent(id, bundle) {
@@ -225,6 +205,28 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 				});
 			}
 		});
+	}
+
+	clearHash() {
+		//history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+
+	setHash(hash) {
+		//history.pushState("", document.title, window.location.pathname + window.location.search);
+
+		window.location.hash = '#' + hash;
+
+		return this;
+	}
+
+	createAnchor(anchor, bundle) {
+		let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
+
+		if (typeof bundle != 'undefined') {
+			 resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
+		}
+
+		return resultAnchor;
 	}
 
 	onButtonClick(e) {

@@ -13,8 +13,16 @@ Hawk.RequestStatus = {
     EXCEPTION: 2
 };
 
+Hawk.getLocation = function() {
+    return window.location;
+}
+
+Hawk.getPath = function() {
+    return Hawk.getLocation().pathname;
+}
+
 Hawk.getHash = function() {
-    return window.location.hash;
+    return Hawk.getLocation().hash;
 }
 
 Hawk.anchorRegex = new RegExp("^[^\/]+$");
@@ -65,6 +73,17 @@ Hawk.createBundleFromString = function(str) {
     }
 
     return result;
+}
+
+Hawk.createStringFromBundle = function(bundle) {
+    var parts = [];
+
+    for (var i in bundle) {
+        console.log(i + "=" + bundle[i]);
+        parts.push(i + "=" + bundle[i]);
+    }
+
+    return parts.join('&');
 }
 
 Hawk.mergeObjects = function(mainObject, object) {

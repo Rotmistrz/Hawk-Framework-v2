@@ -75,7 +75,7 @@ Hawk.AnchorsManager = class {
     run() {
         this.refresh();
 
-        const currentHash = Hawk.getHash();
+        const currentHash = Hawk.getPreparedHash();
 
         if (currentHash.length > 0) {
             const preparedAnchor = this.getAnchorOfHash(currentHash);

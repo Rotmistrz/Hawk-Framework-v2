@@ -20,6 +20,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 
 			itemClass: "ajax-items-manager__item",
 			contentContainerClass: "ajax-items-manager__content-container",
+			filterLabelClass: "ajax-items-manager__filter",
 
 			slideSpeed: 400,
 			fadeSpeed: 400,
@@ -27,12 +28,51 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 			updateContent: function(contentContainer, items) {
 				contentContainer.html(items);
 			},
+			createFilterLabel: (type, value, description) => {
+				return "<div class=\"" + this.options.filterLabelClass + "\">" + description + "</div>"
+			},
 
-			onLoad: function(contentContainer) {},
+			onLoad: function(result, contentContainer, firstLoading) {},
 			onError: function(contentContainer) {}
 		};
 
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
+	}
+
+	addFilter(type, value) {
+		if (typeof this.filters[type] == 'undefined') {
+			this.filters[type] = [];
+		}
+
+		this.filters[type].push(value);
+	}
+
+	removeFilter(type, value) {
+		if (typeof this.filters[type] != 'undefined') {
+			let currentFilter = this.filters[type];
+
+			for (let i in currentFilter) {
+				if (currentFilter[i] == value) {
+					currentFilter.splice(i, 1);
+
+					this.removeFilterLabel(type, value);
+
+					return;
+				}
+			}
+		}
+	}
+
+	createFilterLabel(type, value, description) {
+		return this.options.createFilterLabel(type, value, description);
+	}
+
+	removeFilterLabel(type, value) {
+		this.container.find('.' + this.options.filterLabelClass).filter(function() {
+			return $(this).attr('data-type') == type;
+		}).filter(function() {
+			return 	$(this).attr('data-id') == value;
+		}).remove();
 	}
 
 	setPage(page) {
@@ -82,8 +122,15 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 		this.options.updateContent(this.contentContainer, content);
 	}
 
-	load(page) {
+	load(page, firstLoading) {
 		this.setPage(page);
+
+		console.log("AjaxItemsManager::load()");
+		console.log(firstLoading);
+
+		if (typeof firstLoading == 'undefined') {
+			firstLoading = false;
+		}
 
 		if (!this.isWorking()) {
 			this.startWorking();
@@ -94,7 +141,8 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 	            dataType: "json",
 	            data: {
 	                'page': this.page,
-	                'itemsPerPage': this.options.itemsPerPage
+	                'itemsPerPage': this.options.itemsPerPage,
+	                'filters': this.filters
 	            },
 	            success: (result) => {
 	            	console.log(result);
@@ -109,6 +157,8 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 
 		                this.updateContent(result.html);
 	                }
+
+	                this.options.onLoad(result, this.contentContainer, firstLoading);
 	            },
 	            error: (jqXHR, textStatus, errorThrown) => {
 	                console.warn(jqXHR.responseText);
@@ -120,6 +170,10 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 		}
 	}
 
+	reload() {
+		this.load(this.getPage());
+	}
+
 	run(page) {
 		if (typeof page == 'undefined') {
 			page = 1;
@@ -127,6 +181,6 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
 
-		this.load(page);
+		this.load(page, true);
 	}
 }

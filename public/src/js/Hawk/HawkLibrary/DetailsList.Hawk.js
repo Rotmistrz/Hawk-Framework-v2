@@ -13,12 +13,16 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 			headerClass: "hawk-details-list__header",
 			contentContainerClass: "hawk-details-list__content-container",
 			contentClass: "hawk-details-list__content",
+			activeClass: "active",
 
 			eventName: "click.detailsList",
 
 			autoHide: true,
 			getContentContainer: (header) => {
 				return header.siblings('.' + this.options.contentContainerClass);
+			},
+			getParent: (element) => {
+				return element.parents('.' + this.options.itemClass);
 			},
 
 			slideSpeed: 200,
@@ -44,8 +48,14 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 
 		const contentContainer = this.options.getContentContainer(header);
 		contentContainer.velocity("slideDown", {
-			duration: this.options.slideSpeed
+			duration: this.options.slideSpeed,
+			complete: () => {
+				this.finishWorking();
+			}
 		});
+
+		const parent = this.options.getParent(header);
+		parent.addClass(this.options.activeClass);
 
 		this.options.onShow(this, header, contentContainer);
 	}
@@ -57,10 +67,30 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 	hide(header) {
 		const contentContainer = this.options.getContentContainer(header);
 		contentContainer.velocity("slideUp", {
-			duration: this.options.slideSpeed
+			duration: this.options.slideSpeed,
+			complete: () => {
+				this.finishWorking();
+			}
 		});
 
+		const parent = this.options.getParent(header);
+		parent.removeClass(this.options.activeClass);
+
 		this.options.onHide(this, header, contentContainer);
+	}
+
+	toggle(header) {
+		if (!this.isWorking()) {
+			this.startWorking();
+
+			const contentContainer = this.options.getContentContainer(header);
+
+			if (contentContainer.is(':visible')) {
+				this.hide(header);
+			} else {
+				this.show(header);
+			}
+		}
 	}
 
 	refreshDependencies() {
@@ -72,15 +102,10 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 
 		this.headers = this.container.find('.' + this.options.headerClass);
 
-		this.headers.bind(this.options.eventName, function() {
-			const header = $(this);
-			const contentContainer = that.options.getContentContainer(header);
-
-			if (contentContainer.is(':visible')) {
-				that.hide(header);
-			} else {
-				that.show(header);
-			}
+		this.headers.bind(this.options.eventName, (e) => {
+			const header = $(e.currentTarget);
+			
+			this.toggle(header);
 		});
 	}
 

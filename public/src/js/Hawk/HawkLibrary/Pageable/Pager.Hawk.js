@@ -59,6 +59,10 @@ Hawk.Pager = class {
 			this.checkDependencies();
 		}
 
+		if (typeof this.options.onPageChanged == 'function') {
+			this.options.onPageChanged(this, this.getPage());
+		}
+
 		return this;
 	}
 
@@ -85,9 +89,9 @@ Hawk.Pager = class {
 			this.controls.next.css({ visibility: "visible" });
 		}
 
-		if (typeof this.options.onPageChanged == 'function') {
-			this.options.onPageChanged(this, this.getPage());
-		}
+		// if (typeof this.options.onPageChanged == 'function') {
+		// 	this.options.onPageChanged(this, this.getPage());
+		// }
 	}
 
 	previous() {

@@ -1,4 +1,4 @@
-Hawk.TextFormField = class extends Hawk.FormField {
+Hawk.CheckboxFormField = class extends Hawk.FormField {
 	constructor(name, options) {
 		super(name, options);
 	}
@@ -8,16 +8,10 @@ Hawk.TextFormField = class extends Hawk.FormField {
 	}
 
 	validate() {
-		return this.options.validate(this.getValue());
+		return this.options.validate(this.getField());
 	}
 
 	initializeObserving() {
-		this.field.keydown(() => {
-			setTimeout(() => {
-				this.checkField();
-			}, 10);
-		});
-
 		this.field.change(() => {
 			this.checkField();
 		});

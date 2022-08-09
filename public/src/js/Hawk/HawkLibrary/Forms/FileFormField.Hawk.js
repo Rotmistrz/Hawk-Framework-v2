@@ -8,7 +8,7 @@ Hawk.FileFormField = class extends Hawk.FormField {
 	}
 
 	validate() {
-		return this.options.validate(this.getField(), this.getWrapper());
+		return this.options.validate(this.getField());
 	}
 
 	initializeObserving() {

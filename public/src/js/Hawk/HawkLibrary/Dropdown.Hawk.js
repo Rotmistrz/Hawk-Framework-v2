@@ -59,7 +59,7 @@ Hawk.Dropdown = function(container, options) {
 
         onShow: function(dropdown) {},
         onHide: function(dropdown) {},
-        onRadioSelected: function(dropdown, field) {
+        onSelected: function(dropdown, field) {
             var description = field.parent().find('.dropdown-item__description').html();
 
             dropdown.title.html(description);
@@ -129,7 +129,7 @@ Hawk.Dropdown = function(container, options) {
 
     this.select = function(field) {
         if (field.length > 0) {
-            return this.options.onRadioSelected(this, field);
+            return this.options.onSelected(this, field);
         } else {
             return false;
         }
@@ -175,7 +175,7 @@ Hawk.Dropdown = function(container, options) {
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor);   //.find('.' + this.options.escapeSensorClass);
 
-        this.fields = this.list.find('input[type="radio"]');
+        this.fields = this.list.find('input[type="radio"], input[type="checkbox"]');
 
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
@@ -250,8 +250,8 @@ Hawk.Dropdown = function(container, options) {
 
         if (this.fields.length > 0) {
             this.fields.change(function() {
-                if (typeof that.options.onRadioSelected == 'function') {
-                    that.options.onRadioSelected(that, $(this));
+                if (typeof that.options.onSelected == 'function') {
+                    that.options.onSelected(that, $(this));
                 }
             });
         }
