@@ -20,6 +20,8 @@
 // require ./HawkLibrary/ItemsManagers/AjaxItemsManager.Hawk.js
 
 // require ./HawkLibrary/Forms/FormField.Hawk.js
+// require ./HawkLibrary/Forms/FileFormField.Hawk.js
+// require ./HawkLibrary/Forms/CheckboxFormField.Hawk.js
 // require ./HawkLibrary/Forms/TextFormField.Hawk.js
 // require ./HawkLibrary/Forms/TextareaFormField.Hawk.js
 

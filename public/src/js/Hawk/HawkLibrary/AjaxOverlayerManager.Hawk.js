@@ -1,3 +1,14 @@
+Hawk.AjaxOverlayerManagerConstants = {
+	modes: {
+		DEFAULT: 0,
+		DELEGATE_EVENTS: 1
+	},
+
+	getDefaultHashPattern: () => {
+		return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+\/(([a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
+	}
+};
+
 Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	constructor(container, options) {
 		super();
@@ -22,7 +33,10 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			fadeSpeed: 200,
 			slideSpeed: 200,
 
+			mode: Hawk.AjaxOverlayerManagerConstants.modes.DEFAULT,
+
 			eventName: 'click.ajaxOverlayerManager',
+			popstateEventName: 'popstate.ajaxOverlayerManager',
 
 			wrapperClass: 'overlayer__wrapper',
 			innerClass: 'overlayer__inner',
@@ -34,7 +48,32 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 
 			onLoad: (aom, id, bundle) => {},
 			onShow: (aom) => {},
-			onHide: (aom) => {}
+			onHide: (aom) => {},
+			onInitialize: (aom, hash) => {
+				if (hash.length > 0) {
+					if (hash.startsWith("#")) {
+						hash = hash.substring(1);
+					}
+
+					const regexp = new RegExp(Hawk.AjaxOverlayerManagerConstants.getDefaultHashPattern());
+
+					if (regexp.test(hash)) {
+						const parts = hash.split('/');
+
+						if (parts[1] == aom.getOverlayerID()) {
+							const id = parts[2];
+
+							var bundle = {};
+
+							if (typeof parts[4] != 'undefined') {
+								bundle = Hawk.createBundleFromString(parts[4]);
+							}
+
+							aom.load(id, bundle);
+						}
+					}
+				}
+			}
 		};
 
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -68,6 +107,10 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 				this.content.html("");
 			}
 		});
+
+		this.clearHash();
+
+		$(window).unbind(this.options.popstateEventName);
 	}
 
 	show() {
@@ -91,6 +134,28 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		}
 
 		this.loadContent(id, bundle);
+	}
+
+	clearHash() {
+		//history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+
+	setHash(hash) {
+		//history.pushState("", document.title, window.location.pathname + window.location.search);
+
+		window.location.hash = '#' + hash;
+
+		return this;
+	}
+
+	createAnchor(anchor, bundle) {
+		let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
+
+		if (typeof bundle != 'undefined') {
+			 resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
+		}
+
+		return resultAnchor;
 	}
 
 	loadContent(id, bundle) {
@@ -122,6 +187,14 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            	} else {
 	            		this.hide();
 	            	}
+
+	            	if (typeof result.anchor != 'undefined') {
+	            		this.setHash(this.createAnchor(result.anchor, bundle));
+	            	}
+
+	            	$(window).bind(this.options.popstateEventName, (e) => {
+					    this.hide();
+					});
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
 	                // here should appear error layer
@@ -183,13 +256,17 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	refreshDependencies() {
-		if (typeof this.buttons != 'undefined') {
-			this.buttons.unbind(this.options.eventName);
+		if (this.options.mode == Hawk.AjaxOverlayerManagerConstants.modes.DELEGATE_EVENTS) {
+			this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
+		} else {
+			if (typeof this.buttons != 'undefined') {
+				this.buttons.unbind(this.options.eventName);
+			}
+
+			this.buttons = $(this.getButtonsSelector());
+
+			this.buttons.bind(this.options.eventName, this.onButtonClick.bind(this));
 		}
-
-		this.buttons = $(this.getButtonsSelector());
-
-		this.buttons.bind(this.options.eventName, this.onButtonClick.bind(this));
 	}
 
 	run() {
@@ -206,12 +283,16 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 
 		this.container.click((e) => {
 			this.hide();
+			history.pushState("", document.title, window.location.pathname + window.location.search);
 		});
 
 		this.container.on('click', '.' + this.options.closeButtonClass, (e) => {
 			this.hide();
+			history.pushState("", document.title, window.location.pathname + window.location.search);
 		});
 
 		this.initializeClosePreventer();
+
+		this.options.onInitialize(this, Hawk.getHash());
 	}
 }

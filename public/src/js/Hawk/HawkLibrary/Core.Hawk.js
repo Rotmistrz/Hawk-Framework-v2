@@ -21,7 +21,9 @@ Hawk.anchorRegex = new RegExp("^[^\/]+$");
 
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
     if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
-        return this.getHash().replaceAll('/', '');
+        const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
+
+        return this.getHash().replaceAll(regexp, "");
     } else {
         return this.getHash().substring(1).replaceAll('/', '');
     }
