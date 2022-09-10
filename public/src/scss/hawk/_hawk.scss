@@ -34,7 +34,11 @@
 
 @import 'blocks/form-fields.scss';
 
+@import 'blocks/icon-form-field.scss';
+
 @import 'blocks/choice-fields.scss';
+
+@import 'blocks/invisible-form-field.scss';
 
 /***** VARIA *****/
 
@@ -72,5 +76,9 @@
 
 @import 'modules/details-list/_hawk-details-list';
 @import 'modules/details-list/_details-list-item';
+
+/***** COMPONENTS *****/
+
+@import 'components/_components';
 
 /** END_MODULES **/

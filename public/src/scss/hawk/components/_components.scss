@@ -1,0 +1,9 @@
+.hawk-single-instance-container {
+  &__loading-layer {
+    //background: rgba(0, 0, 0, .2);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
