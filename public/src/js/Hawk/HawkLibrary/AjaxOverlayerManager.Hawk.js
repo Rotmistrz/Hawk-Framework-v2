@@ -141,9 +141,12 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	loadContent(id, bundle) {
 		if (!this.isWorking()) {
 			this.startWorking();
+
 			if (typeof bundle == 'undefined') {
 				bundle = {};
 			}
+
+			this.loadingLayer.css({ display: 'flex' });
 
 			this.setRequest($.ajax({
 	            type: "POST",
@@ -184,6 +187,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            },
 	            complete: () => {
 	                this.finishWorking();
+
+	                this.loadingLayer.css({ display: 'none' });
 	            }
 	        }));
 		}
@@ -278,6 +283,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
 		this.content = this.container.find('.' + this.options.contentClass);
 		this.closeButton = this.container.find('.' + this.options.closeButtonClass);
+
+		this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
 
 		//this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
 

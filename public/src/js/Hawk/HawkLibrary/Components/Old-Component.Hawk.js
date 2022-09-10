@@ -1,22 +1,28 @@
 Hawk.Component = class {
-    constructor(id) {
+    constructor(classname, values, options, id) {
+        this.classname = classname;
+        this.container;
+
+        this.values = values;
+
+        this.properties = options.properties || {};
+        this.methods = options.methods || {};
+
         this.id = id || -1;
 
-        this.values = {};
-        this.properties = {};
-        this.methods = {};
-    }
-
-    getClassID() {
-        throw new Error("This method should be overwritten in the subclass.");
-    }
-
-    getClassname() {
-        throw new Error("This method should be overwritten in the subclass.");
+        this.onRefresh = options.onRefresh || function() {};
+        this.onClick = options.onClick || function(component) {};
+        this.onCreateFromDOM = options.onCreateFromDOM || function(container, values) {
+            return values;
+        };
     }
 
     getID() {
         return this.id;
+    }
+
+    getClassname() {
+        return this.classname;
     }
 
     set(key, value) {
@@ -34,11 +40,13 @@ Hawk.Component = class {
 
         this.refreshView();
 
+        this.onRefresh(key, value, this);
+
         return this;
     }
 
     getProperty(key) {
-        const property = this.properties[key];
+        var property = this.properties[key];
 
         return property(this);
     }
@@ -97,15 +105,9 @@ Hawk.Component = class {
         });
     }
 
-    prepareFromDOM() {
-        for (const i in this.values) {
-            const element = this.getElement(i);
+    run() {
+        var allComponentBindings = {};
 
-            if (element.is('input, textarea')) {
-                this.values[i] = element.val();
-            } else {
-                this.values[i] = element.text().trim();
-            }
-        }
+        this.container = this.getContainer();
     }
 }

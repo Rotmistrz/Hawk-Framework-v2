@@ -144,6 +144,12 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 		});
 	}
 
+	clearMessage() {
+		this.hideMessage(() => {
+			this.info.html("");
+		});
+	}
+
 	showSpinner() {
 		this.spinner.css({ opacity: 1 });
 

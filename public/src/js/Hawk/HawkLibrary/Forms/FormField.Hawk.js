@@ -26,6 +26,10 @@ Hawk.FormField = class {
 		return this.name;
 	}
 
+	getWrapper() {
+		return this.wrapper;
+	}
+
 	getValue() {
 		throw new Error("This method should be overwritten in the subclass.");
 	}
