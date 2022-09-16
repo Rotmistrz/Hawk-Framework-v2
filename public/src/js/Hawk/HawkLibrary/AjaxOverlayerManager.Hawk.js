@@ -46,7 +46,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			loadingLayerClass: 'overlayer__loading-layer',
 			closeButtonClass: 'ajax-overlayer-close',
 
-			onLoad: (aom, id, bundle) => {},
+			onLoad: (aom, id, result) => {},
 			onShow: (aom) => {},
 			onHide: (aom) => {},
 			onInitialize: (aom, hash) => {

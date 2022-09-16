@@ -5,12 +5,19 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
 		this.path = path;
 	}
 
-	send() {
+	getDefaultOptions() {
+        let defaultOptions = super.getDefaultOptions();
+        defaultOptions.method = "POST";
+
+        return defaultOptions;
+    }
+
+    send() {
 		const data = this.collectData(this.form.get(0));
 
 		$.ajax({
             url: this.path,
-            type: 'POST',
+            type: this.options.method,
             data: data,
             cache: false,
             processData: false, // Don't process the files

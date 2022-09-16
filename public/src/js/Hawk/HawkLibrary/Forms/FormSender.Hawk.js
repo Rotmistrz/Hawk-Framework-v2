@@ -11,34 +11,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 			this.fields[field.getName()] = field;
 		}
 
-		this.defaultOptions = {
-			autoDisable: true,
-			fadeSpeed: 200,
-			slideSpeed: 200,
-
-			infoContainerClass: "form__info-container",
-			infoWrapperClass: "form__info-wrapper",
-			infoClass: "form__info",
-			spinnerClass: "form__spinner",
-
-			obtainButton: (form) => {
-				return form.find('button[type="submit"]');
-			},
-			obtainCancelButton: (form) => {
-				return form.find('.form__cancel-button');
-			},
-
-			onSuccess: (result) => {
-				this.defaultResultCallback(result);
-			},
-			onError: (result) => {
-				this.defaultResultCallback(result);
-			},
-			onException: (result) => {
-
-			},
-			onComplete: (result) => {}
-		};
+		this.defaultOptions = this.getDefaultOptions();
 
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
 
@@ -51,9 +24,42 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 		this.cancelButton = this.options.obtainCancelButton(this.form);
 	}
 
+	getDefaultOptions() {
+		return {
+			autoDisable: true,
+			fadeSpeed: 200,
+			slideSpeed: 200,
+
+			infoContainerClass: "form__info-container",
+			infoWrapperClass: "form__info-wrapper",
+			infoClass: "form__info",
+			spinnerClass: "form__spinner",
+
+			obtainButton: (form) => {
+				return form.find('button[type="submit"]');
+			},
+				obtainCancelButton: (form) => {
+				return form.find('.form__cancel-button');
+			},
+
+				onSuccess: (result) => {
+				this.defaultResultCallback(result);
+			},
+				onError: (result) => {
+				this.defaultResultCallback(result);
+			},
+				onException: (result) => {
+				if (typeof result != 'undefined') {
+					this.defaultResultCallback(result);
+				}
+			},
+			onComplete: (result) => {}
+		};
+	}
+
 	defaultResultCallback(result) {
 		this.checkFields(result.errorFields);
-		this.changeMessage(result.message);
+		this.changeMessage("<p class=\"failure\">" + result.message + "</p>");
 	}
 
 	getField(name) {
