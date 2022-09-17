@@ -66,6 +66,8 @@ Hawk.ComponentController = class {
 
                     instance.refreshView();
 
+                    console.log(instance);
+
                     this.options.onComponentsLoad(this);
 
                 } else if (result.status == Hawk.RequestStatus.ERROR) {
