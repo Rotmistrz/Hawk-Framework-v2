@@ -156,6 +156,18 @@ Hawk.Dropdown = function(container, options) {
         return sensor;
     }
 
+    this.refreshDependencies = function() {
+        this.fields = this.list.find('input[type="radio"], input[type="checkbox"]');
+
+        if (this.fields.length > 0) {
+            this.fields.change(function() {
+                if (typeof that.options.onSelected == 'function') {
+                    that.options.onSelected(that, $(this));
+                }
+            });
+        }
+    }
+
     this.run = function() {
         this.header = this.container.find('.' + this.options.headerClass);
         this.title = this.container.find('.' + this.options.titleClass);
@@ -174,8 +186,6 @@ Hawk.Dropdown = function(container, options) {
 
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor);   //.find('.' + this.options.escapeSensorClass);
-
-        this.fields = this.list.find('input[type="radio"], input[type="checkbox"]');
 
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
@@ -248,13 +258,7 @@ Hawk.Dropdown = function(container, options) {
             }
         });
 
-        if (this.fields.length > 0) {
-            this.fields.change(function() {
-                if (typeof that.options.onSelected == 'function') {
-                    that.options.onSelected(that, $(this));
-                }
-            });
-        }
+        this.refreshDependencies();
 
         return true;
     }

@@ -82,7 +82,17 @@ Hawk.Component = class {
         subcomponentHTML.css({ display: 'none' });
 
         subcomponentsContainer.append(subcomponentHTML);
+
+        subcomponent.refreshView();
         subcomponentHTML.velocity("slideDown");
+    }
+
+    updateElementValue(element, value) {
+        if (element.is('input')) {
+            element.val(value);
+        } else {
+            element.html(value);
+        }
     }
 
     refreshView() {
@@ -93,13 +103,13 @@ Hawk.Component = class {
         for (const i in this.values) {
             element = this.getElement(i);
 
-            element.html(this.values[i]);
+            this.updateElementValue(element, this.values[i]);
         }
 
         for (const i in this.properties) {
             element = this.getElement(i);
 
-            element.html(this.getProperty(i));
+            this.updateElementValue(element, this.getProperty(i));
         }
 
         for (var i in this.subcomponents) {

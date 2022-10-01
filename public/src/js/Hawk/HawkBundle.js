@@ -41,4 +41,6 @@
 // require ./HawkLibrary/SlideMenu.Hawk.js
 // require ./HawkLibrary/Routes.Hawk.js
 
+// require ./HawkLibrary/Calendar/Countdown.Hawk.js
+
 export default Hawk;

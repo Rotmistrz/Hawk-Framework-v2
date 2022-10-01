@@ -8,6 +8,7 @@ Hawk.AjaxRequestManager = function(options) {
         onSuccess: function() {},
         onError: function() {},
         onException: function() {},
+        onFailure: function() {},
         onComplete: function() {}
     };
 
@@ -31,6 +32,7 @@ Hawk.AjaxRequestManager = function(options) {
         const onSuccess = callbacks.onSuccess || this.options.onSuccess;
         const onFailure = callbacks.onFailure || this.options.onFailure;
         const onError = callbacks.onError || this.options.onError;
+        const onException = callbacks.onException || this.options.onException;
         const onComplete = callbacks.onComplete || this.options.onComplete;
 
         this.ajaxRequest = $.ajax({
@@ -55,7 +57,7 @@ Hawk.AjaxRequestManager = function(options) {
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.responseText);
 
-                onException(jqXHR.responseText);
+                onFailure(jqXHR.responseText);
             },
             complete: function() {
                 that.ajaxRequestWorking = false;
