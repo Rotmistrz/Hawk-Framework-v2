@@ -1,0 +1,13 @@
+.invisible-form-field {
+	background: none;
+	border: 0;
+	display: block;
+	width: 100%;
+	text-align: center;
+	-webkit-appearance: none;
+	outline: none;
+
+	&:focus {
+		border: 0;
+	}
+}

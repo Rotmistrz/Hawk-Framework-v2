@@ -9,13 +9,20 @@ Hawk.RequestStatus = {
     ERROR: 1,
     EXCEPTION: 2
 };
+Hawk.getLocation = function() {
+    return window.location;
+}
+Hawk.getPath = function() {
+    return Hawk.getLocation().pathname;
+}
 Hawk.getHash = function() {
-    return window.location.hash;
+    return Hawk.getLocation().hash;
 }
 Hawk.anchorRegex = new RegExp("^[^\/]+$");
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
     if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
-        return this.getHash().replaceAll('/', '');
+        const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
+        return this.getHash().replaceAll(regexp, "");
     } else {
         return this.getHash().substring(1).replaceAll('/', '');
     }
@@ -46,6 +53,14 @@ Hawk.createBundleFromString = function(str) {
         result[key] = value;
     }
     return result;
+}
+Hawk.createStringFromBundle = function(bundle) {
+    var parts = [];
+    for (var i in bundle) {
+        console.log(i + "=" + bundle[i]);
+        parts.push(i + "=" + bundle[i]);
+    }
+    return parts.join('&');
 }
 Hawk.mergeObjects = function(mainObject, object) {
     var result = {};
@@ -183,6 +198,7 @@ Hawk.AjaxRequestManager = function(options) {
         onSuccess: function() {},
         onError: function() {},
         onException: function() {},
+        onFailure: function() {},
         onComplete: function() {}
     };
     this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -200,6 +216,7 @@ Hawk.AjaxRequestManager = function(options) {
         const onSuccess = callbacks.onSuccess || this.options.onSuccess;
         const onFailure = callbacks.onFailure || this.options.onFailure;
         const onError = callbacks.onError || this.options.onError;
+        const onException = callbacks.onException || this.options.onException;
         const onComplete = callbacks.onComplete || this.options.onComplete;
         this.ajaxRequest = $.ajax({
             type: type,
@@ -221,7 +238,7 @@ Hawk.AjaxRequestManager = function(options) {
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.responseText);
-                onException(jqXHR.responseText);
+                onFailure(jqXHR.responseText);
             },
             complete: function() {
                 that.ajaxRequestWorking = false;
@@ -296,7 +313,7 @@ Hawk.AnchorsManager = class {
     }
     run() {
         this.refresh();
-        const currentHash = Hawk.getHash();
+        const currentHash = Hawk.getPreparedHash();
         if (currentHash.length > 0) {
             const preparedAnchor = this.getAnchorOfHash(currentHash);
             if ($(preparedAnchor).length > 0) {
@@ -401,7 +418,7 @@ Hawk.Dropdown = function(container, options) {
         escapeSensorClass: 'hawk-dropdown__escape-sensor',
         onShow: function(dropdown) {},
         onHide: function(dropdown) {},
-        onRadioSelected: function(dropdown, field) {
+        onSelected: function(dropdown, field) {
             var description = field.parent().find('.dropdown-item__description').html();
             dropdown.title.html(description);
             dropdown.hide();
@@ -451,7 +468,7 @@ Hawk.Dropdown = function(container, options) {
     }
     this.select = function(field) {
         if (field.length > 0) {
-            return this.options.onRadioSelected(this, field);
+            return this.options.onSelected(this, field);
         } else {
             return false;
         }
@@ -471,6 +488,16 @@ Hawk.Dropdown = function(container, options) {
         sensor.addClass(className);
         return sensor;
     }
+    this.refreshDependencies = function() {
+        this.fields = this.list.find('input[type="radio"], input[type="checkbox"]');
+        if (this.fields.length > 0) {
+            this.fields.change(function() {
+                if (typeof that.options.onSelected == 'function') {
+                    that.options.onSelected(that, $(this));
+                }
+            });
+        }
+    }
     this.run = function() {
         this.header = this.container.find('.' + this.options.headerClass);
         this.title = this.container.find('.' + this.options.titleClass);
@@ -485,7 +512,6 @@ Hawk.Dropdown = function(container, options) {
         this.container.append(this.endSensor); //.find('.' + this.options.endSensorClass);
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor); //.find('.' + this.options.escapeSensorClass);
-        this.fields = this.list.find('input[type="radio"]');
         if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
         }
@@ -545,13 +571,7 @@ Hawk.Dropdown = function(container, options) {
                 that.hide();
             }
         });
-        if (this.fields.length > 0) {
-            this.fields.change(function() {
-                if (typeof that.options.onRadioSelected == 'function') {
-                    that.options.onRadioSelected(that, $(this));
-                }
-            });
-        }
+        this.refreshDependencies();
         return true;
     }
 }
@@ -898,6 +918,9 @@ Hawk.Pager = class {
         } else {
             this.checkDependencies();
         }
+        if (typeof this.options.onPageChanged == 'function') {
+            this.options.onPageChanged(this, this.getPage());
+        }
         return this;
     }
     getPagesNumber() {
@@ -926,9 +949,9 @@ Hawk.Pager = class {
                 visibility: "visible"
             });
         }
-        if (typeof this.options.onPageChanged == 'function') {
-            this.options.onPageChanged(this, this.getPage());
-        }
+        // if (typeof this.options.onPageChanged == 'function') {
+        // 	this.options.onPageChanged(this, this.getPage());
+        // }
     }
     previous() {
         return this.updatePage(this.getPage() - 1);
@@ -1149,15 +1172,47 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
             itemsPerPage: 12,
             itemClass: "ajax-items-manager__item",
             contentContainerClass: "ajax-items-manager__content-container",
+            filterLabelClass: "ajax-items-manager__filter",
             slideSpeed: 400,
             fadeSpeed: 400,
             updateContent: function(contentContainer, items) {
                 contentContainer.html(items);
             },
-            onLoad: function(contentContainer) {},
+            createFilterLabel: (type, value, description) => {
+                return "<div class=\"" + this.options.filterLabelClass + "\">" + description + "</div>"
+            },
+            onLoad: function(result, contentContainer, firstLoading) {},
             onError: function(contentContainer) {}
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    addFilter(type, value) {
+        if (typeof this.filters[type] == 'undefined') {
+            this.filters[type] = [];
+        }
+        this.filters[type].push(value);
+    }
+    removeFilter(type, value) {
+        if (typeof this.filters[type] != 'undefined') {
+            let currentFilter = this.filters[type];
+            for (let i in currentFilter) {
+                if (currentFilter[i] == value) {
+                    currentFilter.splice(i, 1);
+                    this.removeFilterLabel(type, value);
+                    return;
+                }
+            }
+        }
+    }
+    createFilterLabel(type, value, description) {
+        return this.options.createFilterLabel(type, value, description);
+    }
+    removeFilterLabel(type, value) {
+        this.container.find('.' + this.options.filterLabelClass).filter(function() {
+            return $(this).attr('data-type') == type;
+        }).filter(function() {
+            return $(this).attr('data-id') == value;
+        }).remove();
     }
     setPage(page) {
         this.page = page;
@@ -1194,8 +1249,13 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
     updateContent(content) {
         this.options.updateContent(this.contentContainer, content);
     }
-    load(page) {
+    load(page, firstLoading) {
         this.setPage(page);
+        console.log("AjaxItemsManager::load()");
+        console.log(firstLoading);
+        if (typeof firstLoading == 'undefined') {
+            firstLoading = false;
+        }
         if (!this.isWorking()) {
             this.startWorking();
             this.setRequest($.ajax({
@@ -1204,7 +1264,8 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
                 dataType: "json",
                 data: {
                     'page': this.page,
-                    'itemsPerPage': this.options.itemsPerPage
+                    'itemsPerPage': this.options.itemsPerPage,
+                    'filters': this.filters
                 },
                 success: (result) => {
                     console.log(result);
@@ -1215,6 +1276,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
                         //this.makePageActive(this.getPage());
                         this.updateContent(result.html);
                     }
+                    this.options.onLoad(result, this.contentContainer, firstLoading);
                 },
                 error: (jqXHR, textStatus, errorThrown) => {
                     console.warn(jqXHR.responseText);
@@ -1225,12 +1287,15 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
             }));
         }
     }
+    reload() {
+        this.load(this.getPage());
+    }
     run(page) {
         if (typeof page == 'undefined') {
             page = 1;
         }
         this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
-        this.load(page);
+        this.load(page, true);
     }
 }
 Hawk.FormField = class {
@@ -1255,6 +1320,9 @@ Hawk.FormField = class {
     }
     getName() {
         return this.name;
+    }
+    getWrapper() {
+        return this.wrapper;
     }
     getValue() {
         throw new Error("This method should be overwritten in the subclass.");
@@ -1299,6 +1367,24 @@ Hawk.FormField = class {
         this.initializeObserving();
     }
 }
+Hawk.FileFormField = class extends Hawk.FormField {
+    constructor(name, options) {
+        super(name, options);
+    }
+    getValue() {
+        return this.field.val();
+    }
+    validate() {
+        return this.options.validate(this.getField(), this.getWrapper());
+    }
+    initializeObserving() {
+        this.field.change(() => {
+            setTimeout(() => {
+                this.checkField();
+            }, 10);
+        });
+    }
+}
 Hawk.TextFormField = class extends Hawk.FormField {
     constructor(name, options) {
         super(name, options);
@@ -1315,6 +1401,51 @@ Hawk.TextFormField = class extends Hawk.FormField {
                 this.checkField();
             }, 10);
         });
+        this.field.change(() => {
+            this.checkField();
+        });
+    }
+}
+Hawk.ChoiceFormField = class extends Hawk.FormField {
+    constructor(name, options) {
+        super(name, options);
+    }
+    getValue() {
+        return this.field.val();
+    }
+    validate() {
+        return this.options.validate(this.getField());
+    }
+    initializeObserving() {
+        this.field.change(() => {
+            this.checkField();
+        });
+    }
+}
+Hawk.TextareaFormField = class extends Hawk.FormField {
+    constructor(name, options) {
+        super(name, options);
+    }
+    getValue() {
+        return this.field.val();
+    }
+    validate() {
+        return this.options.validate(this.getValue());
+    }
+    initializeObserving() {
+        this.field.keydown(() => {
+            setTimeout(() => {
+                this.checkField();
+            }, 10);
+        });
+        this.field.change(() => {
+            this.checkField();
+        });
+    }
+    bind(form) {
+        this.field = $(form).find('textarea[name="' + this.getName() + '"]');
+        this.wrapper = this.options.obtainWrapper(this.field);
+        return this.isBinded();
     }
 }
 Hawk.FormSender = class extends Hawk.SingleThreadClass {
@@ -1326,7 +1457,17 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
             const field = fields[i];
             this.fields[field.getName()] = field;
         }
-        this.defaultOptions = {
+        this.defaultOptions = this.getDefaultOptions();
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+        this.infoContainer = this.form.find('.' + this.options.infoContainerClass);
+        this.infoWrapper = this.form.find('.' + this.options.infoWrapperClass);
+        this.info = this.form.find('.' + this.options.infoClass);
+        this.spinner = this.form.find('.' + this.options.spinnerClass);
+        this.button = this.options.obtainButton(this.form);
+        this.cancelButton = this.options.obtainCancelButton(this.form);
+    }
+    getDefaultOptions() {
+        return {
             autoDisable: true,
             fadeSpeed: 200,
             slideSpeed: 200,
@@ -1347,20 +1488,16 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
                 this.defaultResultCallback(result);
             },
             onException: (result) => {
-                this.defaultResultCallback(result);
+                if (typeof result != 'undefined') {
+                    this.defaultResultCallback(result);
+                }
             },
             onComplete: (result) => {}
         };
-        this.options = Hawk.mergeObjects(this.defaultOptions, options);
-        this.infoContainer = this.form.find('.' + this.options.infoContainerClass);
-        this.infoWrapper = this.form.find('.' + this.options.infoWrapperClass);
-        this.info = this.form.find('.' + this.options.infoClass);
-        this.spinner = this.form.find('.' + this.options.spinnerClass);
-        this.button = this.options.obtainButton(this.form);
-        this.cancelButton = this.options.obtainCancelButton(this.form);
     }
     defaultResultCallback(result) {
-        this.changeMessage(result.message);
+        this.checkFields(result.errorFields);
+        this.changeMessage("<p class=\"failure\">" + result.message + "</p>");
     }
     getField(name) {
         return this.fields[name];
@@ -1436,6 +1573,11 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
             }
         });
     }
+    clearMessage() {
+        this.hideMessage(() => {
+            this.info.html("");
+        });
+    }
     showSpinner() {
         this.spinner.css({
             opacity: 1
@@ -1488,7 +1630,7 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
         this.form.submit((e) => {
             e.preventDefault();
             this.submit();
-        })
+        });
     }
     submit() {
         if (!this.isWorking()) {
@@ -1515,11 +1657,16 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
         super(form, fields, options);
         this.path = path;
     }
+    getDefaultOptions() {
+        let defaultOptions = super.getDefaultOptions();
+        defaultOptions.method = "POST";
+        return defaultOptions;
+    }
     send() {
         const data = this.collectData(this.form.get(0));
         $.ajax({
             url: this.path,
-            type: 'POST',
+            type: this.options.method,
             data: data,
             cache: false,
             processData: false, // Don't process the files
@@ -1549,34 +1696,32 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
                 }
             },
             complete: (jqXHR) => {
-                this.spinner.hide();
+                this.hideSpinner();
                 this.finishWorking();
             }
         });
     }
 }
 Hawk.ComponentsConstants = {
-    COMPONENT_ID_ATTRIBUTE: "data-hawk-component-id"
+    COMPONENT_ID_ATTRIBUTE: "data-hawk-component-id",
+    COMPONENT_CLASS_ID_ATTRIBUTE: "data-hawk-component-class"
 }
 Hawk.Component = class {
-    constructor(classname, values, options, id) {
-        this.classname = classname;
-        this.container;
-        this.values = values;
-        this.properties = options.properties || {};
-        this.methods = options.methods || {};
+    constructor(id) {
         this.id = id || -1;
-        this.onRefresh = options.onRefresh || function() {};
-        this.onClick = options.onClick || function(component) {};
-        this.onCreateFromDOM = options.onCreateFromDOM || function(container, values) {
-            return values;
-        };
+        this.values = {};
+        this.properties = {};
+        this.methods = {};
+        this.subcomponents = {};
+    }
+    getClassID() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    getClassname() {
+        throw new Error("This method should be overwritten in the subclass.");
     }
     getID() {
         return this.id;
-    }
-    getClassname() {
-        return this.classname;
     }
     set(key, value) {
         this.values[key] = value;
@@ -1588,11 +1733,10 @@ Hawk.Component = class {
     update(key, value) {
         this.set(key, value);
         this.refreshView();
-        this.onRefresh(key, value, this);
         return this;
     }
     getProperty(key) {
-        var property = this.properties[key];
+        const property = this.properties[key];
         return property(this);
     }
     getContainer() {
@@ -1603,28 +1747,59 @@ Hawk.Component = class {
         }
     }
     getElement(name) {
-        return this.getContainer().find('.' + this.getClassname() + '__' + name);
+        if (this.getID() != -1) {
+            return this.getContainer().find('.' + this.getClassname() + '__' + name).filter((index, current) => {
+                const parents = $(current).parents('.' + this.getClassname());
+                return parents.eq(0).attr(Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE) == this.getID();
+            });
+        } else {
+            return this.getContainer().find('.' + this.getClassname() + '__' + name);
+        }
+    }
+    addSubcomponent(subcomponent) {
+        if (typeof this.subcomponents[subcomponent.getClassID()] == 'undefined') {
+            this.subcomponents[subcomponent.getClassID()] = [];
+        }
+        this.subcomponents[subcomponent.getClassID()].push(subcomponent);
+    }
+    placeSubcomponent(subcomponent, html) {
+        const subcomponentsContainer = this.getElement('subcomponents').filter('[' + Hawk.ComponentsConstants.COMPONENT_CLASS_ID_ATTRIBUTE + '="' + subcomponent.getClassID() + '"]');
+        this.addSubcomponent(subcomponent);
+        const subcomponentHTML = $(html);
+        subcomponentHTML.css({
+            display: 'none'
+        });
+        subcomponentsContainer.append(subcomponentHTML);
+        subcomponent.refreshView();
+        subcomponentHTML.velocity("slideDown");
+    }
+    updateElementValue(element, value) {
+        if (element.is('input')) {
+            element.val(value);
+        } else {
+            element.html(value);
+        }
     }
     refreshView() {
         let element = this.getElement("id");
         element.html(this.getID());
         for (const i in this.values) {
             element = this.getElement(i);
-            element.html(this.values[i]);
+            this.updateElementValue(element, this.values[i]);
         }
         for (const i in this.properties) {
             element = this.getElement(i);
-            element.html(this.getProperty(i));
+            this.updateElementValue(element, this.getProperty(i));
         }
-        // for (var i in this.subcomponents) {
-        //
-        //     for (let j in this.subcomponents[i]) {
-        //         if (this.subcomponents[i][j].hasOwnProperty('refreshView')) {
-        //             this.subcomponents[i][j].refreshView();
-        //         }
-        //
-        //     }
-        // }
+        for (var i in this.subcomponents) {
+            console.log("refreshing subcomponents: " + i);
+            for (let j in this.subcomponents[i]) {
+                console.log(this.subcomponents[i][j].getID());
+                //if (this.subcomponents[i][j].hasOwnProperty('refreshView')) {
+                this.subcomponents[i][j].refreshView();
+                //}
+            }
+        }
         for (const i in this.methods) {
             this.methods[i](this);
         }
@@ -1637,9 +1812,15 @@ Hawk.Component = class {
             }
         });
     }
-    run() {
-        var allComponentBindings = {};
-        this.container = this.getContainer();
+    prepareFromDOM() {
+        for (const i in this.values) {
+            const element = this.getElement(i);
+            if (element.is('input, textarea')) {
+                this.values[i] = element.val();
+            } else {
+                this.values[i] = element.text().trim();
+            }
+        }
     }
 }
 Hawk.ComponentClass = class {
@@ -1746,6 +1927,68 @@ Hawk.ComponentClass = class {
         });
     }
 }
+Hawk.ComponentController = class {
+    constructor(options) {
+        this.defaultOptions = {
+            singleInstanceContainerClass: 'hawk-component-container', // is it necessary?
+            onComponentsLoad: (controller) => {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+        this.instances = {};
+    }
+    createFromJSON(json) {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    createFromDOM(id) {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    getLoadingSingleComponentPath(id) {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    getLoadingComponentsPath() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    getSingleInstanceContainerClass() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    getInstancesContainerClass() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    putInstance(id, instance) {
+        this.instances[id] = instance;
+        return this;
+    }
+    getInstance(id) {
+        return this.instances[id] || null;
+    }
+    loadOne(id) {
+        $.ajax({
+            url: this.getLoadingSingleComponentPath(id),
+            type: 'GET',
+            data: {},
+            cache: false,
+            processData: false, // Don't process the files
+            contentType: false,
+            dataType: 'json',
+            success: (result) => {
+                console.log(result);
+                if (result.status == Hawk.RequestStatus.SUCCESS) {
+                    const instance = this.createFromJSON(result.instance);
+                    this.putInstance(id, instance);
+                    $('.' + this.getSingleInstanceContainerClass() + '[' + Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE + '="' + result.id + '"]').html(result.html);
+                    instance.refreshView();
+                    console.log(instance);
+                    this.options.onComponentsLoad(this);
+                } else if (result.status == Hawk.RequestStatus.ERROR) {} else {}
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.log(jqXHR.responseText);
+                //console.log(errorThrown);
+            },
+            complete: (jqXHR) => {}
+        });
+    }
+}
 Hawk.DetailsList = class extends Hawk.SingleThreadClass {
     constructor(container, options) {
         super();
@@ -1758,10 +2001,14 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
             headerClass: "hawk-details-list__header",
             contentContainerClass: "hawk-details-list__content-container",
             contentClass: "hawk-details-list__content",
+            activeClass: "active",
             eventName: "click.detailsList",
             autoHide: true,
             getContentContainer: (header) => {
                 return header.siblings('.' + this.options.contentContainerClass);
+            },
+            getParent: (element) => {
+                return element.parents('.' + this.options.itemClass);
             },
             slideSpeed: 200,
             fadeSpeed: 200,
@@ -1781,38 +2028,63 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
         this.current = header;
         const contentContainer = this.options.getContentContainer(header);
         contentContainer.velocity("slideDown", {
-            duration: this.options.slideSpeed
+            duration: this.options.slideSpeed,
+            complete: () => {
+                this.finishWorking();
+            }
         });
+        const parent = this.options.getParent(header);
+        parent.addClass(this.options.activeClass);
         this.options.onShow(this, header, contentContainer);
     }
     showByIndex(index) {}
     hide(header) {
         const contentContainer = this.options.getContentContainer(header);
         contentContainer.velocity("slideUp", {
-            duration: this.options.slideSpeed
+            duration: this.options.slideSpeed,
+            complete: () => {
+                this.finishWorking();
+            }
         });
+        const parent = this.options.getParent(header);
+        parent.removeClass(this.options.activeClass);
         this.options.onHide(this, header, contentContainer);
     }
+    toggle(header) {
+        if (!this.isWorking()) {
+            this.startWorking();
+            const contentContainer = this.options.getContentContainer(header);
+            if (contentContainer.is(':visible')) {
+                this.hide(header);
+            } else {
+                this.show(header);
+            }
+        }
+    }
     refreshDependencies() {
-        if (this.headers !== null) {
+        if (this.headers != null) {
             this.headers.unbind(this.options.eventName);
         }
         const that = this;
         this.headers = this.container.find('.' + this.options.headerClass);
-        this.headers.bind(this.options.eventName, function() {
-            const header = $(this);
-            const contentContainer = that.options.getContentContainer(header);
-            if (contentContainer.is(':visible')) {
-                that.hide(header);
-            } else {
-                that.show(header);
-            }
+        this.headers.bind(this.options.eventName, (e) => {
+            const header = $(e.currentTarget);
+            this.toggle(header);
         });
     }
     run() {
         this.refreshDependencies();
     }
 }
+Hawk.AjaxOverlayerManagerConstants = {
+    modes: {
+        DEFAULT: 0,
+        DELEGATE_EVENTS: 1
+    },
+    getDefaultHashPattern: () => {
+        return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+\/(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
+    }
+};
 Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
     constructor(container, options) {
         super();
@@ -1823,20 +2095,43 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.lang;
         this.contentContainer;
         this.content;
+        this.buttons;
         this.closeButton;
         this.defaultOptions = {
             path: "/ajax/load-overlayer",
             fadeSpeed: 200,
             slideSpeed: 200,
+            mode: Hawk.AjaxOverlayerManagerConstants.modes.DEFAULT,
+            eventName: 'click.ajaxOverlayerManager',
+            popstateEventName: 'popstate.ajaxOverlayerManager',
             wrapperClass: 'overlayer__wrapper',
             innerClass: 'overlayer__inner',
             contentContainerClass: 'overlayer__content-container',
             contentClass: 'overlayer__content',
             loadingLayerClass: 'overlayer__loading-layer',
             closeButtonClass: 'ajax-overlayer-close',
-            onLoad: (aom, id, bundle) => {},
+            onLoad: (aom, id, result) => {},
             onShow: (aom) => {},
-            onHide: (aom) => {}
+            onHide: (aom) => {},
+            onInitialize: (aom, hash) => {
+                if (hash.length > 0) {
+                    if (hash.startsWith("#")) {
+                        hash = hash.substring(1);
+                    }
+                    const regexp = new RegExp(Hawk.AjaxOverlayerManagerConstants.getDefaultHashPattern());
+                    if (regexp.test(hash)) {
+                        const parts = hash.split('/');
+                        if (parts[1] == aom.getOverlayerID()) {
+                            const id = parts[2];
+                            var bundle = {};
+                            if (typeof parts[4] != 'undefined') {
+                                bundle = Hawk.createBundleFromString(parts[4]);
+                            }
+                            aom.load(id, bundle);
+                        }
+                    }
+                }
+            }
         };
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
     }
@@ -1864,6 +2159,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                 this.content.html("");
             }
         });
+        this.clearHash();
+        $(window).unbind(this.options.popstateEventName);
     }
     show() {
         this.options.onShow(this);
@@ -1876,13 +2173,26 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
             }
         });
     }
+    isOpen() {
+        return this.container.is(":visible");
+    }
     load(id, bundle) {
+        if (!this.isOpen()) {
+            this.show();
+        } else {
+            $(window).unbind(this.options.popstateEventName);
+        }
+        this.loadContent(id, bundle);
+    }
+    loadContent(id, bundle) {
         if (!this.isWorking()) {
             this.startWorking();
-            this.show();
             if (typeof bundle == 'undefined') {
                 bundle = {};
             }
+            this.loadingLayer.css({
+                display: 'flex'
+            });
             this.setRequest($.ajax({
                 type: "POST",
                 url: this.options.path,
@@ -1905,6 +2215,12 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                     } else {
                         this.hide();
                     }
+                    if (typeof result.anchor != 'undefined') {
+                        this.setHash(this.createAnchor(result.anchor, bundle));
+                    }
+                    $(window).bind(this.options.popstateEventName, (e) => {
+                        this.hide();
+                    });
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     // here should appear error layer
@@ -1913,6 +2229,9 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
                 },
                 complete: () => {
                     this.finishWorking();
+                    this.loadingLayer.css({
+                        display: 'none'
+                    });
                 }
             }));
         }
@@ -1938,6 +2257,21 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
             }
         });
     }
+    clearHash() {
+        //history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+    setHash(hash) {
+        //history.pushState("", document.title, window.location.pathname + window.location.search);
+        window.location.hash = '#' + hash;
+        return this;
+    }
+    createAnchor(anchor, bundle) {
+        let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
+        if (typeof bundle != 'undefined') {
+            resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
+        }
+        return resultAnchor;
+    }
     onButtonClick(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -1958,20 +2292,36 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         });
         return this;
     }
+    refreshDependencies() {
+        if (this.options.mode == Hawk.AjaxOverlayerManagerConstants.modes.DELEGATE_EVENTS) {
+            this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
+        } else {
+            if (typeof this.buttons != 'undefined') {
+                this.buttons.unbind(this.options.eventName);
+            }
+            this.buttons = $(this.getButtonsSelector());
+            this.buttons.bind(this.options.eventName, this.onButtonClick.bind(this));
+        }
+    }
     run() {
         this.body = $('body');
         this.lang = $('html').attr('lang');
         this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
         this.content = this.container.find('.' + this.options.contentClass);
         this.closeButton = this.container.find('.' + this.options.closeButtonClass);
-        this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
+        this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
+        //this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
+        this.refreshDependencies();
         this.container.click((e) => {
             this.hide();
+            history.pushState("", document.title, window.location.pathname + window.location.search);
         });
         this.container.on('click', '.' + this.options.closeButtonClass, (e) => {
             this.hide();
+            history.pushState("", document.title, window.location.pathname + window.location.search);
         });
         this.initializeClosePreventer();
+        this.options.onInitialize(this, Hawk.getHash());
     }
 }
 Hawk.SectionDetector = class {
@@ -2042,6 +2392,542 @@ Hawk.SectionDetector = class {
         this.scrollY = $(window).scrollTop();
         this.checkSections();
         //}, 200);
+    }
+}
+Hawk.BookmarksManager = function(container, options) {
+    this.container = $(container);
+    this.content;
+    this.contentWrapper;
+    this.bookmarks;
+    this.current; // current bookmark container
+    this.currentHeight = 0;
+    this.currentWidth;
+    this.loading = false;
+    var that = this;
+    this.defaultOptions = {
+        responsive: true,
+        activeScroll: false,
+        activeScrollWidth: 480,
+        slideDuration: 200,
+        fadeDuration: 200,
+        activeBookmarkClass: "active",
+        bookmarksClass: "bookmarks-manager__bookmark-container",
+        contentClass: "bookmarks-manager__content",
+        contentWrapperClass: "bookmarks-manager__content-wrapper",
+        bookmarkClass: "bookmarks-manager__bookmark",
+        bookmarkContentClass: "bookmarks-manager__bookmark-content",
+        bookmarkActiveCallback: function(bookmarkContainer) {},
+        bookmarkUnactiveCallback: function(bookmarkContainer) {},
+        changeContentCallback: function(content) {},
+        changeBookmarkCallback: function(bookmarkContainer) {},
+        changeHashCallback: function(hash) {},
+    };
+    this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    this.isResponsive = function() {
+        return this.options.responsive;
+    };
+    this.isSmallDevice = function() {
+        return this.isResponsive() && !this.content.is(":visible");
+    };
+    this.changeContent = function(content, callback, outerContainer) {
+        var container;
+        if (outerContainer === undefined) {
+            container = this.content;
+        } else container = outerContainer;
+        var showing = function() {
+            container.hide();
+            container.html(content.show());
+            container.velocity("slideDown", {
+                duration: that.options.slideDuration,
+                complete: function() {
+                    container.velocity({
+                        opacity: 1
+                    }, {
+                        duration: that.options.fadeDuration,
+                        complete: function() {
+                            var currentHeight = that.content.outerHeight();
+                            that.currentHeight = currentHeight;
+                            that.contentWrapper.css({
+                                "min-height": that.currentHeight + "px",
+                            });
+                            that.options.changeContentCallback(that.content);
+                            if (typeof callback == "function") callback();
+                            that.loading = false;
+                        },
+                    });
+                },
+            });
+        };
+        if (container.css("opacity") != 0) {
+            container.velocity({
+                opacity: 0
+            }, {
+                duration: that.options.fadeDuration,
+                complete: function() {
+                    container.html("");
+                    showing();
+                },
+            });
+        } else {
+            showing();
+        }
+        if (this.options.activeScroll && Hawk.w < this.options.activeScrollWidth) {
+            var id = this.content.attr("id");
+            if (id !== undefined) {
+                Hawk.scrollToElement({
+                    anchor: "#" + id
+                });
+            }
+        }
+        return this;
+    };
+    this.changeBookmark = function(bookmarkContainer) {
+        this.unsetBookmarkActive();
+        this.current = bookmarkContainer;
+        var bookmark = this.current.find("." + this.options.bookmarkClass);
+        var content = this.current.find("." + this.options.bookmarkContentClass);
+        this.setBookmarkActive(this.current);
+        if (this.isSmallDevice()) {
+            content.velocity("slideDown", {
+                duration: that.options.slideDuration,
+                complete: function() {
+                    that.options.changeContentCallback(content);
+                    that.loading = false;
+                },
+            });
+        } else {
+            this.changeContent(content.clone(true));
+        }
+        return this;
+    };
+    this.unsetBookmarkActive = function() {
+        if (this.current !== undefined) {
+            var current = this.current;
+            current.find("." + this.options.bookmarkClass).removeClass(this.options.activeBookmarkClass);
+            current.find("." + this.options.bookmarkContentClass).velocity("slideUp", {
+                duration: that.options.slideDuration,
+            });
+            this.current = undefined;
+            this.options.bookmarkUnactiveCallback(current);
+        }
+        return this;
+    };
+    this.setBookmarkActive = function(bookmarkContainer) {
+        var bookmark = bookmarkContainer.find("." + this.options.bookmarkClass);
+        bookmark.addClass(this.options.activeBookmarkClass);
+        this.options.bookmarkActiveCallback(bookmarkContainer);
+        return this;
+    };
+    this.launchBookmark = function(n) {
+        this.changeBookmark(this.bookmarks.eq(n));
+        return this;
+    };
+    this.updateOptions = function(options) {
+        this.options = Hawk.mergeObjects(this.options, options);
+        return this;
+    };
+    this.clear = function(callback) {
+        //this.current = undefined;
+        this.unsetBookmarkActive();
+        this.content.velocity({
+            opacity: 0
+        }, {
+            duration: 200,
+            complete: function() {
+                if (callback !== undefined) {
+                    callback();
+                }
+            },
+        });
+        return this;
+    };
+    this.remindActiveBookmark = function() {
+        if (this.isSmallDevice()) {}
+        return this;
+    };
+    this.launchBookmarkByName = function(name) {
+        var finalName = name;
+        this.bookmarks.each(function() {
+            var current = $(this);
+            if (current.attr("data-hash") == finalName) {
+                that.changeBookmark(current);
+                return;
+            }
+        });
+    };
+    this.refresh = function() {
+        var current = this.current;
+        if (current !== undefined) {
+            this.clear(function() {
+                that.changeBookmark(current);
+            });
+        }
+        return this;
+    };
+    this.run = function() {
+        this.bookmarks = this.container.find("." + this.options.bookmarksClass);
+        this.content = this.container.find("." + this.options.contentClass);
+        this.contentWrapper = this.container.find("." + this.options.contentWrapperClass);
+        var refresh;
+        this.currentWidth = Hawk.w;
+        $(window).resize(function() {
+            if (Hawk.w != that.currentWidth) {
+                clearTimeout(refresh);
+                refresh = setTimeout(function() {
+                    that.refresh();
+                    that.currentWidth = Hawk.w;
+                }, 100);
+            }
+        });
+        var hash = window.location.hash;
+        if (hash.length > 0) {
+            hash = hash.substr(1);
+            console.log(hash);
+            var chosenBookmark = this.bookmarks.filter('[data-hash="' + hash + '"]');
+            if (chosenBookmark.length > 0) {
+                this.launchBookmarkByName(hash);
+                this.options.changeHashCallback(hash);
+            } else {
+                this.launchBookmark(0);
+            }
+        } else {
+            this.launchBookmark(0);
+        }
+        this.bookmarks.click(function() {
+            if (that.loading == true) {
+                return;
+            }
+            if (that.current !== undefined && that.current.is($(this))) {
+                that.remindActiveBookmark();
+            } else {
+                that.changeBookmark($(this));
+                that.loading = true;
+            }
+        });
+        return this;
+    };
+};
+Hawk.SlideMenu = function(id, options) {
+    this.menu = $('#' + id);
+    this.wrapper = this.menu.find('> div');
+    this.mode;
+    this.direction;
+    this.state;
+    this.toggler;
+    this.close;
+    this.directionClassName;
+    this.modeClassName;
+    this.openClassName;
+    this.states = {
+        closed: 'closed',
+        open: 'open'
+    };
+    this.modes = {
+        slideFade: 'slide-fade',
+        slide: 'slide',
+        fade: 'fade',
+        radial: 'radial'
+    };
+    this.directions = {
+        top: 'top',
+        right: 'right',
+        bottom: 'bottom',
+        left: 'left'
+    };
+    this.defaultOptions = {
+        slideDuration: 500,
+        fadeDuration: 500,
+        direction: 'top',
+        mode: 'slide',
+        toggler: $('.menu-toggler'),
+        close: this.menu.find('.menu-close'),
+        mainClass: 'slide-menu',
+        showCallback: function(menu) {},
+        hideCallback: function(menu, hideCall) {
+            hideCall();
+        }
+    };
+    this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    this.show = function() {
+        var that = this;
+        var timeRemaining = this.totalDuration();
+        that.options.showCallback(that.menu);
+        // setTimeout(function() {
+        //     that.options.showCallback(that.menu);
+        // }, timeRemaining);
+        if (this.options.mode == this.modes.fade) {
+            this.menu.velocity("fadeIn", {
+                duration: this.options.fadeDuration
+            });
+        }
+        this.menu.addClass(this.openClassName);
+        this.state = this.states.open;
+        this.toggler.addClass('open');
+        this.toggler.find('.icon-hamburger').addClass('open');
+        return this;
+    }
+    this.hide = function() {
+        var that = this;
+        this.options.hideCallback(this.menu, function() {
+            if (that.options.mode == that.modes.fade) {
+                that.menu.velocity("fadeOut", {
+                    duration: that.options.fadeDuration
+                });
+            }
+            that.menu.removeClass(that.openClassName);
+        });
+        this.state = this.states.closed;
+        this.options.toggler.removeClass('open');
+        this.options.toggler.find('.icon-hamburger').removeClass('open');
+        return this;
+    }
+    this.totalDuration = function() {
+        if (this.options.mode == this.modes.slide) {
+            return this.options.slideDuration;
+        } else if (this.options.mode == this.modes.slideFade) {
+            return this.options.slideDuration + this.options.fadeDuration;
+        } else if (this.options.mode == this.modes.fade) {
+            return this.options.fadeDuration;
+        } else {
+            return 0;
+        }
+    }
+    this.run = function() {
+        var that = this;
+        this.toggler = this.options.toggler;
+        this.close = this.options.close;
+        this.modeClassName = this.options.mainClass + "--" + this.options.mode;
+        this.directionClassName = this.options.mainClass + "--" + this.options.direction;
+        this.openClassName = this.options.mainClass + "--open";
+        this.menu.addClass(this.directionClassName);
+        this.menu.addClass(this.modeClassName);
+        this.hide();
+        this.toggler.click(function() {
+            if (that.state == that.states.open) {
+                that.hide();
+            } else {
+                that.show();
+            }
+        });
+        this.close.click(function() {
+            that.hide();
+        });
+        return this;
+    }
+}
+Hawk.Routes = {
+    routes: {},
+    path: Hawk.getPath(),
+    regexp: new RegExp(""),
+    is: function(route) {
+        this.regexp = new RegExp(route);
+        return this.regexp.test(Hawk.getPath());
+    },
+    contains: function(parameterName) {
+        var regexp = new RegExp('/' + parameterName + '/');
+        var endRegexp = new RegExp('/' + parameterName + '$');
+        return regexp.test(Hawk.getPath()) || endRegexp.test(Hawk.getPath());
+    },
+    getParameterValue: function(parameterString) {
+        var parts = parameterString.split('/');
+        if (parts.length > 2) {
+            return parts[2];
+        } else {
+            return null;
+        }
+    },
+    get: function(parameterName) {
+        if (this.contains(parameterName)) {
+            var pattern = '/' + parameterName + '/([0-9a-zA-Z\-]+)';
+            var regexp = new RegExp(pattern + '/');
+            var endRegexp = new RegExp(pattern + '$');
+            var results = regexp.exec(Hawk.getPath());
+            if (results != null) {
+                return this.getParameterValue(results[0]);
+            } else {
+                results = endRegexp.exec(Hawk.getPath());
+                if (results != null) {
+                    return this.getParameterValue(results[0]);
+                } else {
+                    return null;
+                }
+            }
+        } else {
+            return null;
+        }
+    }
+}
+Hawk.RevealingItem = class {
+    constructor(container, options) {
+        this.container = container;
+        this.defaultOptions = {
+            baseItemClass: 'pulling-item__base-item',
+            layerItemClass: 'pulling-item__layer-item',
+            afterItemClass: 'pulling-item__after-item',
+            barClass: 'pulling-item__pulling-bar'
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+        this.currentDelta = 0;
+        this.leftOffset = 0;
+        this.maxWidth = 0;
+    }
+    getWidth() {
+        return this.layerItem.width();
+    }
+    countDelta(pageX) {
+        var delta = pageX - (this.leftOffset + this.getWidth());
+        this.currentDelta = delta;
+        return this.currentDelta;
+    }
+    pulling(e) {
+        var pageX = (e.type.toLowerCase() === 'mousemove') ? e.pageX : e.originalEvent.touches[0].pageX;
+        var width = pageX - this.leftOffset;
+        this.layerItem.css({
+            width: width + "px"
+        });
+        var afterItemWidth = this.baseItem.width() - width;
+        this.afterItem.css({
+            width: afterItemWidth + "px"
+        });
+    }
+    startPulling() {
+        $('body').bind('mousemove.revealingItem touchmove.revealingItem', this.pulling.bind(this));
+    }
+    finishPulling() {
+        $('body').unbind('mousemove.revealingItem touchmove.revealingItem');
+    }
+    refresh() {
+        this.leftOffset = this.layerItem.offset().left;
+    }
+    run() {
+        this.baseItem = this.container.find('.' + this.options.baseItemClass);
+        this.layerItem = this.container.find('.' + this.options.layerItemClass);
+        this.afterItem = this.container.find('.' + this.options.afterItemClass);
+        this.bar = this.container.find('.' + this.options.barClass);
+        console.log('lalala');
+        console.log(this.options.layerItemClass);
+        console.log(this.layerItem);
+        this.refresh();
+        $(window).resize(() => {
+            this.refresh();
+        })
+        $('body').bind('mouseup touchend', (e) => {
+            console.log('finishing pulling?');
+            this.finishPulling();
+        });
+        $('body').bind('mousedown touchstart', (e) => {
+            var pageY = (e.type.toLowerCase() === 'mousedown') ? e.pageY : e.originalEvent.touches[0].pageY;
+            var pageX = (e.type.toLowerCase() === 'mousedown') ? e.pageX : e.originalEvent.touches[0].pageX;
+            if (pageY > this.bar.offset().top && pageY < (this.bar.offset().top + this.bar.height()) && pageX > this.bar.offset().left && pageX < (this.bar.offset().left + this.bar.width())) {
+                this.startPulling();
+            }
+        });
+    }
+}
+Hawk.Countdown = class Countdown {
+    constructor(container, targetDate, options) {
+        this.container = $(container);
+        this.targetDate = targetDate;
+        this.interval;
+        this.finished = false;
+        this.defaultOptions = {
+            valueClassNames: {
+                hours: 'hawk-countdown__hours',
+                minutes: 'hawk-countdown__minutes',
+                seconds: 'hawk-countdown__seconds'
+            },
+            captionClassNames: {
+                hours: 'hawk-countdown__hours-caption',
+                minutes: 'hawk-countdown__minutes-caption',
+                seconds: 'hawk-countdown__seconds-caption'
+            },
+            unitForms: {
+                hours: {
+                    'single': "hour",
+                    'many': "hours"
+                },
+                minutes: {
+                    'single': "minute",
+                    'many': "minutes"
+                },
+                seconds: {
+                    'single': "second",
+                    'many': "seconds"
+                }
+            },
+            onTargetReached: (countdown) => {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    getCurrentTime() {
+        return new Date();
+    }
+    getTimeDifference() {
+        const now = this.getCurrentTime();
+        let timeDifference = this.targetDate.getTime() - now.getTime();
+        if (timeDifference > 0) {
+            const hours = Math.floor(timeDifference / 1000 / 60 / 60);
+            timeDifference -= hours * 1000 * 60 * 60;
+            const minutes = Math.floor(timeDifference / 1000 / 60);
+            timeDifference -= minutes * 1000 * 60;
+            const seconds = Math.floor(timeDifference / 1000);
+            return {
+                hours: hours,
+                minutes: minutes,
+                seconds: seconds
+            };
+        } else {
+            return {
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            };
+        }
+    }
+    isTargetReached(timeLeft) {
+        return timeLeft.hours == 0 && timeLeft.minutes == 0 && timeLeft.seconds == 0;
+    }
+    update() {
+        const timeLeft = this.getTimeDifference();
+        this.values.hours.html(Hawk.addZeros(timeLeft.hours, 2));
+        this.values.minutes.html(Hawk.addZeros(timeLeft.minutes, 2));
+        this.values.seconds.html(Hawk.addZeros(timeLeft.seconds, 2));
+        if (timeLeft.hours == 1) {
+            this.captions.hours.html(this.options.unitForms.hours.single);
+        } else {
+            this.captions.hours.html(this.options.unitForms.hours.many);
+        }
+        if (timeLeft.minutes == 1) {
+            this.captions.minutes.html(this.options.unitForms.minutes.single);
+        } else {
+            this.captions.minutes.html(this.options.unitForms.minutes.many);
+        }
+        if (timeLeft.seconds == 1) {
+            this.captions.seconds.html(this.options.unitForms.seconds.single);
+        } else {
+            this.captions.seconds.html(this.options.unitForms.seconds.many);
+        }
+        if (this.isTargetReached(timeLeft) && !this.finished) {
+            this.finished = true;
+            clearInterval(this.interval);
+            this.options.onTargetReached(this);
+        }
+    }
+    run() {
+        this.values = {
+            hours: this.container.find('.' + this.options.valueClassNames.hours),
+            minutes: this.container.find('.' + this.options.valueClassNames.minutes),
+            seconds: this.container.find('.' + this.options.valueClassNames.seconds)
+        };
+        this.captions = {
+            hours: this.container.find('.' + this.options.captionClassNames.hours),
+            minutes: this.container.find('.' + this.options.captionClassNames.minutes),
+            seconds: this.container.find('.' + this.options.captionClassNames.seconds)
+        };
+        this.update();
+        this.interval = setInterval(() => {
+            this.update();
+        }, 1000);
     }
 }
 export default Hawk;

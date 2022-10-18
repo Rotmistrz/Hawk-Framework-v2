@@ -54,3 +54,4 @@
 /public/Hawk-Framework-v2/js/node_modules
 /public/node_modules
 .env-prod
+/.idea

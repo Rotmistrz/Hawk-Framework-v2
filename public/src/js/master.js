@@ -203,4 +203,7 @@ $(document).ready(function() {
     }, 1000);
     
 
+    App.Examples.RevealingItem = new Hawk.RevealingItem($('#exemplary-revealing-item'));
+    App.Examples.RevealingItem.run();
+
 });

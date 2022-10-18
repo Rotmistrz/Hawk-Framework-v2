@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    {% include('contents/revealing-item.html') %}
+
     <section class="site-section">
         <div class="site-section__layer">
             <div class="site-section__wrapper">
@@ -57,4 +59,5 @@
     {% include('contents/pager.html') %}
 
     {% include('contents/ajax-items-manager.html') %}
+
 {% endblock %}
