@@ -1,5 +1,6 @@
 // require ./HawkLibrary/Core.Hawk.js
 // require ./HawkLibrary/Validation/Validator.Hawk.js
+// require ./HawkLibrary/Text/TextParser.Hawk.js
 // require ./HawkLibrary/Requests/RequestStatus.Hawk.js
 // require ./HawkLibrary/Requests/RequestType.Hawk.js
 

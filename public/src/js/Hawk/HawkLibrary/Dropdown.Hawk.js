@@ -60,11 +60,13 @@ Hawk.Dropdown = function(container, options) {
         onShow: function(dropdown) {},
         onHide: function(dropdown) {},
         onSelected: function(dropdown, field) {
-            var description = field.parent().find('.dropdown-item__description').html();
+            if (field.attr('type') == 'radio') {
+                var description = field.parent().find('.dropdown-item__description').html();
 
-            dropdown.title.html(description);
+                dropdown.title.html(description);
 
-            dropdown.hide();
+                dropdown.hide();
+            }
 
             return true;
         }

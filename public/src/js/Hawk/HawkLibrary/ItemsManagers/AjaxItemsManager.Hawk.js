@@ -20,6 +20,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 
 			itemClass: "ajax-items-manager__item",
 			contentContainerClass: "ajax-items-manager__content-container",
+			loadingLayerClass: "ajax-items-manager__loading-layer",
 			filterLabelClass: "ajax-items-manager__filter",
 
 			slideSpeed: 400,
@@ -40,26 +41,28 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 	}
 
 	addFilter(type, value) {
-		if (typeof this.filters[type] == 'undefined') {
-			this.filters[type] = [];
-		}
+		// if (typeof this.filters[type] == 'undefined') {
+		// 	this.filters[type] = [];
+		// }
 
-		this.filters[type].push(value);
+		this.filters[type] = value;
 	}
 
 	removeFilter(type, value) {
 		if (typeof this.filters[type] != 'undefined') {
-			let currentFilter = this.filters[type];
+			delete this.filters[type];
 
-			for (let i in currentFilter) {
-				if (currentFilter[i] == value) {
-					currentFilter.splice(i, 1);
-
-					this.removeFilterLabel(type, value);
-
-					return;
-				}
-			}
+			// let currentFilter = this.filters[type];
+			//
+			// for (let i in currentFilter) {
+			// 	if (currentFilter[i] == value) {
+			// 		currentFilter.splice(i, 1);
+			//
+			// 		this.removeFilterLabel(type, value);
+			//
+			// 		return;
+			// 	}
+			// }
 		}
 	}
 
@@ -135,6 +138,9 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 		if (!this.isWorking()) {
 			this.startWorking();
 
+			this.loadingLayer.css({ display: 'flex' });
+			this.updateContent("");
+
 			this.setRequest($.ajax({
 	            type: "POST",
 	            url: this.options.path,
@@ -165,6 +171,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 	            },
 	            complete: () => {
 	                this.finishWorking();
+					this.loadingLayer.css({ display: 'none' });
 	            }
 	        }));
 		}
@@ -180,6 +187,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 		}
 
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
+		this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
 
 		this.load(page, true);
 	}
