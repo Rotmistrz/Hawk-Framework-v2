@@ -1253,6 +1253,17 @@
   border: 0;
 }
 
+.logo {
+  background-repeat: no-repeat;
+  background-size: contain;
+  overflow: hidden;
+  display: block;
+  text-indent: -100000px;
+  text-align: left;
+  background-color: transparent;
+  border: 0;
+}
+
 /***** VARIA *****/
 .tile {
   max-width: 460px;

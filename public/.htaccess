@@ -20,8 +20,8 @@ DirectoryIndex index.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{HTTPS} off
-    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteCond %{HTTP_HOST} ^(www.)?hawk2.filipmarkiewicz.pl
+    RewriteRule ^(.*)$ https://hawkframework.pl/$1 [R=301,L]
 
     RewriteCond %{HTTP_HOST} ^www.hawkframework.pl
     RewriteRule ^(.*)$ https://hawkframework.pl/$1 [R=301,L]
@@ -31,6 +31,9 @@ DirectoryIndex index.php
 
     RewriteCond %{HTTP_HOST} ^www.hawk-framework.pl
     RewriteRule ^(.*)$ https://hawkframework.pl/$1 [R=301,L]
+
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the

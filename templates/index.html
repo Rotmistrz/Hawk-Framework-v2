@@ -22,26 +22,34 @@
     <body>
         <header class="site-header">
             <div class="site-header__bar">
-                <nav class="horizontal-menu">
-                    <ul class="horizontal-menu__core">
-                        <li>
-                            <a class="menu-item" href="/">Components</a>
-                        </li>
+                <section class="site-bar">
+                    <div class="site-bar__logo-container">
+                        <a class="logo-hawk-framework">Hawk Framework</a>
+                    </div>
 
-                        <li>
-                            <a class="menu-item" href="/blocks">Blocks</a>
-                        </li>
+                    <div class="site-bar__side-container">
+                        <nav class="horizontal-menu">
+                            <ul class="horizontal-menu__core">
+                                <li>
+                                    <a class="menu-item" href="/">Components</a>
+                                </li>
 
-                        <li>
-                            <a class="menu-item" href="/variables">Variables</a>
-                        </li>
-                    </ul>
-                </nav>
+                                <li>
+                                    <a class="menu-item" href="/blocks">Blocks</a>
+                                </li>
+
+                                <li>
+                                    <a class="menu-item" href="/variables">Variables</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
             </div>
 
-            {% block header %}
+            {#{% block header %}
             <h1 class="site-title">Hawk Framework v2</h1>
-            {% endblock %}
+            {% endblock %}#}
         </header>
 
         <main class="site-content">
@@ -57,15 +65,19 @@
                         <div class="bounded-section">
                             <div class="text text--light text--small">
                                 <p>
-                                Copyright 2021-2022 by <a href="http://filipmarkiewicz.pl" target="_blank">Filip J. Markiewicz</a>. All rights reserved.
+                                    Copyright 2021-2022 by <a href="http://filipmarkiewicz.pl" target="_blank">Filip J. Markiewicz</a>. All rights reserved.
                                 </p>
 
                                 <p>
-                                The Hawk Library can be used under the MIT License. It's nice to put some information about this project in the source code and let me know that you use it, just for my satisfaction that this library is helpful for more people.
+                                    Logo has been made by Michał Kantor MacKantiStudio69.
                                 </p>
 
                                 <p>
-                                Last modification: 13.07.2022
+                                    The Hawk Library can be used under the MIT License. It's nice to put some information about this project in the source code and let me know that you use it, just for my satisfaction that this library is helpful for more people.
+                                </p>
+
+                                <p>
+                                    Last modification: 13.07.2022
                                 </p>
                             </div>
                         </div>
