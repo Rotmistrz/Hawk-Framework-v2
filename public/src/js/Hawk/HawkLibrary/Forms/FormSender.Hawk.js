@@ -38,17 +38,17 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 			obtainButton: (form) => {
 				return form.find('button[type="submit"]');
 			},
-				obtainCancelButton: (form) => {
+			obtainCancelButton: (form) => {
 				return form.find('.form__cancel-button');
 			},
 
-				onSuccess: (result) => {
+			onSuccess: (result) => {
 				this.defaultResultCallback(result);
 			},
-				onError: (result) => {
+			onError: (result) => {
 				this.defaultResultCallback(result);
 			},
-				onException: (result) => {
+			onException: (result) => {
 				if (typeof result != 'undefined') {
 					this.defaultResultCallback(result);
 				}
@@ -208,6 +208,16 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 
         return this;
     }
+
+	clearValues() {
+		for (let i in this.fields) {
+			const current = this.fields[i];
+
+			current.clearValue();
+		}
+
+		return this;
+	}
 
 	run() {
 		this.bindFields();

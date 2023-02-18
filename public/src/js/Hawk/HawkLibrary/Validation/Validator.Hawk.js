@@ -16,6 +16,16 @@ Hawk.Validator.isPhoneNumber = function(number) {
     }
 }
 
+Hawk.Validator.isNumberPositive = function(number) {
+    if (/^[0-9]+((,|\.){1}[0-9]+)?$/.test(number)) {
+        number = number.replace(",", ".");
+
+        return parseFloat(number) > 0;
+    } else {
+        return false;
+    }
+}
+
 Hawk.Validator.isNumber = function(number) {
     if (/^[0-9]+$/.test(number)) {
         return true;

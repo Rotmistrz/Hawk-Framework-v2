@@ -2,9 +2,12 @@ Hawk.Component = class {
     constructor(id) {
         this.id = id || -1;
 
+        this.instanceNew = false;
+
         this.values = {};
         this.properties = {};
         this.methods = {};
+        this.subcomponentsFilters = {};
 
         this.subcomponents = {};
     }
@@ -27,6 +30,10 @@ Hawk.Component = class {
 
     getAsHTML() {
         throw new Error("This method should be overwritten in the subclass.");
+    }
+
+    isDescendingOrder() {
+        return false;
     }
 
     getID() {
@@ -82,7 +89,25 @@ Hawk.Component = class {
             this.subcomponents[subcomponent.constructor.getClassID()] = [];
         }
 
-        this.subcomponents[subcomponent.constructor.getClassID()].push(subcomponent);
+        if (subcomponent.isDescendingOrder()) {
+            this.subcomponents[subcomponent.constructor.getClassID()].unshift(subcomponent);
+        } else {
+            this.subcomponents[subcomponent.constructor.getClassID()].push(subcomponent);
+        }
+    }
+
+    getSubcomponent(className, id) {
+        if (typeof this.subcomponents[className] != 'undefined') {
+            for (const subcomponent of this.subcomponents[className]) {
+                if (subcomponent.getID() == id) {
+                    return subcomponent;
+                }
+            }
+
+            return null;
+        } else {
+            return null;
+        }
     }
 
     getSubcomponentsContainer(className) {
@@ -119,14 +144,34 @@ Hawk.Component = class {
         const subcomponentHTML = $(html);
         subcomponentHTML.css({ display: 'none' });
 
-        subcomponentsContainer.append(subcomponentHTML);
+        if (subcomponent.isDescendingOrder()) {
+            subcomponentsContainer.prepend(subcomponentHTML);
+        } else {
+            subcomponentsContainer.append(subcomponentHTML);
+        }
 
         subcomponent.refreshView();
         subcomponentHTML.velocity("slideDown");
     }
 
-    getSubcomponents(className) {
-        return this.subcomponents[className];
+    getSubcomponents(classID) {
+        if (typeof this.subcomponentsFilters[classID] == 'function' && typeof this.subcomponents[classID] != 'undefined') {
+            return this.subcomponentsFilters[classID](this.subcomponents[classID]);
+        } else {
+            return this.subcomponents[classID];
+        }
+    }
+
+    refreshSubcomponents(classID) {
+        this.clearSubcomponentsContainer(classID);
+
+        const theseSubcomponents = this.getSubcomponents(classID);
+
+        for (const j in theseSubcomponents) {
+            const ThisSubcomponent = theseSubcomponents[j];
+
+            this.showSubcomponent(ThisSubcomponent);
+        }
     }
 
     updateElementValue(element, value) {
@@ -137,38 +182,38 @@ Hawk.Component = class {
         }
     }
 
-    refreshView() {
-        let element = this.getElement("id");
-
-        element.html(this.getID());
-
+    refreshValues() {
         for (const i in this.values) {
-            element = this.getElement(i);
+            const element = this.getElement(i);
 
             this.updateElementValue(element, this.values[i]);
         }
+    }
 
+    refreshProperties() {
         for (const i in this.properties) {
-            element = this.getElement(i);
+            const element = this.getElement(i);
 
             this.updateElementValue(element, this.getProperty(i));
         }
+    }
 
+    refreshAllSubcomponents() {
         for (var i in this.subcomponents) {
-            console.log("refreshing subcomponents: " + i);
+            this.refreshSubcomponents(i);
 
-            this.clearSubcomponentsContainer(i);
-
-            const theseSubcomponents = this.getSubcomponents(i);
-
-            for (const j in theseSubcomponents) {
-                const ThisSubcomponent = theseSubcomponents[j];
-
-                this.showSubcomponent(ThisSubcomponent);
-                //container.append(Assignee.getAsHTML());
-
-                //Assignee.refreshView();
-            }
+            // this.clearSubcomponentsContainer(i);
+            //
+            // const theseSubcomponents = this.getSubcomponents(i);
+            //
+            // for (const j in theseSubcomponents) {
+            //     const ThisSubcomponent = theseSubcomponents[j];
+            //
+            //     this.showSubcomponent(ThisSubcomponent);
+            //     //container.append(Assignee.getAsHTML());
+            //
+            //     //Assignee.refreshView();
+            // }
             // for (let j in this.subcomponents[i]) {
             //     console.log(this.subcomponents[i][j].getID());
             //
@@ -178,10 +223,26 @@ Hawk.Component = class {
             //
             // }
         }
+    }
 
+    refreshMethods() {
         for (const i in this.methods) {
             this.methods[i](this);
         }
+    }
+
+    refreshView() {
+        let element = this.getElement("id");
+
+        element.html(this.getID());
+
+        this.refreshValues();
+
+        this.refreshProperties();
+
+        this.refreshAllSubcomponents();
+
+        this.refreshMethods();
     }
 
     remove() {
@@ -192,6 +253,16 @@ Hawk.Component = class {
                 container.remove();
             }
         });
+    }
+
+    setIsNew(instanceNew) {
+        this.instanceNew = instanceNew;
+
+        return this;
+    }
+
+    isInstanceNew() {
+        return this.instanceNew;
     }
 
     prepareFromDOM() {

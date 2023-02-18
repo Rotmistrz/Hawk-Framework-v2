@@ -15,6 +15,8 @@ Hawk.DropdownConstants = {
     }
 }
 
+Hawk.RegisteredDropdowns = [];
+
 Hawk.Dropdown = function(container, options) {
     var that = this;
 
@@ -106,6 +108,12 @@ Hawk.Dropdown = function(container, options) {
                 }
             }
         });
+
+        for (const dropdown of Hawk.RegisteredDropdowns) {
+            if (dropdown.isOpen() && dropdown != this) {
+                dropdown.hide();
+            }
+        }
 
         this.setOpen();
 
@@ -261,6 +269,8 @@ Hawk.Dropdown = function(container, options) {
         });
 
         this.refreshDependencies();
+
+        Hawk.RegisteredDropdowns.push(this);
 
         return true;
     }

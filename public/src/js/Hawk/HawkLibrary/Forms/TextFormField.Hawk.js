@@ -11,6 +11,12 @@ Hawk.TextFormField = class extends Hawk.FormField {
 		return this.options.validate(this.getValue());
 	}
 
+	clearValue() {
+		this.field.val('');
+
+		return this;
+	}
+
 	initializeObserving() {
 		this.field.keydown(() => {
 			setTimeout(() => {

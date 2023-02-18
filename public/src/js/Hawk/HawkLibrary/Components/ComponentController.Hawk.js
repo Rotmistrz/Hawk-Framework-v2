@@ -3,10 +3,15 @@ Hawk.ComponentController = class {
         this.defaultOptions = {
             singleInstanceContainerClass: 'hawk-component-container', // is it necessary?
 
-            onComponentsLoad: (controller) => {}
+            onComponentsLoad: (controller, id) => {},
+            onComponentsLoadingComplete: (controller, id) => {},
+
+            ordering: 'ASC'
         };
 
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
+
+        //console.log(this.constructor.getClassID() + " - ORDER: " + this.options.order);
 
         this.instances = {};
     }
@@ -23,7 +28,7 @@ Hawk.ComponentController = class {
         throw new Error("This method should be overwritten in the subclass.");
     }
 
-    getLoadingComponentsPath() {
+    getLoadingComponentsPath(id) {
         throw new Error("This method should be overwritten in the subclass.");
     }
 
@@ -35,8 +40,12 @@ Hawk.ComponentController = class {
         throw new Error("This method should be overwritten in the subclass.");
     }
 
-    putInstance(id, instance) {
-        this.instances[id] = instance;
+    static getClassID() {
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+
+    putInstance(instance) {
+        this.instances[instance.getID()] = instance;
 
         return this;
     }
@@ -45,9 +54,35 @@ Hawk.ComponentController = class {
         return this.instances[id] || null;
     }
 
-    loadOne(id) {
+    attachInstance(instance) {
+        const instancesContainer = this.getInstancesContainer();
+
+        console.log(this.options.ordering);
+
+        if (this.options.ordering == 'DESC') {
+            instancesContainer.prepend(instance.getAsHTML());
+        } else {
+            instancesContainer.append(instance.getAsHTML());
+        }
+
+        instance.refreshView();
+
+        this.putInstance(instance);
+    }
+
+    getInstancesContainer() {
+        return $('.' + this.getInstancesContainerClass() + '[' + Hawk.ComponentsConstants.COMPONENT_CLASS_ID_ATTRIBUTE + '="' + this.constructor.getClassID() + '"]');
+    }
+
+    getSingleInstanceContainer(id) {
+        return $('.' + this.getSingleInstanceContainerClass() + '[' + Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE + '="' + id + '"]');
+    }
+
+    load(id) {
+        console.log("PATH: " + this.getLoadingComponentsPath(id));
+
         $.ajax({
-            url: this.getLoadingSingleComponentPath(id),
+            url: this.getLoadingComponentsPath(id),
             type: 'GET',
             data: {},
             cache: false,
@@ -58,17 +93,77 @@ Hawk.ComponentController = class {
                 console.log(result);
 
                 if (result.status == Hawk.RequestStatus.SUCCESS) {
+                    const instancesContainer = this.getInstancesContainer();
+
+                    if (typeof result.html != 'undefined') {
+                        instancesContainer.html(result.html);
+
+                        for (const instanceJSON of result.instances) {
+                            const instance = this.createFromJSON(instanceJSON);
+
+                            this.putInstance(instance);
+
+                            instance.refreshView();
+
+                            console.log(instance);
+                        }
+                    } else {
+                        instancesContainer.html("");
+
+                        for (const instanceJSON of result.instances) {
+                            const instance = this.createFromJSON(instanceJSON);
+
+                            this.attachInstance(instance);
+
+                            instance.refreshView();
+
+                            console.log(instance);
+                        }
+                    }
+
+                    this.options.onComponentsLoad(this, id);
+                } else if (result.status == Hawk.RequestStatus.ERROR) {
+
+                } else {
+
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.log(jqXHR.responseText);
+
+                //console.log(errorThrown);
+            },
+            complete: (jqXHR) => {
+                this.options.onComponentsLoadingComplete(this);
+            }
+        });
+    }
+
+    loadOne(id) {
+        console.log("PATH: " + this.getLoadingSingleComponentPath(id));
+
+        $.ajax({
+            url: this.getLoadingSingleComponentPath(id),
+            type: 'GET',
+            data: {},
+            cache: false,
+            processData: false, // Don't process the files
+            contentType: false,
+            dataType: 'json',
+            success: (result) => {
+                if (result.status == Hawk.RequestStatus.SUCCESS) {
                     const instance = this.createFromJSON(result.instance);
 
-                    this.putInstance(id, instance);
+                    this.putInstance(instance);
 
-                    $('.' + this.getSingleInstanceContainerClass() + '[' + Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE + '="' + result.id + '"]').html(result.html);
+                    const instanceContainer = this.getSingleInstanceContainer(result.id);
+                    instanceContainer.html(result.html);
 
                     instance.refreshView();
 
                     console.log(instance);
 
-                    this.options.onComponentsLoad(this);
+                    this.options.onComponentsLoad(this, id);
 
                 } else if (result.status == Hawk.RequestStatus.ERROR) {
 
@@ -82,7 +177,7 @@ Hawk.ComponentController = class {
                 //console.log(errorThrown);
             },
             complete: (jqXHR) => {
-
+                this.options.onComponentsLoadingComplete(this, id);
             }
         });
     }

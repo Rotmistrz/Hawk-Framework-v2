@@ -5,11 +5,13 @@ Hawk.AjaxOverlayerManagerConstants = {
 	},
 
 	getDefaultHashPattern: () => {
-		return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+\/(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
+		return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+(\/)?(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
 	}
 };
 
 Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
+	static instances = 0;
+
 	constructor(container, options) {
 		super();
 
@@ -34,6 +36,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			slideSpeed: 200,
 
 			mode: Hawk.AjaxOverlayerManagerConstants.modes.DEFAULT,
+			closeOnClickOutside: false,
 
 			eventName: 'click.ajaxOverlayerManager',
 			popstateEventName: 'popstate.ajaxOverlayerManager',
@@ -46,6 +49,9 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			loadingLayerClass: 'overlayer__loading-layer',
 			closeButtonClass: 'ajax-overlayer-close',
 
+			baseZIndexValue: 9000,
+
+			onLoading: (aom, id, result) => {},
 			onLoad: (aom, id, result) => {},
 			onShow: (aom) => {},
 			onHide: (aom) => {},
@@ -96,6 +102,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			this.abortRequest();
 		}
 
+		this.constructor.instances--;
 		this.options.onHide(this);
 
 		this.container.velocity("fadeOut", {
@@ -114,8 +121,11 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	show() {
+		this.constructor.instances++;
+
 		this.options.onShow(this);
 
+		this.container.css({ 'z-index': this.options.baseZIndexValue + this.constructor.instances });
 		this.container.velocity("fadeIn", {
 			duration: this.options.fadeSpeed,
 			complete: () => {
@@ -165,13 +175,17 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	            			}
 	            		}
 
+						if (typeof this.options.onLoading == 'function') {
+							this.options.onLoading(this, id, result);
+						}
+
 	            		this.changeContent(result.html, finalCallback);
 	            		
 	            	} else {
 	            		this.hide();
 	            	}
 
-	            	if (typeof result.anchor != 'undefined') {
+	            	if (typeof result.anchor != 'undefined' && result.anchor.length > 0) {
 	            		this.setHash(this.createAnchor(result.anchor, bundle));
 	            	}
 
@@ -179,9 +193,11 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 					    this.hide();
 					});
 	            },
-	            error: function(jqXHR, textStatus, errorThrown) {
+	            error: (jqXHR, textStatus, errorThrown) => {
 	                // here should appear error layer
 	                //alert(errorThrown);
+
+					this.hide();
 
 	                console.log(jqXHR.responseText);
 	            },
@@ -227,8 +243,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	createAnchor(anchor, bundle) {
 		let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
 
-		if (typeof bundle != 'undefined') {
-			 resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
+		if (typeof bundle != 'undefined' && bundle.length > 0) {
+			resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
 		}
 
 		return resultAnchor;
@@ -276,6 +292,11 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		}
 	}
 
+	actionClose() {
+		this.hide();
+		history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+
 	run() {
 		this.body = $('body');
 		this.lang = $('html').attr('lang');
@@ -291,13 +312,13 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.refreshDependencies();
 
 		this.container.click((e) => {
-			this.hide();
-			history.pushState("", document.title, window.location.pathname + window.location.search);
+			if (this.options.closeOnClickOutside) {
+				this.actionClose();
+			}
 		});
 
 		this.container.on('click', '.' + this.options.closeButtonClass, (e) => {
-			this.hide();
-			history.pushState("", document.title, window.location.pathname + window.location.search);
+			this.actionClose();
 		});
 
 		this.initializeClosePreventer();

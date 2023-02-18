@@ -38,6 +38,10 @@ Hawk.FormField = class {
 		throw new Error("This method should be overwritten in the subclass.");
 	}
 
+	clearValue() {
+		throw new Error("This method should be overwritten in the subclass.");
+	}
+
 	bind(form) {
 		this.field = $(form).find('input[name="' + this.getName() + '"]');
 
