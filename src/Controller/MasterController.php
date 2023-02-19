@@ -699,6 +699,27 @@ class MasterController extends AbstractController {
                                 'description' => "Current <span class=\"inline-code\">Content Container</span> element."
                             ]
                         ]
+                    ],
+                    [
+                        'name' => "onHide",
+                        'description' => "It is invoked when the content is going to be hidden.",
+                        'parameters' => [
+                            [
+                                'name' => "detailsList",
+                                'type' => "Hawk.DetailsList",
+                                'description' => "Current instance of Hawk.DetailsList"
+                            ],
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                            ]
+                        ]
                     ]
                 ],
                 'methods' => [
@@ -706,6 +727,19 @@ class MasterController extends AbstractController {
                         'name' => "show",
                         'type' => "void",
                         'description' => "Shows the content.",
+                        'parameters' => [
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "The header which the content is related with."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "hide",
+                        'type' => "void",
+                        'description' => "Hides the content.",
                         'parameters' => [
                             [
                                 'name' => "header",

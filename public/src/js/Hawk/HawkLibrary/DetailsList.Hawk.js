@@ -21,7 +21,7 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 			getContentContainer: (header) => {
 				return header.siblings('.' + this.options.contentContainerClass);
 			},
-			getParent: (element) => {
+			getItem: (element) => {
 				return element.parents('.' + this.options.itemClass);
 			},
 
@@ -54,7 +54,7 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 			}
 		});
 
-		const parent = this.options.getParent(header);
+		const parent = this.options.getItem(header);
 		parent.addClass(this.options.activeClass);
 
 		this.options.onShow(this, header, contentContainer);
@@ -73,7 +73,7 @@ Hawk.DetailsList = class extends Hawk.SingleThreadClass {
 			}
 		});
 
-		const parent = this.options.getParent(header);
+		const parent = this.options.getItem(header);
 		parent.removeClass(this.options.activeClass);
 
 		this.options.onHide(this, header, contentContainer);
