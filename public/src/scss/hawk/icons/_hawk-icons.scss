@@ -64,13 +64,13 @@
 }
 .icon-arrow--north {
 	@include transform(rotate(-45deg));
-	top: -2px;
 }
 .icon-arrow--east {
 	@include transform(rotate(45deg));
 }
 .icon-arrow--south {
-	@include transform(rotate(135deg));
+	@include transform(rotate(-225deg));
+	top: -2px;
 }
 .icon-arrow--primary {
 	border-color: $primary-color;

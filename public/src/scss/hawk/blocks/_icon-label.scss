@@ -23,6 +23,16 @@
 		}
 	}
 }
+.icon-label--small-space {
+	.icon-label__icon-container {
+		padding-right: 8px;
+	}
+}
+.icon-label--reverse {
+	.icon-label__icon-container {
+		padding: 0 0 0 12px;
+	}
+}
 .icon-label--decorated {
 	.icon-label__icon-container {
 		position: relative;

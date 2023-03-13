@@ -1,6 +1,7 @@
 .text {
   font-size: $main-font-size;
   line-height: $main-font-size + 8px;
+  font-style: normal;
 
   @media (min-width: $desktop-xl) {
     font-size: $main-font-size-01;

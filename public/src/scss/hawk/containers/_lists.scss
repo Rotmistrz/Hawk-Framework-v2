@@ -6,3 +6,25 @@
 		padding: 4px 0;
 	}
 }
+.simple-list--more-space {
+	> li {
+		padding: 12px 0;
+
+		&:first-child {
+			padding-top: 0;
+		}
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+}
+
+.plain-list {
+	list-style-type: none;
+
+	> li {
+		display: block;
+		padding: 2px 0;
+	}
+}

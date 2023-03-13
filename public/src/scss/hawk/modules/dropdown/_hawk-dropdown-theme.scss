@@ -14,12 +14,16 @@
     font-weight: 500;
   }
 
-  &__list {
+  &__list-container {
     border: 1px solid $dark-color-op20;
     background: $light-color;
     border-top: 0;
     padding: 8px 0;
     @include transition(all .2s linear);
+  }
+
+  &__list {
+
   }
 
   &.hawk-dropdown--open {
@@ -28,7 +32,7 @@
       border-bottom-color: transparent;
     }
 
-    .std-dropdown__list {
+    .std-dropdown__list-container {
       border-color: $primary-color;
     }
   }

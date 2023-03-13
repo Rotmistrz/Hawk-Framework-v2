@@ -33,11 +33,14 @@
 
   &__list-container {
     position: absolute;
+    display: none;
     top: 100%;
     left: 0;
     min-width: 100%;
     z-index: 10;
     @include box-sizing(border-box);
+    max-height: 200px;
+    overflow: hidden;
   }
 
   &__list {

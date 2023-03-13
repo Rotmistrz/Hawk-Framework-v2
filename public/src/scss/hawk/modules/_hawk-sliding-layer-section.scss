@@ -11,6 +11,12 @@
 		margin: 0 40px 0 0;
 		@include transition(all .3s ease-in-out);
 		@include transform(translate3d(0, 0, 0));
+		z-index: 1000;
+
+		@media (min-width: $desktop-xl) {
+			width: 40%;
+			right: -40%;
+		}
 	}
 }
 .hawk-sliding-layer-section--active {

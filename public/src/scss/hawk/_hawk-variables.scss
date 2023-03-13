@@ -31,6 +31,7 @@ $light-color-10: #E5E5E5; // leading grey
 $light-color-11: #fff2dd; // piaskowy jasniejszy
 $light-color-12: #ece1cb; // piaskowy ciemniejszy
 $light-color-13: #eee;
+$light-color-14: #aaa;
 
 $light-background: rgba(255, 255, 255, .8);
 
@@ -254,4 +255,4 @@ $desktop-xl :  1700px;
 $desktop-xxl : 2000px;
 
 
-@import '../this-project/_variables';
+@import '../this-project/_variables.scss';
