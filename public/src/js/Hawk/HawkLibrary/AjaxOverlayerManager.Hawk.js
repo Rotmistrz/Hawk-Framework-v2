@@ -243,7 +243,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	createAnchor(anchor, bundle) {
 		let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
 
-		if (typeof bundle != 'undefined' && bundle.length > 0) {
+		if (typeof bundle != 'undefined') {
 			resultAnchor += "/" + Hawk.createStringFromBundle(bundle);
 		}
 

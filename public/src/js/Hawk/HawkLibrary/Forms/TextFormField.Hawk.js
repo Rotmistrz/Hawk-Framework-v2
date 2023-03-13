@@ -1,6 +1,8 @@
 Hawk.TextFormField = class extends Hawk.FormField {
 	constructor(name, options) {
 		super(name, options);
+
+		this.timeout = null;
 	}
 
 	getValue() {
@@ -19,13 +21,18 @@ Hawk.TextFormField = class extends Hawk.FormField {
 
 	initializeObserving() {
 		this.field.keydown(() => {
-			setTimeout(() => {
+			if (this.timeout != null) {
+				clearTimeout(this.timeout);
+			}
+
+			this.timeout = setTimeout(() => {
 				this.checkField();
-			}, 10);
+				this.timeout = null;
+			}, 500);
 		});
 
-		this.field.change(() => {
-			this.checkField();
-		});
+		// this.field.change(() => {
+		// 	this.checkField();
+		// });
 	}
 }

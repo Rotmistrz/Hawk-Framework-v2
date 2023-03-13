@@ -41,7 +41,6 @@
 // require ./HawkLibrary/BookmarksManager.Hawk.js
 // require ./HawkLibrary/SlideMenu.Hawk.js
 // require ./HawkLibrary/Routes.Hawk.js
-// require ./HawkLibrary/RevealingItem.Hawk.js
 
 // require ./HawkLibrary/Calendar/Countdown.Hawk.js
 

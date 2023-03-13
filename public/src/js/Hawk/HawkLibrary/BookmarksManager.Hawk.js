@@ -21,6 +21,8 @@ Hawk.BookmarksManager = function (container, options) {
     slideDuration: 200,
     fadeDuration: 200,
 
+    rootContainer: window,
+
     activeBookmarkClass: "active",
     bookmarksClass: "bookmarks-manager__bookmark-container",
     contentClass: "bookmarks-manager__content",
@@ -46,12 +48,16 @@ Hawk.BookmarksManager = function (container, options) {
     return this.isResponsive() && !this.content.is(":visible");
   };
 
-  this.changeContent = function (content, callback, outerContainer) {
-    var container;
+  this.changeContent = function (content, callback, preventAutoscroll) {
+    var container = this.content;
 
-    if (outerContainer === undefined) {
-      container = this.content;
-    } else container = outerContainer;
+    // if (outerContainer === undefined) {
+    //   container = this.content;
+    // } else container = outerContainer;
+
+    if (typeof preventAutoscroll == 'undefined') {
+      preventAutoscroll = false;
+    }
 
     var showing = function () {
       container.hide();
@@ -61,24 +67,24 @@ Hawk.BookmarksManager = function (container, options) {
         duration: that.options.slideDuration,
         complete: function () {
           container.velocity(
-            { opacity: 1 },
-            {
-              duration: that.options.fadeDuration,
-              complete: function () {
-                var currentHeight = that.content.outerHeight();
+              { opacity: 1 },
+              {
+                duration: that.options.fadeDuration,
+                complete: function () {
+                  var currentHeight = that.content.outerHeight();
 
-                that.currentHeight = currentHeight;
-                that.contentWrapper.css({
-                  "min-height": that.currentHeight + "px",
-                });
+                  that.currentHeight = currentHeight;
+                  that.contentWrapper.css({
+                    "min-height": that.currentHeight + "px",
+                  });
 
-                that.options.changeContentCallback(that.content);
+                  that.options.changeContentCallback(that.content);
 
-                if (typeof callback == "function") callback();
+                  if (typeof callback == "function") callback();
 
-                that.loading = false;
-              },
-            }
+                  that.loading = false;
+                },
+              }
           );
         },
       });
@@ -86,31 +92,31 @@ Hawk.BookmarksManager = function (container, options) {
 
     if (container.css("opacity") != 0) {
       container.velocity(
-        { opacity: 0 },
-        {
-          duration: that.options.fadeDuration,
-          complete: function () {
-            container.html("");
-            showing();
-          },
-        }
+          { opacity: 0 },
+          {
+            duration: that.options.fadeDuration,
+            complete: function () {
+              container.html("");
+              showing();
+            },
+          }
       );
     } else {
       showing();
     }
 
-    if (this.options.activeScroll && Hawk.w < this.options.activeScrollWidth) {
+    if (this.options.activeScroll && Hawk.w < this.options.activeScrollWidth && !preventAutoscroll) {
       var id = this.content.attr("id");
 
-      if (id !== undefined) {
-        Hawk.scrollToElement({ anchor: "#" + id });
+      if (typeof id != 'undefined') {
+        Hawk.scrollToElement({ anchor: "#" + id, container: this.options.rootContainer });
       }
     }
 
     return this;
   };
 
-  this.changeBookmark = function (bookmarkContainer) {
+  this.changeBookmark = function (bookmarkContainer, preventAutoscroll) {
     this.unsetBookmarkActive();
 
     this.current = bookmarkContainer;
@@ -130,7 +136,7 @@ Hawk.BookmarksManager = function (container, options) {
         },
       });
     } else {
-      this.changeContent(content.clone(true));
+      this.changeContent(content.clone(true), () => {}, preventAutoscroll);
     }
 
     return this;
@@ -163,8 +169,8 @@ Hawk.BookmarksManager = function (container, options) {
     return this;
   };
 
-  this.launchBookmark = function (n) {
-    this.changeBookmark(this.bookmarks.eq(n));
+  this.launchBookmark = function (n, preventAutoscroll) {
+    this.changeBookmark(this.bookmarks.eq(n), preventAutoscroll);
 
     return this;
   };
@@ -180,15 +186,15 @@ Hawk.BookmarksManager = function (container, options) {
 
     this.unsetBookmarkActive();
     this.content.velocity(
-      { opacity: 0 },
-      {
-        duration: 200,
-        complete: function () {
-          if (callback !== undefined) {
-            callback();
-          }
-        },
-      }
+        { opacity: 0 },
+        {
+          duration: 200,
+          complete: function () {
+            if (callback !== undefined) {
+              callback();
+            }
+          },
+        }
     );
 
     return this;
@@ -201,14 +207,14 @@ Hawk.BookmarksManager = function (container, options) {
     return this;
   };
 
-  this.launchBookmarkByName = function (name) {
+  this.launchBookmarkByName = function (name, preventAutoscroll) {
     var finalName = name;
 
     this.bookmarks.each(function () {
       var current = $(this);
 
       if (current.attr("data-hash") == finalName) {
-        that.changeBookmark(current);
+        that.changeBookmark(current, preventAutoscroll);
 
         return;
       }
@@ -220,7 +226,7 @@ Hawk.BookmarksManager = function (container, options) {
 
     if (current !== undefined) {
       this.clear(function () {
-        that.changeBookmark(current);
+        that.changeBookmark(current, true);
       });
     }
 
@@ -251,7 +257,7 @@ Hawk.BookmarksManager = function (container, options) {
     if (hash.length > 0) {
       hash = hash.substr(1);
 
-      console.log(hash);
+      //console.log(hash);
 
       var chosenBookmark = this.bookmarks.filter('[data-hash="' + hash + '"]');
 
@@ -259,10 +265,10 @@ Hawk.BookmarksManager = function (container, options) {
         this.launchBookmarkByName(hash);
         this.options.changeHashCallback(hash);
       } else {
-        this.launchBookmark(0);
+        this.launchBookmark(0, true);
       }
     } else {
-      this.launchBookmark(0);
+      this.launchBookmark(0, true);
     }
 
     this.bookmarks.click(function () {

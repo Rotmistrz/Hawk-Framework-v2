@@ -20,6 +20,14 @@ Hawk.Component = class {
         throw new Error("This method should be overwritten in the subclass.");
     }
 
+    static getAppContext() {
+        if (typeof AppContext != 'undefined') {
+            return AppContext;
+        } else {
+            return {};
+        }
+    }
+
     getRepresentativeName() {
         throw new Error("This method should be overwritten in the subclass.");
     }
@@ -38,6 +46,20 @@ Hawk.Component = class {
 
     getID() {
         return this.id;
+    }
+
+    updateInstance(anotherInstance) {
+        this.values = anotherInstance.values;
+        this.subcomponents = anotherInstance.subcomponents;
+
+        this.refreshView();
+        // for (var i in this.values) {
+        //     this.values[i] = anotherInstance.get(i);
+        // }
+        //
+        // for (var s in this.subcomponents) {
+        //     this.subcomponents[s] = anotherInstance.subcomp
+        // }
     }
 
     set(key, value) {
@@ -167,10 +189,8 @@ Hawk.Component = class {
 
         const theseSubcomponents = this.getSubcomponents(classID);
 
-        for (const j in theseSubcomponents) {
-            const ThisSubcomponent = theseSubcomponents[j];
-
-            this.showSubcomponent(ThisSubcomponent);
+        for (const subcmpt of theseSubcomponents) {
+            this.showSubcomponent(subcmpt);
         }
     }
 

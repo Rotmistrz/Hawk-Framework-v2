@@ -42,6 +42,7 @@ Hawk.AjaxRequestManager = function(options) {
             data: bundle,
             success: function(result) {
                 console.log(result);
+                that.ajaxRequestWorking = false;
 
                 if (typeof result.status != 'undefined' && result.status == Hawk.RequestStatus.SUCCESS) {
                     console.log("SUCCESS");
@@ -56,12 +57,11 @@ Hawk.AjaxRequestManager = function(options) {
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.responseText);
+                that.ajaxRequestWorking = false;
 
                 onFailure(jqXHR.responseText);
             },
             complete: function() {
-                that.ajaxRequestWorking = false;
-
                 onComplete();
             }
         });

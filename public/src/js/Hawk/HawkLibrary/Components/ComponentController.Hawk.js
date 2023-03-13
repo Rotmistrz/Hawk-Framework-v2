@@ -6,7 +6,25 @@ Hawk.ComponentController = class {
             onComponentsLoad: (controller, id) => {},
             onComponentsLoadingComplete: (controller, id) => {},
 
-            ordering: 'ASC'
+            appendComponents: (controller, result) => {
+                const instancesContainerContent = controller.getInstancesContainerContent();
+
+                if (typeof result.html != 'undefined') {
+                    instancesContainerContent.html(result.html);
+
+                    controller.parseInstances(result.instances);
+                } else {
+                    instancesContainerContent.html("");
+
+                    controller.attachInstances(result.instances);
+                }
+            },
+            getInstanceAsHTML: (instance) => {
+                return instance.getAsHTML();
+            },
+
+            ordering: 'ASC',
+            requestType: 'GET'
         };
 
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -40,6 +58,14 @@ Hawk.ComponentController = class {
         throw new Error("This method should be overwritten in the subclass.");
     }
 
+    getInstancesContainerContentClass() {
+        return "hawk-instances-container__content";
+    }
+
+    getLoadingLayerClass() {
+        return "hawk-instances-container__loading-layer";
+    }
+
     static getClassID() {
         throw new Error("This method should be overwritten in the subclass.");
     }
@@ -54,15 +80,17 @@ Hawk.ComponentController = class {
         return this.instances[id] || null;
     }
 
-    attachInstance(instance) {
-        const instancesContainer = this.getInstancesContainer();
+    attachInstance(instance, ordering) {
+        if (typeof ordering == 'undefined') {
+            ordering = this.options.ordering;
+        }
 
-        console.log(this.options.ordering);
+        const instancesContainerContent = this.getInstancesContainerContent();
 
-        if (this.options.ordering == 'DESC') {
-            instancesContainer.prepend(instance.getAsHTML());
+        if (ordering == 'DESC') {
+            instancesContainerContent.prepend(this.options.getInstanceAsHTML(instance));
         } else {
-            instancesContainer.append(instance.getAsHTML());
+            instancesContainerContent.append(this.options.getInstanceAsHTML(instance));
         }
 
         instance.refreshView();
@@ -74,54 +102,78 @@ Hawk.ComponentController = class {
         return $('.' + this.getInstancesContainerClass() + '[' + Hawk.ComponentsConstants.COMPONENT_CLASS_ID_ATTRIBUTE + '="' + this.constructor.getClassID() + '"]');
     }
 
+    getInstancesContainerContent() {
+        const container = this.getInstancesContainer();
+
+        return container.find('.' + this.getInstancesContainerContentClass());
+    }
+
+    getLoadingLayer() {
+        const container = this.getInstancesContainer();
+
+        return container.find('.' + this.getLoadingLayerClass());
+    }
+
     getSingleInstanceContainer(id) {
         return $('.' + this.getSingleInstanceContainerClass() + '[' + Hawk.ComponentsConstants.COMPONENT_ID_ATTRIBUTE + '="' + id + '"]');
     }
 
-    load(id) {
-        console.log("PATH: " + this.getLoadingComponentsPath(id));
+    parseInstances(instances) {
+        for (const instanceJSON of instances) {
+            const instance = this.createFromJSON(instanceJSON);
+
+            this.putInstance(instance);
+
+            instance.refreshView();
+        }
+    }
+
+    attachInstances(instances) {
+        for (const instanceJSON of instances) {
+            const instance = this.createFromJSON(instanceJSON);
+
+            this.attachInstance(instance);
+
+            instance.refreshView();
+        }
+    }
+
+    load(id, extraData, url) {
+        if (typeof extraData == 'undefined') {
+            extraData = {};
+        }
+
+        const loadingLayer = this.getLoadingLayer();
+
+        loadingLayer.css({ display: 'block' });
+
+        // console.log("PATH: " + this.getLoadingComponentsPath(id));
+        //
+
+        console.log(extraData);
+
+        if (typeof url == 'undefined') {
+            url = this.getLoadingComponentsPath(id);
+        }
+
+        console.log(url);
 
         $.ajax({
-            url: this.getLoadingComponentsPath(id),
-            type: 'GET',
-            data: {},
-            cache: false,
-            processData: false, // Don't process the files
-            contentType: false,
-            dataType: 'json',
+            url: url,
+            type: this.options.requestType,
+            data: extraData,
+            // cache: false,
+            // processData: false, // Don't process the files
+            // contentType: false,
+            dataType: "json",
             success: (result) => {
                 console.log(result);
 
                 if (result.status == Hawk.RequestStatus.SUCCESS) {
-                    const instancesContainer = this.getInstancesContainer();
-
-                    if (typeof result.html != 'undefined') {
-                        instancesContainer.html(result.html);
-
-                        for (const instanceJSON of result.instances) {
-                            const instance = this.createFromJSON(instanceJSON);
-
-                            this.putInstance(instance);
-
-                            instance.refreshView();
-
-                            console.log(instance);
-                        }
-                    } else {
-                        instancesContainer.html("");
-
-                        for (const instanceJSON of result.instances) {
-                            const instance = this.createFromJSON(instanceJSON);
-
-                            this.attachInstance(instance);
-
-                            instance.refreshView();
-
-                            console.log(instance);
-                        }
-                    }
+                    this.options.appendComponents(this, result);
 
                     this.options.onComponentsLoad(this, id);
+                    
                 } else if (result.status == Hawk.RequestStatus.ERROR) {
 
                 } else {
@@ -134,6 +186,8 @@ Hawk.ComponentController = class {
                 //console.log(errorThrown);
             },
             complete: (jqXHR) => {
+                loadingLayer.css({ display: 'none' });
+
                 this.options.onComponentsLoadingComplete(this);
             }
         });

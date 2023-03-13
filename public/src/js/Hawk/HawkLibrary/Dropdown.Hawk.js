@@ -40,7 +40,7 @@ Hawk.Dropdown = function(container, options) {
     }
 
     this.defaultOptions = {
-        slideSpeed: 200,
+        slideSpeed: 400,
 
         type: Hawk.DropdownConstants.Types.OVERLAYER,
         direction: Hawk.DropdownConstants.Directions.DOWNWARDS,
@@ -97,12 +97,21 @@ Hawk.Dropdown = function(container, options) {
         return this.state == this.states.OPEN;
     }
 
+    this.doesNeedScrollbar = function() {
+        return this.listContainer.get(0).offsetHeight < this.listContainer.get(0).scrollHeight;
+    }
+
     this.show = function() {
         this.container.addClass(that.options.openClass);
 
         this.listContainer.velocity("slideDown", {
             duration: that.options.slideSpeed,
-            complete: function() {
+            easing: "linear",
+            complete: () => {
+                if (this.doesNeedScrollbar()) {
+                    this.listContainer.mCustomScrollbar();
+                }
+
                 if (typeof that.options.onShow === 'function') {
                     that.options.onShow(that);
                 }
@@ -125,6 +134,7 @@ Hawk.Dropdown = function(container, options) {
 
         this.listContainer.velocity("slideUp", {
             duration: that.options.slideSpeed,
+            easing: "linear",
             complete: function() {
                 if (typeof that.options.onHide === 'function') {
                     that.options.onHide(that);
@@ -175,6 +185,14 @@ Hawk.Dropdown = function(container, options) {
                     that.options.onSelected(that, $(this));
                 }
             });
+        }
+    }
+
+    this.checkFields = function() {
+        const fields = this.fields.filter(":checked");
+
+        if (fields.length > 0) {
+            this.select(fields);
         }
     }
 
@@ -269,6 +287,7 @@ Hawk.Dropdown = function(container, options) {
         });
 
         this.refreshDependencies();
+        this.checkFields();
 
         Hawk.RegisteredDropdowns.push(this);
 

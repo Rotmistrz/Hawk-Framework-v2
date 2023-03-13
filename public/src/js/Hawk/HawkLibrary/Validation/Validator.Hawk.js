@@ -34,6 +34,14 @@ Hawk.Validator.isNumber = function(number) {
     }
 }
 
+Hawk.Validator.isRationalNumber = function(number) {
+    if (/^(\-)?[0-9]+((,|\.)[0-9]+)?$/.test(number)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 Hawk.Validator.isShortPhoneNumber = function(number) {
     if (/^[0-9\s]+$/.test(number)) {
         number = number.replace("\s", "");
