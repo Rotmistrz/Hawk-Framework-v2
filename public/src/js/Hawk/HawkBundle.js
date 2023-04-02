@@ -36,7 +36,10 @@
 // require ./HawkLibrary/Components/ComponentController.Hawk.js
 
 // require ./HawkLibrary/DetailsList.Hawk.js
+
 // require ./HawkLibrary/AjaxOverlayerManager.Hawk.js
+// require ./HawkLibrary/ConfirmationManager.Hawk.js
+
 // require ./HawkLibrary/SectionDetector.Hawk.js
 // require ./HawkLibrary/BookmarksManager.Hawk.js
 // require ./HawkLibrary/SlideMenu.Hawk.js

@@ -31,8 +31,8 @@ Hawk.TextFormField = class extends Hawk.FormField {
 			}, 500);
 		});
 
-		// this.field.change(() => {
-		// 	this.checkField();
-		// });
+		this.field.change(() => {
+			this.checkField();
+		});
 	}
 }

@@ -1,0 +1,15 @@
+.fields-row {
+  @media (min-width: $tablet-m) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 20px;
+  }
+
+  &__item {
+    @media (min-width: $tablet-m) {
+      flex-grow: 1;
+      flex-basis: 50%;
+    }
+  }
+}

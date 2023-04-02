@@ -1,6 +1,7 @@
 .form-field {
   display: block;
   width: 100%;
+  position: relative;
 
   &__wrapper {
     position: relative;
@@ -19,32 +20,6 @@
     height: 1px;
     width: 100%;
     background: $dark-color;
-    @include transition(all .2s linear);
-  }
-
-  &__header {
-    padding: 0 0 5px 0;
-    text-align: left;
-    white-space: nowrap;
-    font-size: $main-font-size;
-
-    @media (min-width: $mobile-m) {
-      padding: 0 0 8px 0;
-    }
-
-    @media (min-width: $tablet-m) {
-      text-align: left;
-    }
-
-    @media (min-width: $desktop-xl) {
-      font-size: $main-font-size-01;
-    }
-  }
-
-  &__title {
-    color: $dark-color;
-    position: relative;
-    font-weight: 500;
     @include transition(all .2s linear);
   }
 
@@ -147,5 +122,55 @@
 
   .form-field__field-container {
     width: 100%;
+  }
+}
+
+.form-field--file {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .form-field__side-container {
+    padding: 0 0 0 16px;
+  }
+
+  input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    z-index: -999;
+  }
+}
+
+.form-field-wrapper {
+  display: block;
+  width: 100%;
+  position: relative;
+
+  &__header {
+    padding: 0 0 5px 0;
+    text-align: left;
+    white-space: nowrap;
+    font-size: $main-font-size;
+
+    @media (min-width: $mobile-m) {
+      padding: 0 0 8px 0;
+    }
+
+    @media (min-width: $tablet-m) {
+      text-align: left;
+    }
+
+    @media (min-width: $desktop-xl) {
+      font-size: $main-font-size-01;
+    }
+  }
+
+  &__title {
+    color: $dark-color;
+    position: relative;
+    font-weight: 500;
+    @include transition(all .2s linear);
   }
 }

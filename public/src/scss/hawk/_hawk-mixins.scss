@@ -96,3 +96,8 @@
   -ms-user-select: $select; /* Internet Explorer/Edge */
   user-select: $select;
 }
+
+@mixin strictWidth($width) {
+  min-width: $width;
+  max-width: $width;
+}

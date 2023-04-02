@@ -71,6 +71,9 @@ Hawk.Dropdown = function(container, options) {
             }
 
             return true;
+        },
+        onChanged: function(dropdown, field) {
+
         }
     };
 
@@ -181,6 +184,10 @@ Hawk.Dropdown = function(container, options) {
 
         if (this.fields.length > 0) {
             this.fields.change(function() {
+                if (typeof that.options.onChanged == 'function') {
+                    that.options.onChanged(that, $(this));
+                }
+
                 if (typeof that.options.onSelected == 'function') {
                     that.options.onSelected(that, $(this));
                 }

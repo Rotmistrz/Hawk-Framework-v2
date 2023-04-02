@@ -297,7 +297,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		history.pushState("", document.title, window.location.pathname + window.location.search);
 	}
 
-	run() {
+	initializeStructure() {
 		this.body = $('body');
 		this.lang = $('html').attr('lang');
 
@@ -306,6 +306,10 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.closeButton = this.container.find('.' + this.options.closeButtonClass);
 
 		this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
+	}
+
+	run() {
+		this.initializeStructure();
 
 		//this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
 
