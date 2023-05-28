@@ -150,6 +150,13 @@
   }
 }
 
+.text--no-indent-lists {
+  ul,
+  ol {
+    padding-left: 0;
+  }
+}
+
 .text--distinguished {
   font-weight: 700;
 }
