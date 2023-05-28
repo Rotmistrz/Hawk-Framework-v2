@@ -71,18 +71,18 @@ Hawk.BookmarksManager = function (container, options) {
               {
                 duration: that.options.fadeDuration,
                 complete: function () {
+                  that.options.changeContentCallback(that.content);
+
+                  if (typeof callback == "function") callback();
+
+                  that.loading = false;
+
                   var currentHeight = that.content.outerHeight();
 
                   that.currentHeight = currentHeight;
                   that.contentWrapper.css({
                     "min-height": that.currentHeight + "px",
                   });
-
-                  that.options.changeContentCallback(that.content);
-
-                  if (typeof callback == "function") callback();
-
-                  that.loading = false;
                 },
               }
           );

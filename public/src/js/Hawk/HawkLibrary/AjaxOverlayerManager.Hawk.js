@@ -51,6 +51,35 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 
 			baseZIndexValue: 9000,
 
+			changeContent: (aom, content, callback) => {
+				aom.content.css({ opacity: 0 });
+				aom.content.html(content);
+				aom.contentContainer.velocity("slideDown", {
+					duration: aom.options.slideSpeed,
+					complete: () => {
+						aom.content.velocity({ opacity: 1 }, {
+							duration: aom.options.fadeSpeed,
+							complete: () => {
+								if (typeof callback == 'function') {
+									callback();
+								}
+							}
+						});
+					}
+				});
+			},
+			hide: (aom) => {
+				aom.container.velocity("fadeOut", {
+					duration: aom.options.fadeSpeed,
+					complete: () => {
+						aom.body.css({ overflow: 'auto' });
+
+						aom.contentContainer.hide();
+						aom.content.html("");
+					}
+				});
+			},
+
 			onLoading: (aom, id, result) => {},
 			onLoad: (aom, id, result) => {},
 			onShow: (aom) => {},
@@ -105,15 +134,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 		this.constructor.instances--;
 		this.options.onHide(this);
 
-		this.container.velocity("fadeOut", {
-			duration: this.options.fadeSpeed,
-			complete: () => {
-				this.body.css({ overflow: 'auto' });
-
-				this.contentContainer.hide();
-				this.content.html("");
-			}
-		});
+		this.options.hide(this);
 
 		this.clearHash();
 
@@ -211,21 +232,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	changeContent(content, callback) {
-		this.content.css({ opacity: 0 });
-		this.content.html(content);
-		this.contentContainer.velocity("slideDown", {
-			duration: this.options.slideSpeed,
-			complete: () => {
-				this.content.velocity({ opacity: 1 }, {
-					duration: this.options.fadeSpeed,
-					complete: () => {
-						if (typeof callback == 'function') {
-							callback();
-						}
-					}
-				});
-			}
-		});
+		this.options.changeContent(this, content, callback);
 	}
 
 	clearHash() {

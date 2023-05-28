@@ -40,7 +40,7 @@ Hawk.Dropdown = function(container, options) {
     }
 
     this.defaultOptions = {
-        slideSpeed: 400,
+        slideSpeed: 200,
 
         type: Hawk.DropdownConstants.Types.OVERLAYER,
         direction: Hawk.DropdownConstants.Directions.DOWNWARDS,
@@ -60,7 +60,9 @@ Hawk.Dropdown = function(container, options) {
         escapeSensorClass: 'hawk-dropdown__escape-sensor',
 
         onShow: function(dropdown) {},
+        onShowing: function(dropdown) {},
         onHide: function(dropdown) {},
+        onHiding: function(dropdown) {},
         onSelected: function(dropdown, field) {
             if (field.attr('type') == 'radio') {
                 var description = field.parent().find('.dropdown-item__description').html();
@@ -121,6 +123,10 @@ Hawk.Dropdown = function(container, options) {
             }
         });
 
+        if (typeof that.options.onShowing === 'function') {
+            that.options.onShowing(that);
+        }
+
         for (const dropdown of Hawk.RegisteredDropdowns) {
             if (dropdown.isOpen() && dropdown != this) {
                 dropdown.hide();
@@ -144,6 +150,10 @@ Hawk.Dropdown = function(container, options) {
                 }
             }
         });
+
+        if (typeof that.options.onHiding === 'function') {
+            that.options.onHiding(that);
+        }
 
         this.setClosed();
 

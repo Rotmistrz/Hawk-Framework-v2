@@ -43,7 +43,7 @@ Hawk.FormField = class {
 	}
 
 	bind(form) {
-		this.field = $(form).find('input[name="' + this.getName() + '"]');
+		this.field = $(form).find('input[name="' + this.getName() + '"], input[name="' + this.getName() + '[]"]');
 
 		this.wrapper = this.options.obtainWrapper(this.field);
 
