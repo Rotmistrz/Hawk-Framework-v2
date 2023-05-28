@@ -1,5 +1,5 @@
 Hawk.AjaxOverlayerManagerConstants = {
-	modes: {
+	Modes: {
 		DEFAULT: 0,
 		DELEGATE_EVENTS: 1
 	},
@@ -35,18 +35,19 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 			fadeSpeed: 200,
 			slideSpeed: 200,
 
-			mode: Hawk.AjaxOverlayerManagerConstants.modes.DEFAULT,
+			mode: Hawk.AjaxOverlayerManagerConstants.Modes.DEFAULT,
 			closeOnClickOutside: false,
 
 			eventName: 'click.ajaxOverlayerManager',
 			popstateEventName: 'popstate.ajaxOverlayerManager',
 
 			wrapperClass: 'overlayer__wrapper',
-			innerClass: 'overlayer__inner',
 			contentContainerClass: 'overlayer__content-container',
 			contentClass: 'overlayer__content',
 
 			loadingLayerClass: 'overlayer__loading-layer',
+
+			buttonClass: 'ajax-overlayer-button',
 			closeButtonClass: 'ajax-overlayer-close',
 
 			baseZIndexValue: 9000,
@@ -123,7 +124,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	getButtonsSelector() {
-		return '.ajax-overlayer-button[data-overlayer-id="' + this.getOverlayerID() + '"]';
+		return '.' + this.options.buttonClass + '[data-overlayer-id="' + this.getOverlayerID() + '"]';
 	}
 
 	hide() {
@@ -286,7 +287,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 	}
 
 	refreshDependencies() {
-		if (this.options.mode == Hawk.AjaxOverlayerManagerConstants.modes.DELEGATE_EVENTS) {
+		if (this.options.mode == Hawk.AjaxOverlayerManagerConstants.Modes.DELEGATE_EVENTS) {
 			this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
 		} else {
 			if (typeof this.buttons != 'undefined') {
@@ -317,8 +318,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
 
 	run() {
 		this.initializeStructure();
-
-		//this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
 
 		this.refreshDependencies();
 

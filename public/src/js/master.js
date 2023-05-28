@@ -1,40 +1,21 @@
 import Hawk from './Hawk-v2';
 
-class Car {
-    constructor(model, year) {
-        this.model = model;
-        this.year = year;
-    }
-
-    getModel() {
-        return this.model;
-    }
-}
-
-class Opel extends Car {
-    constructor(year, engine) {
-        super("Opel", year);
-
-        this.engine = engine;
-    }
-
-    printEngine() {
-        console.log(this.engine);
-    }
-}
-
-console.log("no i teraz mozna jechac dalej z tematem");
-
 $(document).ready(function() {
     var App = {
         Blocks: {},
-        Examples: {}
+        Examples: {},
+        Widgets: {
+            Overlayers: {},
+            Dropdowns: {},
+            MoreContentManagers: {},
+            DetailsLists: {},
+            SlidingLayerManagers: {},
+            FormSenders: {}
+        }
     };
 
+    // It's good to keep only necessary initialization and assign them to App.Widgets[AppropriateType]
     var HawkExamples = {};
-
-
-    
 
     HawkExamples.exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'));
     HawkExamples.exemplaryDropdown.run();
@@ -205,5 +186,7 @@ $(document).ready(function() {
 
     App.Examples.RevealingItem = new Hawk.RevealingItem($('#exemplary-revealing-item'));
     App.Examples.RevealingItem.run();
+
+    // End of examples
 
 });
