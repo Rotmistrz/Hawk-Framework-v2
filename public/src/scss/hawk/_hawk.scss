@@ -9,12 +9,12 @@
 
 @import 'blocks/_titles';
 
+@import 'blocks/_pictures';
+
 
 /***** CONTAINERS *****/
 
 @import 'containers/_containers';
-
-@import 'containers/_form-containers';
 
 @import 'containers/_horizontal-items';
 
@@ -41,6 +41,8 @@
 @import 'blocks/choice-fields.scss';
 
 @import 'blocks/invisible-form-field.scss';
+
+@import 'containers/_form-containers';
 
 /***** VARIA *****/
 
@@ -80,6 +82,7 @@
 
 @import 'modules/details-list/_hawk-details-list';
 @import 'modules/details-list/_details-list-item';
+@import 'modules/hawk-bookmarks-manager';
 
 /***** COMPONENTS *****/
 

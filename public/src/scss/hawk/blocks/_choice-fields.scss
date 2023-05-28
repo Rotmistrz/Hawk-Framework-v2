@@ -39,6 +39,12 @@
 		}
 	}
 
+	&__core:focus ~ &__field {
+		&:before {
+			background: $dark-color;
+		}
+	}
+
 	&__core:checked ~ &__field {
 		border-color: $dark-color;
 
@@ -55,6 +61,32 @@
 				@include border-radius(50%);
 			}
 		}
+	}
+}
+.choice-field--light {
+	.choice-field__field {
+		border: 1px solid $light-color;
+	}
+
+	.choice-field__core:focus ~ .choice-field__field {
+		&:before {
+			background: $light-color;
+		}
+	}
+
+	.choice-field__core:focus ~ .choice-field__field {
+		&:before {
+			background: $primary-color;
+		}
+	}
+
+	.choice-field__core:checked ~ .choice-field__field {
+		border-color: $light-color;
+	}
+}
+.choice-field.error {
+	.choice-field__field {
+		border-color: $error-color;
 	}
 }
 

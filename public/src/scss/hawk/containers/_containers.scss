@@ -23,6 +23,12 @@
 .flex-container--horizontally-center {
 	align-items: center;
 }
+.flex-container--stretch {
+	align-items: stretch;
+}
+.flex-container--horizontally-south {
+	align-items: flex-end;
+}
 .flex-container--reverse {
 
 	@media (min-width: $tablet-m) {
@@ -65,6 +71,14 @@
 	}
 }
 
+.flex-container--from-tablet-xl {
+	display: block;
+
+	@media (min-width: $tablet-xl) {
+		display: flex;
+	}
+}
+
 .flex-column {
 	min-height: 1px;
 	padding: 20px 0 0 0;
@@ -82,14 +96,49 @@
 	padding-top: 40px;
 
 	@media (min-width: $tablet-m) {
-		padding-top: 0;
+		padding: 0 12px;
+	}
+
+	&:first-child {
+		padding-left: 0;
+	}
+
+	&:last-child {
+		padding-right: 0;
 	}
 }
 .flex-column--small-space {
 	padding-top: 20px;
 
 	@media (min-width: $tablet-m) {
-		padding-top: 0;
+		padding: 0 8px;
+	}
+
+	&:first-child {
+		padding-left: 0;
+	}
+
+	&:last-child {
+		padding-right: 0;
+	}
+}
+.flex-column--big-space {
+	padding-top: 40px;
+
+	@media (min-width: $tablet-m) {
+		padding: 0 20px;
+	}
+
+	@media (min-width: $desktop-m) {
+		padding: 0 40px;
+	}
+
+	&:first-child {
+		padding-left: 0;
+	}
+
+	&:last-child {
+		padding-right: 0;
 	}
 }
 .flex-column--no-top-space {
@@ -126,6 +175,15 @@
 
 .flex-column--7 {
 	@media (min-width: $tablet-m) {
+		min-width: math.div(7, 12) * 100%;
+		max-width: math.div(7, 12) * 100%;
+	}
+}
+.flex-column--7-from-tablet-xl {
+	min-width: 100%;
+	max-width: 100%;
+
+	@media (min-width: $tablet-xl) {
 		min-width: math.div(7, 12) * 100%;
 		max-width: math.div(7, 12) * 100%;
 	}
@@ -274,6 +332,15 @@
 
 .flex-column--5 {
 	@media (min-width: $tablet-m) {
+		min-width: math.div(5, 12) * 100%;
+		max-width: math.div(5, 12) * 100%;
+	}
+}
+.flex-column--5--from-tablet-xl {
+	min-width: 100%;
+	max-width: 100%;
+
+	@media (min-width: $tablet-xl) {
 		min-width: math.div(5, 12) * 100%;
 		max-width: math.div(5, 12) * 100%;
 	}

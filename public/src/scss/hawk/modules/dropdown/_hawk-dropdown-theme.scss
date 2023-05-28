@@ -19,7 +19,7 @@
     background: $light-color;
     border-top: 0;
     padding: 8px 0;
-    @include transition(all .2s linear);
+    //@include transition(all .2s linear);
   }
 
   &__list {

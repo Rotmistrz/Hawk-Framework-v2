@@ -58,12 +58,17 @@
 	width: 20px;
 	height: 20px;
 }
+.icon-arrow--thin {
+	border-top: 1px solid $dark-color;
+	border-right: 1px solid $dark-color;
+}
 
 .icon-arrow--west {
 	@include transform(rotate(225deg));
 }
 .icon-arrow--north {
 	@include transform(rotate(-45deg));
+	top: 1px;
 }
 .icon-arrow--east {
 	@include transform(rotate(45deg));
