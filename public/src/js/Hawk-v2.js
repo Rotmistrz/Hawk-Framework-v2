@@ -2499,7 +2499,16 @@ Hawk.AjaxOverlayerManagerConstants = {
         return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+(\/)?(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
     }
 };
-Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
+Hawk.OverlayerManagerConstants = {
+    Modes: {
+        DEFAULT: 0,
+        DELEGATE_EVENTS: 1
+    },
+    getDefaultHashPattern: () => {
+        return "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+(\/)?(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
+    }
+};
+Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
     static instances = 0;
     constructor(container, options) {
         super();
@@ -2513,19 +2522,17 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.buttons;
         this.closeButton;
         this.defaultOptions = {
-            path: "/ajax/load-overlayer",
             fadeSpeed: 200,
             slideSpeed: 200,
             mode: Hawk.AjaxOverlayerManagerConstants.Modes.DEFAULT,
             closeOnClickOutside: false,
-            eventName: 'click.ajaxOverlayerManager',
             popstateEventName: 'popstate.ajaxOverlayerManager',
+            eventName: 'click.overlayerManager',
             wrapperClass: 'overlayer__wrapper',
-            innerClass: 'overlayer__inner',
             contentContainerClass: 'overlayer__content-container',
             contentClass: 'overlayer__content',
             loadingLayerClass: 'overlayer__loading-layer',
-            closeButtonClass: 'ajax-overlayer-close',
+            closeButtonClass: 'overlayer-close',
             baseZIndexValue: 9000,
             changeContent: (aom, content, callback) => {
                 aom.content.css({
@@ -2593,7 +2600,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         return this.lang;
     }
     getButtonsSelector() {
-        return '.ajax-overlayer-button[data-overlayer-id="' + this.getOverlayerID() + '"]';
+        return '.' + this.options.buttonClass + '[data-overlayer-id="' + this.getOverlayerID() + '"]';
     }
     hide() {
         if (this.isWorking()) {
@@ -2632,60 +2639,29 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         this.loadContent(id, bundle);
     }
     loadContent(id, bundle) {
-        if (!this.isWorking()) {
-            this.startWorking();
-            if (typeof bundle == 'undefined') {
-                bundle = {};
-            }
-            this.loadingLayer.css({
-                display: 'flex'
-            });
-            this.setRequest($.ajax({
-                type: "POST",
-                url: this.options.path,
-                dataType: "json",
-                data: {
-                    id: id,
-                    bundle: bundle,
-                    lang: this.getLang()
-                },
-                success: (result) => {
-                    console.log(result);
-                    if (result.status == Hawk.RequestStatus.SUCCESS) {
-                        let finalCallback = () => {};
-                        if (typeof this.options.onLoad == 'function') {
-                            finalCallback = () => {
-                                this.options.onLoad(this, id, result);
-                            }
-                        }
-                        if (typeof this.options.onLoading == 'function') {
-                            this.options.onLoading(this, id, result);
-                        }
-                        this.changeContent(result.html, finalCallback);
-                    } else {
-                        this.hide();
-                    }
-                    if (typeof result.anchor != 'undefined' && result.anchor.length > 0) {
-                        this.setHash(this.createAnchor(result.anchor, bundle));
-                    }
-                    $(window).bind(this.options.popstateEventName, (e) => {
-                        this.hide();
-                    });
-                },
-                error: (jqXHR, textStatus, errorThrown) => {
-                    // here should appear error layer
-                    //alert(errorThrown);
-                    this.hide();
-                    console.log(jqXHR.responseText);
-                },
-                complete: () => {
-                    this.finishWorking();
-                    this.loadingLayer.css({
-                        display: 'none'
-                    });
+        throw new Error("This method should be overwritten in the subclass.");
+    }
+    actionLoad(id, result) {
+        if (result.status == Hawk.RequestStatus.SUCCESS) {
+            let finalCallback = () => {};
+            if (typeof this.options.onLoad == 'function') {
+                finalCallback = () => {
+                    this.options.onLoad(this, id, result);
                 }
-            }));
+            }
+            if (typeof this.options.onLoading == 'function') {
+                this.options.onLoading(this, id, result);
+            }
+            this.changeContent(result.html, finalCallback);
+        } else {
+            this.hide();
         }
+        if (typeof result.anchor != 'undefined' && result.anchor.length > 0) {
+            this.setHash(this.createAnchor(result.anchor, bundle));
+        }
+        $(window).bind(this.options.popstateEventName, (e) => {
+            this.hide();
+        });
     }
     changeContent(content, callback) {
         this.options.changeContent(this, content, callback);
@@ -2711,6 +2687,8 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         const jQueryThis = $(e.currentTarget);
         const id = jQueryThis.attr('data-id');
         var bundleString;
+        console.log(jQueryThis);
+        console.log(id);
         if (typeof jQueryThis.attr('data-bundle') != 'undefined') {
             bundleString = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));
         } else {
@@ -2750,7 +2728,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
     }
     run() {
         this.initializeStructure();
-        //this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
         this.refreshDependencies();
         this.container.click((e) => {
             if (this.options.closeOnClickOutside) {
@@ -2762,6 +2739,85 @@ Hawk.AjaxOverlayerManager = class extends Hawk.SingleThreadClass {
         });
         this.initializeClosePreventer();
         this.options.onInitialize(this, Hawk.getHash());
+    }
+}
+Hawk.AjaxOverlayerManager = class extends Hawk.OverlayerManager {
+    constructor(container, options) {
+        super(container, options);
+        this.defaultOptions = Hawk.mergeWholeObjects(this.defaultOptions, {
+            path: "/ajax/load-overlayer",
+            buttonClass: 'ajax-overlayer-button'
+        });
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    loadContent(id, bundle) {
+        if (!this.isWorking()) {
+            this.startWorking();
+            if (typeof bundle == 'undefined') {
+                bundle = {};
+            }
+            this.loadingLayer.css({
+                display: 'flex'
+            });
+            this.setRequest($.ajax({
+                type: "POST",
+                url: this.options.path,
+                dataType: "json",
+                data: {
+                    id: id,
+                    bundle: bundle,
+                    lang: this.getLang()
+                },
+                success: (result) => {
+                    console.log(result);
+                    this.actionLoad(id, result);
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    // here should appear error layer
+                    //alert(errorThrown);
+                    this.hide();
+                    console.log(jqXHR.responseText);
+                },
+                complete: () => {
+                    this.finishWorking();
+                    this.loadingLayer.css({
+                        display: 'none'
+                    });
+                }
+            }));
+        }
+    }
+}
+Hawk.SimpleOverlayerManager = class extends Hawk.OverlayerManager {
+    constructor(container, options) {
+        super(container, options);
+        this.defaultOptions = Hawk.mergeWholeObjects(this.defaultOptions, {
+            buttonClass: 'simple-overlayer-button',
+            contentToLoadClass: 'simple-overlayer-content'
+        });
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+    }
+    loadContent(id, bundle) {
+        if (!this.isWorking()) {
+            this.startWorking();
+            if (typeof bundle == 'undefined') {
+                bundle = {};
+            }
+            this.loadingLayer.css({
+                display: 'flex'
+            });
+            var contentToLoad = $('.' + this.options.contentToLoadClass + '[data-id="' + id + '"]').clone();
+            const result = {
+                id: id,
+                html: contentToLoad.html(),
+                status: Hawk.RequestStatus.SUCCESS
+            };
+            this.actionLoad(id, result);
+            this.finishWorking();
+            this.loadingLayer.css({
+                display: 'none'
+            });
+        }
     }
 }
 Hawk.ConfirmationManager = class extends Hawk.AjaxOverlayerManager {
@@ -3388,4 +3444,5 @@ Hawk.Countdown = class Countdown {
         }, 1000);
     }
 }
+/* require ./HawkLibrary/RevealingItem.Hawk.js */
 export default Hawk;

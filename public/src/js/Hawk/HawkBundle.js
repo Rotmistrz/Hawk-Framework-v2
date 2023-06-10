@@ -38,8 +38,13 @@
 
 // require ./HawkLibrary/DetailsList.Hawk.js
 
-// require ./HawkLibrary/AjaxOverlayerManager.Hawk.js
-// require ./HawkLibrary/ConfirmationManager.Hawk.js
+// require ./HawkLibrary/Overlayers/OverlayerManagerConstants.Hawk.js
+// require ./HawkLibrary/Overlayers/OverlayerManager.Hawk.js
+// require ./HawkLibrary/Overlayers/AjaxOverlayerManager.Hawk.js
+// require ./HawkLibrary/Overlayers/SimpleOverlayerManager.Hawk.js
+// require ./HawkLibrary/Overlayers/ConfirmationManager.Hawk.js
+
+/* require ./HawkLibrary/RevealingItem.Hawk.js */
 
 // require ./HawkLibrary/SectionDetector.Hawk.js
 // require ./HawkLibrary/BookmarksManager.Hawk.js

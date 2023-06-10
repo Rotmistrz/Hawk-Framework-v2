@@ -11,6 +11,297 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MasterController extends AbstractController {
 
+    static public function getOverlayerManagerDoc(array $extraValues = []) : array {
+        return array_merge_recursive($extraValues, [
+            'properties' => [
+                [
+                    'name' => "mode",
+                    'type' => "Hawk.AjaxOverlayerManagerConstants.Modes",
+                    'default' => "DEFAULT",
+                    'description' => "Click event assignment mode."
+                ],
+
+                [
+                    'name' => "fadeSpeed",
+                    'type' => "integer",
+                    'default' => 200,
+                    'description' => "The speed of the overlayer's appearing and disappearing (in miliseconds)."
+                ],
+
+                [
+                    'name' => "slideSpeed",
+                    'type' => "integer",
+                    'default' => 200,
+                    'description' => "The speed of expanding the content on the layer (in miliseconds)."
+                ],
+
+                [
+                    'name' => "closeOnClickOutside",
+                    'type' => "boolean",
+                    'default' => "false",
+                    'description' => "Whether to close the overlayer when user clicks outside the content's container or not."
+                ],
+
+                [
+                    'name' => "eventName",
+                    'type' => "string",
+                    'default' => "click.overlayerManager",
+                    'description' => "A name of the JavaScript <span class=\"code\">click</span> event that the <span class=\"code\">Hawk.AjaxOverlayerManager</span> instance should use to control buttons connected with this instance."
+                ],
+
+                [
+                    'name' => "popstateEventName",
+                    'type' => "string",
+                    'default' => "popstate.overlayerManager",
+                    'description' => "A name of the JavaScript <span class=\"code\">popstate</span> event that the <span class=\"code\">Hawk.AjaxOverlayerManager</span> instance should use to control the browser's back button."
+                ],
+
+                [
+                    'name' => "wrapperClass",
+                    'type' => "string",
+                    'default' => "overlayer__wrapper",
+                    'description' => "The class' name of the wrapper."
+                ],
+
+                [
+                    'name' => "contentContainerClass",
+                    'type' => "string",
+                    'default' => "overlayer__content-container",
+                    'description' => "The class' name of the content's container."
+                ],
+
+                [
+                    'name' => "contentClass",
+                    'type' => "string",
+                    'default' => "overlayer__content",
+                    'description' => "The class' name of the content element."
+                ],
+                [
+                    'name' => "loadingLayerClass",
+                    'type' => "string",
+                    'default' => "overlayer__loading-layer",
+                    'description' => "The class' name of the layer which is visible when the content is loading."
+                ],
+
+                [
+                    'name' => "closeButtonClass",
+                    'type' => "string",
+                    'default' => "ajax-overlayer-close",
+                    'description' => "The class' name of the element which closes the overlayer. This element needs to be inside the overlayer container (may be in the loaded part, though)."
+                ],
+
+                [
+                    'name' => "baseZIndexValue",
+                    'type' => "integer",
+                    'default' => 9000,
+                    'description' => "Base value of z-index feature that is being increased and being set for following instances of Hawk.AjaxOverlayerManager."
+                ]
+            ],
+            'callbacks' => [
+                [
+                    'name' => "onLoad",
+                    'description' => "It is invoked when the content has been loaded.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "id",
+                            'type' => "string",
+                            'description' => "ID of the loaded content."
+                        ],
+                        [
+                            'name' => "result",
+                            'type' => "object",
+                            'description' => "The whole result object returned by the server."
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onLoading",
+                    'description' => "It is invoked when the AJAX request is completed and the content is going to be changed.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "id",
+                            'type' => "string",
+                            'description' => "ID of the loaded content."
+                        ],
+                        [
+                            'name' => "result",
+                            'type' => "object",
+                            'description' => "The whole result object returned by the server."
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onShow",
+                    'description' => "It is invoked when the overlayer is being shown.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onHide",
+                    'description' => "It is invoked when the overlayer is being hidden.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onInitialize",
+                    'description' => "It is invoked when the page has been loaded and the overlayer has already been initialized. It should process the hash and possibly load the appropriate content.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "hash",
+                            'type' => "string",
+                            'description' => "The value of the <span class=\"code\">window.location.hash</span>"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "changeContent",
+                    'description' => "It is invoked when the content is going to be put in the overlayer.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "content",
+                            'type' => "jQuery object",
+                            'description' => "-"
+                        ],
+                        [
+                            'name' => "callback",
+                            'type' => "function",
+                            'description' => "The function that should be invoked when content is placed in the overlayer"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "hide",
+                    'description' => "This function hides the overlayer.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ]
+                    ]
+                ]
+            ],
+            'methods' => [
+                [
+                    'name' => "getOverlayerID",
+                    'type' => "integer",
+                    'description' => "Returns the overlayer's id number.",
+                    'parameters' => [
+
+                    ]
+                ],
+                [
+                    'name' => "getLang",
+                    'type' => "string",
+                    'description' => "Returns the language code which is inferred from the <code class=\"inline-code\">lang</code> attribute of the <code class=\"inline-code\">html</code> element.",
+                    'parameters' => [
+
+                    ]
+                ],
+
+                [
+                    'name' => "hide",
+                    'type' => "void",
+                    'description' => "Closes the overlayer.",
+                    'parameters' => [
+
+                    ]
+                ],
+                [
+                    'name' => "show",
+                    'type' => "void",
+                    'description' => "Shows the overlayer.",
+                    'parameters' => [
+
+                    ]
+                ],
+
+                [
+                    'name' => "load",
+                    'type' => "void",
+                    'description' => "Loads the content. Sends the Request to the endpoint defined in the options and shows the overlayer with the already loaded content.",
+                    'parameters' => [
+                        [
+                            'name' => "id",
+                            'type' => "string",
+                            'default' => "-",
+                            'description' => "The ID of the content that should be loaded (sent with the Request). Helps the server to return the appropriate result."
+                        ],
+                        [
+                            'name' => "bundle",
+                            'type' => "object",
+                            'default' => "{}",
+                            'description' => "The extra parameters that can be used by the backend service."
+                        ]
+                    ]
+                ],
+                [
+                    'name' => "changeContent",
+                    'type' => "void",
+                    'description' => "Changes the content inside the overlayer.",
+                    'parameters' => [
+                        [
+                            'name' => "content",
+                            'type' => "string",
+                            'default' => "-",
+                            'description' => "The string containing the HTML code that is going to be shown in the overlayer."
+                        ],
+                        [
+                            'name' => "callback",
+                            'type' => "function",
+                            'default' => "null",
+                            'description' => "The callback that is being invoked after the content is changed."
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "run",
+                    'type' => "void",
+                    'description' => "Launches the Ajax Overlayer Manager and binds the DOM elements with necessary events. ",
+                    'parameters' => [
+                    ]
+                ]
+            ]
+        ]);
+    }
+
     /**
      * @Route("/")
      */
@@ -459,7 +750,7 @@ class MasterController extends AbstractController {
                 'methods' => []
             ],
 
-            'ajaxOverlayerManager' => [
+            'ajaxOverlayerManager' => static::getOverlayerManagerDoc([
                 'listings' => [
                     'html' => highlight_string($this->renderView("hawk/modules/ajax-overlayer-manager/hawk-ajax-overlayer-manager.html", [
                     ]), true),
@@ -512,298 +803,38 @@ class MasterController extends AbstractController {
                     ],
 
                     [
-                        'name' => "mode",
-                        'type' => "Hawk.AjaxOverlayerManagerConstants.Modes",
-                        'default' => "DEFAULT",
-                        'description' => "Click event assignment mode."
-                    ],
-
-                    [
-                        'name' => "fadeSpeed",
-                        'type' => "integer",
-                        'default' => 200,
-                        'description' => "The speed of the overlayer's appearing and disappearing (in miliseconds)."
-                    ],
-
-                    [
-                        'name' => "slideSpeed",
-                        'type' => "integer",
-                        'default' => 200,
-                        'description' => "The speed of expanding the content on the layer (in miliseconds)."
-                    ],
-
-                    [
-                        'name' => "closeOnClickOutside",
-                        'type' => "boolean",
-                        'default' => "false",
-                        'description' => "Whether to close the overlayer when user clicks outside the content's container or not."
-                    ],
-
-                    [
-                        'name' => "eventName",
-                        'type' => "string",
-                        'default' => "click.ajaxOverlayerManager",
-                        'description' => "A name of the JavaScript <span class=\"code\">click</span> event that the <span class=\"code\">Hawk.AjaxOverlayerManager</span> instance should use to control buttons connected with this instance."
-                    ],
-
-                    [
-                        'name' => "popstateEventName",
-                        'type' => "string",
-                        'default' => "popstate.ajaxOverlayerManager",
-                        'description' => "A name of the JavaScript <span class=\"code\">popstate</span> event that the <span class=\"code\">Hawk.AjaxOverlayerManager</span> instance should use to control the browser's back button."
-                    ],
-
-                    [
-                        'name' => "wrapperClass",
-                        'type' => "string",
-                        'default' => "overlayer__wrapper",
-                        'description' => "The class' name of the wrapper."
-                    ],
-
-                    [
-                        'name' => "contentContainerClass",
-                        'type' => "string",
-                        'default' => "overlayer__content-container",
-                        'description' => "The class' name of the content's container."
-                    ],
-
-                    [
-                        'name' => "contentClass",
-                        'type' => "string",
-                        'default' => "overlayer__content",
-                        'description' => "The class' name of the content element."
-                    ],
-                    [
-                        'name' => "loadingLayerClass",
-                        'type' => "string",
-                        'default' => "overlayer__loading-layer",
-                        'description' => "The class' name of the layer which is visible when the content is loading."
-                    ],
-
-                    [
                         'name' => "buttonClass",
                         'type' => "string",
                         'default' => "ajax-overlayer-button",
                         'description' => "The class' name of the elements which open the overlayer. They are descripted wider above."
-                    ],
-
-                    [
-                        'name' => "closeButtonClass",
-                        'type' => "string",
-                        'default' => "ajax-overlayer-close",
-                        'description' => "The class' name of the element which closes the overlayer. This element needs to be inside the overlayer container (may be in the loaded part, though)."
-                    ],
-
-                    [
-                        'name' => "baseZIndexValue",
-                        'type' => "integer",
-                        'default' => 9000,
-                        'description' => "Base value of z-index feature that is being increased and being set for following instances of Hawk.AjaxOverlayerManager."
-                    ]
-                ],
-                'callbacks' => [
-                    [
-                        'name' => "onLoad",
-                        'description' => "It is invoked when the content has been loaded.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ],
-                            [
-                                'name' => "id",
-                                'type' => "string",
-                                'description' => "ID of the loaded content."
-                            ],
-                            [
-                                'name' => "result",
-                                'type' => "object",
-                                'description' => "The whole result object returned by the server."
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "onLoading",
-                        'description' => "It is invoked when the AJAX request is completed and the content is going to be changed.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ],
-                            [
-                                'name' => "id",
-                                'type' => "string",
-                                'description' => "ID of the loaded content."
-                            ],
-                            [
-                                'name' => "result",
-                                'type' => "object",
-                                'description' => "The whole result object returned by the server."
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "onShow",
-                        'description' => "It is invoked when the overlayer is being shown.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "onHide",
-                        'description' => "It is invoked when the overlayer is being hidden.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "onInitialize",
-                        'description' => "It is invoked when the page has been loaded and the overlayer has already been initialized. It should process the hash and possibly load the appropriate content.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ],
-                            [
-                                'name' => "hash",
-                                'type' => "string",
-                                'description' => "The value of the <span class=\"code\">window.location.hash</span>"
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "changeContent",
-                        'description' => "It is invoked when the content is going to be put in the overlayer.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ],
-                            [
-                                'name' => "content",
-                                'type' => "jQuery object",
-                                'description' => "-"
-                            ],
-                            [
-                                'name' => "callback",
-                                'type' => "function",
-                                'description' => "The function that should be invoked when content is placed in the overlayer"
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "hide",
-                        'description' => "This function hides the overlayer.",
-                        'parameters' => [
-                            [
-                                'name' => "ajaxOverlayerManager",
-                                'type' => "Hawk.AjaxOverlayerManager",
-                                'description' => "Current instance of Hawk.AjaxOverlayerManager"
-                            ]
-                        ]
-                    ]
-                ],
-                'methods' => [
-                    [
-                        'name' => "getOverlayerID",
-                        'type' => "integer",
-                        'description' => "Returns the overlayer's id number.",
-                        'parameters' => [
-                            
-                        ]
-                    ],
-                    [
-                        'name' => "getLang",
-                        'type' => "string",
-                        'description' => "Returns the language code which is inferred from the <code class=\"inline-code\">lang</code> attribute of the <code class=\"inline-code\">html</code> element.",
-                        'parameters' => [
-                            
-                        ]
-                    ],
-
-                    [
-                        'name' => "hide",
-                        'type' => "void",
-                        'description' => "Closes the overlayer.",
-                        'parameters' => [
-                            
-                        ]
-                    ],
-                    [
-                        'name' => "show",
-                        'type' => "void",
-                        'description' => "Shows the overlayer.",
-                        'parameters' => [
-                            
-                        ]
-                    ],
-
-                    [
-                        'name' => "load",
-                        'type' => "void",
-                        'description' => "Loads the content. Sends the Request to the endpoint defined in the options and shows the overlayer with the already loaded content.",
-                        'parameters' => [
-                            [
-                                'name' => "id",
-                                'type' => "string",
-                                'default' => "-",
-                                'description' => "The ID of the content that should be loaded (sent with the Request). Helps the server to return the appropriate result."
-                            ],
-                            [
-                                'name' => "bundle",
-                                'type' => "object",
-                                'default' => "{}",
-                                'description' => "The extra parameters that can be used by the backend service."
-                            ]
-                        ]
-                    ],
-                    [
-                        'name' => "changeContent",
-                        'type' => "void",
-                        'description' => "Changes the content inside the overlayer.",
-                        'parameters' => [
-                            [
-                                'name' => "content",
-                                'type' => "string",
-                                'default' => "-",
-                                'description' => "The string containing the HTML code that is going to be shown in the overlayer."
-                            ],
-                            [
-                                'name' => "callback",
-                                'type' => "function",
-                                'default' => "null",
-                                'description' => "The callback that is being invoked after the content is changed."
-                            ]
-                        ]
-                    ],
-
-                    [
-                        'name' => "run",
-                        'type' => "void",
-                        'description' => "Launches the Ajax Overlayer Manager and binds the DOM elements with necessary events. ",
-                        'parameters' => [
-                        ]
                     ]
                 ]
-            ],
+            ]),
+
+            'simpleOverlayerManager' => static::getOverlayerManagerDoc([
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/modules/overlayers/hawk-simple-overlayer-manager.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/modules/overlayers/hawk-simple-overlayer-manager.js", [
+                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "simple-overlayer-button",
+                        'description' => "The class' name of the elements which open the overlayer. They are descripted wider above."
+                    ],
+
+                    [
+                        'name' => "contentToLoadClass",
+                        'type' => "string",
+                        'default' => "simple-overlayer-content",
+                        'description' => "The class' name of the elements which contain contents for SimpleOverlayerManager. They are descripted wider above."
+                    ]
+                ]
+            ]),
 
             'detailsList' => [
                 'listings' => [

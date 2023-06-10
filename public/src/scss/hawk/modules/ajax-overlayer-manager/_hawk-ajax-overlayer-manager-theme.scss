@@ -12,6 +12,16 @@
 		background: $light-color;
 		padding: 32px 20px;
 		margin: 40px 0;
+
+		@media (min-width: $tablet-s) {
+			margin: 60px 32px;
+			padding: 40px;
+		}
+
+		@media (min-width: $desktop-m) {
+			margin: 80px auto;
+			max-width: 900px;
+		}
 	}
 
 	&__close {

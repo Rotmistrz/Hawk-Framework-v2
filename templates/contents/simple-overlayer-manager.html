@@ -1,0 +1,68 @@
+{% set presentationSection = {
+    title: 'Simple Overlayer Manager',
+    anchor: 'simple-overlayer-manager',
+    listings: {
+        html: simpleOverlayerManager.listings.html,
+        js: simpleOverlayerManager.listings.js
+    },
+    links: [
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/AjaxOverlayerManager.Hawk.js',
+            type: 'js',
+            title: 'SimpleOverlayerManager.Hawk.js'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager.scss',
+            type: 'css',
+            title: 'hawk-simple-overlayer-manager.scss'
+        },
+        {
+            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager-theme.scss',
+            type: 'css',
+            title: 'hawk-simple-overlayer-manager-theme.scss'
+        }
+    ],
+
+    properties: simpleOverlayerManager.properties,
+    callbacks: simpleOverlayerManager.callbacks,
+    methods: simpleOverlayerManager.methods,
+    request: simpleOverlayerManager.request,
+    response: simpleOverlayerManager.response
+} %}
+
+{% extends 'contents/_presentation-section.html' %}
+
+{% block exampleAndDescription %}
+
+{% set description = "<div class=\"text\">
+    <p>
+        <strong>Simple Overlayer Manager</strong> allows to show some content above the page, i.e. some details about things presented in the text which don't need to be visible all the time. The content that should be displayed on the overlayer is a part of the loaded HTML structure, so it doesn't need to be loaded from the server. It's more SEO-friendly than loading asynchronously like in AjaxOverlayerManager but generates more HTML code for browser to load at once.
+    </p>
+
+    <p>
+        This Component needs the special HTML structure at the end of the document and the container for content to load with special classname (<code class=\"inline-code\">simple-overlayer-content</code> by default) and <code class=\"inline-code\">data-id</code> attribute coresponding with the button. The buttons that launch the mechanism should have the certain form as well. They need to have the <code class=\"inline-code\">simple-overlayer-button</code> classname (could be changed in the options), the <code class=\"inline-code\">data-id</code> attribute whose value indicates the content to load and the <code class=\"inline-code\">data-overlayer-id</code> that contains the ID of the Ajax Overlayer Manager which should handle the request. They can also have the <code class=\"inline-code\">data-bundle</code> attribute which keeps the extra values. The Bundle is in the inline <code class=\"inline-code\">key=value</code> shape.
+    </p>
+</div>" %}
+
+<section class="subsection bounded-section">
+    {{ description }}
+
+    <div class="row">
+        <div class="simple-overlayer-content" data-id="1">
+            <header class="section-header">
+                <h3 class="section-title section-title--small">Simple Overlayer Manager</h3>
+            </header>
+
+            {{ description }}
+        </div>
+
+        <button class="button simple-overlayer-button" type="button" data-overlayer-id="1" data-id="1">
+            <div class="button__wrapper">
+                <div class="button__inner">
+                    See the overlayer
+                </div>
+            </div>
+        </button>
+    </div>
+</section>
+{% endblock %}

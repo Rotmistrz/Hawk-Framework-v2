@@ -1,0 +1,50 @@
+Hawk.AjaxOverlayerManager = class extends Hawk.OverlayerManager {
+	constructor(container, options) {
+		super(container, options);
+
+		this.defaultOptions = Hawk.mergeWholeObjects(this.defaultOptions, {
+			path: "/ajax/load-overlayer",
+
+			buttonClass: 'ajax-overlayer-button'
+		});
+
+		this.options = Hawk.mergeObjects(this.defaultOptions, options);
+	}
+
+	loadContent(id, bundle) {
+		if (!this.isWorking()) {
+			this.startWorking();
+
+			if (typeof bundle == 'undefined') {
+				bundle = {};
+			}
+
+			this.loadingLayer.css({ display: 'flex' });
+
+			this.setRequest($.ajax({
+				type: "POST",
+				url: this.options.path,
+				dataType: "json",
+				data: { id: id, bundle: bundle, lang: this.getLang() },
+				success: (result) => {
+					console.log(result);
+
+					this.actionLoad(id, result);
+				},
+				error: (jqXHR, textStatus, errorThrown) => {
+					// here should appear error layer
+					//alert(errorThrown);
+
+					this.hide();
+
+					console.log(jqXHR.responseText);
+				},
+				complete: () => {
+					this.finishWorking();
+
+					this.loadingLayer.css({ display: 'none' });
+				}
+			}));
+		}
+	}
+}

@@ -148,6 +148,11 @@ $(document).ready(function() {
     });
     App.Examples.AjaxOverlayerManager.run();
 
+    App.Examples.SimpleOverlayerManager = new Hawk.SimpleOverlayerManager($('#overlayer'), {
+        // options and callbacks
+    });
+    App.Examples.SimpleOverlayerManager.run();
+
 
 
     App.Examples.Pager = new Hawk.Pager($('#exemplary-pager'), {
@@ -184,8 +189,8 @@ $(document).ready(function() {
     }, 1000);
     
 
-    App.Examples.RevealingItem = new Hawk.RevealingItem($('#exemplary-revealing-item'));
-    App.Examples.RevealingItem.run();
+    // App.Examples.RevealingItem = new Hawk.RevealingItem($('#exemplary-revealing-item'));
+    // App.Examples.RevealingItem.run();
 
     // End of examples
 
