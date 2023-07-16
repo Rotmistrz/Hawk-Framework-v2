@@ -74,75 +74,89 @@
                     </div>
                 </div>
 
-                {% if presentationSection.properties|length > 0 %}
                 <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Properties (options)</h3>
-                    </header>
+                    <section class="hawk-details-list presentation-details-list subsections-list">
+                        {% if presentationSection.properties|length > 0 %}
+                        <div class="hawk-details-list__item subsections-list__item">
+                            <header class="hawk-details-list__header">
+                                <h3 class="subsection-title">Properties (options)</h3>
+                            </header>
 
-                    <section class="subsection">
-                        {% include('this-project/elements/table-properties.html') with {
-                            properties: presentationSection.properties
-                        } %}
+                            <section class="subsection hawk-details-list__content-container">
+                                <div class="hawk-details-list__content presentation-details-list__content">
+                                    {% include('this-project/elements/table-properties.html') with {
+                                    properties: presentationSection.properties
+                                    } %}
+                                </div>
+                            </section>
+                        </div>
+                        {% endif %}
+
+                        {% if presentationSection.callbacks|length > 0 %}
+                        <div class="hawk-details-list__item subsections-list__item">
+                            <header class="hawk-details-list__header">
+                                <h3 class="subsection-title">Callbacks</h3>
+                            </header>
+
+                            <section class="subsection hawk-details-list__content-container">
+                                <div class="hawk-details-list__content presentation-details-list__content">
+                                    {% include('this-project/elements/table-callbacks.html') with {
+                                    callbacks: presentationSection.callbacks
+                                    } %}
+                                </div>
+                            </section>
+                        </div>
+                        {% endif %}
+
+                        {% if presentationSection.methods|length > 0 %}
+                        <div class="hawk-details-list__item subsections-list__item">
+                            <header class="hawk-details-list__header">
+                                <h3 class="subsection-title">Public methods</h3>
+                            </header>
+
+                            <section class="subsection hawk-details-list__content-container">
+                                <div class="hawk-details-list__content presentation-details-list__content">
+                                    {% include('this-project/elements/table-methods.html') with {
+                                    methods: presentationSection.methods
+                                    } %}
+                                </div>
+                            </section>
+                        </div>
+                        {% endif %}
+
+                        {% if presentationSection.request|length > 0 %}
+                        <div class="hawk-details-list__item subsections-list__item">
+                            <header class="hawk-details-list__header">
+                                <h3 class="subsection-title">Request</h3>
+                            </header>
+
+                            <section class="subsection hawk-details-list__content-container">
+                                <div class="hawk-details-list__content presentation-details-list__content">
+                                    {% include('this-project/elements/table-request.html') with {
+                                    request: presentationSection.request
+                                    } %}
+                                </div>
+                            </section>
+                        </div>
+                        {% endif %}
+
+                        {% if presentationSection.response|length > 0 %}
+                        <div class="hawk-details-list__item subsections-list__item">
+                            <header class="hawk-details-list__header">
+                                <h3 class="subsection-title">Response</h3>
+                            </header>
+
+                            <section class="subsection hawk-details-list__content-container">
+                                <div class="hawk-details-list__content presentation-details-list__content">
+                                    {% include('this-project/elements/table-response.html') with {
+                                    response: presentationSection.response
+                                    } %}
+                                </div>
+                            </section>
+                        </div>
+                        {% endif %}
                     </section>
                 </div>
-                {% endif %}
-
-                {% if presentationSection.callbacks|length > 0 %}
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Callbacks</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-callbacks.html') with {
-                            callbacks: presentationSection.callbacks
-                        } %}
-                    </section>
-                </div>
-                {% endif %}
-
-                {% if presentationSection.methods|length > 0 %}
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Public methods</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-methods.html') with {
-                            methods: presentationSection.methods
-                        } %}
-                    </section>
-                </div>
-                {% endif %}
-
-                {% if presentationSection.request|length > 0 %}
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Request</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-request.html') with {
-                            request: presentationSection.request
-                        } %}
-                    </section>
-                </div>
-                {% endif %}
-
-                {% if presentationSection.response|length > 0 %}
-                <div class="row row--more-space">
-                    <header class="subsection-header">
-                        <h3 class="subsection-title">Response</h3>
-                    </header>
-
-                    <section class="subsection">
-                        {% include('this-project/elements/table-response.html') with {
-                            response: presentationSection.response
-                        } %}
-                    </section>
-                </div>
-                {% endif %}
             </div>
         </div>
     </div>

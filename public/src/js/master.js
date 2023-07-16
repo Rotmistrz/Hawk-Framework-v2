@@ -180,7 +180,10 @@ $(document).ready(function() {
 
     App.Examples.AjaxItemsManager.run(1);
 
-
+    Hawk.Launchers.DetailsList($('.presentation-details-list'), {
+        slideSpeed: 500,
+        autoHide: false
+    });
 
 
     setTimeout(function() {

@@ -53,4 +53,6 @@
 
 // require ./HawkLibrary/Calendar/Countdown.Hawk.js
 
+// require ./HawkLibrary/Launchers/Launchers.Hawk.js
+
 export default Hawk;
