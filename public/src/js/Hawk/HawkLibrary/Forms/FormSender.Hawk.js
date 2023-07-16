@@ -43,23 +43,27 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
 			},
 
 			onSuccess: (result) => {
-				this.defaultResultCallback(result);
+				this.defaultResultCallback(result, "success");
 			},
 			onError: (result) => {
-				this.defaultResultCallback(result);
+				this.defaultResultCallback(result, "failure");
 			},
 			onException: (result) => {
 				if (typeof result != 'undefined') {
-					this.defaultResultCallback(result);
+					this.defaultResultCallback(result, "failure");
 				}
 			},
-			onComplete: (result) => {}
+			onComplete: () => {}
 		};
 	}
 
-	defaultResultCallback(result) {
+	defaultResultCallback(result, className) {
+		if (typeof className == 'undefined') {
+			className = "";
+		}
+
 		this.checkFields(result.errorFields);
-		this.changeMessage("<p class=\"failure\">" + result.message + "</p>");
+		this.changeMessage("<p class=\"" + className + "\">" + result.message + "</p>");
 	}
 
 	getField(name) {

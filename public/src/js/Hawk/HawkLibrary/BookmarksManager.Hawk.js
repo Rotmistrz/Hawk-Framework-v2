@@ -233,10 +233,14 @@ Hawk.BookmarksManager = function (container, options) {
     return this;
   };
 
-  this.run = function () {
+  this.run = function (defaultBookmark) {
     this.bookmarks = this.container.find("." + this.options.bookmarksClass);
     this.content = this.container.find("." + this.options.contentClass);
     this.contentWrapper = this.container.find("." + this.options.contentWrapperClass);
+
+    if (typeof defaultBookmark == 'undefined') {
+      defaultBookmark = 0;
+    }
 
     var refresh;
 
@@ -265,10 +269,10 @@ Hawk.BookmarksManager = function (container, options) {
         this.launchBookmarkByName(hash);
         this.options.changeHashCallback(hash);
       } else {
-        this.launchBookmark(0, true);
+        this.launchBookmark(defaultBookmark, true);
       }
     } else {
-      this.launchBookmark(0, true);
+      this.launchBookmark(defaultBookmark, true);
     }
 
     this.bookmarks.click(function () {

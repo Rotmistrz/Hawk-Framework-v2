@@ -57,6 +57,8 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
                 this.hideSpinner();
 
                 this.finishWorking();
+
+                this.options.onComplete();
             }
         });
 	}
