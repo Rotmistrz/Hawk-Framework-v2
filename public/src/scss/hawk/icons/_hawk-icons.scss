@@ -75,6 +75,9 @@
 }
 .icon-arrow--south {
 	@include transform(rotate(-225deg));
+	top: -4px;
+}
+.icon-arrow--south.icon-arrow--small {
 	top: -2px;
 }
 .icon-arrow--primary {

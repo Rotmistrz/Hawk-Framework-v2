@@ -22,9 +22,9 @@ Hawk.anchorRegex = new RegExp("^[^\/]+$");
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
     if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
         const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
-        return this.getHash().replaceAll(regexp, "");
+        return '#' + this.getHash().replaceAll(regexp, "");
     } else {
-        return this.getHash().substring(1).replaceAll('/', '');
+        return '#' + this.getHash().substring(1).replaceAll('/', '');
     }
 }
 Hawk.isInObject = function(value, obj) {
@@ -1657,22 +1657,25 @@ Hawk.FormSender = class extends Hawk.SingleThreadClass {
                 return form.find('.form__cancel-button');
             },
             onSuccess: (result) => {
-                this.defaultResultCallback(result);
+                this.defaultResultCallback(result, "success");
             },
             onError: (result) => {
-                this.defaultResultCallback(result);
+                this.defaultResultCallback(result, "failure");
             },
             onException: (result) => {
                 if (typeof result != 'undefined') {
-                    this.defaultResultCallback(result);
+                    this.defaultResultCallback(result, "failure");
                 }
             },
-            onComplete: (result) => {}
+            onComplete: () => {}
         };
     }
-    defaultResultCallback(result) {
+    defaultResultCallback(result, className) {
+        if (typeof className == 'undefined') {
+            className = "";
+        }
         this.checkFields(result.errorFields);
-        this.changeMessage("<p class=\"failure\">" + result.message + "</p>");
+        this.changeMessage("<p class=\"" + className + "\">" + result.message + "</p>");
     }
     getField(name) {
         return this.fields[name];
@@ -1880,6 +1883,7 @@ Hawk.AjaxFormSender = class extends Hawk.FormSender {
             complete: (jqXHR) => {
                 this.hideSpinner();
                 this.finishWorking();
+                this.options.onComplete();
             }
         });
     }
@@ -3145,10 +3149,13 @@ Hawk.BookmarksManager = function(container, options) {
         }
         return this;
     };
-    this.run = function() {
+    this.run = function(defaultBookmark) {
         this.bookmarks = this.container.find("." + this.options.bookmarksClass);
         this.content = this.container.find("." + this.options.contentClass);
         this.contentWrapper = this.container.find("." + this.options.contentWrapperClass);
+        if (typeof defaultBookmark == 'undefined') {
+            defaultBookmark = 0;
+        }
         var refresh;
         this.currentWidth = Hawk.w;
         $(window).resize(function() {
@@ -3169,10 +3176,10 @@ Hawk.BookmarksManager = function(container, options) {
                 this.launchBookmarkByName(hash);
                 this.options.changeHashCallback(hash);
             } else {
-                this.launchBookmark(0, true);
+                this.launchBookmark(defaultBookmark, true);
             }
         } else {
-            this.launchBookmark(0, true);
+            this.launchBookmark(defaultBookmark, true);
         }
         this.bookmarks.click(function() {
             if (that.loading == true) {

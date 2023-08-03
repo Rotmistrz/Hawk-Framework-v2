@@ -28,11 +28,22 @@
 		padding-right: 8px;
 	}
 }
+.icon-label--more-space {
+	.icon-label__icon-container {
+		padding-right: 20px;
+	}
+}
 .icon-label--reverse {
 	.icon-label__icon-container {
 		padding: 0 0 0 12px;
 	}
 }
+.icon-label--reverse.icon-label--more-space {
+	.icon-label__icon-container {
+		padding-left: 20px;
+	}
+}
+
 .icon-label--decorated {
 	.icon-label__icon-container {
 		position: relative;

@@ -182,7 +182,13 @@ $(document).ready(function() {
 
     Hawk.Launchers.DetailsList($('.presentation-details-list'), {
         slideSpeed: 500,
-        autoHide: false
+        autoHide: false,
+        onShow: (detailsList, header, contentContainer) => {
+            header.find('.icon-arrow').addClass('icon-arrow--north').removeClass('icon-arrow--south');
+        },
+        onHide: (detailsList, header, contentContainer) => {
+            header.find('.icon-arrow').addClass('icon-arrow--south').removeClass('icon-arrow--north');
+        }
     });
 
 
