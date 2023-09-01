@@ -16,6 +16,7 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
             getGroupClassname: (id) => {
                 return "hawk-items-manager-group-" + id;
             },
+
             actionShow: (items, imCallback) => {
                 $(items).removeClass('hawk-hidden');
                 $(items).addClass('hawk-shown');
@@ -95,10 +96,6 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
         if (this.hasManagerID()) {
             cssSelector += '[' + this.options.managerIdAttribute + '="' + this.getManagerID() + '"]';
         }
-
-        console.log(cssSelector);
-
-        console.log(this.container.find(cssSelector));
 
         return this.container.find(cssSelector);
     }

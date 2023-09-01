@@ -153,7 +153,10 @@ $(document).ready(function() {
     });
     App.Examples.SimpleOverlayerManager.run();
 
+    App.Examples.ItemsManager = new Hawk.ItemsManager($('#exemplary-items-manager'), {
 
+    });
+    App.Examples.ItemsManager.run();
 
     App.Examples.Pager = new Hawk.Pager($('#exemplary-pager'), {
         onClick: (pager, nr) => {

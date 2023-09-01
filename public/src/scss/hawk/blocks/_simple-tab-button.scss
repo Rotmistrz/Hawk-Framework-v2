@@ -1,0 +1,30 @@
+.simple-tab-button {
+  padding: 8px 32px;
+  position: relative;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: $main-font-size-00;
+  color: $light-color-06;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: $primary-color;
+    height: 3px;
+    opacity: 0;
+    @include transition(all .2s linear);
+    margin: -1px 0 0 0;
+  }
+}
+.simple-tab-button.active {
+  color: $dark-color;
+
+  &:before {
+    opacity: 1;
+  }
+}

@@ -29,6 +29,8 @@
 
 @import 'blocks/_buttons';
 
+@import 'blocks/_simple-tab-button';
+
 
 /***** FORMS *****/
 
@@ -53,6 +55,8 @@
 @import 'blocks/_icon-label';
 
 @import 'blocks/_titled-label';
+
+@import 'blocks/_tabs-bar';
 
 
 /***** ICONS *****/
@@ -88,6 +92,10 @@
 /***** COMPONENTS *****/
 
 @import 'components/_components';
+
+/***** BEHAVIOUR *****/
+
+@import 'behaviour/_hawk-behaviour';
 
 
 /** END_MODULES **/

@@ -18,6 +18,10 @@
 
 // require ./HawkLibrary/Pageable/Pager.Hawk.js
 
+// require ./HawkLibrary/Bars/BookmarksBar.Hawk.js
+
+// require ./HawkLibrary/ItemsManagers/ItemsManagerConstants.Hawk.js
+// require ./HawkLibrary/ItemsManagers/ItemsManager.Hawk.js
 // require ./HawkLibrary/ItemsManagers/AjaxLoadingItemsManager.Hawk.js
 // require ./HawkLibrary/ItemsManagers/AjaxItemsManager.Hawk.js
 

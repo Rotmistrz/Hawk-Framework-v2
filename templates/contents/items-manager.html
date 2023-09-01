@@ -1,0 +1,102 @@
+<section id="items-manager-anchor" class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper">
+            <div class="site-section__inner">
+                <header class="section-header">
+                    <h2 class="section-title">
+                        Items Manager
+                    </h2>
+                </header>
+
+                <section id="exemplary-items-manager" class="hawk-items-manager">
+                    <section class="plain-bar">
+                        <ul class="tabs-bar">
+                            <li>
+                                <button class="simple-tab-button active hawk-items-manager__bookmark" type="button" data-id="-1">
+                                    All
+                                </button>
+                            </li>
+
+                            <li>
+                                <button class="simple-tab-button hawk-items-manager__bookmark" type="button" data-id="1">
+                                    Hussars
+                                </button>
+                            </li>
+
+                            <li>
+                                <button class="simple-tab-button hawk-items-manager__bookmark" type="button" data-id="2">
+                                    Landscapes
+                                </button>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <ul class="tiles-list">
+                        <li class="hawk-items-manager__item hawk-items-manager-group-2">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/jezioro-o-poranku.jpg'
+                                }
+                            } %}
+                        </li>
+
+                        <li class="hawk-items-manager__item hawk-items-manager-group-2">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/odra-wieczorem.jpg'
+                                }
+                            } %}
+                        </li>
+
+                        <li class="hawk-items-manager__item hawk-items-manager-group-1">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/husaria.jpg'
+                                }
+                            } %}
+                        </li>
+
+                        <li class="hawk-items-manager__item hawk-items-manager-group-1">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/husaria-02.jpg'
+                                }
+                            } %}
+                        </li>
+
+                        <li class="hawk-items-manager__item hawk-items-manager-group-1 hawk-items-manager-group-2">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/husaria-w-gorach.jpg'
+                                }
+                            } %}
+                        </li>
+
+                        <li class="hawk-items-manager__item hawk-items-manager-group-1">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/husarz-z-kopia.jpg'
+                                }
+                            } %}
+                        </li>
+
+                        <li class="hawk-items-manager__item hawk-items-manager-group-2">
+                            {% include('blocks/tile.html') with {
+                                tile: {
+                                    type: 'clear',
+                                    image: '/img/pictures/odra-za-dnia.jpg'
+                                }
+                            } %}
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
