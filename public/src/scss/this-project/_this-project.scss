@@ -432,10 +432,26 @@
 
   > li {
     @include box-sizing(border-box);
+    padding: 20px 0 0 0;
 
     @media (min-width: $tablet-m) {
-      width: 31%;
-      padding: 0 0 3.5% 0;
+      flex-grow: 1;
+      @include strictWidth(31%);
+      padding: 3.5% 0 0 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    @media (min-width: $tablet-m) {
+      &:nth-child(2) {
+        padding-top: 0;
+      }
+
+      &:nth-child(3) {
+        padding-top: 0;
+      }
     }
 
     //&:first-child {

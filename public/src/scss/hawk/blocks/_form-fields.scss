@@ -152,7 +152,6 @@
     padding: 0 0 5px 0;
     text-align: left;
     white-space: nowrap;
-    font-size: $main-font-size;
 
     @media (min-width: $mobile-m) {
       padding: 0 0 8px 0;
@@ -161,16 +160,21 @@
     @media (min-width: $tablet-m) {
       text-align: left;
     }
+  }
+
+  &__title {
+    position: relative;
+    font-weight: 500;
+    @include transition(all .2s linear);
+    font-size: $main-font-size;
 
     @media (min-width: $desktop-xl) {
       font-size: $main-font-size-01;
     }
   }
-
-  &__title {
-    color: $dark-color;
-    position: relative;
-    font-weight: 500;
-    @include transition(all .2s linear);
+}
+.form-field-wrapper.error {
+  .form-field-wrapper__title {
+    color: $error-color;
   }
 }

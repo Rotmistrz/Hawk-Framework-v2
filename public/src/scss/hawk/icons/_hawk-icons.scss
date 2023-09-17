@@ -90,10 +90,13 @@
 	display: block;
 	background: url('/img/icons/icon-loader.svg') no-repeat center;
 	background-size: contain;
+	@include animation(Rotate 2s infinite linear);
+}
+.icon-loader--small {
+	width: 20px;
+	height: 20px;
 }
 .icon-loader--light {
 	background-image: url('/img/icons/icon-loader-light.svg');
 }
-.icon-loader--animated {
-	@include animation(Rotate 2s infinite linear);
-}
+

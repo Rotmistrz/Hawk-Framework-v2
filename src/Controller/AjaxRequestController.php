@@ -39,6 +39,16 @@ class AjaxRequestController extends AbstractController {
             ],
             [
                 'image' => '/img/pictures/husaria.jpg'
+            ],
+
+            [
+                'image' => '/img/pictures/husaria-w-gorach.jpg'
+            ],
+            [
+                'image' => '/img/pictures/jezioro-o-poranku.jpg'
+            ],
+            [
+                'image' => '/img/pictures/odra-wieczorem.jpg'
             ]
         ];
 

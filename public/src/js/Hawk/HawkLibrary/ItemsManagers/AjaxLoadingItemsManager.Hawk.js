@@ -19,10 +19,10 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 
 			bundle: {},
 
-			itemClass: "hawk-ajax-items-loading-manager__item",
-			buttonClass: "hawk-ajax-items-loading-manager__button",
-			contentContainerClass: "hawk-ajax-items-loading-manager__content-container",
-			loadingLayerClass: "hawk-ajax-items-loading-manager__loading-layer",
+			itemClass: "hawk-ajax-loading-items-manager__item",
+			buttonClass: "hawk-ajax-loading-items-manager__button",
+			contentContainerClass: "hawk-ajax-loading-items-manager__content-container",
+			loadingLayerClass: "hawk-ajax-loading-items-manager__loading-layer",
 
 			slideSpeed: 400,
 			fadeSpeed: 400,
@@ -94,9 +94,6 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 					//alert(errorThrown);
 
 					console.log(jqXHR.responseText);
-
-
-
 				},
 				complete: () => {
 					this.finishWorking();

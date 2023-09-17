@@ -24,6 +24,8 @@
 
 @import 'blocks/_text';
 
+@import 'blocks/_text-container';
+
 
 /***** BUTTONS *****/
 
@@ -78,6 +80,8 @@
 @import 'modules/_hawk-layered-section';
 @import 'modules/_hawk-more-content-manager';
 @import 'modules/_hawk-sliding-layer-section';
+@import 'modules/items-manager/_hawk-ajax-loading-items-manager';
+@import 'modules/items-manager/_hawk-ajax-loading-items-manager-theme';
 
 @import 'modules/_ajax-items-manager';
 

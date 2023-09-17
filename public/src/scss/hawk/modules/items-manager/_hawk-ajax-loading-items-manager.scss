@@ -1,0 +1,11 @@
+.hawk-ajax-loading-items-manager {
+  &__loading-layer-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__loading-layer {
+    opacity: 0;
+    @include transition(all .2s linear);
+  }
+}

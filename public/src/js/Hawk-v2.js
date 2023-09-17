@@ -1209,6 +1209,42 @@ Hawk.Pager = class {
         });
     }
 }
+Hawk.Pager = class {
+    constructor(container, options) {
+        this.defaultOptions = {
+            buttonClass: 'hawk-bookmarks-bar__bookmark',
+            activeClass: 'active',
+            valueAttrName: 'data-id',
+            onSelected: (bookmarksBar, bookmark, value) => {}
+        };
+        this.options = Hawk.mergeObjects(this.defaultOptions, options);
+        this.container = $(container);
+        this.bookmarks = null;
+    }
+    markBookmarkAsActive(bookmark) {
+        bookmark.addClass(this.options.activeClass);
+        return this;
+    }
+    clearBookmarks() {
+        this.bookmarks.removeClass(this.options.activeClass);
+    }
+    getValue(bookmark) {
+        return bookmark.attr(this.options.valueAttrName);
+    }
+    putValue() {}
+    refreshDependencies() {
+        this.bookmarks = this.container.find('.' + this.options.bookmarkClass);
+        this.bookmarks.click((e) => {
+            const bookmark = $(e.currentTarget);
+            this.clearBookmarks();
+            this.markBookmarkAsActive(bookmark)
+            this.options.onSelected(this, bookmark, this.getValue(bookmark));
+        });
+    }
+    run() {
+        this.refreshDependencies();
+    }
+}
 Hawk.ItemsManagerConstants = {
     Modes: {
         CLICK: 0,
@@ -1323,9 +1359,12 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
         this.defaultOptions = {
             itemsPerLoading: 6,
             path: "ajax/load-items",
-            itemClass: "ajax-loading-items-manager__item",
-            buttonClass: "ajax-loading-items-manager__button",
-            contentContainerClass: "ajax-loading-items-manager__content-container",
+            itemsDisplayingType: 'block',
+            bundle: {},
+            itemClass: "hawk-ajax-loading-items-manager__item",
+            buttonClass: "hawk-ajax-loading-items-manager__button",
+            contentContainerClass: "hawk-ajax-loading-items-manager__content-container",
+            loadingLayerClass: "hawk-ajax-loading-items-manager__loading-layer",
             slideSpeed: 400,
             fadeSpeed: 400,
             appendItems: function(contentContainer, items) {
@@ -1350,6 +1389,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
     isDone() {
         return this.done;
     }
+    getBundle() {
+        return this.options.bundle;
+    }
     setFilter(name, value) {
         this.filters[name] = value;
         return this;
@@ -1357,13 +1399,23 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
     load(offset) {
         if (!this.isWorking()) {
             this.startWorking();
+            if (typeof offset == 'undefined') {
+                offset = 0;
+            }
+            this.loadingLayer.velocity({
+                opacity: 1
+            }, {
+                duration: 100
+            });
             this.setRequest($.ajax({
                 type: "POST",
                 url: this.options.path,
                 dataType: "json",
                 data: {
                     offset: offset,
-                    itemsPerLoading: this.options.itemsPerLoading
+                    itemsPerLoading: this.options.itemsPerLoading,
+                    filters: this.filters,
+                    bundle: this.getBundle()
                 },
                 success: (result) => {
                     console.log(result);
@@ -1381,6 +1433,11 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
                 },
                 complete: () => {
                     this.finishWorking();
+                    this.loadingLayer.velocity({
+                        opacity: 0
+                    }, {
+                        duration: 100
+                    });
                 }
             }));
         }
@@ -1392,6 +1449,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
         });
         this.options.appendItems(this.contentContainer, items);
         items.velocity("slideDown", {
+            display: this.options.itemsDisplayingType,
             duration: this.options.slideSpeed,
             complete: () => {
                 items.velocity({
@@ -1419,6 +1477,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
     run() {
         this.buttons = this.container.find('.' + this.options.buttonClass);
         this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
+        this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
         this.buttons.click(() => {
             if (!this.isDone()) {
                 this.load(this.offset);

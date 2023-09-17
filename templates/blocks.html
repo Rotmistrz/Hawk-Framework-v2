@@ -583,17 +583,22 @@
                                             <li>
                                                 {% include('blocks/form-field.html') with {
                                                     formField: {
-                                                        type: 'with-title',
+                                                        placeholder: 'Form field with placeholder',
+                                                        type: 'text',
+                                                        name: 'exemplary-form-field-with-placeholder'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/wrapped-form-field.html') with {
+                                                    formFieldWrapper: {
                                                         title: 'Form field with title'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
+                                                    },
                                                     formField: {
-                                                        type: 'with-placeholder',
-                                                        title: 'Form field with placeholder'
+                                                        type: 'text',
+                                                        name: 'exemplary-form-field-with-title',
+                                                        placeholder: 'Type something'
                                                     }
                                                 } %}
                                             </li>
@@ -602,18 +607,22 @@
                                                 {% include('blocks/form-field.html') with {
                                                     formField: {
                                                         extraClass: ' form-field--underline',
-                                                        type: 'with-title',
+                                                        type: 'text',
+                                                        placeholder: 'Underlined form field',
+                                                        name: 'exemplary-underlined-form-field-with-placeholder'
+                                                    }
+                                                } %}
+                                            </li>
+
+                                            <li>
+                                                {% include('blocks/wrapped-form-field.html') with {
+                                                    formFieldWrapper: {
                                                         title: 'Underlined form field with title'
-                                                    }
-                                                } %}
-                                            </li>
-
-                                            <li>
-                                                {% include('blocks/form-field.html') with {
+                                                    },
                                                     formField: {
                                                         extraClass: ' form-field--underline',
-                                                        type: 'with-placeholder',
-                                                        title: 'Underlined form field with placeholder'
+                                                        placeholder: 'Type something',
+                                                        name: 'exemplary-underlined-form-field-with-title'
                                                     }
                                                 } %}
                                             </li>
@@ -622,18 +631,21 @@
                                                 {% include('blocks/form-field.html') with {
                                                     formField: {
                                                         extraClass: ' error',
-                                                        type: 'with-title',
-                                                        title: 'Form field with error'
+                                                        type: 'text',
+                                                        placeholder: 'Form field with error'
                                                     }
                                                 } %}
                                             </li>
 
                                             <li>
-                                                {% include('blocks/form-field.html') with {
+                                                {% include('blocks/wrapped-form-field.html') with {
+                                                    formFieldWrapper: {
+                                                        title: 'Underlined form field with title - error',
+                                                        extraClass: 'error'
+                                                    },
                                                     formField: {
-                                                        extraClass: ' form-field--underline error',
-                                                        type: 'with-placeholder',
-                                                        title: 'Underlined form field with error'
+                                                        type: 'text',
+                                                        extraClass: ' form-field--underline error'
                                                     }
                                                 } %}
                                             </li>

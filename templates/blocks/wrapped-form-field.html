@@ -1,0 +1,7 @@
+{% extends('blocks/form-field-wrapper.html') %}
+
+{% block content %}
+    {% include('blocks/form-field.html') with {
+        formField: formField|merge({ independent: false })
+    } %}
+{% endblock %}

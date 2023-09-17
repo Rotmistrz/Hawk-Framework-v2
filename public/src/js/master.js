@@ -72,9 +72,9 @@ $(document).ready(function() {
         itemsPerLoading: 3
     });
     HawkVariables.ajaxLoadingItemsManager.run();
+    HawkVariables.ajaxLoadingItemsManager.load(0);
 
-    HawkVariables.ajaxLoadingItemsManager.container.find('.ajax-loading-items-manager__clear-button').click(function() {
-        console.log("Lalala clearing");
+    HawkVariables.ajaxLoadingItemsManager.container.find('.hawk-ajax-loading-items-manager__clear-button').click(function() {
         HawkVariables.ajaxLoadingItemsManager.clear();
     });
 
@@ -158,30 +158,30 @@ $(document).ready(function() {
     });
     App.Examples.ItemsManager.run();
 
-    App.Examples.Pager = new Hawk.Pager($('#exemplary-pager'), {
-        onClick: (pager, nr) => {
-            console.log(nr);
-            pager.updatePage(nr);
-        }
-    });
-    App.Examples.Pager.run(10);
-
-    App.Examples.AjaxItemsManager = new Hawk.AjaxItemsManager($('#exemplary-ajax-items-manager'), {
-
-    });
-
-    App.Examples.AjaxItemsManagerPager = new Hawk.Pager($('#exemplary-ajax-items-manager .hawk-pager'), {
-        onPageChanged: (pager, nr) => {
-            console.log(nr);
-
-            App.Examples.AjaxItemsManager.load(nr);
-        }
-    });
-    App.Examples.AjaxItemsManagerPager.run();
-
-    App.Examples.AjaxItemsManager.addPager(App.Examples.AjaxItemsManagerPager);
-
-    App.Examples.AjaxItemsManager.run(1);
+    // App.Examples.Pager = new Hawk.Pager($('#exemplary-pager'), {
+    //     onClick: (pager, nr) => {
+    //         console.log(nr);
+    //         pager.updatePage(nr);
+    //     }
+    // });
+    // App.Examples.Pager.run(10);
+    //
+    // App.Examples.AjaxItemsManager = new Hawk.AjaxItemsManager($('#exemplary-ajax-items-manager'), {
+    //
+    // });
+    //
+    // App.Examples.AjaxItemsManagerPager = new Hawk.Pager($('#exemplary-ajax-items-manager .hawk-pager'), {
+    //     onPageChanged: (pager, nr) => {
+    //         console.log(nr);
+    //
+    //         App.Examples.AjaxItemsManager.load(nr);
+    //     }
+    // });
+    // App.Examples.AjaxItemsManagerPager.run();
+    //
+    // App.Examples.AjaxItemsManager.addPager(App.Examples.AjaxItemsManagerPager);
+    //
+    // App.Examples.AjaxItemsManager.run(1);
 
     Hawk.Launchers.DetailsList($('.presentation-details-list'), {
         slideSpeed: 500,

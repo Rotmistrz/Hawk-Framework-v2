@@ -1,0 +1,9 @@
+<label class="form-field-wrapper{% if formFieldWrapper.extraClass is defined and formFieldWrapper.extraClass|length > 0 %} {{ formFieldWrapper.extraClass }}{% endif %}">
+    <header class="form-field-wrapper__header">
+        <h3 class="form-field-wrapper__title">{{ formFieldWrapper.title }}</h3>
+    </header>
+
+    {% block content %}}
+        {{ formFieldWrapper.content }}
+    {% endblock %}
+</label>
