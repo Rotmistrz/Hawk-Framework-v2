@@ -8,6 +8,7 @@
                     </h2>
                 </header>
 
+                {% block description %}
                 <div class="flex-container">
                     <div class="flex-column flex-column--4 flex-column--space">
                         {% block exampleAndDescription %}
@@ -73,6 +74,7 @@
                         </section>
                     </div>
                 </div>
+                {% endblock %}
 
                 <div class="row row--more-space">
                     <section class="hawk-details-list presentation-details-list subsections-list">

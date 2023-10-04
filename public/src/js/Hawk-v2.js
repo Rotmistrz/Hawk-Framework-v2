@@ -1357,10 +1357,12 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
         this.contentContainer;
         this.loadingLayer;
         this.defaultOptions = {
+            path: "/ajax/load-items",
             itemsPerLoading: 6,
-            path: "ajax/load-items",
             itemsDisplayingType: 'block',
-            bundle: {},
+            bundle: () => {
+                return {};
+            },
             itemClass: "hawk-ajax-loading-items-manager__item",
             buttonClass: "hawk-ajax-loading-items-manager__button",
             contentContainerClass: "hawk-ajax-loading-items-manager__content-container",
@@ -1369,6 +1371,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
             fadeSpeed: 400,
             appendItems: function(contentContainer, items) {
                 contentContainer.append(items);
+            },
+            prepareHTML: function(rawHTML, items) {
+                return Hawk.jQueryFromString(rawHTML);
             },
             onLoad: function(buttons, contentContainer) {},
             onDone: function(buttons, contentContainer) {
@@ -1390,7 +1395,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
         return this.done;
     }
     getBundle() {
-        return this.options.bundle;
+        return this.options.bundle();
     }
     setFilter(name, value) {
         this.filters[name] = value;
@@ -1419,7 +1424,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
                 },
                 success: (result) => {
                     console.log(result);
-                    this.appendContent(result.items);
+                    this.appendContent(result.html, result.items);
                     this.offset = result.offset;
                     this.done = result.isDone;
                     if (this.isDone()) {
@@ -1442,17 +1447,17 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
             }));
         }
     }
-    appendContent(rawItems) {
-        const items = Hawk.jQueryFromString(rawItems);
-        items.css({
+    appendContent(html, items) {
+        const preparedContent = this.options.prepareHTML(html, items);
+        preparedContent.css({
             opacity: 0
         });
-        this.options.appendItems(this.contentContainer, items);
-        items.velocity("slideDown", {
+        this.options.appendItems(this.contentContainer, preparedContent);
+        preparedContent.velocity("slideDown", {
             display: this.options.itemsDisplayingType,
             duration: this.options.slideSpeed,
             complete: () => {
-                items.velocity({
+                preparedContent.velocity({
                     opacity: 1
                 }, {
                     duration: this.options.fadeSpeed

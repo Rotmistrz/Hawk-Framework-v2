@@ -799,14 +799,14 @@ class MasterController extends AbstractController {
                         'name' => "path",
                         'type' => "string",
                         'default' => "/ajax/load-overlayer",
-                        'description' => "Path to the endpoint which processes the Request and returns a JSON Response with the content that is going to be shown on the layer. The Request and Response structure is descripted below."
+                        'description' => "Path to the endpoint which processes the Request and returns a JSON Response with the content that is going to be shown on the layer. The Request and Response structure is described below."
                     ],
 
                     [
                         'name' => "buttonClass",
                         'type' => "string",
                         'default' => "ajax-overlayer-button",
-                        'description' => "The class' name of the elements which open the overlayer. They are descripted wider above."
+                        'description' => "The class' name of the elements which open the overlayer. They are described wider above."
                     ]
                 ]
             ]),
@@ -824,14 +824,14 @@ class MasterController extends AbstractController {
                         'name' => "buttonClass",
                         'type' => "string",
                         'default' => "simple-overlayer-button",
-                        'description' => "The class' name of the elements which open the overlayer. They are descripted wider above."
+                        'description' => "The class' name of the elements which open the overlayer. They are described wider above."
                     ],
 
                     [
                         'name' => "contentToLoadClass",
                         'type' => "string",
                         'default' => "simple-overlayer-content",
-                        'description' => "The class' name of the elements which contain contents for SimpleOverlayerManager. They are descripted wider above."
+                        'description' => "The class' name of the elements which contain contents for SimpleOverlayerManager. They are described wider above."
                     ]
                 ]
             ]),
@@ -850,6 +850,152 @@ class MasterController extends AbstractController {
                         'type' => "boolean",
                         'default' => "true",
                         'description' => "Indicates whether to hide all the currently displayed contents when the new one is going to be visible."
+                    ]
+                ],
+                'callbacks' => [
+                    [
+                        'name' => "onShow",
+                        'description' => "It is invoked when the content is going to be displayed.",
+                        'parameters' => [
+                            [
+                                'name' => "detailsList",
+                                'type' => "Hawk.DetailsList",
+                                'description' => "Current instance of Hawk.DetailsList"
+                            ],
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "onHide",
+                        'description' => "It is invoked when the content is going to be hidden.",
+                        'parameters' => [
+                            [
+                                'name' => "detailsList",
+                                'type' => "Hawk.DetailsList",
+                                'description' => "Current instance of Hawk.DetailsList"
+                            ],
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                            ]
+                        ]
+                    ]
+                ],
+                'methods' => [
+                    [
+                        'name' => "show",
+                        'type' => "void",
+                        'description' => "Shows the content.",
+                        'parameters' => [
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "The header which the content is related with."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "hide",
+                        'type' => "void",
+                        'description' => "Hides the content.",
+                        'parameters' => [
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "The header which the content is related with."
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+
+            'ajaxLoadingItemsManager' => [
+                'listings' => [
+//                    'html' => highlight_string($this->renderView("hawk/modules/details-list/details-list.html", [
+//                    ]), true),
+//                    'js' => highlight_string($this->renderView("hawk/modules/details-list/details-list.js", [
+//                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "path",
+                        'type' => "string",
+                        'default' => "/ajax/load-items",
+                        'description' => "Path to the endpoint which processes the Request and returns a&nbsp;JSON&nbsp;Response with the items that are going to be shown. The Request and Response structure is described below."
+                    ],
+                    [
+                        'name' => "itemsPerLoading",
+                        'type' => "integer",
+                        'default' => 6,
+                        'description' => "Number of items that should be loaded. It is being sent to the server with the Request."
+                    ],
+                    [
+                        'name' => "itemsDisplayingType",
+                        'type' => "string",
+                        'default' => "block",
+                        'description' => "CSS value of the <code class=\"inline-code\">display</code> feature which should be applied to the loaded items after they are shown."
+                    ],
+                    [
+                        'name' => "bundle",
+                        'type' => "function",
+                        'default' => "() : {}",
+                        'description' => "A function that returns the JS object with extra data that should be sent to the server to prepare appropriate items to return."
+                    ],
+
+                    [
+                        'name' => "itemClass",
+                        'type' => "string",
+                        'default' => "hawk-ajax-loading-items-manager__item",
+                        'description' => "A classname of loaded items. Necessary if items can be being hidden."
+                    ],
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "hawk-ajax-loading-items-manager__button",
+                        'description' => "A classname of button which launches the loading."
+                    ],
+                    [
+                        'name' => "contentContainerClass",
+                        'type' => "string",
+                        'default' => "hawk-ajax-loading-items-manager__content-container",
+                        'description' => "A classname of the container where loaded items should be placed in."
+                    ],
+                    [
+                        'name' => "loadingLayerClass",
+                        'type' => "string",
+                        'default' => "hawk-ajax-loading-items-manager__loading-layer",
+                        'description' => "A classname of the node that should be shown during loading."
+                    ],
+
+                    [
+                        'name' => "slideSpeed",
+                        'type' => "integer",
+                        'default' => 400,
+                        'description' => "The speed of expanding the loading items (in miliseconds)."
+                    ],
+                    [
+                        'name' => "fadeSpeed",
+                        'type' => "integer",
+                        'default' => 400,
+                        'description' => "The speed of appearing and disappearing of the loaded items (in miliseconds)."
                     ]
                 ],
                 'callbacks' => [

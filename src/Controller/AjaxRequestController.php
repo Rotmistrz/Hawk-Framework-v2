@@ -55,8 +55,11 @@ class AjaxRequestController extends AbstractController {
         $amount = count($source);
 
         $html = "";
+        $items = [];
 
         for ($i = $offset, $n = 0; $n < $itemsPerLoading && $i < $amount; $i++, $n++) {
+            $items[] = $source[$i];
+
             $html .= "<li>";
 
         	$html .= $this->renderView('blocks/tile.html', [
@@ -78,7 +81,8 @@ class AjaxRequestController extends AbstractController {
         }
 
     	return new JsonResponse([
-    		'items' => $html,
+    		'html' => $html,
+            'items' => $items,
             'offset' => $offset,
             'isDone' => $isDone
     	]);

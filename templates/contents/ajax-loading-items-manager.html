@@ -1,67 +1,78 @@
-<section id="ajax-loading-items-manager-anchor" class="site-section">
-    <div class="site-section__layer">
-        <div class="site-section__wrapper">
-            <div class="site-section__inner">
-                <header class="section-header">
-                    <h2 class="section-title">
-                        Ajax Loading Items Manager
-                    </h2>
-                </header>
+{% extends 'contents/_presentation-section.html' %}
 
-                <section class="subsection">
-                    <div class="text-container text-container--2-columns">
-                        <div class="text">
-                            <p>
-                                <strong>Ajax Loading Items Manager</strong> is used to load some objects asynchronously from the server.
-                                Not all items are loaded &ndash; user decides if there should be shown more of them. Some data are passed
-                                to the back-end &ndash; how many objects should be returned, how many have been loaded yet, if and what filters
-                                should be applied and custom bundle which is set by the developer.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <section id="exemplary-ajax-loading-items-manager" class="hawk-ajax-loading-items-manager std-ajax-loading-items-manager">
-                            <div class="hawk-ajax-loading-items-manager__content-wrapper">
-                                <ul class="hawk-ajax-loading-items-manager__content-container tiles-list">
+{% set presentationSection = {
+    title: 'Ajax Loading Items Manager',
+    anchor: 'ajax-loading-items-manager',
+    listings: {
+    js: ajaxLoadingItemsManager.listings.js
+    },
+    links: [
+    {
+    link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/AjaxLoadingItemsManager.Hawk.js',
+    type: 'js',
+    title: 'AjaxLoadingItemsManager.Hawk.js'
+    }
+    ],
 
-                                </ul>
+    properties: ajaxLoadingItemsManager.properties,
+    callbacks: ajaxLoadingItemsManager.callbacks,
+    methods: ajaxLoadingItemsManager.methods
+} %}
 
-                                <div class="hawk-ajax-loading-items-manager__loading-layer-container std-ajax-loading-items-manager__loading-layer-container">
-                                    <div class="hawk-ajax-loading-items-manager__loading-layer">
-                                        <div class="icon-loader">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{% block description %}
 
-                            <div class="button-container">
-                                <ul class="horizontal-items">
-                                    <li>
-                                        <button class="button button--static hawk-ajax-loading-items-manager__button" type="button">
-                                            <div class="button__wrapper">
-                                                <div class="button__inner">
-                                                    Load more
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </li>
-
-                                    <li>
-                                        <button class="button button--static hawk-ajax-loading-items-manager__clear-button" type="button">
-                                            <div class="button__wrapper">
-                                                <div class="button__inner">
-                                                    Clear
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-                    </div>
-                </section>
-            </div>
+<section class="subsection">
+    <div class="text-container text-container--2-columns">
+        <div class="text">
+            <p>
+                <strong>Ajax Loading Items Manager</strong> is used to load some objects asynchronously from the server.
+                Not all items are loaded &ndash; user decides if there should be shown more of them. Some data are passed
+                to the back-end &ndash; how many objects should be returned, how many have been loaded yet, if and what filters
+                should be applied and custom bundle which is set by the developer.
+            </p>
         </div>
     </div>
+
+    <div class="row">
+        <section id="exemplary-ajax-loading-items-manager" class="hawk-ajax-loading-items-manager std-ajax-loading-items-manager">
+            <div class="hawk-ajax-loading-items-manager__content-wrapper">
+                <ul class="hawk-ajax-loading-items-manager__content-container tiles-list">
+
+                </ul>
+
+                <div class="hawk-ajax-loading-items-manager__loading-layer-container std-ajax-loading-items-manager__loading-layer-container">
+                    <div class="hawk-ajax-loading-items-manager__loading-layer">
+                        <div class="icon-loader">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <ul class="horizontal-items">
+                    <li>
+                        <button class="button button--static hawk-ajax-loading-items-manager__button" type="button">
+                            <div class="button__wrapper">
+                                <div class="button__inner">
+                                    Load more
+                                </div>
+                            </div>
+                        </button>
+                    </li>
+
+                    <li>
+                        <button class="button button--static hawk-ajax-loading-items-manager__clear-button" type="button">
+                            <div class="button__wrapper">
+                                <div class="button__inner">
+                                    Clear
+                                </div>
+                            </div>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
 </section>
+
+{% endblock %}

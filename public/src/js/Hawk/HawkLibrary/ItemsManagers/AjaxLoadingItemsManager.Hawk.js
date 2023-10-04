@@ -12,12 +12,12 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 		this.loadingLayer;
 
 		this.defaultOptions = {
+			path: "/ajax/load-items",
 			itemsPerLoading: 6,
-			path: "ajax/load-items",
 
 			itemsDisplayingType: 'block',
 
-			bundle: {},
+			bundle: () => { return {}; },
 
 			itemClass: "hawk-ajax-loading-items-manager__item",
 			buttonClass: "hawk-ajax-loading-items-manager__button",
@@ -29,6 +29,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 
 			appendItems: function(contentContainer, items) {
 				contentContainer.append(items);
+			},
+			prepareHTML: function(rawHTML, items) {
+				return Hawk.jQueryFromString(rawHTML);
 			},
 
 			onLoad: function(buttons, contentContainer) {},
@@ -51,7 +54,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 	}
 
 	getBundle() {
-		return this.options.bundle;
+		return this.options.bundle();
 	}
 
 	setFilter(name, value) {
@@ -80,7 +83,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 				success: (result) => {
 					console.log(result);
 
-					this.appendContent(result.items);
+					this.appendContent(result.html, result.items);
 					this.offset = result.offset;
 
 					this.done = result.isDone;
@@ -106,18 +109,18 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 		}
 	}
 
-	appendContent(rawItems) {
-		const items = Hawk.jQueryFromString(rawItems);
+	appendContent(html, items) {
+		const preparedContent = this.options.prepareHTML(html, items);
 
-		items.css({ opacity: 0 });
+		preparedContent.css({ opacity: 0 });
 
-		this.options.appendItems(this.contentContainer, items);
+		this.options.appendItems(this.contentContainer, preparedContent);
 
-		items.velocity("slideDown", {
+		preparedContent.velocity("slideDown", {
 			display: this.options.itemsDisplayingType,
 			duration: this.options.slideSpeed,
 			complete: () => {
-				items.velocity({ opacity: 1 }, {
+				preparedContent.velocity({ opacity: 1 }, {
 					duration: this.options.fadeSpeed
 				});
 			}
