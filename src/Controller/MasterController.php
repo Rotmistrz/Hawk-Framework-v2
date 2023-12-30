@@ -1000,72 +1000,117 @@ class MasterController extends AbstractController {
                 ],
                 'callbacks' => [
                     [
-                        'name' => "onShow",
-                        'description' => "It is invoked when the content is going to be displayed.",
+                        'name' => "appendItems",
+                        'description' => "It should append loaded items to container with necessary way.",
                         'parameters' => [
-                            [
-                                'name' => "detailsList",
-                                'type' => "Hawk.DetailsList",
-                                'description' => "Current instance of Hawk.DetailsList"
-                            ],
-                            [
-                                'name' => "header",
-                                'type' => "jQuery object",
-                                'description' => "Current <span class=\"inline-code\">Header</span> element."
-                            ],
                             [
                                 'name' => "contentContainer",
                                 'type' => "jQuery object",
-                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                                'description' => "Container for items."
+                            ],
+                            [
+                                'name' => "items",
+                                'type' => "jQuery object",
+                                'description' => "Already loaded items as HTML wrapped in jQuery object."
                             ]
                         ]
                     ],
                     [
-                        'name' => "onHide",
-                        'description' => "It is invoked when the content is going to be hidden.",
+                        'name' => "prepareHTML",
+                        'description' => "It should prepare jQuery object from loaded data (a raw HTML or a JS objects collection) to pass them to <span class=\"inline-code\">appendItems</span> function.",
                         'parameters' => [
                             [
-                                'name' => "detailsList",
-                                'type' => "Hawk.DetailsList",
-                                'description' => "Current instance of Hawk.DetailsList"
+                                'name' => "rawHTML",
+                                'type' => "string",
+                                'description' => "Loaded items as raw HTML string"
                             ],
                             [
-                                'name' => "header",
+                                'name' => "items",
+                                'type' => "JS objects collection",
+                                'description' => "Loaded items as JS objects collection"
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "onLoad",
+                        'description' => "It is invoked when items are loaded and placed into content container.",
+                        'parameters' => [
+                            [
+                                'name' => "buttons",
                                 'type' => "jQuery object",
-                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                                'description' => "Buttons launching the loading."
                             ],
                             [
                                 'name' => "contentContainer",
                                 'type' => "jQuery object",
-                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                                'description' => "The element where loaded items are placed in."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "onDone",
+                        'description' => "It is invoked when all items are loaded and placed into content container and there's no more to load.",
+                        'parameters' => [
+                            [
+                                'name' => "buttons",
+                                'type' => "jQuery object",
+                                'description' => "Buttons launching the loading."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "The element where loaded items are placed in."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "onError",
+                        'description' => "It is invoked when there an error occurred during loading.",
+                        'parameters' => [
+                            [
+                                'name' => "buttons",
+                                'type' => "jQuery object",
+                                'description' => "Buttons launching the loading."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "The element where loaded items are placed in."
                             ]
                         ]
                     ]
                 ],
                 'methods' => [
                     [
-                        'name' => "show",
+                        'name' => "isDone",
+                        'type' => "bool",
+                        'description' => "Informs if loading is completed or not.",
+                        'parameters' => [
+                        ]
+                    ],
+                    [
+                        'name' => "load",
                         'type' => "void",
-                        'description' => "Shows the content.",
+                        'description' => "Loads more items by sending a request to the backend.",
                         'parameters' => [
                             [
-                                'name' => "header",
-                                'type' => "jQuery object",
-                                'default' => "-",
-                                'description' => "The header which the content is related with."
+                                'name' => "offset",
+                                'type' => "integer",
+                                'default' => "0",
+                                'description' => "Number of items which should be skipped."
                             ]
                         ]
                     ],
                     [
-                        'name' => "hide",
+                        'name' => "setFilter",
                         'type' => "void",
-                        'description' => "Hides the content.",
+                        'description' => "Sets a filter, which should be send with next requests.",
                         'parameters' => [
                             [
-                                'name' => "header",
-                                'type' => "jQuery object",
-                                'default' => "-",
-                                'description' => "The header which the content is related with."
+                                'name' => "offset",
+                                'type' => "integer",
+                                'default' => "0",
+                                'description' => "Number of items which should be skipped."
                             ]
                         ]
                     ]

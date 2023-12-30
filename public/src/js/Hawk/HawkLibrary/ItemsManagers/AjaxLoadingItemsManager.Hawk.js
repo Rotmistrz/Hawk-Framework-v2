@@ -57,10 +57,26 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 		return this.options.bundle();
 	}
 
-	setFilter(name, value) {
-		this.filters[name] = value;
+	hasFilter(name, value) {
+		return (typeof this.filters[name] != 'undefined' && this.filters[name].indexOf(value) > 0);
+	}
 
-		return this;
+	addFilter(name, value) {
+		if (typeof this.filters[name] == 'undefined') {
+			this.filters[name] = [];
+		}
+
+		this.filters[name].push(value);
+	}
+
+	clearFilter(name, value) {
+		if (this.hasFilter(name, value)) {
+
+		}
+	}
+
+	clearFilters(name) {
+
 	}
 
 	load(offset) {
