@@ -34,6 +34,8 @@ Hawk.Dropdown = function(container, options) {
 
     this.fields;
 
+    this.disabled = false;
+
     this.states = {
         CLOSED: 0,
         OPEN: 1
@@ -53,6 +55,7 @@ Hawk.Dropdown = function(container, options) {
         titleClass: 'hawk-dropdown__title',
         listClass: 'hawk-dropdown__list',
         listContainerClass: 'hawk-dropdown__list-container',
+        disabledClass: 'disabled',
 
         startEscapeSensorClass: 'hawk-dropdown__start-escape-sensor',
         sensorClass: 'hawk-dropdown__sensor',
@@ -63,7 +66,7 @@ Hawk.Dropdown = function(container, options) {
         onShowing: function(dropdown) {},
         onHide: function(dropdown) {},
         onHiding: function(dropdown) {},
-        onSelected: function(dropdown, field) {
+        onSelected: function(dropdown, field, silently) {
             if (field.attr('type') == 'radio') {
                 var description = field.parent().find('.dropdown-item__description').html();
 
@@ -86,6 +89,30 @@ Hawk.Dropdown = function(container, options) {
     this.mode = this.options.mode;
     this.type = this.options.type;
 
+    this.isDisabled = function() {
+        return this.disabled;
+    }
+
+    this.disable = function() {
+        this.disabled = true;
+        this.container.addClass(this.options.disabledClass);
+
+        return this;
+    }
+
+    this.enable = function() {
+        this.disabled = false;
+        this.container.removeClass(this.options.disabledClass);
+
+        return this;
+    }
+
+    this.clearFields = function() {
+        this.fields.each(function() {
+           $(this).prop('checked', false);
+        });
+    }
+
     this.setOpen = function() {
         this.state = this.states.OPEN;
 
@@ -103,7 +130,7 @@ Hawk.Dropdown = function(container, options) {
     }
 
     this.doesNeedScrollbar = function() {
-        return this.listContainer.get(0).offsetHeight < this.listContainer.get(0).scrollHeight;
+        return this.list.get(0).offsetHeight < this.list.get(0).scrollHeight;
     }
 
     this.show = function() {
@@ -114,7 +141,7 @@ Hawk.Dropdown = function(container, options) {
             easing: "linear",
             complete: () => {
                 if (this.doesNeedScrollbar()) {
-                    this.listContainer.mCustomScrollbar();
+                    this.list.mCustomScrollbar();
                 }
 
                 if (typeof that.options.onShow === 'function') {
@@ -160,26 +187,26 @@ Hawk.Dropdown = function(container, options) {
         return this;
     }
 
-    this.select = function(field) {
+    this.select = function(field, silently) {
         if (field.length > 0) {
-            return this.options.onSelected(this, field);
+            return this.options.onSelected(this, field, silently);
         } else {
             return false;
         }
     }
 
-    this.selectByIndex = function(index) {
+    this.selectByIndex = function(index, silently) {
         const field = this.fields.eq(index);
 
-        return this.select(field);
+        return this.select(field, silently);
     }
 
-    this.selectByValue = function(value) {
+    this.selectByValue = function(value, silently) {
         const field = this.fields.filter(function() {
             return $(this).val() == value;
         });
 
-        return this.select(field);
+        return this.select(field, silently);
     }
 
     this.createSensor = function(className) {
@@ -252,7 +279,7 @@ Hawk.Dropdown = function(container, options) {
 
             if (that.isOpen()) {
                 that.hide();
-            } else {
+            } else if (!that.isDisabled()) {
                 that.show();
             }
         });
@@ -264,13 +291,13 @@ Hawk.Dropdown = function(container, options) {
         });
 
         this.sensor.focus(function() {
-            if (!that.isOpen()) {
+            if (!that.isOpen() && !that.isDisabled()) {
                 that.show();
             }
         });
 
         this.endSensor.focus(function() {
-            if (!that.isOpen()) {
+            if (!that.isOpen() && !that.isDisabled()) {
                 that.show();
             }
         });

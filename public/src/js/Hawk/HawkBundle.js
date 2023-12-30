@@ -7,33 +7,36 @@
 
 // require ./HawkLibrary/Requests/AjaxRequestManager.Hawk.js
 
+// require ./HawkLibrary/Controllers/FieldController.Hawk.js
+
 // require ./HawkLibrary/AnchorsManager.Hawk.js
 // require ./HawkLibrary/Dropdown.Hawk.js
 // require ./HawkLibrary/LayeredSection.Hawk.js
-// require ./HawkLibrary/FieldController.Hawk.js
 // require ./HawkLibrary/MoreContentManager.Hawk.js
 // require ./HawkLibrary/SlidingLayerManager.Hawk.js
 
 // require ./HawkLibrary/Basements/SingleThreadClass.Hawk.js
 
 // require ./HawkLibrary/Pageable/Pager.Hawk.js
-
-// require ./HawkLibrary/Bars/BookmarksBar.Hawk.js
+// require ./HawkLibrary/Pageable/StepsManager.Hawk.js
 
 // require ./HawkLibrary/ItemsManagers/ItemsManagerConstants.Hawk.js
 // require ./HawkLibrary/ItemsManagers/ItemsManager.Hawk.js
 // require ./HawkLibrary/ItemsManagers/AjaxLoadingItemsManager.Hawk.js
 // require ./HawkLibrary/ItemsManagers/AjaxItemsManager.Hawk.js
 
-// require ./HawkLibrary/Forms/FormField.Hawk.js
-// require ./HawkLibrary/Forms/FileFormField.Hawk.js
-// require ./HawkLibrary/Forms/TextFormField.Hawk.js
-// require ./HawkLibrary/Forms/ChoiceFormField.Hawk.js
-// require ./HawkLibrary/Forms/TextareaFormField.Hawk.js
+// require ./HawkLibrary/Forms/Fields/FormField.Hawk.js
+// require ./HawkLibrary/Forms/Fields/FileFormField.Hawk.js
+// require ./HawkLibrary/Forms/Fields/TextFormField.Hawk.js
+// require ./HawkLibrary/Forms/Fields/ChoiceFormField.Hawk.js
+// require ./HawkLibrary/Forms/Fields/TextareaFormField.Hawk.js
 
-// require ./HawkLibrary/Forms/FormSender.Hawk.js
-// require ./HawkLibrary/Forms/StaticFormSender.Hawk.js
-// require ./HawkLibrary/Forms/AjaxFormSender.Hawk.js
+// require ./HawkLibrary/Forms/Multifields/FormMultifield.Hawk.js
+// require ./HawkLibrary/Forms/Multifields/TextFormMultifield.Hawk.js
+
+// require ./HawkLibrary/Forms/FormSenders/FormSender.Hawk.js
+// require ./HawkLibrary/Forms/FormSenders/StaticFormSender.Hawk.js
+// require ./HawkLibrary/Forms/FormSenders/AjaxFormSender.Hawk.js
 
 // require ./HawkLibrary/Components/ComponentConstants.Hawk.js
 // require ./HawkLibrary/Components/Component.Hawk.js
@@ -48,15 +51,13 @@
 // require ./HawkLibrary/Overlayers/SimpleOverlayerManager.Hawk.js
 // require ./HawkLibrary/Overlayers/ConfirmationManager.Hawk.js
 
-/* require ./HawkLibrary/RevealingItem.Hawk.js */
-
 // require ./HawkLibrary/SectionDetector.Hawk.js
 // require ./HawkLibrary/BookmarksManager.Hawk.js
 // require ./HawkLibrary/SlideMenu.Hawk.js
 // require ./HawkLibrary/Routes.Hawk.js
 
-// require ./HawkLibrary/Calendar/Countdown.Hawk.js
+// require ./HawkLibrary/HeightAdjuster.Hawk.js
 
-// require ./HawkLibrary/Launchers/Launchers.Hawk.js
+// require ./HawkLibrary/Calendar/Countdown.Hawk.js
 
 export default Hawk;

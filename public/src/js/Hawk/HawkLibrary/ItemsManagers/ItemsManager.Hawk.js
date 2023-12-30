@@ -16,7 +16,6 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
             getGroupClassname: (id) => {
                 return "hawk-items-manager-group-" + id;
             },
-
             actionShow: (items, imCallback) => {
                 $(items).removeClass('hawk-hidden');
                 $(items).addClass('hawk-shown');
@@ -68,6 +67,16 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
         this.options.onGroupSelected(groupID);
     }
 
+    changeBookmark(groupID) {
+        const field = this.bookmarks.find('input[value="' + groupID + '"]');
+
+        console.log("Changing bookmark.......");
+        console.log(field);
+
+        field.prop('checked', true);
+        field.trigger('change');
+    }
+
     onButtonClick(button) {
         this.selectItemsByGroup($(button).attr(this.options.groupIdAttribute));
     }
@@ -96,6 +105,10 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
         if (this.hasManagerID()) {
             cssSelector += '[' + this.options.managerIdAttribute + '="' + this.getManagerID() + '"]';
         }
+
+        console.log(cssSelector);
+
+        console.log(this.container.find(cssSelector));
 
         return this.container.find(cssSelector);
     }

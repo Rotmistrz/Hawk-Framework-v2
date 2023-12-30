@@ -27,8 +27,6 @@ Hawk.AjaxOverlayerManager = class extends Hawk.OverlayerManager {
 				dataType: "json",
 				data: { id: id, bundle: bundle, lang: this.getLang() },
 				success: (result) => {
-					console.log(result);
-
 					this.actionLoad(id, result);
 				},
 				error: (jqXHR, textStatus, errorThrown) => {
@@ -37,7 +35,7 @@ Hawk.AjaxOverlayerManager = class extends Hawk.OverlayerManager {
 
 					this.hide();
 
-					console.log(jqXHR.responseText);
+					//console.log(jqXHR.responseText);
 				},
 				complete: () => {
 					this.finishWorking();

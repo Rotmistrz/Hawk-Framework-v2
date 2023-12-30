@@ -133,6 +133,8 @@ Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
 
         this.options.onShow(this);
 
+        //console.log("Overlayer showing");
+
         this.container.css({ 'z-index': this.options.baseZIndexValue + this.constructor.instances });
         this.container.velocity("fadeIn", {
             duration: this.options.fadeSpeed,
@@ -180,7 +182,7 @@ Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
         }
 
         if (typeof result.anchor != 'undefined' && result.anchor.length > 0) {
-            this.setHash(this.createAnchor(result.anchor, bundle));
+            this.setHash(this.createAnchor(result.anchor, result.bundle));
         }
 
         $(window).bind(this.options.popstateEventName, (e) => {
@@ -222,9 +224,6 @@ Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
 
         const id = jQueryThis.attr('data-id');
         var bundleString;
-
-        console.log(jQueryThis);
-        console.log(id);
 
         if (typeof jQueryThis.attr('data-bundle') != 'undefined') {
             bundleString = Hawk.createBundleFromString(jQueryThis.attr('data-bundle'));

@@ -5,24 +5,25 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 		this.container = $(container);
 		this.offset = 0;
 		this.done = false;
+
 		this.filters = {};
+		this.orderBy = "";
+		this.lang = "";
 
 		this.buttons;
 		this.contentContainer;
 		this.loadingLayer;
+		this.noItemsContainer;
 
 		this.defaultOptions = {
-			path: "/ajax/load-items",
 			itemsPerLoading: 6,
+			path: "ajax/load-items",
 
-			itemsDisplayingType: 'block',
-
-			bundle: () => { return {}; },
-
-			itemClass: "hawk-ajax-loading-items-manager__item",
-			buttonClass: "hawk-ajax-loading-items-manager__button",
-			contentContainerClass: "hawk-ajax-loading-items-manager__content-container",
-			loadingLayerClass: "hawk-ajax-loading-items-manager__loading-layer",
+			itemClass: "ajax-loading-items-manager__item",
+			buttonClass: "ajax-loading-items-manager__button",
+			contentContainerClass: "ajax-loading-items-manager__content-container",
+			loadingLayerClass: "ajax-loading-items-manager__loading-layer",
+			noItemsContainerClass: "ajax-loading-items-manager__no-items",
 
 			slideSpeed: 400,
 			fadeSpeed: 400,
@@ -30,12 +31,9 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 			appendItems: function(contentContainer, items) {
 				contentContainer.append(items);
 			},
-			prepareHTML: function(rawHTML, items) {
-				return Hawk.jQueryFromString(rawHTML);
-			},
 
-			onLoad: function(buttons, contentContainer) {},
-			onDone: function(buttons, contentContainer) {
+			onLoad: function(buttons, contentContainer, result) {},
+			onDone: function(buttons, contentContainer, result) {
 				buttons.velocity({ opacity: 0 }, {
 					complete: function() {
 						buttons.css({ visibility: "hidden" });
@@ -53,94 +51,132 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 		return this.done;
 	}
 
-	getBundle() {
-		return this.options.bundle();
+	getOffset() {
+		return this.offset;
 	}
 
-	hasFilter(name, value) {
-		return (typeof this.filters[name] != 'undefined' && this.filters[name].indexOf(value) > 0);
+	setOffset(offset) {
+		this.offset = offset;
+
+		return this;
 	}
 
-	addFilter(name, value) {
-		if (typeof this.filters[name] == 'undefined') {
-			this.filters[name] = [];
-		}
-
-		this.filters[name].push(value);
+	getFilters() {
+		return this.filters;
 	}
 
-	clearFilter(name, value) {
-		if (this.hasFilter(name, value)) {
+	setFilters(filters) {
+		this.filters = filters;
 
-		}
+		return this;
 	}
 
-	clearFilters(name) {
+	getOrderBy() {
+		return this.orderBy;
+	}
 
+	setOrderBy(orderBy) {
+		this.orderBy = orderBy;
+
+		return this;
+	}
+
+	getLang() {
+		return this.lang;
+	}
+
+	setLang(lang) {
+		this.lang = lang;
+
+		return this;
 	}
 
 	load(offset) {
 		if (!this.isWorking()) {
 			this.startWorking();
 
-			if (typeof offset == 'undefined') {
-				offset = 0;
-			}
-
-			this.loadingLayer.velocity({ opacity: 1 }, {
-				duration: 100
-			});
+			this.loadingLayer.css({ display: 'flex' });
 
 			this.setRequest($.ajax({
-				type: "POST",
-				url: this.options.path,
-				dataType: "json",
-				data: { offset: offset, itemsPerLoading: this.options.itemsPerLoading, filters: this.filters, bundle: this.getBundle() },
-				success: (result) => {
-					console.log(result);
+	            type: "POST",
+	            url: this.options.path,
+	            dataType: "json",
+	            data: {
+	            	offset: offset,
+					itemsPerLoading: this.options.itemsPerLoading,
+					filters: this.getFilters(),
+					orderBy: this.getOrderBy(),
+					lang: this.getLang()
+				},
+	            success: (result) => {
+	            	console.log(result);
 
-					this.appendContent(result.html, result.items);
-					this.offset = result.offset;
+	                this.appendContent(result.items, result);
+	                this.offset = result.offset;
 
-					this.done = result.isDone;
+	                this.done = result.isDone;
 
-					if (this.isDone()) {
-						this.options.onDone(this.buttons, this.contentContainer);
+	                if (this.isDone()) {
+	                	this.options.onDone(this.buttons, this.contentContainer, result);
+	                }
+
+	                if (result.offset == 0 && result.isDone) {
+	                	this.showNoItemsInfo();
+					} else {
+	                	this.hideNoItemsInfo();
 					}
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					// here should appear error layer
-					//alert(errorThrown);
+	            },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                // here should appear error layer
+	                //alert(errorThrown);
 
-					console.log(jqXHR.responseText);
-				},
-				complete: () => {
-					this.finishWorking();
-
-					this.loadingLayer.velocity({ opacity: 0 }, {
-						duration: 100
-					});
-				}
-			}));
+	                console.log(jqXHR.responseText);
+	            },
+	            complete: () => {
+	                this.finishWorking();
+					this.loadingLayer.css({ display: 'none' });
+	            }
+	        }));
 		}
 	}
 
-	appendContent(html, items) {
-		const preparedContent = this.options.prepareHTML(html, items);
+	reload() {
+		this.load(this.getOffset());
+	}
 
-		preparedContent.css({ opacity: 0 });
+	showNoItemsInfo() {
+		if (!this.noItemsContainer.is(":visible")) {
+			this.noItemsContainer.velocity("slideDown");
+		}
+	}
 
-		this.options.appendItems(this.contentContainer, preparedContent);
+	hideNoItemsInfo() {
+		if (this.noItemsContainer.is(":visible")) {
+			this.noItemsContainer.velocity("slideUp");
+		}
+	}
 
-		preparedContent.velocity("slideDown", {
-			display: this.options.itemsDisplayingType,
-			duration: this.options.slideSpeed,
-			complete: () => {
-				preparedContent.velocity({ opacity: 1 }, {
-					duration: this.options.fadeSpeed
-				});
-			}
-		});
+	appendContent(rawItems, result) {
+		const items = Hawk.jQueryFromString(rawItems);
+
+		items.css({ opacity: 0 });
+
+		this.options.appendItems(this.contentContainer, items);
+
+		if (items.length > 0) {
+			items.velocity("slideDown", {
+				duration: this.options.slideSpeed,
+				complete: () => {
+					items.velocity({ opacity: 1 }, {
+						duration: this.options.fadeSpeed
+					});
+
+					this.options.onLoad(this.buttons, this.contentContainer, result);
+				}
+			});
+		} else {
+			this.options.onLoad(this.buttons, this.contentContainer, result);
+		}
 	}
 
 	clear() {
@@ -160,6 +196,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 		this.buttons = this.container.find('.' + this.options.buttonClass);
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
 		this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
+		this.noItemsContainer = this.container.find('.' + this.options.noItemsContainerClass);
 
 		this.buttons.click(() => {
 			if (!this.isDone()) {

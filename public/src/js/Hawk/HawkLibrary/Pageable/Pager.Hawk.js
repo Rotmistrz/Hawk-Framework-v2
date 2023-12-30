@@ -21,7 +21,7 @@ Hawk.Pager = class {
 	            return $("<li class=\"std-pager__separator\"><div class=\"pager-item-separator\">...</div></li>");
 	        },
 
-			onPageChanged: function(pager, nr) {
+			onPageChanged: function(pager, nr, bySystem) {
 			}
 		};
 
@@ -48,7 +48,11 @@ Hawk.Pager = class {
 		return this;
 	}
 
-	updatePage(page) {
+	updatePage(page, bySystem) {
+		if (typeof bySystem == 'undefined') {
+			bySystem = true;
+		}
+
 		this.setPage(page);
 
 		this.markAsActive(page);
@@ -60,7 +64,7 @@ Hawk.Pager = class {
 		}
 
 		if (typeof this.options.onPageChanged == 'function') {
-			this.options.onPageChanged(this, this.getPage());
+			this.options.onPageChanged(this, this.getPage(), bySystem);
 		}
 
 		return this;
@@ -94,12 +98,12 @@ Hawk.Pager = class {
 		// }
 	}
 
-	previous() {
-		return this.updatePage(this.getPage() - 1);
+	previous(bySystem) {
+		return this.updatePage(this.getPage() - 1, bySystem);
 	}
 
-	next() {
-		return this.updatePage(this.getPage() + 1);
+	next(bySystem) {
+		return this.updatePage(this.getPage() + 1, bySystem);
 	}
 
 	create(pagesNumber) {
@@ -175,7 +179,7 @@ Hawk.Pager = class {
 			const jQueryThis = $(e.currentTarget);
 			const page = jQueryThis.attr(this.options.pageNrAttr);
 
-			this.updatePage(page);
+			this.updatePage(page, false);
 		});
 
 		this.checkDependencies();
@@ -206,11 +210,11 @@ Hawk.Pager = class {
 		this.markAsActive(this.getPage());
 
 		this.controls.previous.click((e) => {
-			this.previous();
+			this.previous(false);
 		});
 
 		this.controls.next.click((e) => {
-			this.next();
+			this.next(false);
 		});
 	}
 }
