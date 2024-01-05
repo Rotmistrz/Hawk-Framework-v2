@@ -111,7 +111,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 	            success: (result) => {
 	            	console.log(result);
 
-	                this.appendContent(result.items, result);
+	                this.appendContent(result.html, result);
 	                this.offset = result.offset;
 
 	                this.done = result.isDone;

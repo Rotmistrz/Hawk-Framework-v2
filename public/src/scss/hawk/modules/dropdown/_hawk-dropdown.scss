@@ -31,6 +31,32 @@
     @include user-select(none);
   }
 
+  &__header-inner {
+    position: relative;
+  }
+
+  &__searching-field {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: none;
+    outline: none;
+    z-index: 4;
+
+    &:focus ~ * {
+      opacity: .2;
+    }
+  }
+  &__searching-field[disabled] {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
   &__list-container {
     position: absolute;
     display: none;

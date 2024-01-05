@@ -26,6 +26,7 @@ Hawk.Dropdown = function(container, options) {
     this.title;
     this.list;
     this.listContainer;
+    this.searchingField;
 
     this.startEscapeSensor;
     this.sensor;
@@ -55,6 +56,8 @@ Hawk.Dropdown = function(container, options) {
         titleClass: 'hawk-dropdown__title',
         listClass: 'hawk-dropdown__list',
         listContainerClass: 'hawk-dropdown__list-container',
+        searchingFieldClass: 'hawk-dropdown__searching-field',
+
         disabledClass: 'disabled',
 
         startEscapeSensorClass: 'hawk-dropdown__start-escape-sensor',
@@ -134,6 +137,7 @@ Hawk.Dropdown = function(container, options) {
     }
 
     this.show = function() {
+        this.enableSearchingField();
         this.container.addClass(that.options.openClass);
 
         this.listContainer.velocity("slideDown", {
@@ -166,6 +170,9 @@ Hawk.Dropdown = function(container, options) {
     }
 
     this.hide = function() {
+        this.clearSearchingField();
+        this.disableSearchingField();
+
         this.container.removeClass(that.options.openClass);
 
         this.listContainer.velocity("slideUp", {
@@ -183,6 +190,7 @@ Hawk.Dropdown = function(container, options) {
         }
 
         this.setClosed();
+        this.showAllItems();
 
         return this;
     }
@@ -240,11 +248,43 @@ Hawk.Dropdown = function(container, options) {
         }
     }
 
+    this.clearSearchingField = function() {
+        this.searchingField.val("");
+
+        return this;
+    }
+
+    this.disableSearchingField = function() {
+        this.searchingField.attr('disabled', 'disabled');
+
+        return this;
+    }
+
+    this.isSearchingFieldDisabled = function() {
+        return this.searchingField.is(':disabled');
+    }
+
+    this.enableSearchingField = function() {
+        this.searchingField.removeAttr('disabled');
+        this.searchingField.focus();
+
+        return this;
+    }
+
+    this.showAllItems = function() {
+        this.list.children().css({ display: 'block' });
+
+        return this;
+    }
+
     this.run = function() {
+        const that = this;
+
         this.header = this.container.find('.' + this.options.headerClass);
         this.title = this.container.find('.' + this.options.titleClass);
         this.list = this.container.find('.' + this.options.listClass);
         this.listContainer = this.container.find('.' + this.options.listContainerClass);
+        this.searchingField = this.container.find('.' + this.options.searchingFieldClass);
 
         this.sensor = this.createSensor(this.options.sensorClass);
         this.container.prepend(this.sensor);
@@ -273,7 +313,7 @@ Hawk.Dropdown = function(container, options) {
             e.stopPropagation();
         });
 
-        this.header.click(function(e) {
+        this.header.add(this.searchingField).click(function(e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -306,6 +346,26 @@ Hawk.Dropdown = function(container, options) {
             if (that.isOpen()) {
                 that.hide();
             }
+        });
+
+        this.searchingField.keydown(function() {
+            const thisthis = $(this);
+
+            setTimeout(function() {
+                const value = thisthis.val().trim().toLowerCase();
+
+                if (value.length > 0 && !that.isSearchingFieldDisabled()) {
+                    that.list.children().each(function() {
+                        if ($(this).text().trim().toLowerCase().includes(value)) {
+                            $(this).css({ display: 'block' });
+                        } else {
+                            $(this).css({ display: 'none' });
+                        }
+                    });
+                } else {
+                    that.showAllItems();
+                }
+            }, 200);
         });
 
         // this.sensor.blur(function() {

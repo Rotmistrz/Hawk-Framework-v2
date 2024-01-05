@@ -1,6 +1,10 @@
 <section id="{{ dropdown.id }}" class="hawk-dropdown std-dropdown">
     <header class="hawk-dropdown__header std-dropdown__header">
-        <h4 class="hawk-dropdown__title std-dropdown__title">{{ dropdown.title }}</h4>
+        <div class="hawk-dropdown__header-inner std-dropdown__header-inner">
+            <input class="hawk-dropdown__searching-field std-dropdown__searching-field" type="text" />
+
+            <h4 class="hawk-dropdown__title std-dropdown__title">{{ dropdown.title }}</h4>
+        </div>
 
         <div class="hawk-dropdown__icon icon-triangular-arrow-down icon-triangular-arrow-down--small"></div>
     </header>
@@ -9,7 +13,7 @@
         <ul class="hawk-dropdown__list">
             <li>
                 <label class="dropdown-item">
-                    <input class="dropdown-item__field" type="radio" value="1" />
+                    <input class="dropdown-item__field" type="radio" name="{{ dropdown.id }}-someradio" value="1" />
 
                     <div class="dropdown-item__description">
                         Lorem ipsum dolor
@@ -19,7 +23,7 @@
 
             <li>
                 <label class="dropdown-item">
-                    <input class="dropdown-item__field" type="radio" value="2" />
+                    <input class="dropdown-item__field" type="radio" name="{{ dropdown.id }}-someradio" value="2" />
 
                     <div class="dropdown-item__description">
                         Sed tristique massa
@@ -29,7 +33,7 @@
 
             <li>
                 <label class="dropdown-item">
-                    <input class="dropdown-item__field" type="radio" value="3" />
+                    <input class="dropdown-item__field" type="radio" name="{{ dropdown.id }}-someradio" value="3" />
 
                     <div class="dropdown-item__description">
                         Orci varius natoque penatibus
@@ -39,7 +43,7 @@
 
             <li>
                 <label class="dropdown-item">
-                    <input class="dropdown-item__field" type="radio" value="4" />
+                    <input class="dropdown-item__field" type="radio" name="{{ dropdown.id }}-someradio" value="4" />
 
                     <div class="dropdown-item__description">
                         Aliquam in mi non dolor
@@ -49,7 +53,7 @@
 
             <li>
                 <label class="dropdown-item">
-                    <input class="dropdown-item__field" type="radio" value="4" />
+                    <input class="dropdown-item__field" type="radio" name="{{ dropdown.id }}-someradio" value="5" />
 
                     <div class="dropdown-item__description">
                         Sed tristique massa
