@@ -396,6 +396,20 @@ class MasterController extends AbstractController {
                         'type' => "string",
                         'default' => "hawk-dropdown__list-container",
                         'description' => "-"
+                    ],
+
+                    [
+                        'name' => "searchingFieldClass",
+                        'type' => "string",
+                        'default' => "hawk-dropdown__searching-field",
+                        'description' => "-"
+                    ],
+
+                    [
+                        'name' => "disabledClass",
+                        'type' => "string",
+                        'default' => "disabled",
+                        'description' => "Class which is set up when dropdown becomes disabled."
                     ]
                 ],
 
@@ -407,7 +421,19 @@ class MasterController extends AbstractController {
                             [
                                 'name' => "dropdown",
                                 'type' => "Hawk.Dropdown",
-                                'description' => "current dropdown"
+                                'description' => "Current dropdown instance"
+                            ]
+                        ]
+                    ],
+
+                    [
+                        'name' => "onShowing",
+                        'description' => "Is being executed when the dropdown's list starts to be shown.",
+                        'parameters' => [
+                            [
+                                'name' => "dropdown",
+                                'type' => "Hawk.Dropdown",
+                                'description' => "Current dropdown instance"
                             ]
                         ]
                     ],
@@ -419,24 +445,42 @@ class MasterController extends AbstractController {
                             [
                                 'name' => "dropdown",
                                 'type' => "Hawk.Dropdown",
-                                'description' => "current dropdown"
+                                'description' => "Current dropdown instance"
                             ]
                         ]
                     ],
 
                     [
-                        'name' => "onRadioSelected",
-                        'description' => "Is being executed immediately after one of the options is selected. It refers only to radio fields.",
+                        'name' => "onHiding",
+                        'description' => "Is being executed when the dropdown's list starts to be hidden.",
                         'parameters' => [
                             [
                                 'name' => "dropdown",
                                 'type' => "Hawk.Dropdown",
-                                'description' => "current dropdown"
+                                'description' => "Current dropdown instance"
+                            ]
+                        ]
+                    ],
+
+                    [
+                        'name' => "onSelected",
+                        'description' => "Is being executed immediately after one of the options is selected. The function should return boolean value informing if the operation succeeded.",
+                        'type' => "Boolean",
+                        'parameters' => [
+                            [
+                                'name' => "dropdown",
+                                'type' => "Hawk.Dropdown",
+                                'description' => "Current dropdown instance"
                             ],
                             [
                                 'name' => "radio",
                                 'type' => "DOM.Input",
-                                'description' => "selected field"
+                                'description' => "Selected field"
+                            ],
+                            [
+                                'name' => "silently",
+                                'type' => "true",
+                                'description' => "Additional information for callback function if some actions should be done or just the field should be chosen."
                             ]
                         ]
                     ]
@@ -476,6 +520,14 @@ class MasterController extends AbstractController {
                         ]
                     ],
                     [
+                        'name' => "select",
+                        'type' => "boolean",
+                        'description' => "Selects the option precisely by the field. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
+                        'parameters' => [
+
+                        ]
+                    ],
+                    [
                         'name' => "selectByIndex",
                         'type' => "boolean",
                         'description' => "Selects the option by the position on the list. 0 is the first index. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
@@ -489,6 +541,46 @@ class MasterController extends AbstractController {
                         'description' => "Selects the option by the value of the field. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
                         'parameters' => [
                             
+                        ]
+                    ],
+                    [
+                        'name' => "isDisabled",
+                        'type' => "boolean",
+                        'description' => "Informs if the dropdown is disabled.",
+                        'parameters' => [
+
+                        ]
+                    ],
+                    [
+                        'name' => "disable",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Disables the dropdown.",
+                        'parameters' => [
+
+                        ]
+                    ],
+                    [
+                        'name' => "enable",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Enables the dropdown.",
+                        'parameters' => [
+
+                        ]
+                    ],
+                    [
+                        'name' => "clearFields",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Clears all fields and makes them unchecked.",
+                        'parameters' => [
+
+                        ]
+                    ],
+                    [
+                        'name' => "refreshDependencies",
+                        'type' => "Hawk.Dropdown",
+                        'description' => "Binds callbacks with the fields.",
+                        'parameters' => [
+
                         ]
                     ]
                 ]

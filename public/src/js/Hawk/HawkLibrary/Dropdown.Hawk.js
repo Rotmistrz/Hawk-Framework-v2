@@ -114,6 +114,8 @@ Hawk.Dropdown = function(container, options) {
         this.fields.each(function() {
            $(this).prop('checked', false);
         });
+
+        return this;
     }
 
     this.setOpen = function() {
@@ -238,6 +240,8 @@ Hawk.Dropdown = function(container, options) {
                 }
             });
         }
+
+        return this;
     }
 
     this.checkFields = function() {
@@ -275,6 +279,10 @@ Hawk.Dropdown = function(container, options) {
         this.list.children().css({ display: 'block' });
 
         return this;
+    }
+
+    this.searchingFieldExist = function() {
+        return this.searchingField.length > 0;
     }
 
     this.run = function() {
@@ -348,25 +356,27 @@ Hawk.Dropdown = function(container, options) {
             }
         });
 
-        this.searchingField.keydown(function() {
-            const thisthis = $(this);
+        if (this.searchingFieldExist()) {
+            this.searchingField.keydown(function() {
+                const thisthis = $(this);
 
-            setTimeout(function() {
-                const value = thisthis.val().trim().toLowerCase();
+                setTimeout(function() {
+                    const value = thisthis.val().trim().toLowerCase();
 
-                if (value.length > 0 && !that.isSearchingFieldDisabled()) {
-                    that.list.children().each(function() {
-                        if ($(this).text().trim().toLowerCase().includes(value)) {
-                            $(this).css({ display: 'block' });
-                        } else {
-                            $(this).css({ display: 'none' });
-                        }
-                    });
-                } else {
-                    that.showAllItems();
-                }
-            }, 200);
-        });
+                    if (value.length > 0 && !that.isSearchingFieldDisabled()) {
+                        that.list.children().each(function() {
+                            if ($(this).text().trim().toLowerCase().includes(value)) {
+                                $(this).css({ display: 'block' });
+                            } else {
+                                $(this).css({ display: 'none' });
+                            }
+                        });
+                    } else {
+                        that.showAllItems();
+                    }
+                }, 200);
+            });
+        }
 
         // this.sensor.blur(function() {
         //     setTimeout(function() {

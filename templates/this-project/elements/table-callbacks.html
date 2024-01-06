@@ -10,6 +10,12 @@
                                 <td class="std-table__cell">
                                     <div class="property">
                                         <div class="property__name">{{ callback.name }}</div>
+
+                                        {% if method.type|length > 0 %}
+                                        <div class="property__type">
+                                            {{ method.type }}
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </td>
                                 <td class="std-table__cell">
