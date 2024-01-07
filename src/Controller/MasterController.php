@@ -524,7 +524,18 @@ class MasterController extends AbstractController {
                         'type' => "boolean",
                         'description' => "Selects the option precisely by the field. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
                         'parameters' => [
-
+                            [
+                                'name' => "field",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "Field that should be selected."
+                            ],
+                            [
+                                'name' => "silently",
+                                'type' => "boolean",
+                                'default' => "-",
+                                'description' => "Extra info that will be passed to the callback function."
+                            ]
                         ]
                     ],
                     [
@@ -532,7 +543,18 @@ class MasterController extends AbstractController {
                         'type' => "boolean",
                         'description' => "Selects the option by the position on the list. 0 is the first index. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
                         'parameters' => [
-                            
+                            [
+                                'name' => "index",
+                                'type' => "integer",
+                                'default' => "-",
+                                'description' => "Index of the field that should be selected counted from 0."
+                            ],
+                            [
+                                'name' => "silently",
+                                'type' => "boolean",
+                                'default' => "-",
+                                'description' => "Extra info that will be passed to the callback function."
+                            ]
                         ]
                     ],
                     [
@@ -540,7 +562,18 @@ class MasterController extends AbstractController {
                         'type' => "boolean",
                         'description' => "Selects the option by the value of the field. Returns <code class=\"inline-code\">true</code> if the option exists and has been sucessfully chosen, <code class=\"inline-code\">false</code> otherwise.",
                         'parameters' => [
-                            
+                            [
+                                'name' => "value",
+                                'type' => "string",
+                                'default' => "-",
+                                'description' => "Value of the field that should be selected."
+                            ],
+                            [
+                                'name' => "silently",
+                                'type' => "boolean",
+                                'default' => "-",
+                                'description' => "Extra info that will be passed to the callback function."
+                            ]
                         ]
                     ],
                     [
