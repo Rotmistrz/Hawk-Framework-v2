@@ -5,9 +5,6 @@
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex index.php
 
-Header add Content-Security-Policy "frame-ancestors 'self'"
-Header add X-Frame-Options "SAMEORIGIN"
-
 # By default, Apache does not evaluate symbolic links if you did not enable this
 # feature in your server configuration. Uncomment the following line if you
 # install assets as symlinks or if you experience problems related to symlinks
@@ -23,7 +20,7 @@ Header add X-Frame-Options "SAMEORIGIN"
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{HTTP_HOST} ^(www.)?hawk2.filipmarkiewicz.pl
+    RewriteCond %{HTTP_HOST} ^(www.)?hawk2.filipmarkiewicz.pl/
     RewriteRule ^(.*)$ https://hawkframework.pl/$1 [R=301,L]
 
     RewriteCond %{HTTP_HOST} ^www.hawkframework.pl

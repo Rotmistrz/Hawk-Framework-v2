@@ -28,12 +28,14 @@ Hawk.getHash = function() {
 Hawk.anchorRegex = new RegExp("^[^\/]+$");
 
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
-    if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
-        const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
+    const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
 
-        return this.getHash().replaceAll(regexp, "");
+    let hash = this.getHash().replaceAll(regexp, "");
+
+    if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
+        return '#' + hash;
     } else {
-        return this.getHash().substring(1).replaceAll('/', '');
+        return hash;
     }
 }
 

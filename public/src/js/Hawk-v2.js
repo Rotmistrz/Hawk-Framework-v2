@@ -20,11 +20,12 @@ Hawk.getHash = function() {
 }
 Hawk.anchorRegex = new RegExp("^[^\/]+$");
 Hawk.getPreparedHash = function(withoutLeadingHashSign) {
+    const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
+    let hash = this.getHash().replaceAll(regexp, "");
     if (typeof withoutLeadingHashSign == 'undefined' || !withoutLeadingHashSign) {
-        const regexp = new RegExp("[^a-zA-Z0-9\-_]+", 'g');
-        return this.getHash().replaceAll(regexp, "");
+        return '#' + hash;
     } else {
-        return this.getHash().substring(1).replaceAll('/', '');
+        return hash;
     }
 }
 Hawk.isInObject = function(value, obj) {
