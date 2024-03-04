@@ -1699,6 +1699,40 @@
   list-style-type: none;
 }
 
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.breadcrumbs > li {
+  position: relative;
+  display: block;
+}
+.breadcrumbs > li:before {
+  content: "››";
+  padding: 0 12px 0 0;
+}
+.breadcrumbs > li:first-child:before {
+  display: none;
+}
+
+.breadcrumb-item {
+  color: #000;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.breadcrumb-item--interactive {
+  cursor: pointer;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.breadcrumb-item--interactive:hover, .breadcrumb-item--interactive:focus {
+  color: #e08921;
+}
+
 /***** ICONS *****/
 .extended-icon, .icon-email {
   display: block;
@@ -2843,6 +2877,39 @@ a {
   background-image: url("/img/logo-hawkframework.svg");
 }
 
+/***** CONTAINERS *****/
+.site-content-bar__layer {
+  padding: 0 20px;
+}
+@media (min-width: 420px) {
+  .site-content-bar__layer {
+    padding: 0 40px;
+  }
+}
+@media (min-width: 1100px) {
+  .site-content-bar__layer {
+    padding: 0 60px;
+  }
+}
+@media (min-width: 1300px) {
+  .site-content-bar__layer {
+    padding: 0 80px;
+  }
+}
+@media (min-width: 1500px) {
+  .site-content-bar__layer {
+    padding: 0 100px;
+  }
+}
+@media (min-width: 1700px) {
+  .site-content-bar__layer {
+    padding: 0 10%;
+  }
+}
+.site-content-bar__wrapper {
+  padding: 32px 0 0 0;
+}
+
 /***** FOOTER *****/
 .site-footer__layer {
   background: #222222;
@@ -2920,6 +2987,19 @@ a {
     padding: 80px 0;
   }
 }
+.site-section__wrapper--less-top-space {
+  padding-top: 20px;
+}
+@media (min-width: 992px) {
+  .site-section__wrapper--less-top-space {
+    padding-top: 40px;
+  }
+}
+@media (min-width: 1700px) {
+  .site-section__wrapper--less-top-space {
+    padding-top: 60px;
+  }
+}
 .site-section__wrapper--only-top {
   padding-bottom: 0;
 }
@@ -2934,6 +3014,21 @@ a {
 }
 .site-section__row:last-child {
   padding-bottom: 0;
+}
+
+.scrollable-section {
+  max-height: 320px;
+}
+.scrollable-section .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background: #222222;
+}
+
+.scrollable-section--higher {
+  max-height: 480px;
+}
+
+.scrollable-section--unbounded {
+  max-height: 100%;
 }
 
 /** END_SECTIONS **/

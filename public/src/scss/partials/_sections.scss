@@ -1,0 +1,91 @@
+.site-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.site-section {
+  &__layer {
+    padding: 0 20px;
+
+    @media (min-width: $mobile-m) {
+      padding: 0 40px;
+    }
+
+    @media (min-width: $desktop-s) {
+      padding: 0 60px;
+    }
+
+    @media (min-width: $desktop-m) {
+      padding: 0 80px;
+    }
+
+    @media (min-width: $desktop-l) {
+      padding: 0 100px;
+    }
+
+    @media (min-width: $desktop-xl) {
+      padding: 0 10%;
+    }
+  }
+
+  &__wrapper {
+    padding: 40px 0;
+
+    @media (min-width: $tablet-xl) {
+      padding: 64px 0;
+    }
+
+    @media (min-width: $desktop-xl) {
+      padding: 80px 0;
+    }
+  }
+
+  &__wrapper--less-top-space {
+    padding-top: 20px;
+
+    @media (min-width: $tablet-xl) {
+      padding-top: 40px;
+    }
+
+    @media (min-width: $desktop-xl) {
+      padding-top: 60px;
+    }
+  }
+
+  &__wrapper--only-top {
+    padding-bottom: 0;
+  }
+  &__wrapper--only-bottom {
+    padding-top: 0;
+  }
+
+  &__row {
+    padding: 64px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.scrollable-section {
+  max-height: 320px;
+
+  .mCSB_scrollTools {
+    .mCSB_dragger {
+      .mCSB_dragger_bar {
+        background: $dark-color-01;
+      }
+    }
+  }
+}
+.scrollable-section--higher {
+  max-height: 480px;
+}
+.scrollable-section--unbounded {
+  max-height: 100%;
+}

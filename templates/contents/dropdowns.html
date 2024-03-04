@@ -1,85 +1,97 @@
-{% set presentationSection = {
-    title: 'Dropdowns',
-    anchor: 'dropdowns',
-    listings: {
-        html: dropdown.listings.html,
-        js: dropdown.listings.js
-    },
-    links: [
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/Dropdown.Hawk.js',
-            type: 'js',
-            title: 'Dropdown.Hawk.js'
-        },
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown.scss',
-            type: 'css',
-            title: 'hawk-dropdown.scss'
-        },
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown-theme.scss',
-            type: 'css',
-            title: 'hawk-dropdown-theme.scss'
-        }
-    ],
+<section class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper site-section__wrapper--less-top-space">
+            <div class="site-section__inner">
 
-    properties: dropdown.properties,
-    callbacks: dropdown.callbacks,
-    methods: dropdown.methods
-} %}
-
-{% extends 'contents/_presentation-section.html' %}
-
-{% block exampleAndDescription %}
-<section class="subsection bounded-section">
-    <div class="text">
-        <p>
-            <strong>Dropdown</strong> allows to select one (or more) options from the list that is visible when it is needed. It is commonly used as an elegant alternative to native <code class="inline-code">select</code> form field but can also work as a list of links or just custom component in application.
-        </p>
-
-        <p>
-            <strong>Dropdown</strong> has variants of working type: overlaying nearby content or expending and moving it. Direction of opening can be downwards or upwards.
-        </p>
-    </div>
-
-    <div class="row">
-
-        <ul class="presentation-list">
-            <li>
-                <header class="subsection-subheader">
-                    <h4 class="subsection-subtitle">Overlaying dropdown (default)</h4>
-                </header>
-
-                {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
-                    dropdown: {
-                        id: 'exemplary-dropdown',
-                        title: 'Exemplary dropdown'
+            {% set presentationSection = {
+                title: 'Dropdown',
+                anchor: 'dropdown',
+                listings: {
+                    html: dropdown.listings.html,
+                    js: dropdown.listings.js
+                },
+                links: [
+                    {
+                        link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/Dropdown.Hawk.js',
+                        type: 'js',
+                        title: 'Dropdown.Hawk.js'
+                    },
+                    {
+                        link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown.scss',
+                        type: 'css',
+                        title: 'hawk-dropdown.scss'
+                    },
+                    {
+                        link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/dropdown/_hawk-dropdown-theme.scss',
+                        type: 'css',
+                        title: 'hawk-dropdown-theme.scss'
                     }
-                } %}
-            </li>
+                ],
 
-            <li>
-                <header class="subsection-subheader">
-                    <h4 class="subsection-subtitle">Expanding dropdown</h4>
-                </header>
+                properties: dropdown.properties,
+                callbacks: dropdown.callbacks,
+                methods: dropdown.methods
+            } %}
 
-                {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
-                    dropdown: {
-                        id: 'expanding-dropdown',
-                        title: 'Expanding dropdown'
-                    }
-                } %}
-            </li>
-        </ul>
-  
-    </div>
+            {% embed('contents/_presentation-section-core.html') %}
 
-    <div class="row">
-        <div class="text">
-            <p>
-                The tables below show many more options of customization.
-            </p>
+            {% block exampleAndDescription %}
+            <section class="subsection bounded-section">
+                <div class="text">
+                    <p>
+                        <strong>Dropdown</strong> allows to select one (or more) options from the list that is visible when it is needed. It is commonly used as an elegant alternative to native <code class="inline-code">select</code> form field but can also work as a list of links or just custom component in application.
+                    </p>
+
+                    <p>
+                        <strong>Dropdown</strong> has variants of working type: overlaying nearby content or expending and moving it. Direction of opening can be downwards or upwards.
+                    </p>
+                </div>
+
+                <div class="row">
+
+                    <ul class="presentation-list">
+                        <li>
+                            <header class="subsection-subheader">
+                                <h4 class="subsection-subtitle">Overlaying dropdown (default)</h4>
+                            </header>
+
+                            {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                                dropdown: {
+                                    id: 'exemplary-dropdown',
+                                    title: 'Exemplary dropdown'
+                                }
+                            } %}
+                        </li>
+
+                        <li>
+                            <header class="subsection-subheader">
+                                <h4 class="subsection-subtitle">Expanding dropdown</h4>
+                            </header>
+
+                            {% include('hawk/modules/dropdown/hawk-dropdown.html') with {
+                                dropdown: {
+                                    id: 'expanding-dropdown',
+                                    title: 'Expanding dropdown'
+                                }
+                            } %}
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="row">
+                    <div class="text">
+                        <p>
+                            The tables below show many more options of customization.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            {% endblock %}
+
+            {% endembed %}
+
+            </div>
         </div>
     </div>
 </section>
-{% endblock %}

@@ -1,0 +1,14 @@
+.logo-jwg {
+  @extend .logo;
+  background-image: url('/img/logo-jwg.svg');
+  width: 120px;
+  height: 28px;
+
+  @media (min-width: $desktop-xl) {
+    width: 136px;
+    height: 32px;
+  }
+}
+.logo-jwg--light {
+  background-image: url('/img/logo-jwg-light.svg');
+}

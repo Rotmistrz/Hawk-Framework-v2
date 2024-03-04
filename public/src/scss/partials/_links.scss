@@ -1,0 +1,8 @@
+.std-link {
+  color: $dark-color-02;
+
+  &:hover,
+  &:focus {
+    color: $dark-color;
+  }
+}

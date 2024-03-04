@@ -1,0 +1,143 @@
+<header class="section-header">
+    <h2 class="section-title">
+        {{ presentationSection.title }}
+    </h2>
+</header>
+
+{% block description %}
+<div class="flex-container">
+    <div class="flex-column flex-column--4 flex-column--space">
+        {% block exampleAndDescription %}
+
+        {% endblock %}
+    </div>
+
+    <div class="flex-column flex-column--8 flex-column--space">
+        <section class="subsection">
+            <div class="subsection__content">
+                <ul class="presentation-list">
+                    {% if presentationSection.listings.html is defined %}
+                    <li>
+                        <div class="listing">
+                            <div class="scrollable-section">
+                                {% autoescape false %}
+                                {{ presentationSection.listings.html }}
+                                {% endautoescape %}
+                            </div>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <li>
+                        <div class="listing">
+
+                            {% autoescape false %}
+                            {{ presentationSection.listings.js }}
+                            {% endautoescape %}
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <ul class="plain-list plain-list--more-space">
+                            {% for link in presentationSection.links %}
+                            {% if link.type == 'js' %}
+                            {% set filename = 'icon-js-color' %}
+                            {% set alt = 'JS' %}
+                            {% elseif link.type == 'css' %}
+                            {% set filename = 'icon-css-01' %}
+                            {% set alt = 'CSS' %}
+                            {% endif %}
+
+                            <li>
+                                <a class="icon-label std-link" href="{{ link.link }}" target="_blank">
+                                    <div class="icon-label__icon-container">
+                                        <img class="icon-label__icon icon-label__icon--small" src="/img/icons/files/{{ filename }}.svg" alt="{{ alt }}" />
+                                    </div>
+
+                                    <div class="icon-label__description-container">
+                                        <p class="text">
+                                            {{ link.title }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% if presentationSection.properties|length > 0 %}
+<div class="row row--more-space">
+    <header class="subsection-header">
+        <h3 class="subsection-title">Properties (options)</h3>
+    </header>
+
+    <section class="subsection">
+        {% include('this-project/elements/table-properties.html') with {
+        properties: presentationSection.properties
+        } %}
+    </section>
+</div>
+{% endif %}
+
+{% if presentationSection.callbacks|length > 0 %}
+<div class="row row--more-space">
+    <header class="subsection-header">
+        <h3 class="subsection-title">Callbacks</h3>
+    </header>
+
+    <section class="subsection">
+        {% include('this-project/elements/table-callbacks.html') with {
+        callbacks: presentationSection.callbacks
+        } %}
+    </section>
+</div>
+{% endif %}
+
+{% if presentationSection.methods|length > 0 %}
+<div class="row row--more-space">
+    <header class="subsection-header">
+        <h3 class="subsection-title">Public methods</h3>
+    </header>
+
+    <section class="subsection">
+        {% include('this-project/elements/table-methods.html') with {
+        methods: presentationSection.methods
+        } %}
+    </section>
+</div>
+{% endif %}
+
+{% if presentationSection.request|length > 0 %}
+<div class="row row--more-space">
+    <header class="subsection-header">
+        <h3 class="subsection-title">Request</h3>
+    </header>
+
+    <section class="subsection">
+        {% include('this-project/elements/table-request.html') with {
+        request: presentationSection.request
+        } %}
+    </section>
+</div>
+{% endif %}
+
+{% if presentationSection.response|length > 0 %}
+<div class="row row--more-space">
+    <header class="subsection-header">
+        <h3 class="subsection-title">Response</h3>
+    </header>
+
+    <section class="subsection">
+        {% include('this-project/elements/table-response.html') with {
+        response: presentationSection.response
+        } %}
+    </section>
+</div>
+{% endif %}

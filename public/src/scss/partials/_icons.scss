@@ -1,0 +1,105 @@
+@import '../hawk/blocks/_extended-icon';
+
+.icon-action {
+  @extend .extended-icon;
+  width: 28px;
+  height: 28px;
+}
+
+.icon-std-arrow {
+  @extend .extended-icon;
+  width: 16px;
+  height: 16px;
+  @include transition(all .2s ease-in-out);
+
+  &:before {
+    background-image: url('/img/icons/icon-std-arrow-down.svg');
+  }
+
+  &:after {
+    background-image: url('/img/icons/icon-std-arrow-down-light.svg');
+  }
+}
+.icon-std-arrow--up {
+  @include transform(rotate(180deg));
+}
+
+.icon-long-arrow {
+  @extend .extended-icon;
+  width: 48px;
+  height: 16px;
+
+  &:before {
+    background-image: url('/img/icons/button-arrow.svg');
+  }
+}
+.icon-long-arrow--left {
+  @include transform(rotate(180deg));
+}
+
+.icon-add {
+  @extend .extended-icon;
+  width: 32px;
+  height: 32px;
+  @include transition(all .2s ease-in-out);
+
+  &:before {
+    background-image: url('/img/icons/icon-add.svg');
+  }
+
+  &:after {
+    background-image: url('/img/icons/icon-add-filled.svg');
+  }
+}
+.icon-add--filled {
+  &:before {
+    background-image: url('/img/icons/icon-add-filled.svg');
+  }
+
+  &:after {
+    background-image: url('/img/icons/icon-add-filled-with-orange.svg');
+  }
+}
+
+.icon-round-plus {
+  @extend .icon-action;
+
+  &:before {
+    background-image: url('/img/icons/small/icon-plus-light-filled-stroke.svg');
+  }
+
+  &:after {
+    background-image: url('/img/icons/small/icon-plus-filled.svg');
+  }
+}
+
+.icon-round-minus {
+  @extend .icon-action;
+
+  &:before {
+    background-image: url('/img/icons/small/icon-minus-light-filled-stroke.svg');
+  }
+
+  &:after {
+    background-image: url('/img/icons/small/icon-minus-filled.svg');
+  }
+}
+
+.icon-container {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $primary-violet;
+  @include border-radius(50%);
+
+  &__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
+}
+.icon-container--primary {
+  background: $primary-color;
+}

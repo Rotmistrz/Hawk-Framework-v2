@@ -1,41 +1,52 @@
-{% set presentationSection = {
-    title: 'Layered section',
-    anchor: 'layered-section',
-    listings: {
-        html: layeredSection.listings.html,
-        js: layeredSection.listings.js
-    },
-    links: [
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/LayeredSection.Hawk.js',
-            type: 'js',
-            title: 'LayeredSection.Hawk.js'
-        },
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-layered-section.scss',
-            type: 'css',
-            title: 'hawk-layered-section.scss'
-        }
-    ],
+<section class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper site-section__wrapper--less-top-space">
+            <div class="site-section__inner">
 
-    properties: layeredSection.properties,
-    callbacks: layeredSection.callbacks,
-    methods: layeredSection.methods
-} %}
+                {% set presentationSection = {
+                    title: 'Layered section',
+                    anchor: 'layered-section',
+                    listings: {
+                        html: layeredSection.listings.html,
+                        js: layeredSection.listings.js
+                    },
+                    links: [
+                        {
+                            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/LayeredSection.Hawk.js',
+                            type: 'js',
+                            title: 'LayeredSection.Hawk.js'
+                        },
+                        {
+                            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-layered-section.scss',
+                            type: 'css',
+                            title: 'hawk-layered-section.scss'
+                        }
+                    ],
 
-{% extends 'contents/_presentation-section.html' %}
+                    properties: layeredSection.properties,
+                    callbacks: layeredSection.callbacks,
+                    methods: layeredSection.methods
+                } %}
 
-{% block exampleAndDescription %}
-<section class="subsection bounded-section">
-                       
-    {% include('hawk/modules/layered-section/hawk-layered-section-example.html') %}
-  
-    <div class="row">
-        <div class="text">
-            <p>
-                Every layer is binded with corresponding button through the <span class="inline-code">nameAttribute</span> (<span class="code">data-name</span> by default, look below). Base layer is the special one, which is visible as first and sets the section's size.
-            </p>
+                {% embed('contents/_presentation-section-core.html') %}
+
+                    {% block exampleAndDescription %}
+                    <section class="subsection bounded-section">
+
+                        {% include('hawk/modules/layered-section/hawk-layered-section-example.html') %}
+
+                        <div class="row">
+                            <div class="text">
+                                <p>
+                                    Every layer is binded with corresponding button through the <span class="inline-code">nameAttribute</span> (<span class="code">data-name</span> by default, look below). Base layer is the special one, which is visible as first and sets the section's size.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    {% endblock %}
+
+                {% endembed %}
+            </div>
         </div>
     </div>
 </section>
-{% endblock %}

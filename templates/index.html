@@ -16,7 +16,7 @@
 
         <script src="/dist/js/velocity.js"></script>
 
-        <title>Hawk Framework v2</title>
+        <title>{% if Page.title is defined and Page.title|length > 0 %}{{ Page.title }}{% else %}Hawk Framework v2{% endif %}</title>
     </head>
 
     <body>
@@ -32,7 +32,7 @@
                         <nav class="horizontal-menu">
                             <ul class="horizontal-menu__core">
                                 <li>
-                                    <a class="menu-item" href="/">Components</a>
+                                    <a class="menu-item" href="/">Widgets</a>
                                 </li>
 
                                 <li>
@@ -54,6 +54,26 @@
         </header>
 
         <main class="site-content">
+            {% if Page.breadcrumbs is defined and Page.breadcrumbs|length > 0 %}
+            <div class="site-content-bar">
+                <div class="site-content-bar__layer">
+                    <div class="site-content-bar__wrapper">
+                        <ul class="breadcrumbs">
+                            {% for breadcrumbItem in Page.breadcrumbs %}
+                            <li>
+                                {% if breadcrumbItem.link is defined and breadcrumbItem.link|length > 0 %}
+                                <a class="breadcrumb-item breadcrumb-item--interactive" href="{{ breadcrumbItem.link }}">{{ breadcrumbItem.name }}</a>
+                                {% else %}
+                                <span class="breadcrumb-item">{{ breadcrumbItem.name }}</span>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             {% block content %}
 
             {% endblock %}

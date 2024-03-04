@@ -1,0 +1,29 @@
+.created-by {
+  text-align: center;
+
+  @media (min-width: $tablet-m) {
+    text-align: left;
+  }
+
+  @media (min-width: $desktop-s) {
+    display: flex;
+    align-items: center;
+  }
+
+  &__description {
+    padding: 0 0 8px 0;
+    font-size: $small-font-size;
+
+    @media (min-width: $desktop-s) {
+      padding: 0 12px 0 0;
+    }
+  }
+
+  &__logo {
+    margin: 0 auto;
+
+    @media (min-width: $tablet-m) {
+      margin: 0;
+    }
+  }
+}

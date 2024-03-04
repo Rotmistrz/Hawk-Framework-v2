@@ -12,7 +12,7 @@
                 <div class="flex-container">
                     <div class="flex-column flex-column--4 flex-column--space">
                         {% block exampleAndDescription %}
-                        
+
                         {% endblock %}
                     </div>
 
@@ -24,9 +24,9 @@
                                     <li>
                                         <div class="listing">
                                             <div class="scrollable-section">
-                                            {% autoescape false %}
-                                            {{ presentationSection.listings.html }}
-                                            {% endautoescape %}
+                                                {% autoescape false %}
+                                                {{ presentationSection.listings.html }}
+                                                {% endautoescape %}
                                             </div>
                                         </div>
                                     </li>
@@ -34,24 +34,24 @@
 
                                     <li>
                                         <div class="listing">
-                                   
+
                                             {% autoescape false %}
                                             {{ presentationSection.listings.js }}
                                             {% endautoescape %}
-                                   
+
                                         </div>
                                     </li>
 
                                     <li>
                                         <ul class="plain-list plain-list--more-space">
                                             {% for link in presentationSection.links %}
-                                                {% if link.type == 'js' %}
-                                                    {% set filename = 'icon-js-color' %}
-                                                    {% set alt = 'JS' %}
-                                                {% elseif link.type == 'css' %}
-                                                    {% set filename = 'icon-css-01' %}
-                                                    {% set alt = 'CSS' %}
-                                                {% endif %}
+                                            {% if link.type == 'js' %}
+                                            {% set filename = 'icon-js-color' %}
+                                            {% set alt = 'JS' %}
+                                            {% elseif link.type == 'css' %}
+                                            {% set filename = 'icon-css-01' %}
+                                            {% set alt = 'CSS' %}
+                                            {% endif %}
 
                                             <li>
                                                 <a class="icon-label std-link" href="{{ link.link }}" target="_blank">

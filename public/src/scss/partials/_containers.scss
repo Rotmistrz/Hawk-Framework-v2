@@ -1,0 +1,18 @@
+.row {
+  padding: 40px 0 0 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+.row--more-space {
+  padding-top: 60px;
+
+  @media (min-width: $desktop-s) {
+    padding-top: 80px;
+  }
+}

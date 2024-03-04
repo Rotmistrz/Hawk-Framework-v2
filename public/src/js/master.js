@@ -4,6 +4,10 @@ $(document).ready(function() {
     var App = {
         Blocks: {},
         Examples: {},
+        Routes: {
+            WIDGETS_DROPDOWN: "widgets/dropdown/?$",
+            WIDGETS_LAYERED_SECTION: "widgets/layered-section/?$",
+        },
         Widgets: {
             Overlayers: {},
             Dropdowns: {},
@@ -17,17 +21,19 @@ $(document).ready(function() {
     // It's good to keep only necessary initialization and assign them to App.Widgets[AppropriateType]
     var HawkExamples = {};
 
-    HawkExamples.exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'));
-    HawkExamples.exemplaryDropdown.run();
-    //console.log(HawkExamples.exemplaryDropdown.selectByValue(2));
+    if (Hawk.Routes.is(App.Routes.WIDGETS_DROPDOWN)) {
+        HawkExamples.exemplaryDropdown = new Hawk.Dropdown($('#exemplary-dropdown'));
+        HawkExamples.exemplaryDropdown.run();
+        //console.log(HawkExamples.exemplaryDropdown.selectByValue(2));
 
-    HawkExamples.expandingDropdown = new Hawk.Dropdown($('#expanding-dropdown'), {
-        type: Hawk.DropdownConstants.Types.EXPANDING
-    });
-    HawkExamples.expandingDropdown.run();
-
-    HawkExamples.layeredSection = new Hawk.LayeredSection($('#exemplary-layered-section'));
-    HawkExamples.layeredSection.run();
+        HawkExamples.expandingDropdown = new Hawk.Dropdown($('#expanding-dropdown'), {
+            type: Hawk.DropdownConstants.Types.EXPANDING
+        });
+        HawkExamples.expandingDropdown.run();
+    } else if (Hawk.Routes.is(App.Routes.WIDGETS_LAYERED_SECTION)) {
+        HawkExamples.layeredSection = new Hawk.LayeredSection($('#exemplary-layered-section'));
+        HawkExamples.layeredSection.run();
+    }
 
     HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
     HawkExamples.moreContentManager.run();
