@@ -1,4 +1,7 @@
-Hawk.FormSender = class extends Hawk.SingleThreadClass {
+import Hawk from '../../Core.Hawk';
+import SingleThreadClass from '../../Basements/SingleThreadClass.Hawk';
+
+export default class FormSender extends SingleThreadClass {
 	constructor(form, fields, options, multifields) {
 		super();
 

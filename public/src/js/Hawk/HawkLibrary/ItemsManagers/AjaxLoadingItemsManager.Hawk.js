@@ -1,4 +1,7 @@
-Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
+import Hawk from "../Core.Hawk";
+import SingleThreadClass from "../Basements/SingleThreadClass.Hawk";
+
+export default class AjaxLoadingItemsManager extends SingleThreadClass {
 	constructor(container, options) {
 		super();
 
@@ -109,7 +112,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 					lang: this.getLang()
 				},
 	            success: (result) => {
-	            	console.log(result);
+	            	Hawk.writeDebugInfo(result);
 
 	                this.appendContent(result.html, result);
 	                this.offset = result.offset;
@@ -130,7 +133,7 @@ Hawk.AjaxLoadingItemsManager = class extends Hawk.SingleThreadClass {
 	                // here should appear error layer
 	                //alert(errorThrown);
 
-	                console.log(jqXHR.responseText);
+	                Hawk.writeDebugError(jqXHR.responseText);
 	            },
 	            complete: () => {
 	                this.finishWorking();

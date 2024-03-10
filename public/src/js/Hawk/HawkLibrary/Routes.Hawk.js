@@ -1,4 +1,6 @@
-Hawk.Routes = {
+import Hawk from './Core.Hawk';
+
+const Routes = {
     routes: {},
 
     path: Hawk.getPath(),
@@ -52,3 +54,5 @@ Hawk.Routes = {
         }
     }
 }
+
+export default Routes;

@@ -1,4 +1,6 @@
-Hawk.BookmarksManager = function (container, options) {
+import Hawk from './Core.Hawk';
+
+export default function BookmarksManager(container, options) {
   this.container = $(container);
   this.content;
   this.contentWrapper;

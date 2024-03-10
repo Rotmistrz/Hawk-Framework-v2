@@ -1,4 +1,7 @@
-Hawk.DetailsList = class extends Hawk.SingleThreadClass {
+import Hawk from './Core.Hawk';
+import SingleThreadClass from 'Basements/SingleThreadClass.Hawk';
+
+export default class DetailsList extends SingleThreadClass {
 	constructor(container, options) {
 		super();
 

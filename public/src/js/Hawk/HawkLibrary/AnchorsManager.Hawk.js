@@ -1,4 +1,6 @@
-Hawk.AnchorsManager = class {
+import Hawk from './Core.Hawk';
+
+export default class AnchorsManager {
     constructor(options) {
         this.defaultOptions = {
             delay: 100,
@@ -88,67 +90,3 @@ Hawk.AnchorsManager = class {
         }
     }
 }
-
-// Hawk.OldAnchorsManager = function(options) {
-//     var that = this;
-
-//     this.defaultOptions = {
-//         delay: 100,
-//         menu: undefined,
-
-//         offset: function() {
-//             return 0;
-//         }
-//     }
-
-//     this.options = Hawk.mergeObjects(this.defaultOptions, options);
-
-//     this.anchorsCallback = function(e) {
-//         var regex = /#{1}.+$/;
-//         var link = this;
-
-//         var href = $(this).attr('href');
-//         var anchor;
-//         var extraDelay = 0;
-
-//         if (anchor = regex.exec(href)) {
-//             if ($(anchor + Hawk.anchorSufix).length) {
-//                 e.preventDefault();
-
-//                 if (typeof that.options.menu !== 'undefined' && $(link).parents().is(that.options.menu.menu)) {
-//                     extraDelay = that.options.menu.totalDuration();
-
-//                     that.options.menu.hide();
-//                 }
-
-//                 var finalDelay = that.options.delay + extraDelay;
-
-//                 var callback = function() {
-
-//                 }
-
-//                 if (typeof $(link).attr('data-anchor-type') == 'undefined' || $(link).attr('data-anchor-type') != 'blank') {
-//                     callback = function() {
-//                         window.location.hash = anchor;
-//                     }
-//                 }
-
-//                 Hawk.scrollToElement({ anchor: anchor + Hawk.anchorSufix, callback: callback, delay: finalDelay, offset: that.options.offset() });
-//             }
-//         }
-//     };
-
-//     this.goTo = function(anchor) {
-//         Hawk.scrollToElement({ anchor: anchor + Hawk.anchorSufix, offset: that.options.offset() });
-//     }
-
-//     this.refresh = function() {
-//         $('a').unbind('click', this.anchorsCallback).click(this.anchorsCallback);
-
-//         return this;
-//     }
-
-//     this.run = function() {
-//         this.refresh();
-//     }
-// }

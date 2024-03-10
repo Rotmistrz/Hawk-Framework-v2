@@ -1,4 +1,7 @@
-Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
+import Hawk from "../Core.Hawk";
+import SingleThreadClass from "../Basements/SingleThreadClass.Hawk"
+
+export default class AjaxItemsManager extends SingleThreadClass {
 	constructor(container, options) {
 		super();
 
@@ -52,11 +55,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 
 	filterExists(type, value) {
 		if (typeof this.filters[type] != 'undefined') {
-			console.log(this.filters[type]);
-
 			for (const filter of this.filters[type]) {
-				console.log(filter);
-
 				if (filter == value) {
 					return true;
 				}
@@ -218,7 +217,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 					'lang': this.getLang()
 				},
 				success: (result) => {
-					console.log(result);
+					Hawk.writeDebugInfo(result);
 
 					if (result.status == Hawk.RequestStatus.SUCCESS) {
 						if (result.allItemsAmount > 0) {
@@ -242,7 +241,7 @@ Hawk.AjaxItemsManager = class extends Hawk.SingleThreadClass {
 					this.options.onLoad(result, this.contentContainer, firstLoading);
 				},
 				error: (jqXHR, textStatus, errorThrown) => {
-					console.warn(jqXHR.responseText);
+					Hawk.writeDebugError(jqXHR.responseText);
 				},
 				complete: () => {
 					this.finishWorking();

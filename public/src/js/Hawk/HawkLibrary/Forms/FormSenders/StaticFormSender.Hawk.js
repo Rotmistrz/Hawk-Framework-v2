@@ -1,4 +1,6 @@
-Hawk.StaticFormSender = class extends Hawk.FormSender {
+import FormSender from "./FormSender.Hawk";
+
+export default class StaticFormSender extends FormSender {
 	constructor(form, fields, callback, options) {
 		super(form, fields, options);
 

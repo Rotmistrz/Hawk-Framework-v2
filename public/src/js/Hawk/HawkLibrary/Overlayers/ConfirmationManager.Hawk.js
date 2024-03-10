@@ -1,4 +1,9 @@
-Hawk.ConfirmationManager = class extends Hawk.AjaxOverlayerManager {
+import Hawk from '../Core.Hawk';
+import AjaxOverlayerManager from "./AjaxOverlayerManager.Hawk";
+import OverlayerManagerMode from "./Enums/OverlayerManagerMode.Hawk";
+import AjaxFormSender from '../Forms/FormSenders/AjaxFormSender.Hawk';
+
+export default class ConfirmationManager extends AjaxOverlayerManager {
     constructor(container, options) {
         super(container);
 
@@ -19,13 +24,10 @@ Hawk.ConfirmationManager = class extends Hawk.AjaxOverlayerManager {
                 const action = aom.getAction(id);
 
                 if (action != null) {
-                    console.log("intiailize form");
-                    console.log(action);
-
                     const formBlock = aom.content.find('#' + result.bundle.formID);
 
                     if (formBlock.length > 0) {
-                        const formSender = new Hawk.AjaxFormSender(formBlock, [], action.targetPath, action.callbacks);
+                        const formSender = new AjaxFormSender(formBlock, [], action.targetPath, action.callbacks);
                         formSender.run();
                     } else {
                         aom.hide();
@@ -37,8 +39,6 @@ Hawk.ConfirmationManager = class extends Hawk.AjaxOverlayerManager {
         });
 
         this.options = Hawk.mergeObjects(this.defaultOptions, options);
-
-        console.log(this.defaultOptions);
     }
 
     getButtonsSelector() {
@@ -72,12 +72,7 @@ Hawk.ConfirmationManager = class extends Hawk.AjaxOverlayerManager {
         const actionName = jQueryThis.attr(this.options.actionAttrName);
         const bundle = this.options.obtainData(jQueryThis);
 
-        console.log(bundle);
-
         const action = this.getAction(actionName);
-
-        console.log(actionName);
-        console.log(action);
 
         if (action != null) {
             this.load(actionName, {
@@ -88,7 +83,7 @@ Hawk.ConfirmationManager = class extends Hawk.AjaxOverlayerManager {
     }
 
     refreshDependencies() {
-        if (this.options.mode == Hawk.AjaxOverlayerManagerConstants.modes.DELEGATE_EVENTS) {
+        if (this.options.mode == OverlayerManagerMode.DELEGATE_EVENTS) {
             this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
         } else {
             if (typeof this.buttons != 'undefined') {

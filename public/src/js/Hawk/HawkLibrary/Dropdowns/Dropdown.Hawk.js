@@ -1,23 +1,8 @@
-Hawk.DropdownConstants = {
-    Modes: {
-        PLAIN: 0,
-        CHOOSABLE: 1
-    },
+import Hawk from '../Core.Hawk';
+import DropdownType from 'Enums/DropdownType.Hawk';
+import DropdownDirection from 'Enums/DropdownDirection.Hawk';
 
-    Types: {
-        OVERLAYER: 0,
-        EXPANDING: 1
-    },
-
-    Directions: {
-        DOWNWARDS: 0,
-        UPWARDS: 1
-    }
-}
-
-Hawk.RegisteredDropdowns = [];
-
-Hawk.Dropdown = function(container, options) {
+export default function Dropdown(container, options) {
     var that = this;
 
     this.container = $(container).first();
@@ -45,8 +30,8 @@ Hawk.Dropdown = function(container, options) {
     this.defaultOptions = {
         slideSpeed: 200,
 
-        type: Hawk.DropdownConstants.Types.OVERLAYER,
-        direction: Hawk.DropdownConstants.Directions.DOWNWARDS,
+        type: DropdownType.OVERLAYER,
+        direction: DropdownDirection.DOWNWARDS,
 
         containerClass: 'hawk-dropdown',
         expandingTypeClass: 'hawk-dropdown--expanding',
@@ -307,11 +292,11 @@ Hawk.Dropdown = function(container, options) {
         this.escapeSensor = this.createSensor(this.options.escapeSensorClass);
         this.container.append(this.escapeSensor);   //.find('.' + this.options.escapeSensorClass);
 
-        if (this.options.type === Hawk.DropdownConstants.Types.EXPANDING) {
+        if (this.options.type === DropdownType.EXPANDING) {
             this.container.addClass(this.options.expandingTypeClass);
         }
 
-        if (this.options.direction === Hawk.DropdownConstants.Directions.UPWARDS) {
+        if (this.options.direction === DropdownDirection.UPWARDS) {
             this.container.addClass(this.options.upwardsDirectionClass);
         }
 

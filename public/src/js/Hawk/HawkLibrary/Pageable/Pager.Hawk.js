@@ -1,4 +1,6 @@
-Hawk.Pager = class {
+import Hawk from "../Core.Hawk";
+
+export default class Pager {
 	constructor(container, options) {
 		this.defaultOptions = {
 			pagesVisibilityLimit: 8,

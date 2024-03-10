@@ -1,4 +1,6 @@
-Hawk.MoreContentManager = class {
+import Hawk from './Core.Hawk';
+
+export default class MoreContentManager {
 	constructor(id, options) {
 		this.defaultOptions = {
 			buttonClass: "hawk-more-content-button",

@@ -1,4 +1,7 @@
-Hawk.AjaxOverlayerManager = class extends Hawk.OverlayerManager {
+import Hawk from '../Core.Hawk';
+import OverlayerManager from './OverlayerManager.Hawk';
+
+export default class AjaxOverlayerManager extends OverlayerManager {
 	constructor(container, options) {
 		super(container, options);
 

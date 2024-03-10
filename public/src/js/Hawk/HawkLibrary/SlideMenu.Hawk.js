@@ -1,4 +1,6 @@
-Hawk.SlideMenu = function(id, options) {
+import Hawk from './Core.Hawk';
+
+export default function SlideMenu(id, options) {
     this.menu = $('#' + id);
     this.wrapper = this.menu.find('> div');
 

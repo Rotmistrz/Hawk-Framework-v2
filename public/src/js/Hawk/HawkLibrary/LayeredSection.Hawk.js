@@ -1,4 +1,6 @@
-Hawk.LayeredSection = function(container, options) {
+import Hawk from './Core.Hawk';
+
+export default function LayeredSection(container, options) {
     var that = this;
 
     this.container = $(container).first();

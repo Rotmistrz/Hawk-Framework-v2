@@ -1,4 +1,6 @@
-Hawk.EnlargingObject = class {
+import Hawk from "./Core.Hawk";
+
+export default class EnlargingObject {
 	constructor(container, options) {
 		this.container = $(container);
 

@@ -1,4 +1,6 @@
-Hawk.SlidingLayerManager = class {
+import Hawk from './Core.Hawk';
+
+export default class SlidingLayerManager {
 	constructor(id, options) {
 		this.defaultOptions = {
 			sectionClass: "hawk-sliding-layer-section",

@@ -1,4 +1,6 @@
-Hawk.Countdown = class Countdown {
+import Hawk from '../Core.Hawk';
+
+export default class Countdown {
     constructor(container, targetDate, options) {
         this.container = $(container);
         this.targetDate = targetDate;

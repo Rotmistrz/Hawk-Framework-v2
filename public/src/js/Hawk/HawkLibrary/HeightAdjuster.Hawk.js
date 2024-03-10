@@ -1,4 +1,6 @@
-Hawk.HeightAdjuster = class {
+import Hawk from './Core.Hawk';
+
+export default class HeightAdjuster {
     constructor(container, options) {
         this.container = $(container);
 

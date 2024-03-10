@@ -1,4 +1,8 @@
-Hawk.SimpleOverlayerManager = class extends Hawk.OverlayerManager {
+import Hawh from '../Core.Hawk';
+import OverlayerManager from "./OverlayerManager.Hawk";
+import RequestStatus from "../Requests/RequestStatus.Hawk";
+
+export default class SimpleOverlayerManager extends OverlayerManager {
     constructor(container, options) {
         super(container, options);
 
@@ -25,7 +29,7 @@ Hawk.SimpleOverlayerManager = class extends Hawk.OverlayerManager {
             const result = {
                 id: id,
                 html: contentToLoad.html(),
-                status: Hawk.RequestStatus.SUCCESS
+                status: RequestStatus.SUCCESS
             };
 
             this.actionLoad(id, result);

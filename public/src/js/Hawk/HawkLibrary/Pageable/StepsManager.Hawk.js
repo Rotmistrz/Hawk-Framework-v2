@@ -1,4 +1,6 @@
-Hawk.StepsManager = class {
+import Hawk from "../Core.Hawk";
+
+export default class StepsManager {
     constructor(container, options) {
         this.defaultOptions = {
             stepClass: 'hawk-steps-manager__step',

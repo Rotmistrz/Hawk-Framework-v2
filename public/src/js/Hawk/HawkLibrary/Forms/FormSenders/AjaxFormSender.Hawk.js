@@ -1,4 +1,6 @@
-Hawk.AjaxFormSender = class extends Hawk.FormSender {
+import FormSender from './FormSender.Hawk';
+
+export default class AjaxFormSender extends FormSender {
 	constructor(form, fields, path, options, multifields) {
 		super(form, fields, options, multifields);
 

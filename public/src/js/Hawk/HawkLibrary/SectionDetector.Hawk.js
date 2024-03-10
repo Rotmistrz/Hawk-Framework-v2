@@ -1,4 +1,6 @@
-Hawk.SectionDetector = class {
+import Hawk from "./Core.Hawk";
+
+export default class SectionDetector {
 	constructor(element, sections, options) {
 		this.element = $(element);
 		this.sections = sections;
@@ -57,25 +59,9 @@ Hawk.SectionDetector = class {
 		const that = this;
 
 		this.sections.each(function() {
-			// console.log();
-			// console.log("____________________________________");
-			// console.log("scrollTop: " + that.getScrollY());
-			// console.log("Element top: " + that.getElementTopEdge());
-			// console.log("Element bottom: " + that.getElementBottomEdge());
-
 			if (that.checkIfSectionInRange($(this))) {
-				// console.log($(this).attr('class') + " offset top:::::::::: " + $(this).offset().top);
-				// console.log($(this).attr('class') + " top edge:::::::: " + that.getSectionTopEdge($(this)));
-				// console.log($(this).attr('class') + " bottom edge::::::::: " + that.getSectionBottomEdge($(this)));
-				
-
 				that.options.onSectionInRange(that, $(this));
 			}
-			// else if ($(this).hasClass('section-08')) {
-			// 	console.log($(this).attr('class') + " offset top: " + $(this).offset().top);
-			// 	console.log($(this).attr('class') + " top edge: " + that.getSectionTopEdge($(this)));
-			// 	console.log($(this).attr('class') + " bottom edge: " + that.getSectionBottomEdge($(this)));
-			// }
 		});
 	}
 

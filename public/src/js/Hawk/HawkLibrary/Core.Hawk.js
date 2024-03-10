@@ -5,6 +5,10 @@ Hawk = {
     h: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
 
     anchorSuffix: '-anchor',
+
+    settings: {
+        DEBUG_MODE: true
+    }
 }
 
 Hawk.RequestStatus = {
@@ -12,6 +16,26 @@ Hawk.RequestStatus = {
     ERROR: 1,
     EXCEPTION: 2
 };
+
+Hawk.writeDebugInfo = function(message) {
+    if (Hawk.isDebugMode()) {
+        console.log(message);
+    }
+}
+Hawk.writeDebugWarning = function(message) {
+    if (Hawk.isDebugMode()) {
+        console.warn(message);
+    }
+}
+Hawk.writeDebugError = function(message) {
+    if (Hawk.isDebugMode()) {
+        console.error(message);
+    }
+}
+
+Hawk.isDebugMode = function() {
+    return Hawk.settings.DEBUG_MODE;
+}
 
 Hawk.getLocation = function() {
     return window.location;
@@ -171,3 +195,7 @@ Hawk.scrollToElement = function(options) {
 
     return this;
 }
+
+Hawk.RegisteredDropdowns = [];
+
+export default Hawk;

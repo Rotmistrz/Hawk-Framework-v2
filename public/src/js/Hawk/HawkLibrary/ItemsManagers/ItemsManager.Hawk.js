@@ -1,4 +1,8 @@
-Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
+import Hawk from "../Core.Hawk";
+import SingleThreadClass from '../Basements/SingleThreadClass.Hawk';
+import ItemsManagerMode from "./Enums/ItemsManagerMode.Hawk";
+
+export default class ItemsManager extends SingleThreadClass {
     constructor(container, options) {
         super();
 
@@ -11,7 +15,7 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
             groupIdAttribute: 'data-id',
             managerIdAttribute: 'data-manager-id',
 
-            mode: Hawk.ItemsManagerConstants.CLICK,
+            mode: ItemsManagerMode.CLICK,
 
             getGroupClassname: (id) => {
                 return "hawk-items-manager-group-" + id;
@@ -70,9 +74,6 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
     changeBookmark(groupID) {
         const field = this.bookmarks.find('input[value="' + groupID + '"]');
 
-        console.log("Changing bookmark.......");
-        console.log(field);
-
         field.prop('checked', true);
         field.trigger('change');
     }
@@ -106,10 +107,6 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
             cssSelector += '[' + this.options.managerIdAttribute + '="' + this.getManagerID() + '"]';
         }
 
-        console.log(cssSelector);
-
-        console.log(this.container.find(cssSelector));
-
         return this.container.find(cssSelector);
     }
 
@@ -127,7 +124,7 @@ Hawk.ItemsManager = class extends Hawk.SingleThreadClass {
         this.items = this.getItems();
         this.bookmarks = this.getBookmarks();
 
-        if (this.options.mode == Hawk.ItemsManagerConstants.Modes.CHOICE) {
+        if (this.options.mode == ItemsManagerMode.CHOICE) {
             this.bookmarks.find('input').change((e) => {
                 this.onFieldSelected($(e.currentTarget));
             });

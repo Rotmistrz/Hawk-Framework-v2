@@ -1,5 +1,10 @@
-Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
+import Hawk from '../Core.Hawk';
+import SingleThreadClass from '../Basements/SingleThreadClass.Hawk';
+import OverlayerManagerMode from "./Enums/OverlayerManagerMode.Hawk";
+
+export default class OverlayerManager extends SingleThreadClass {
     static instances = 0;
+    static defaultHashPattern = "^o\/[0-9]+\/[a-zA-Z\-_0-9]+\/[a-zA-Z\-_0-9]+(\/)?(((&)*[a-zA-Z0-9]+=[a-zA-Z0-9]+)*)?$";
 
     constructor(container, options) {
         super();
@@ -22,7 +27,7 @@ Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
             fadeSpeed: 200,
             slideSpeed: 200,
 
-            mode: Hawk.AjaxOverlayerManagerConstants.Modes.DEFAULT,
+            mode: OverlayerManagerMode.DEFAULT,
             closeOnClickOutside: false,
 
             popstateEventName: 'popstate.ajaxOverlayerManager',
@@ -77,7 +82,7 @@ Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
                         hash = hash.substring(1);
                     }
 
-                    const regexp = new RegExp(Hawk.AjaxOverlayerManagerConstants.getDefaultHashPattern());
+                    const regexp = new RegExp(OverlayerManager.defaultHashPattern);
 
                     if (regexp.test(hash)) {
                         const parts = hash.split('/');
@@ -245,7 +250,7 @@ Hawk.OverlayerManager = class extends Hawk.SingleThreadClass {
     }
 
     refreshDependencies() {
-        if (this.options.mode == Hawk.AjaxOverlayerManagerConstants.Modes.DELEGATE_EVENTS) {
+        if (this.options.mode == OverlayerManagerMode.DELEGATE_EVENTS) {
             this.body.on('click', this.getButtonsSelector(), this.onButtonClick.bind(this));
         } else {
             if (typeof this.buttons != 'undefined') {
