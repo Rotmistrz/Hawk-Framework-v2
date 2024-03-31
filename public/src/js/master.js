@@ -7,6 +7,7 @@ $(document).ready(function() {
         Routes: {
             WIDGETS_DROPDOWN: "widgets/dropdown/?$",
             WIDGETS_LAYERED_SECTION: "widgets/layered-section/?$",
+            MORE_CONTENT_MANAGER: "widgets/more-content-manager/?$"
         },
         Widgets: {
             Overlayers: {},
@@ -33,10 +34,11 @@ $(document).ready(function() {
     } else if (Hawk.Routes.is(App.Routes.WIDGETS_LAYERED_SECTION)) {
         HawkExamples.layeredSection = new Hawk.LayeredSection($('#exemplary-layered-section'));
         HawkExamples.layeredSection.run();
+    } else if (Hawk.Routes.is(App.Routes.MORE_CONTENT_MANAGER)) {
+        HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
+        HawkExamples.moreContentManager.run();
     }
 
-    HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
-    HawkExamples.moreContentManager.run();
 
     HawkExamples.detailsList = new Hawk.DetailsList($('#exemplary-details-list'), {});
     HawkExamples.detailsList.run();

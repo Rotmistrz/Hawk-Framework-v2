@@ -1,4 +1,4 @@
-Hawk.SingleThreadClass = class {
+export default class SingleThreadClass {
 	constructor() {
 		this.request = null;
 		this.requestWorking = false;

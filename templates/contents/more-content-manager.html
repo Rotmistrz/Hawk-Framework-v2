@@ -1,34 +1,46 @@
-{% set presentationSection = {
-    title: 'More content manager',
-    anchor: 'more-content-manager',
-    listings: {
-        html: moreContentManager.listings.html,
-        js: moreContentManager.listings.js
-    },
-    links: [
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
-            type: 'js',
-            title: 'MoreContentManager.Hawk.js'
-        },
-        {
-            link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-more-content-manager.scss',
-            type: 'css',
-            title: 'hawk-more-content-manager.scss'
-        }
-    ],
+<section class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper site-section__wrapper--less-top-space">
+            <div class="site-section__inner">
 
-    properties: moreContentManager.properties,
-    callbacks: moreContentManager.callbacks,
-    methods: moreContentManager.methods
-} %}
+                {% set presentationSection = {
+                title: 'More content manager',
+                anchor: 'more-content-manager',
+                listings: {
+                html: moreContentManager.listings.html,
+                js: moreContentManager.listings.js
+                },
+                links: [
+                {
+                link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
+                type: 'js',
+                title: 'MoreContentManager.Hawk.js'
+                },
+                {
+                link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-more-content-manager.scss',
+                type: 'css',
+                title: 'hawk-more-content-manager.scss'
+                }
+                ],
 
-{% extends 'contents/_presentation-section.html' %}
+                properties: moreContentManager.properties,
+                callbacks: moreContentManager.callbacks,
+                methods: moreContentManager.methods
+                } %}
 
-{% block exampleAndDescription %}
-<section class="subsection bounded-section">     
+                {% embed('contents/_presentation-section-core.html') %}
 
-    {% include('hawk/modules/more-content-manager/hawk-more-content-manager.html') %}
+                {% block exampleAndDescription %}
+                <section class="subsection bounded-section">
 
+                    {% include('hawk/modules/more-content-manager/hawk-more-content-manager.html') %}
+
+                </section>
+                {% endblock %}
+
+                {% endembed %}
+
+            </div>
+        </div>
+    </div>
 </section>
-{% endblock %}

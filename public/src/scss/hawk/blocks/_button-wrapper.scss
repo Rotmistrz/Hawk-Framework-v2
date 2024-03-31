@@ -1,0 +1,26 @@
+.button-wrapper {
+  display: inline-block;
+  position: relative;
+
+  &__inner {
+    position: relative;
+  }
+
+  &__loader {
+    right: 100%;
+    padding: 0 10px 0 0;
+    @include transform(translate3d(0, -50%, 0));
+    z-index: 2;
+    text-align: center;
+    opacity: 0;
+    @include transition(all .2s linear);
+    position: absolute;
+    top: 50%;
+
+    @media (min-width: $tablet-s) {
+      right: auto;
+      left: 100%;
+      padding: 0 0 0 10px;
+    }
+  }
+}
