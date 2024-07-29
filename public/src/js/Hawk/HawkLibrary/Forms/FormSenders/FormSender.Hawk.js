@@ -38,6 +38,7 @@ export default class FormSender extends SingleThreadClass {
 			autoDisable: true,
 			fadeSpeed: 200,
 			slideSpeed: 200,
+			extraData: {},
 
 			infoContainerClass: "form__info-container",
 			infoWrapperClass: "form__info-wrapper",

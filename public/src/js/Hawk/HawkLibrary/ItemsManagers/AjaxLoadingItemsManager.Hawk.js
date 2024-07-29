@@ -7,6 +7,7 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 
 		this.container = $(container);
 		this.offset = 0;
+		this.loadedItemsAmount = 0;
 		this.done = false;
 
 		this.filters = {};
@@ -52,6 +53,16 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 
 	isDone() {
 		return this.done;
+	}
+
+	getLoadedItemsAmount() {
+		return this.loadedItemsAmount;
+	}
+
+	increaseLoadedItemsAmount(amount) {
+		this.loadedItemsAmount += amount;
+
+		return this.loadedItemsAmount;
 	}
 
 	getOffset() {
@@ -119,11 +130,13 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 
 	                this.done = result.isDone;
 
+					this.increaseLoadedItemsAmount(result.loadedItemsAmount);
+
 	                if (this.isDone()) {
 	                	this.options.onDone(this.buttons, this.contentContainer, result);
 	                }
 
-	                if (result.offset == 0 && result.isDone) {
+	                if (this.getLoadedItemsAmount() == 0) {
 	                	this.showNoItemsInfo();
 					} else {
 	                	this.hideNoItemsInfo();
