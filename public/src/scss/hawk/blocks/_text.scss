@@ -1,7 +1,7 @@
 .text {
+  font-weight: 400;
   font-size: $main-font-size;
   line-height: $main-font-size + 8px;
-  font-style: normal;
 
   @media (min-width: $desktop-xl) {
     font-size: $main-font-size-01;
@@ -10,7 +10,6 @@
 
   p {
     padding: 5px 0;
-    margin: 0;
 
     &:first-child {
       padding-top: 0;
@@ -26,12 +25,12 @@
   }
 
   a {
-    color: $dark-color;
+    // color: $dark-color;
 
-    &:hover,
-    &:focus {
-      color: $primary-color;
-    }
+    // &:hover,
+    // &:focus {
+    //   color: $primary-color;
+    // }
   }
 
   ol {
@@ -41,10 +40,10 @@
 
     > li {
       position: relative;
-      padding: 2px 0 2px 32px;
+      padding: 4px 0 4px 32px;
 
       &:before {
-        content: counters(textOrderedList, '.') ".";
+        content: counters(textOrderedList, ".") ".";
         counter-increment: textOrderedList;
         display: block;
         position: absolute;
@@ -66,7 +65,7 @@
       padding: 2px 0 2px 16px;
 
       &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 10px;
@@ -79,11 +78,22 @@
       }
     }
   }
+
+  strong {
+    font-weight: 700;
+  }
 }
 .text--light {
   a {
     color: $light-color;
   }
+}
+.text--thin {
+ font-weight: 300;
+}
+
+.text--second-font {
+  font-family: $sans-serif-font-family;
 }
 
 .text--large {
@@ -93,6 +103,44 @@
   @media (min-width: $desktop-xl) {
     font-size: $larger-font-size-01;
     line-height: $larger-font-size-01 + 8px;
+  }
+
+  p {
+    padding: 8px 0;
+  }
+
+  ul {
+    padding: 0 0 0 24px;
+
+    > li {
+      padding: 2px 0 2px 16px;
+
+      &:before {
+        top: 12px;
+        width: 6px;
+        height: 6px;
+      }
+    }
+  }
+}
+
+.text--very-large {
+  font-size: $larger-font-size;
+  line-height: $larger-font-size + 8px;
+
+  @media (min-width: $tablet-s) {
+    font-size: $larger-font-size-01;
+    line-height: $larger-font-size-01 + 8px;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $larger-font-size-02;
+    line-height: $larger-font-size-02 + 8px;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $larger-font-size-03;
+    line-height: $larger-font-size-03 + 8px;
   }
 
   p {
@@ -150,13 +198,15 @@
   }
 }
 
-.text--no-indent-lists {
-  ul,
-  ol {
-    padding-left: 0;
-  }
+.text--justify,
+.text--document {
+  text-align: justify;
 }
 
 .text--distinguished {
   font-weight: 700;
+}
+
+.line {
+  display: block;
 }
