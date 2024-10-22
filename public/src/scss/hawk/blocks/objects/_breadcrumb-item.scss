@@ -1,0 +1,14 @@
+.breadcrumb-item {
+  color: $dark-color;
+  font-size: $main-font-size;
+  text-decoration: none;
+}
+.breadcrumb-item--interactive {
+  cursor: pointer;
+  @include transition(all .2s linear);
+
+  &:hover,
+  &:focus {
+    color: $primary-color;
+  }
+}

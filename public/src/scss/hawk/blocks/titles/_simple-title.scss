@@ -1,0 +1,15 @@
+.simple-title {
+  font-size: $large-font-size;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $large-font-size-00;
+  }
+}
+
+.simple-title--small {
+  font-size: $larger-font-size;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $larger-font-size-00;
+  }
+}

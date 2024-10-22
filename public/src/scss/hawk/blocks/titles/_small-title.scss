@@ -1,0 +1,8 @@
+.small-title {
+  font-size: $small-font-size;
+  font-weight: 700;
+
+  @media (min-width: $desktop-xl) {
+    font-size: $small-font-size-01;
+  }
+}

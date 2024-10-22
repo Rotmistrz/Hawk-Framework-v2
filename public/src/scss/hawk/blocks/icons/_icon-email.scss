@@ -1,0 +1,14 @@
+.icon-email {
+  @extend .extended-icon;
+  @extend .extended-icon--interactive;
+  width: 48px;
+  height: 48px;
+
+  &:before {
+    background-image: url('/img/icons/medium/icon-email.svg');
+  }
+
+  &:after {
+    background-image: url('/img/icons/medium/icon-email-primary.svg');
+  }
+}

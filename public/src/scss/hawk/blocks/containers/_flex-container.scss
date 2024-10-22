@@ -1,0 +1,70 @@
+.flex-container {
+  @media (min-width: $tablet-m) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+.flex-container--immediately {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.flex-container--horizontally-center {
+  align-items: center;
+}
+.flex-container--stretch {
+  align-items: stretch;
+}
+.flex-container--horizontally-south {
+  align-items: flex-end;
+}
+.flex-container--reverse {
+
+  @media (min-width: $tablet-m) {
+    flex-direction: row-reverse;
+  }
+
+  .flex-column--6.flex-column--space {
+    @media (min-width: $tablet-m) {
+      &:nth-child(1) {
+        padding-left: 18px;
+        padding-right: 0;
+      }
+
+      &:nth-child(2) {
+        padding-right: 18px;
+        padding-left: 0;
+        padding-top: 0;
+      }
+    }
+
+    @media (min-width: $desktop-s) {
+      &:nth-child(1) {
+        padding-left: 30px;
+      }
+
+      &:nth-child(2) {
+        padding-right: 30px;
+      }
+    }
+
+    @media (min-width: $desktop-l) {
+      &:nth-child(1) {
+        padding-left: 48px;
+      }
+
+      &:nth-child(2) {
+        padding-right: 48px;
+      }
+    }
+  }
+}
+
+.flex-container--from-tablet-xl {
+  display: block;
+
+  @media (min-width: $tablet-xl) {
+    display: flex;
+  }
+}

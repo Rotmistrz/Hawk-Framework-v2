@@ -1,0 +1,60 @@
+.section-title {
+  font-size: $very-large-font-size-00;
+  font-weight: 700;
+
+  @media (min-width: $mobile-m) {
+    font-size: $very-large-font-size-01;
+  }
+
+  @media (min-width: $mobile-l) {
+    font-size: $very-large-font-size-02;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $very-large-font-size-04;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $very-large-font-size-07;
+  }
+}
+
+.section-title--large {
+  font-size: $very-large-font-size-02;
+
+  @media (min-width: $mobile-m) {
+    font-size: $very-large-font-size-04;
+  }
+
+  @media (min-width: $mobile-l) {
+    font-size: $very-large-font-size-05;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $very-large-font-size-07;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $very-large-font-size-12;
+  }
+}
+
+.section-title--small {
+  font-size: $large-font-size-00;
+
+  @media (min-width: $mobile-m) {
+    font-size: $large-font-size-01;
+  }
+
+  @media (min-width: $mobile-l) {
+    font-size: $large-font-size-02;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $large-font-size-03;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $large-font-size-04;
+  }
+}

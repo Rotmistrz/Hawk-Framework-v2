@@ -1,0 +1,21 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  > li {
+    position: relative;
+    display: block;
+
+    &:before {
+      content: '\203A\203A';
+      padding: 0 12px 0 0;
+    }
+
+    &:first-child {
+      &:before {
+        display: none;
+      }
+    }
+  }
+}

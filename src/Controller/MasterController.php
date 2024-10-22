@@ -1062,6 +1062,37 @@ $light-color-05: #fefdfd;
      * @Route("/blocks")
      */
     public function blocks() {
+        $headersFiles = [
+            '_section-header.scss',
+            '_section-subheader.scss',
+            '_subsection-header.scss',
+            '_subsection-subheader.scss',
+            '_simple-header.scss',
+            '_plain-header.scss'
+        ];
+
+        $headersCode = "";
+
+        foreach ($headersFiles as $file) {
+            $headersCode .= file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/headers/' . $file) . "\n";
+        }
+
+        $titlesFiles = [
+            '_section-title.scss',
+            '_section-subtitle.scss',
+            '_subsection-title.scss',
+            '_subsection-subtitle.scss',
+            '_simple-title.scss',
+            '_small-title.scss',
+            '_text-title.scss'
+        ];
+
+        $titlesCode = "";
+
+        foreach ($titlesFiles as $file) {
+            $titlesCode .= file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/titles/' . $file) . "\n";
+        }
+
         return $this->render('blocks.html', [
             'blocks' => [
                 'html' => [
@@ -1193,18 +1224,18 @@ $light-color-05: #fefdfd;
                     ]), true)
                 ],
                 'scss' => [
-                    'sectionTitle' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_titles.scss'), true),
-                    'text' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_text.scss'), true),
-                    'button' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_buttons.scss'), true),
-                    'tile' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_tiles.scss'), true),
-                    'formField' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_form-fields.scss'), true),
-                    'choiceField' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_choice-fields.scss'), true),
-                    'iconItem' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_icon-item.scss'), true),
-                    'iconLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_icon-label.scss'), true),
-                    'titledLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_titled-label.scss'), true),
-                    'extendedIcon' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_extended-icon.scss'), true),
-                    'plainExtendedIcon' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_plain-extended-icon.scss'), true),
-                    'headings' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/_headings.scss'), true)
+                    'sectionTitle' => highlight_string($titlesCode, true),
+                    'text' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/text/_text.scss'), true),
+                    'button' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/buttons/_button.scss'), true),
+                    'tile' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/objects/_tile.scss'), true),
+                    'formField' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/form-fields/_form-field.scss'), true),
+                    'choiceField' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/form-fields/_choice-field.scss'), true),
+                    'iconItem' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/objects/_icon-item.scss'), true),
+                    'iconLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/objects/_icon-label.scss'), true),
+                    'titledLabel' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/objects/_titled-label.scss'), true),
+                    'extendedIcon' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/icons/_extended-icon.scss'), true),
+                    'plainExtendedIcon' => highlight_string(file_get_contents(DIR_SCSS_HAWK_BLOCKS . '/icons/_plain-extended-icon.scss'), true),
+                    'headings' => highlight_string($headersCode, true)
                 ]
             ]
         ]);

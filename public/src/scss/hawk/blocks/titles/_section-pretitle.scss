@@ -1,0 +1,10 @@
+.section-pretitle {
+  font-size: $main-font-size;
+  color: $dark-color-04;
+  font-style: italic;
+  font-weight: 400;
+
+  @media (min-width: $desktop-m) {
+    font-size: $larger-font-size;
+  }
+}

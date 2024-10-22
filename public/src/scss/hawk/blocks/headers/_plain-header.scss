@@ -1,0 +1,7 @@
+.plain-header {
+  padding: 0 0 8px 0;
+
+  @media (min-width: $desktop-xl) {
+    padding-bottom: 12px;
+  }
+}

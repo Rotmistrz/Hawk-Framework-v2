@@ -1,0 +1,29 @@
+.form {
+  &__field-container {
+    padding: 12px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+  &__field-container--separated-top {
+    border-top: 1px solid $light-color-04;
+    margin-top: 12px;
+  }
+  &__field-container--separated-bottom {
+    border-bottom: 1px solid $light-color-04;
+    margin-bottom: 12px;
+  }
+
+  &__info-container {
+    padding: 20px 0 0 0;
+    @include box-sizing(border-box);
+  }
+}
+.form--bounded {
+  max-width: 400px;
+}

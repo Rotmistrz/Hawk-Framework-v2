@@ -1,0 +1,60 @@
+.section-subtitle {
+  font-size: $large-font-size;
+  font-weight: 700;
+
+  @media (min-width: $mobile-m) {
+    font-size: $large-font-size-00;
+  }
+
+  @media (min-width: $mobile-l) {
+    font-size: $large-font-size-01;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $large-font-size-02;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $large-font-size-03;
+  }
+}
+
+.section-subtitle--large {
+  font-size: $large-font-size-01;
+
+  @media (min-width: $mobile-m) {
+    font-size: $large-font-size-02;
+  }
+
+  @media (min-width: $mobile-l) {
+    font-size: $large-font-size-03;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $large-font-size-04;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $large-font-size-06;
+  }
+}
+
+.section-subtitle--small {
+  font-size: $larger-font-size;
+
+  @media (min-width: $mobile-m) {
+    font-size: $larger-font-size-00;
+  }
+
+  @media (min-width: $mobile-l) {
+    font-size: $larger-font-size-01;
+  }
+
+  @media (min-width: $desktop-m) {
+    font-size: $larger-font-size-02;
+  }
+
+  @media (min-width: $desktop-xl) {
+    font-size: $larger-font-size-03;
+  }
+}

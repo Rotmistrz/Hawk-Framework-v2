@@ -1,0 +1,63 @@
+.icon-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &__icon-container {
+    padding: 0 12px 0 0;
+  }
+
+  &__icon {
+    display: block;
+    width: 26px;
+
+    @media (min-width: $desktop-xl) {
+      width: 32px;
+    }
+  }
+  &__icon--small {
+    width: 20px;
+
+    @media (min-width: $desktop-xl) {
+      width: 24px;
+    }
+  }
+}
+.icon-label--small-space {
+  .icon-label__icon-container {
+    padding-right: 8px;
+  }
+}
+.icon-label--more-space {
+  .icon-label__icon-container {
+    padding-right: 20px;
+  }
+}
+.icon-label--reverse {
+  .icon-label__icon-container {
+    padding: 0 0 0 12px;
+  }
+}
+.icon-label--reverse.icon-label--more-space {
+  .icon-label__icon-container {
+    padding-left: 20px;
+  }
+}
+
+.icon-label--decorated {
+  .icon-label__icon-container {
+    position: relative;
+    padding-right: 32px;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 10%;
+      right: 16px;
+      width: 1px;
+      height: 80%;
+      background: $dark-color-op20;
+    }
+  }
+}
