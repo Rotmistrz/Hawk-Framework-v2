@@ -1,69 +1,72 @@
-import FormSender from './FormSender.Hawk';
+import Hawk from "../../Core.Hawk";
+import FormSender from "./FormSender.Hawk";
 
 export default class AjaxFormSender extends FormSender {
-	constructor(form, fields, path, options, multifields) {
-		super(form, fields, options, multifields);
+  constructor(form, fields, path, options, multifields) {
+    super(form, fields, options, multifields);
 
-		this.path = path;
-	}
+    this.path = path;
+  }
 
-	getDefaultOptions() {
-        let defaultOptions = super.getDefaultOptions();
-        defaultOptions.method = "POST";
+  getDefaultOptions() {
+    let defaultOptions = super.getDefaultOptions();
+    defaultOptions.method = "POST";
 
-        return defaultOptions;
-    }
+    return defaultOptions;
+  }
 
-    send() {
-		const data = this.collectData(this.form.get(0));
+  send() {
+    const data = this.collectData(this.form.get(0));
 
-		$.ajax({
-            url: this.path,
-            type: this.options.method,
-            data: data,
-            cache: false,
-            processData: false, // Don't process the files
-            contentType: false,
-            dataType: 'json',
-            success: (result) => {
-                //console.log(result);
+    $.ajax({
+      url: this.path,
+      type: this.options.method,
+      data: data,
+      cache: false,
+      processData: false, // Don't process the files
+      contentType: false,
+      dataType: "json",
+      success: (result) => {
+        Hawk.writeDebugError(result);
 
-                if (result.status == Hawk.RequestStatus.SUCCESS) {
-                    this.clear();
+        if (result.status == Hawk.RequestStatus.SUCCESS) {
+          this.clear();
 
-                    if (this.options.autoDisable) {
-                    	this.hideButton();
+          if (this.options.autoDisable) {
+            this.hideButton();
 
-                    	this.disable();
-                    }
+            this.disable();
+          }
 
-                    this.options.onSuccess(result);
-                } else if (result.status == Hawk.RequestStatus.PENDING) {
-                    this.options.onPending(result);
-                } else if (result.status == Hawk.RequestStatus.ERROR) {
-                	this.options.onError(result);
-                } else {
-                	this.options.onException(result);
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                //console.log(jqXHR.responseText);
+          this.options.onSuccess(result);
+        } else if (result.status == Hawk.RequestStatus.PENDING) {
+          this.options.onPending(result);
+        } else if (result.status == Hawk.RequestStatus.ERROR) {
+          this.options.onError(result);
+        } else {
+          this.options.onException(result);
+        }
+      },
+      error: (jqXHR, textStatus, errorThrown) => {
+        Hawk.writeDebugError(jqXHR.responseText);
 
-                this.changeMessage("There occurred an unexpected error during processing the form. Please try again later.");
+        this.changeMessage(
+          "There occurred an unexpected error during processing the form. Please try again later."
+        );
 
-                //console.log(errorThrown);
+        //console.log(errorThrown);
 
-                if (typeof this.options.onException == 'function') {
-                    this.options.onException();
-                }
-            },
-            complete: (jqXHR) => {
-                this.hideSpinner();
+        if (typeof this.options.onException == "function") {
+          this.options.onException();
+        }
+      },
+      complete: (jqXHR) => {
+        this.hideSpinner();
 
-                this.finishWorking();
+        this.finishWorking();
 
-                this.options.onComplete();
-            }
-        });
-	}
+        this.options.onComplete();
+      },
+    });
+  }
 }

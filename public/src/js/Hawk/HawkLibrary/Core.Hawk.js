@@ -7,7 +7,7 @@ Hawk = {
     anchorSuffix: '-anchor',
 
     settings: {
-        DEBUG_MODE: true
+        DEBUG_MODE: false
     }
 }
 
@@ -192,6 +192,28 @@ Hawk.scrollToElement = function(options) {
     setTimeout(function(){
         $(options.container).scrollTo(options.anchor, options.duration, {'axis': 'y', 'offset': offset, onAfter: function() { options.callback(); } });
     }, options.delay);
+
+    return this;
+}
+
+Hawk.refresh = function() {
+    this.w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    this.h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeigh;
+
+    return this;
+}
+
+Hawk.run = function(showingLayer) {
+    var that = this;
+
+    var pageLoadingLayer = $(showingLayer);
+    pageLoadingLayer.velocity("fadeOut", {
+        duration: 1000
+    });
+
+    $(window).resize(function() {
+        that.refresh();
+    });
 
     return this;
 }

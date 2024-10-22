@@ -55,6 +55,12 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 		return this.done;
 	}
 
+	resetLoadedItemsAmount() {
+		this.loadedItemsAmount = 0;
+
+		return this.loadedItemsAmount;
+	}
+
 	getLoadedItemsAmount() {
 		return this.loadedItemsAmount;
 	}
@@ -81,6 +87,12 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 
 	setFilters(filters) {
 		this.filters = filters;
+
+		return this;
+	}
+
+	setFilter(name, value) {
+		this.filters[name] = value;
 
 		return this;
 	}
@@ -123,30 +135,36 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 					lang: this.getLang()
 				},
 	            success: (result) => {
-	            	Hawk.writeDebugInfo(result);
+					Hawk.writeDebugInfo(result);
 
 	                this.appendContent(result.html, result);
 	                this.offset = result.offset;
 
 	                this.done = result.isDone;
 
-					this.increaseLoadedItemsAmount(result.loadedItemsAmount);
+	                if (result.allItemsAmount == 0) {
+						this.resetLoadedItemsAmount();
+					}
+
+	                this.increaseLoadedItemsAmount(result.loadedItemsAmount);
 
 	                if (this.isDone()) {
 	                	this.options.onDone(this.buttons, this.contentContainer, result);
 	                }
 
-	                if (this.getLoadedItemsAmount() == 0) {
+	                if (this.getLoadedItemsAmount() == 0) { // result.offset == 0 && result.isDone
 	                	this.showNoItemsInfo();
 					} else {
 	                	this.hideNoItemsInfo();
 					}
+
+	                //console.log(this.getLoadedItemsAmount());
 	            },
 	            error: function(jqXHR, textStatus, errorThrown) {
 	                // here should appear error layer
 	                //alert(errorThrown);
 
-	                Hawk.writeDebugError(jqXHR.responseText);
+					Hawk.writeDebugError(jqXHR.responseText);
 	            },
 	            complete: () => {
 	                this.finishWorking();
@@ -206,6 +224,7 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 
 		this.offset = 0;
 		this.done = false;
+		this.resetLoadedItemsAmount();
 	}
 
 	run() {

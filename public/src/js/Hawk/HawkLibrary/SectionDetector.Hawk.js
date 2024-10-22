@@ -72,10 +72,10 @@ export default class SectionDetector {
 			this.checkSections();
 		});
 
-		//setTimeout(() => {
+		setTimeout(() => {
 			this.scrollY = $(window).scrollTop();
 
 			this.checkSections();
-		//}, 200);
+		}, 200);
 	}
 }

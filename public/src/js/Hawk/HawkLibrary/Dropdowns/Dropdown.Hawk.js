@@ -1,6 +1,6 @@
 import Hawk from '../Core.Hawk';
-import DropdownType from 'Enums/DropdownType.Hawk';
-import DropdownDirection from 'Enums/DropdownDirection.Hawk';
+import DropdownType from './Enums/DropdownType.Hawk';
+import DropdownDirection from './Enums/DropdownDirection.Hawk';
 
 export default function Dropdown(container, options) {
     var that = this;
@@ -120,7 +120,7 @@ export default function Dropdown(container, options) {
     }
 
     this.doesNeedScrollbar = function() {
-        return this.list.get(0).offsetHeight < this.list.get(0).scrollHeight;
+        return this.listContainer.get(0).offsetHeight < this.list.get(0).scrollHeight;
     }
 
     this.show = function() {
@@ -132,7 +132,7 @@ export default function Dropdown(container, options) {
             easing: "linear",
             complete: () => {
                 if (this.doesNeedScrollbar()) {
-                    this.list.mCustomScrollbar();
+                    this.listContainer.mCustomScrollbar();
                 }
 
                 if (typeof that.options.onShow === 'function') {

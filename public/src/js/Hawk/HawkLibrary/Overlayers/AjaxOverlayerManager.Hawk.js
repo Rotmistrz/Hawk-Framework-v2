@@ -38,7 +38,7 @@ export default class AjaxOverlayerManager extends OverlayerManager {
 
 					this.hide();
 
-					//console.log(jqXHR.responseText);
+					this.options.onError(jqXHR.responseText);
 				},
 				complete: () => {
 					this.finishWorking();

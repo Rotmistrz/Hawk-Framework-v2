@@ -1,4 +1,7 @@
-Hawk.FileFormField = class extends Hawk.FormField {
+import Hawk from '../../Core.Hawk';
+import FormField from "./FormField.Hawk";
+
+export default class FileFormField extends FormField {
 	constructor(name, allowedTypes, options) {
 		super(name, options);
 

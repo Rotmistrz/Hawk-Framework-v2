@@ -1,10 +1,10 @@
-import Hawk from 'HawkLibrary/Core.Hawk';
+import Hawk from "./HawkLibrary/Core.Hawk";
 
-import AnchorsManager from 'HawkLibrary/AnchorsManager.Hawk';
-import BookmarksManager from 'HawkLibrary/BookmarksManager.Hawk';
+import AnchorsManager from "./HawkLibrary/AnchorsManager.Hawk";
+import BookmarksManager from "./HawkLibrary/BookmarksManager.Hawk";
 import Countdown from "./HawkLibrary/Calendar/Countdown.Hawk";
-import Dropdown from 'HawkLibrary/Dropdowns/Dropdown.Hawk';
-import DetailsList from 'HawkLibrary/DetailsList.Hawk';
+import Dropdown from "./HawkLibrary/Dropdowns/Dropdown.Hawk";
+import DetailsList from "./HawkLibrary/DetailsList.Hawk";
 import RequestStatus from "./HawkLibrary/Requests/RequestStatus.Hawk";
 import SimpleOverlayerManager from "./HawkLibrary/Overlayers/SimpleOverlayerManager.Hawk";
 import AjaxOverlayerManager from "./HawkLibrary/Overlayers/AjaxOverlayerManager.Hawk";
@@ -21,7 +21,14 @@ import AjaxItemsManager from "./HawkLibrary/ItemsManagers/AjaxItemsManager.Hawk"
 import AjaxLoadingItemsManager from "./HawkLibrary/ItemsManagers/AjaxLoadingItemsManager.Hawk";
 import Pager from "./HawkLibrary/Pageable/Pager.Hawk";
 import StepsManager from "./HawkLibrary/Pageable/StepsManager.Hawk";
-
+import Validator from "./HawkLibrary/Validation/Validator.Hawk";
+import ChoiceFormField from "./HawkLibrary/Forms/Fields/ChoiceFormField.Hawk";
+import TextFormField from "./HawkLibrary/Forms/Fields/TextFormField.Hawk";
+import TextareaFormField from "./HawkLibrary/Forms/Fields/TextareaFormField.Hawk";
+import FileFormField from "./HawkLibrary/Forms/Fields/FileFormField.Hawk";
+import AjaxFormSender from "./HawkLibrary/Forms/FormSenders/AjaxFormSender.Hawk";
+import StaticFormSender from "./HawkLibrary/Forms/FormSenders/StaticFormSender.Hawk";
+import SectionDetector from "./HawkLibrary/SectionDetector.Hawk";
 
 Hawk.AnchorsManager = AnchorsManager;
 
@@ -34,6 +41,14 @@ Hawk.HeightAdjuster = HeightAdjuster;
 Hawk.LayeredSection = LayeredSection;
 Hawk.MoreContentManager = MoreContentManager;
 Hawk.SlideMenu = SlideMenu;
+
+Hawk.ChoiceFormField = ChoiceFormField;
+Hawk.TextFormField = TextFormField;
+Hawk.TextareaFormField = TextareaFormField;
+Hawk.FileFormField = FileFormField;
+
+Hawk.AjaxFormSender = AjaxFormSender;
+Hawk.StaticFormSender = StaticFormSender;
 
 Hawk.Pager = Pager;
 Hawk.StepsManager = StepsManager;
@@ -49,5 +64,9 @@ Hawk.ConfirmationManager = ConfirmationManager;
 
 Hawk.RequestStatus = RequestStatus;
 Hawk.Routes = Routes;
+
+Hawk.SectionDetector = SectionDetector;
+
+Hawk.Validator = Validator;
 
 export default Hawk;

@@ -255,15 +255,21 @@ export default class AjaxItemsManager extends SingleThreadClass {
 		this.load(this.getPage());
 	}
 
-	run(page) {
+	run(page, launch) {
 		if (typeof page == 'undefined') {
 			page = 1;
+		}
+
+		if (typeof launch == 'undefined') {
+			launch = 1;
 		}
 
 		this.contentContainer = this.container.find('.' + this.options.contentContainerClass);
 		this.noResultsContainer = this.container.find('.' + this.options.noResultsClass);
 		this.loadingLayer = this.container.find('.' + this.options.loadingLayerClass);
 
-		this.load(page, true);
+		if (launch) {
+			this.load(page, true);
+		}
 	}
 }

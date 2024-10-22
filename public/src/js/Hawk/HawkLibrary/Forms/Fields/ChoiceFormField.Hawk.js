@@ -1,4 +1,6 @@
-Hawk.ChoiceFormField = class extends Hawk.FormField {
+import FormField from './FormField.Hawk';
+
+export default class ChoiceFormField extends FormField {
 	constructor(name, options) {
 		super(name, options);
 	}

@@ -1,4 +1,6 @@
-Hawk.FormField = class {
+import Hawk from '../../Core.Hawk';
+
+export default class FormField {
 	constructor(name, options) {
 		this.name = name;
 		this.field = null;

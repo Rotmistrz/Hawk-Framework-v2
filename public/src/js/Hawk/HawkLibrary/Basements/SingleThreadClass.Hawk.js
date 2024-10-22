@@ -1,42 +1,42 @@
 export default class SingleThreadClass {
-	constructor() {
-		this.request = null;
-		this.requestWorking = false;
-	}
+  constructor() {
+    this.request = null;
+    this.requestWorking = false;
+  }
 
-	setRequest(request) {
-		this.request = request;
-	
-		return this;
-	}
+  setRequest(request) {
+    this.request = request;
 
-	getRequest() {
-		return this.request;
-	}
+    return this;
+  }
 
-	abortRequest() {
-		if (typeof this.request != 'undefined') {
-			this.request.abort();
-		}
+  getRequest() {
+    return this.request;
+  }
 
-		return this;
-	}
+  abortRequest() {
+    if (typeof this.request != "undefined") {
+      this.request.abort();
+    }
 
-	clearRequest() {
-		this.request = null;
+    return this;
+  }
 
-		return this;
-	}
+  clearRequest() {
+    this.request = null;
 
-	isWorking() {
-		return this.requestWorking;
-	}
+    return this;
+  }
 
-	startWorking() {
-		this.requestWorking = true;
-	}
+  isWorking() {
+    return this.requestWorking;
+  }
 
-	finishWorking() {
-		this.requestWorking = false;
-	}
+  startWorking() {
+    this.requestWorking = true;
+  }
+
+  finishWorking() {
+    this.requestWorking = false;
+  }
 }
