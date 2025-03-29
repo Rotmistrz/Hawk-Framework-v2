@@ -5,6 +5,7 @@ export default class AnchorsManager {
         this.defaultOptions = {
             delay: 100,
             loadingDelay: 500,
+            speed: 800,
             menu: undefined,
             anchorSuffix: Hawk.anchorSuffix,
             eventName: "click.anchorsManager",
@@ -30,20 +31,24 @@ export default class AnchorsManager {
     }
 
     goTo(anchor) {
-        Hawk.scrollToElement({ anchor: anchor + this.getAnchorSuffix(), offset: this.options.offset() });
+        Hawk.scrollToElement({ anchor: anchor + this.getAnchorSuffix(), offset: this.options.offset(), duration: this.options.speed });
     }
 
     isLinkBlank(link) {
         return typeof link.attr('data-anchor-type') != 'undefined' && link.attr('data-anchor-type') == 'blank';   
     }
 
-    movingAction(e) {
-        const regex = /#{1}.+$/;
+    movingAction(e, extraDelay) {
         const link = $(e.currentTarget);
 
         const href = link.attr('href');
+
+        const regex = /#{1}.+$/;
         let anchor;
-        let extraDelay = 0;
+
+        if (typeof extraDelay == 'undefined') {
+            extraDelay = 0;
+        }
 
         if (anchor = regex.exec(href)) {
             const rawAnchor = anchor[0] + this.getAnchorSuffix();
@@ -62,8 +67,8 @@ export default class AnchorsManager {
                 const callback = (!this.isLinkBlank(link)) ? function() {
                     window.location.hash = anchor;
                 } : function() {};
-          
-                Hawk.scrollToElement({ anchor: rawAnchor, callback: callback, delay: finalDelay, offset: this.options.offset() });
+
+                Hawk.scrollToElement({ anchor: rawAnchor, callback: callback, delay: finalDelay, offset: this.options.offset(), duration: this.options.speed });
             }
         }
     }

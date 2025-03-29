@@ -1,0 +1,239 @@
+.icon-hamburger {
+  display: block;
+  width: 28px;
+  position: relative;
+
+  @media (min-width: $tablet-xl) {
+    width: 24px;
+  }
+
+  &__inner {
+    height: 17px;
+    position: relative;
+    overflow: hidden;
+
+    > div {
+      position: absolute;
+      left: 0;
+      height: 2px;
+      background: $dark-color;
+      width: 100%;
+      @include transition(all .2s ease-in-out);
+
+      @media (min-width: $tablet-xl) {
+
+      }
+    }
+
+    > div:nth-child(1),
+    > div:nth-child(4) {
+      top: 0;
+    }
+
+    > div:nth-child(2),
+    > div:nth-child(5) {
+      top: 7px;
+    }
+
+    > div:nth-child(3),
+    > div:nth-child(6) {
+      top: 14px;
+    }
+
+    > div:nth-child(4) {
+      @include transition(all .2s linear);
+    }
+
+    > div:nth-child(5) {
+      @include transition(all .4s linear);
+    }
+
+    > div:nth-child(6) {
+      @include transition(all .6s linear);
+    }
+
+    > .icon-hamburger__hover-bar {
+      background: $primary-color;
+      left: -100%;
+
+      &:nth-child(4) {
+        @include transition(all .6s linear);
+      }
+
+      &:nth-child(5) {
+        @include transition(all .4s linear);
+      }
+
+      &:nth-child(6) {
+        @include transition(all .2s linear);
+      }
+    }
+  }
+
+  &:hover,
+  &:focus {
+    .icon-hamburger__inner {
+      > .icon-hamburger__hover-bar {
+        left: 0;
+      }
+    }
+  }
+}
+
+.icon-hamburger--incomplete-both-sides {
+  width: 40px;
+
+  .icon-hamburger__inner {
+    > div {
+      height: 1px;
+
+      &:nth-child(1) {
+        width: 50%;
+
+      }
+
+      &:nth-child(3) {
+        width: 50%;
+        left: 50%;
+      }
+    }
+  }
+}
+.icon-hamburger--incomplete-both-sides.open {
+  .icon-hamburger__inner {
+    overflow: visible;
+
+    > div {
+      background: $light-color;
+    }
+
+    > div:nth-child(1),
+    > div:nth-child(4) {
+      top: 7px;
+      left: auto;
+      right: 0;
+      width: 32px;
+      @include transform(rotate(135deg));
+    }
+
+    > div:nth-child(3),
+    > div:nth-child(6) {
+      opacity: 0;
+      left: -100%;
+    }
+
+    > div:nth-child(2),
+    > div:nth-child(5) {
+      top: 7px;
+      left: auto;
+      @include transform(rotate(-135deg));
+      right: 0;
+      width: 32px;
+    }
+  }
+}
+
+.icon-hamburger.open {
+  .icon-hamburger__inner {
+    overflow: visible;
+
+    > div {
+      background: $light-color;
+    }
+
+    > div:nth-child(1),
+    > div:nth-child(4) {
+      top: 7px;
+      left: auto;
+      right: 0;
+      width: 24px;
+      @include transform(rotate(135deg));
+    }
+
+    > div:nth-child(3),
+    > div:nth-child(6) {
+      opacity: 0;
+      left: -100%;
+    }
+
+    > div:nth-child(2),
+    > div:nth-child(5) {
+      top: 7px;
+      left: auto;
+      @include transform(rotate(-135deg));
+      right: 0;
+      width: 24px;
+    }
+  }
+}
+
+.icon-hamburger--primary {
+  .icon-hamburger__inner {
+    > div {
+      background: $primary-color;
+    }
+  }
+}
+
+.icon-hamburger--light {
+  .icon-hamburger__inner {
+    > div {
+      background: $light-color;
+    }
+  }
+}
+
+.icon-hamburger--large {
+  width: 32px;
+
+  .icon-hamburger__inner {
+    height: 20px;
+
+    > div {
+      height: 4px;
+    }
+
+    > div:nth-child(1),
+    > div:nth-child(4) {
+      top: 0;
+    }
+
+    > div:nth-child(2),
+    > div:nth-child(5) {
+      top: 8px;
+    }
+
+    > div:nth-child(3),
+    > div:nth-child(6) {
+      top: 16px;
+    }
+  }
+
+}
+
+.icon-hamburger--small {
+  width: 20px;
+  height: 12px;
+
+  .icon-hamburger__inner {
+    > div {
+      height: 2px;
+    }
+
+    > div:nth-child(1),
+    > div:nth-child(4) {
+      top: 0;
+    }
+
+    > div:nth-child(2),
+    > div:nth-child(5) {
+      top: 5px;
+    }
+
+    > div:nth-child(3),
+    > div:nth-child(6) {
+      top: 10px;
+    }
+  }
+
+}

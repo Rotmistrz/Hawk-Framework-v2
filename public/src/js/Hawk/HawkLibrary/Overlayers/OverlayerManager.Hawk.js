@@ -76,6 +76,8 @@ export default class OverlayerManager extends SingleThreadClass {
         });
       },
 
+      createAnchor: this.defaultCreateAnchor,
+
       onLoading: (aom, id, result) => {},
       onLoad: (aom, id, result) => {},
       onError: (responseText) => {},
@@ -200,7 +202,7 @@ export default class OverlayerManager extends SingleThreadClass {
     }
 
     if (typeof result.anchor != "undefined" && result.anchor.length > 0) {
-      this.setHash(this.createAnchor(result.anchor, result.bundle));
+      this.setHash(this.createAnchor(this, result.anchor, result.bundle));
     }
 
     $(window).bind(this.options.popstateEventName, (e) => {
@@ -224,7 +226,11 @@ export default class OverlayerManager extends SingleThreadClass {
     return this;
   }
 
-  createAnchor(anchor, bundle) {
+  createAnchor(aom, anchor, bundle) {
+    return this.options.createAnchor(aom, anchor, bundle);
+  }
+
+  defaultCreateAnchor(aom, anchor, bundle) {
     let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
 
     if (typeof bundle != "undefined") {

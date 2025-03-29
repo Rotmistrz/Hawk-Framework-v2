@@ -41,7 +41,8 @@ export default class Pager {
 	}
 
 	getPage() {
-		return this.page;
+		// return this.page;
+		return parseInt(this.page);
 	}
 
 	setPage(page) {
@@ -144,15 +145,17 @@ export default class Pager {
 
 	isOnEdge(page) {
 		return (page < this.options.edgeVisiblePagesNumber)
-				|| (page > (this.getPagesNumber() - this.options.edgeVisiblePagesNumber + 1));
+			|| (page > (this.getPagesNumber() - this.options.edgeVisiblePagesNumber + 1));
 	}
 
 	isFirstPage() {
-		return this.getPage() == 1;
+		return this.getPage() == 1 || this.getPage() == 0;
+		// return this.getPage() == 1;
 	}
 
 	isLastPage() {
-		return this.getPage() == this.getPagesNumber();
+		// return this.getPage() == this.getPagesNumber();
+		return this.getPage() == this.getPagesNumber() || this.getPagesNumber() == 0;
 	}
 
 	isPageVisible(page) {

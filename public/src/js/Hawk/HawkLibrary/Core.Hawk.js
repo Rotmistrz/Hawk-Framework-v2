@@ -206,10 +206,12 @@ Hawk.refresh = function() {
 Hawk.run = function(showingLayer) {
     var that = this;
 
-    var pageLoadingLayer = $(showingLayer);
-    pageLoadingLayer.velocity("fadeOut", {
-        duration: 1000
-    });
+    if (typeof showingLayer != 'undefined') {
+        var pageLoadingLayer = $(showingLayer);
+        pageLoadingLayer.velocity("fadeOut", {
+            duration: 1000
+        });
+    }
 
     $(window).resize(function() {
         that.refresh();

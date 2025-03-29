@@ -1,21 +1,18 @@
-$dark-color: #000;
-$dark-color-op60: rgba($dark-color, 0.6);
-$dark-color-op30: rgba($dark-color, 0.3);
-$dark-color-op20: rgba($dark-color, 0.2);
+/***** COLOURS *****/
 
+// base dark colours
+
+$dark-color: #000;
 $dark-color-01: #222222;
 $dark-color-02: #444444;
 $dark-color-03: #777777;
 $dark-color-04: #3d3d3d;
 
-$primary-color: #fa6900;
-$primary-color-02: #f38630;
+$dark-color-op60: rgba($dark-color, 0.6);
+$dark-color-op30: rgba($dark-color, 0.3);
+$dark-color-op20: rgba($dark-color, 0.2);
 
-$secondary-color: #69d2e7;
-$secondary-color-02: #23aaba;
-
-$tertiary-color: #CCF622;
-$tertiary-color-02: #e9187c;
+// base light colours
 
 $light-color: #fff;
 $light-color-op60: rgba($light-color, 0.6);
@@ -26,32 +23,42 @@ $light-color-03: #f5f5f5;
 $light-color-04: #e1e1e1;
 $light-color-05: #fefdfd;
 $light-color-06: #777;
-$light-color-07: #4b4b4b;
-$light-color-10: #e5e5e5; // leading grey
-$light-color-11: #fff2dd; // piaskowy jasniejszy
-$light-color-12: #ece1cb; // piaskowy ciemniejszy
-$light-color-13: #eee;
+$light-color-07: #e5e5e5;
 
-$light-background: rgba(255, 255, 255, 0.8);
+// base accent colours
 
-$grey: #444;
+$primary-color: #fa6900;
+$primary-color-02: #f38630;
+
+$secondary-color: #69d2e7;
+$secondary-color-02: #23aaba;
+
+$tertiary-color: #1e1e1e;
+$tertiary-color-02: #2e2e2e;
+
+// functional colours
+
+$main-text-color: $dark-color;
+$main-bg-color: $light-color;
+
 $error-color: #db2b39;
-
 $success-color: #090;
-$green-color: #14d64b;
 
-$std-shadow: -3px 6px 20px rgba(0, 0, 0, 0.1);
+/***** FONTS *****/
 
-$sans-serif-font-family: "fearless", sans-serif;
-$second-sans-serif-font-family: "inter", sans-serif;
-$third-sans-serif-font-family: Arial, sans-serif;
-$serif-font-family-primary: "bureau-grot";
+// font families
 
-$serif-font-family: serif;
-$second-serif-font-family: serif;
-$third-serif-font-family: serif;
+$sans-serif-font-family: Tahoma, Arial, sans-serif;
+$second-sans-serif-font-family: Tahoma, Arial, sans-serif;
+$third-sans-serif-font-family: Tahoma, Arial, sans-serif;
+
+$serif-font-family: "Times New Roman", serif;
+$second-serif-font-family: "Times New Roman", serif;
+$third-serif-font-family: "Times New Roman", serif;
 
 $monospace-font-family: "Courier New", monospace;
+
+// font sizes
 
 $main-font-size: 14px;
 $main-font-size-00: 15px;
@@ -234,7 +241,9 @@ $very-huge-font-size-28: 114px;
 $very-huge-font-size-29: 116px;
 $very-huge-font-size-30: 118px;
 
-/* RWD */
+/***** DIMENSIONS *****/
+
+/* resolutions */
 
 $mobile-s: 380px;
 $mobile-m: 420px;
@@ -251,28 +260,3 @@ $desktop-m: 1300px;
 $desktop-l: 1500px;
 $desktop-xl: 1700px;
 $desktop-xxl: 2000px;
-
-$silver: #898c8e;
-$graphite: #1d252c;
-
-/* RWD */
-
-$rwd-360: 360px;
-$rwd-380: 380px;
-$rwd-420: 420px;
-$rwd-480: 480px;
-$rwd-500: 500px;
-$rwd-550: 550px;
-$rwd-650: 650px;
-$rwd-768: 768px;
-$rwd-860: 860px;
-$rwd-900: 900px;
-$rwd-992: 992px;
-$rwd-1100: 1100px;
-$rwd-1200: 1200px;
-$rwd-1300: 1300px;
-$rwd-1400: 1400px;
-$rwd-1500: 1500px;
-$rwd-1600: 1600px;
-$rwd-1700: 1700px;
-$rwd-1800: 1800px;

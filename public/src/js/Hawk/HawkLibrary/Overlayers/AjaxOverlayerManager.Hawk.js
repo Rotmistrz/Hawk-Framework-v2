@@ -30,11 +30,15 @@ export default class AjaxOverlayerManager extends OverlayerManager {
 				dataType: "json",
 				data: { id: id, bundle: bundle, lang: this.getLang() },
 				success: (result) => {
+					Hawk.writeDebugInfo(result);
+
 					this.actionLoad(id, result);
 				},
 				error: (jqXHR, textStatus, errorThrown) => {
 					// here should appear error layer
 					//alert(errorThrown);
+
+					Hawk.writeDebugError(jqXHR.responseText);
 
 					this.hide();
 

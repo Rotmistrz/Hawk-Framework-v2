@@ -1,0 +1,25 @@
+.common-ajax-items-manager {
+  position: relative;
+
+  &__content-wrapper {
+    position: relative;
+  }
+
+  &__loading-layer {
+    background: rgba($light-color, .7);
+    z-index: 8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__pager {
+    padding: 32px 0 0 0;
+
+    @media (min-width: $desktop-m) {
+      padding-top: 48px;
+    }
+  }
+}

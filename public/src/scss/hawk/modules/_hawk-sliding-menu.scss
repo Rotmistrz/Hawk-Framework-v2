@@ -1,0 +1,178 @@
+.hawk-sliding-menu {
+  position: fixed;
+  z-index: 9020;
+  display: block;
+  width: 100%;
+  //overflow: auto;
+  height: 100%;
+
+  &__wrapper {
+    min-height: 100%;
+    position: relative;
+    height: 100%;
+  }
+
+  &__inner {
+
+  }
+}
+.hawk-sliding-menu--open {
+
+}
+
+/** fade **/
+.hawk-sliding-menu--fade {
+  display: none;
+}
+
+.hawk-sliding-menu--fade.hawk-sliding-menu--open {
+
+}
+
+.hawk-sliding-menu--fade.hawk-sliding-menu--top {
+  top: -2px;
+  left: 0;
+  right: auto;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--fade.hawk-sliding-menu--right {
+  top: 0;
+  left: auto;
+  right: 0;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--fade.hawk-sliding-menu--bottom {
+  top: auto;
+  left: 0;
+  right: auto;
+  bottom: 0;
+}
+
+.hawk-sliding-menu--fade.hawk-sliding-menu--left {
+  top: 0;
+  left: 0;
+  right: auto;
+  bottom: auto;
+}
+
+/** slide **/
+.hawk-sliding-menu--slide {
+  display: block;
+  opacity: 1;
+  @include transition(all .3s linear);
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--top {
+  top: -110%;
+  left: auto;
+  right: 0;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--top.hawk-sliding-menu--open {
+  top: -2px;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--right {
+  top: 0;
+  left: auto;
+  right: -100%;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--right.hawk-sliding-menu--open {
+  right: 0;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--bottom {
+  top: auto;
+  left: 0;
+  right: auto;
+  bottom: -100%;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--bottom.hawk-sliding-menu--open {
+  bottom: 0;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--left {
+  top: 0;
+  left: -100%;
+  right: auto;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--slide.hawk-sliding-menu--left.hawk-sliding-menu--open {
+  left: 0;
+}
+
+/** slide-fade **/
+.hawk-sliding-menu--slide-fade {
+  display: block;
+  opacity: 1;
+  @include transition(all 0.4s cubic-bezier(0.98, 0, 1, 0.98) .4s);
+  //@include transition(all 0.4s cubic-bezier(0, 1, 0.6, 0.98) .4s);
+
+  .hawk-sliding-menu__inner {
+    opacity: 0;
+    @include transition(opacity 0.3s ease-out);
+  }
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--open {
+  @include transition(all 0.4s cubic-bezier(0, 1, 0.6, 0.98));
+  //@include box-shadow(0px 12px 20px rgba(0, 0, 0, 0.08));
+
+  .hawk-sliding-menu__inner {
+    opacity: 1;
+    @include transition(opacity 0.3s ease-in 0.4s);
+  }
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--top {
+  @include transform(translate3d(0, -200%, 0));
+  //top: -200%;
+  left: auto;
+  right: 0;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--top.hawk-sliding-menu--open {
+  @include transform(translate3d(0, 0, 0));
+  top: -2px;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--right {
+  top: 0;
+  left: auto;
+  right: -100%;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--right.hawk-sliding-menu--open {
+  right: 0;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--bottom {
+  top: auto;
+  left: 0;
+  right: auto;
+  bottom: -100%;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--bottom.hawk-sliding-menu--open {
+  bottom: 0;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--left {
+  top: 0;
+  left: -100%;
+  right: auto;
+  bottom: auto;
+}
+
+.hawk-sliding-menu--slide-fade.hawk-sliding-menu--left.hawk-sliding-menu--open {
+  left: 0;
+}

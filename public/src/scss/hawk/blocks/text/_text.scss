@@ -40,7 +40,7 @@
 
     > li {
       position: relative;
-      padding: 4px 0 4px 32px;
+      padding: 2px 0 2px 32px;
 
       &:before {
         content: counters(textOrderedList, ".") ".";
@@ -68,7 +68,7 @@
         content: "";
         display: block;
         position: absolute;
-        top: 10px;
+        top: 12px;
         left: 0;
         width: 6px;
         height: 6px;
@@ -89,7 +89,7 @@
   }
 }
 .text--thin {
- font-weight: 300;
+  font-weight: 300;
 }
 .text--second-font {
   font-family: $sans-serif-font-family;

@@ -20,7 +20,7 @@
     height: 1px;
     width: 100%;
     background: $dark-color;
-    @include transition(all .2s linear);
+    @include transition(all 0.2s linear);
   }
 
   &__core {
@@ -39,7 +39,7 @@
     font-family: $sans-serif-font-family;
     font-weight: 400;
     outline: none;
-    @include transition(all .2s linear);
+    @include transition(all 0.2s linear);
     @include box-sizing(border-box);
     @include border-radius(0);
 

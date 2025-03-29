@@ -91,10 +91,50 @@ export default class AjaxLoadingItemsManager extends SingleThreadClass {
 		return this;
 	}
 
-	setFilter(name, value) {
-		this.filters[name] = value;
+	setFilter(type, value) {
+		this.filters[type] = value;
 
 		return this;
+	}
+
+	addFilter(type, value) {
+		if (typeof this.filters[type] == 'undefined') {
+			this.filters[type] = [];
+		}
+
+		this.filters[type].push(value);
+	}
+
+	removeAllFiltersOfType(type) {
+		if (typeof this.filters[type] != 'undefined') {
+			//delete this.filters[type];
+			//
+			// let currentFilter = this.filters[type];
+			//
+			// for (let i in currentFilter) {
+			// 	this.removeFilterLabel(type, currentFilter[i]);
+			// }
+
+			this.filters[type] = [];
+		}
+	}
+
+	removeFilter(type, value) {
+		if (typeof this.filters[type] != 'undefined') {
+			//delete this.filters[type];
+
+			let currentFilter = this.filters[type];
+
+			for (let i in currentFilter) {
+				if (currentFilter[i] == value) {
+					currentFilter.splice(i, 1);
+
+					this.removeFilterLabel(type, value);
+
+					return;
+				}
+			}
+		}
 	}
 
 	getOrderBy() {

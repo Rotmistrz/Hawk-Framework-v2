@@ -1,0 +1,11 @@
+.pager-item {
+  font-weight: 300;
+  font-size: $large-font-size;
+
+  &:before {
+    background: $dark-color;
+  }
+}
+.pager-item.active {
+  font-weight: 700;
+}

@@ -13,7 +13,7 @@ import ConfirmationManager from "./HawkLibrary/Overlayers/ConfirmationManager.Ha
 import Routes from "./HawkLibrary/Routes.Hawk";
 import MoreContentManager from "./HawkLibrary/MoreContentManager.Hawk";
 import LayeredSection from "./HawkLibrary/LayeredSection.Hawk";
-import SlideMenu from "./HawkLibrary/SlideMenu.Hawk";
+import SlidingMenu from "./HawkLibrary/SlidingMenu.Hawk";
 import HeightAdjuster from "./HawkLibrary/HeightAdjuster.Hawk";
 import EnlargingObject from "./HawkLibrary/EnlargingObject.Hawk";
 import ItemsManager from "./HawkLibrary/ItemsManagers/ItemsManager.Hawk";
@@ -40,7 +40,7 @@ Hawk.Enlarging = EnlargingObject;
 Hawk.HeightAdjuster = HeightAdjuster;
 Hawk.LayeredSection = LayeredSection;
 Hawk.MoreContentManager = MoreContentManager;
-Hawk.SlideMenu = SlideMenu;
+Hawk.SlidingMenu = SlidingMenu;
 
 Hawk.ChoiceFormField = ChoiceFormField;
 Hawk.TextFormField = TextFormField;

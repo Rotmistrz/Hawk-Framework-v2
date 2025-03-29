@@ -20,7 +20,6 @@
   align-items: flex-end;
 }
 .flex-container--reverse {
-
   @media (min-width: $tablet-m) {
     flex-direction: row-reverse;
   }

@@ -1,9 +1,15 @@
 @import "_hawk-variables.scss";
 @import "_hawk-mixins.scss";
+@import "_hawk-animations.scss";
 
 /***** BARS *****/
 
 @import "blocks/bars/tabs-bar";
+
+/***** BUTTONS *****/
+
+@import "blocks/buttons/_button.scss";
+@import "blocks/buttons/_simple-tab-button.scss";
 
 /***** CONTAINERS *****/
 
@@ -12,10 +18,7 @@
 @import "blocks/containers/_flex-container.scss";
 @import "blocks/containers/_flex-column.scss";
 
-/***** BUTTONS *****/
-
-@import "blocks/buttons/_button.scss";
-@import "blocks/buttons/_simple-tab-button.scss";
+@import "blocks/containers/_common-ajax-items-manager.scss";
 
 /***** FORMS *****/
 
@@ -43,6 +46,7 @@
 @import "blocks/icons/plain-extended-icon";
 
 @import "blocks/icons/icon-arrow";
+@import "blocks/icons/icon-hamburger";
 @import "blocks/icons/icon-plus";
 @import "blocks/icons/icon-loader";
 @import "blocks/icons/icon-email";
@@ -58,6 +62,11 @@
 @import "blocks/lists/horizontal-items";
 @import "blocks/lists/breadcrumbs";
 
+/***** MENU *****/
+
+@import "blocks/menu/menu-toggler";
+@import "blocks/menu/menu-toggler-container";
+
 /***** OBJECTS *****/
 
 @import "blocks/objects/choice-item";
@@ -66,6 +75,7 @@
 @import "blocks/objects/tile";
 @import "blocks/objects/icon-label";
 @import "blocks/objects/icon-item";
+@import "blocks/objects/pager-item";
 @import "blocks/objects/titled-label";
 
 /***** TEXT *****/
@@ -96,12 +106,14 @@
 @import "modules/dropdown/_hawk-dropdown.scss";
 @import "modules/dropdown/_hawk-dropdown-theme.scss";
 
-@import "modules/pageable/_hawk-pager-theme.scss";
+@import "modules/pageable/_pager-item.scss";
+@import "modules/pageable/_std-pager.scss";
 
 @import "modules/_hawk-form.scss";
 @import "modules/_hawk-layered-section.scss";
 @import "modules/_hawk-more-content-manager.scss";
 @import "modules/_hawk-sliding-layer-section.scss";
+@import "modules/_hawk-sliding-menu.scss";
 
 @import "modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager.scss";
 @import "modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager-theme.scss";
