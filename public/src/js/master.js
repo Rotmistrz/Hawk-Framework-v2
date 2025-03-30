@@ -1,4 +1,4 @@
-import Hawk from './Hawk-v2';
+import Hawk from './Hawk/Bundle.Hawk';
 
 $(document).ready(function() {
     var App = {
@@ -28,7 +28,7 @@ $(document).ready(function() {
         //console.log(HawkExamples.exemplaryDropdown.selectByValue(2));
 
         HawkExamples.expandingDropdown = new Hawk.Dropdown($('#expanding-dropdown'), {
-            type: Hawk.DropdownConstants.Types.EXPANDING
+            type: Hawk.DropdownType.EXPANDING
         });
         HawkExamples.expandingDropdown.run();
     } else if (Hawk.Routes.is(App.Routes.WIDGETS_LAYERED_SECTION)) {
