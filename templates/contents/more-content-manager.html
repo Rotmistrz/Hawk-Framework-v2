@@ -4,28 +4,28 @@
             <div class="site-section__inner">
 
                 {% set presentationSection = {
-                title: 'More content manager',
-                anchor: 'more-content-manager',
-                listings: {
-                html: moreContentManager.listings.html,
-                js: moreContentManager.listings.js
-                },
-                links: [
-                {
-                link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/Hawk-Framework-v2/js/src/hawk-library/MoreContentManager.Hawk.js',
-                type: 'js',
-                title: 'MoreContentManager.Hawk.js'
-                },
-                {
-                link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-more-content-manager.scss',
-                type: 'css',
-                title: 'hawk-more-content-manager.scss'
-                }
-                ],
+                    title: 'More content manager',
+                    anchor: 'more-content-manager',
+                    listings: {
+                        html: moreContentManager.listings.html,
+                        js: moreContentManager.listings.js
+                    },
+                    links: [
+                    {
+                        link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/MoreContentManager.Hawk.js',
+                        type: 'js',
+                        title: 'MoreContentManager.Hawk.js'
+                    },
+                    {
+                        link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/scss/hawk/modules/_hawk-more-content-manager.scss',
+                        type: 'css',
+                        title: 'hawk-more-content-manager.scss'
+                    }
+                    ],
 
-                properties: moreContentManager.properties,
-                callbacks: moreContentManager.callbacks,
-                methods: moreContentManager.methods
+                    properties: moreContentManager.properties,
+                    callbacks: moreContentManager.callbacks,
+                    methods: moreContentManager.methods
                 } %}
 
                 {% embed('contents/_presentation-section-core.html') %}
@@ -33,7 +33,7 @@
                 {% block exampleAndDescription %}
                 <section class="subsection bounded-section">
 
-                    {% include('hawk/modules/more-content-manager/hawk-more-content-manager.html') %}
+                    {% include('hawk/widgets/more-content-manager/hawk-more-content-manager.html') %}
 
                 </section>
                 {% endblock %}

@@ -7,7 +7,8 @@ $(document).ready(function() {
         Routes: {
             WIDGETS_DROPDOWN: "widgets/dropdown/?$",
             WIDGETS_LAYERED_SECTION: "widgets/layered-section/?$",
-            MORE_CONTENT_MANAGER: "widgets/more-content-manager/?$"
+            MORE_CONTENT_MANAGER: "widgets/more-content-manager/?$",
+            DETAILS_LIST: "widgets/details-list?$"
         },
         Widgets: {
             Overlayers: {},
@@ -37,11 +38,10 @@ $(document).ready(function() {
     } else if (Hawk.Routes.is(App.Routes.MORE_CONTENT_MANAGER)) {
         HawkExamples.moreContentManager = new Hawk.MoreContentManager(1, {});
         HawkExamples.moreContentManager.run();
+    } else if (Hawk.Routes.is(App.Routes.DETAILS_LIST)) {
+        HawkExamples.detailsList = new Hawk.DetailsList($('#exemplary-details-list'), {});
+        HawkExamples.detailsList.run();
     }
-
-
-    HawkExamples.detailsList = new Hawk.DetailsList($('#exemplary-details-list'), {});
-    HawkExamples.detailsList.run();
 
     $('.scrollable-section').mCustomScrollbar({
                 axis: "y",

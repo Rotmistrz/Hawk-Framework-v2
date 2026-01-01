@@ -14,8 +14,7 @@ class WidgetController extends BaseController
     /**
      * @Route("/widgets/dropdown")
      */
-    public function dropdown()
-    {
+    public function dropdown() {
         return $this->render('pages/widgets/dropdown.html', [
             'Page' => [
                 'title' => static::getTitle("Dropdown"),
@@ -35,14 +34,14 @@ class WidgetController extends BaseController
 
             'dropdown' => [
                 'listings' => [
-                    'html' => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.html", [
+                    'html' => highlight_string($this->renderView("hawk/widgets/dropdown/hawk-dropdown.html", [
                         'dropdown' => [
                             'id' => "exemplary-dropdown",
                             'title' => "Exemplary dropdown"
                         ],
                         'autoescapeFalse' => false
                     ]), true),
-                    'js' => highlight_string($this->renderView("hawk/modules/dropdown/hawk-dropdown.js", [
+                    'js' => highlight_string($this->renderView("hawk/widgets/dropdown/hawk-dropdown.js", [
                     ]), true)
                 ],
 
@@ -56,14 +55,14 @@ class WidgetController extends BaseController
 
                     [
                         'name' => "type",
-                        'type' => "Hawk.DropdownConstants.Types",
+                        'type' => "DropdownType",
                         'default' => "OVERLAYER",
                         'description' => "Working type."
                     ],
 
                     [
                         'name' => "direction",
-                        'type' => "Hawk.DropdownConstants.Directions",
+                        'type' => "DropdownDirection",
                         'default' => "DOWNWARDS",
                         'description' => "Opening direction kind."
                     ],
@@ -350,8 +349,7 @@ class WidgetController extends BaseController
     /**
      * @Route("/widgets/layered-section")
      */
-    public function layeredSection()
-    {
+    public function layeredSection() {
         return $this->render('pages/widgets/layered-section.html', [
             'Page' => [
                 'title' => static::getTitle("Layered section"),
@@ -371,9 +369,9 @@ class WidgetController extends BaseController
 
             'layeredSection' => [
                 'listings' => [
-                    'html' => highlight_string($this->renderView("hawk/modules/layered-section/hawk-layered-section.html", [
+                    'html' => highlight_string($this->renderView("hawk/widgets/layered-section/hawk-layered-section.html", [
                     ]), true),
-                    'js' => highlight_string($this->renderView("hawk/modules/layered-section/hawk-layered-section.js", [
+                    'js' => highlight_string($this->renderView("hawk/widgets/layered-section/hawk-layered-section.js", [
                     ]), true)
                 ],
 
@@ -502,8 +500,7 @@ class WidgetController extends BaseController
     /**
      * @Route("/widgets/more-content-manager")
      */
-    public function moreContentManager()
-    {
+    public function moreContentManager() {
         return $this->render('pages/widgets/more-content-manager.html', [
             'Page' => [
                 'title' => static::getTitle("More content manager"),
@@ -523,9 +520,9 @@ class WidgetController extends BaseController
 
             'moreContentManager' => [
                 'listings' => [
-                    'html' => highlight_string($this->renderView("hawk/modules/more-content-manager/hawk-more-content-manager.html", [
+                    'html' => highlight_string($this->renderView("hawk/widgets/more-content-manager/hawk-more-content-manager.html", [
                     ]), true),
-                    'js' => highlight_string($this->renderView("hawk/modules/more-content-manager/hawk-more-content-manager.js", [
+                    'js' => highlight_string($this->renderView("hawk/widgets/more-content-manager/hawk-more-content-manager.js", [
                     ]), true)
                 ],
 
@@ -647,6 +644,542 @@ class WidgetController extends BaseController
                     ]
                 ],
                 'methods' => []
+            ]
+        ]);
+    }
+
+    /**
+     * @Route("/widgets/ajax-overlayer-manager")
+     */
+    public function ajaxOverlayerManager() {
+        return $this->render('pages/widgets/ajax-overlayer-manager.html', [
+            'Page' => [
+                'title' => static::getTitle("AJAX Overlayer Manager"),
+                'breadcrumbs' => [
+                    [
+                        'name' => "Home",
+                        'link' => "/"
+                    ],
+                    [
+                        'name' => "Widgets"
+                    ],
+                    [
+                        'name' => "AJAX Overlayer Manager"
+                    ]
+                ]
+            ],
+
+            'ajaxOverlayerManager' => static::getOverlayerManagerDoc([
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/widgets/ajax-overlayer-manager/hawk-ajax-overlayer-manager.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/widgets/ajax-overlayer-manager/hawk-ajax-overlayer-manager.js", [
+                    ]), true)
+                ],
+
+                'request' => [
+                    [
+                        'name' => "id",
+                        'type' => "string",
+                        'description' => "The ID of the content that is going to be loaded."
+                    ],
+                    [
+                        'name' => "bundle",
+                        'type' => "array",
+                        'description' => "A bundle of extra values that can be required to load the&nbsp;appropriate content."
+                    ],
+                    [
+                        'name' => "lang",
+                        'type' => "string",
+                        'description' => "The language code that is taken from the <code class=\"inline-code\">lang</code> attribute of <code class=\"inline-code\">html</code> element."
+                    ]
+                ],
+
+                'response' => [
+                    [
+                        'name' => "status",
+                        'type' => "Hawk.RequestStatus (integer)",
+                        'description' => "The status of the proceeded response. <a href=\"#ajax-communication\">See more</a>"
+                    ],
+                    [
+                        'name' => "html",
+                        'type' => "string",
+                        'description' => "The HTML content that should be displayed on the overlayer."
+                    ],
+                    [
+                        'name' => "id",
+                        'type' => "string",
+                        'description' => "The ID of the content that is loaded (should be the same as in the Request)."
+                    ]
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "path",
+                        'type' => "string",
+                        'default' => "/ajax/load-overlayer",
+                        'description' => "Path to the endpoint which processes the Request and returns a JSON Response with the content that is going to be shown on the layer. The Request and Response structure is described below."
+                    ],
+
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "ajax-overlayer-button",
+                        'description' => "The class' name of the elements which open the overlayer. They are described wider above."
+                    ]
+                ]
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/widgets/simple-overlayer-manager")
+     */
+    public function simpleOverlayerManager() {
+        return $this->render('pages/widgets/simple-overlayer-manager.html', [
+            'Page' => [
+                'title' => static::getTitle("Simple Overlayer Manager"),
+                'breadcrumbs' => [
+                    [
+                        'name' => "Home",
+                        'link' => "/"
+                    ],
+                    [
+                        'name' => "Widgets"
+                    ],
+                    [
+                        'name' => "Simple Overlayer Manager"
+                    ]
+                ]
+            ],
+
+            'simpleOverlayerManager' => static::getOverlayerManagerDoc([
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/widgets/overlayers/hawk-simple-overlayer-manager.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/widgets/overlayers/hawk-simple-overlayer-manager.js", [
+                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "buttonClass",
+                        'type' => "string",
+                        'default' => "simple-overlayer-button",
+                        'description' => "The class' name of the elements which open the overlayer. They are described wider above."
+                    ],
+
+                    [
+                        'name' => "contentToLoadClass",
+                        'type' => "string",
+                        'default' => "simple-overlayer-content",
+                        'description' => "The class' name of the elements which contain contents for SimpleOverlayerManager. They are described wider above."
+                    ]
+                ]
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/widgets/details-list")
+     */
+    public function detailsList() {
+        return $this->render('pages/widgets/details-list.html', [
+            'Page' => [
+                'title' => static::getTitle("Details List"),
+                'breadcrumbs' => [
+                    [
+                        'name' => "Home",
+                        'link' => "/"
+                    ],
+                    [
+                        'name' => "Widgets"
+                    ],
+                    [
+                        'name' => "Details List"
+                    ]
+                ]
+            ],
+
+            'detailsList' => [
+                'listings' => [
+                    'html' => highlight_string($this->renderView("hawk/widgets/details-list/details-list.html", [
+                    ]), true),
+                    'js' => highlight_string($this->renderView("hawk/widgets/details-list/details-list.js", [
+                    ]), true)
+                ],
+
+                'properties' => [
+                    [
+                        'name' => "autoHide",
+                        'type' => "boolean",
+                        'default' => "true",
+                        'description' => "Indicates whether to hide all the currently displayed contents when the new one is going to be visible."
+                    ]
+                ],
+                'callbacks' => [
+                    [
+                        'name' => "onShow",
+                        'description' => "It is invoked when the content is going to be displayed.",
+                        'parameters' => [
+                            [
+                                'name' => "detailsList",
+                                'type' => "Hawk.DetailsList",
+                                'description' => "Current instance of Hawk.DetailsList"
+                            ],
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "onHide",
+                        'description' => "It is invoked when the content is going to be hidden.",
+                        'parameters' => [
+                            [
+                                'name' => "detailsList",
+                                'type' => "Hawk.DetailsList",
+                                'description' => "Current instance of Hawk.DetailsList"
+                            ],
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Header</span> element."
+                            ],
+                            [
+                                'name' => "contentContainer",
+                                'type' => "jQuery object",
+                                'description' => "Current <span class=\"inline-code\">Content Container</span> element."
+                            ]
+                        ]
+                    ]
+                ],
+                'methods' => [
+                    [
+                        'name' => "show",
+                        'type' => "void",
+                        'description' => "Shows the content.",
+                        'parameters' => [
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "The header which the content is related with."
+                            ]
+                        ]
+                    ],
+                    [
+                        'name' => "hide",
+                        'type' => "void",
+                        'description' => "Hides the content.",
+                        'parameters' => [
+                            [
+                                'name' => "header",
+                                'type' => "jQuery object",
+                                'default' => "-",
+                                'description' => "The header which the content is related with."
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+    static public function getOverlayerManagerDoc(array $extraValues = []) : array {
+        return array_merge_recursive($extraValues, [
+            'properties' => [
+                [
+                    'name' => "mode",
+                    'type' => "Hawk.AjaxOverlayerManagerConstants.Modes",
+                    'default' => "DEFAULT",
+                    'description' => "Click event assignment mode."
+                ],
+
+                [
+                    'name' => "fadeSpeed",
+                    'type' => "integer",
+                    'default' => 200,
+                    'description' => "The speed of the overlayer's appearing and disappearing (in miliseconds)."
+                ],
+
+                [
+                    'name' => "slideSpeed",
+                    'type' => "integer",
+                    'default' => 200,
+                    'description' => "The speed of expanding the content on the layer (in miliseconds)."
+                ],
+
+                [
+                    'name' => "closeOnClickOutside",
+                    'type' => "boolean",
+                    'default' => "false",
+                    'description' => "Whether to close the overlayer when user clicks outside the content's container or not."
+                ],
+
+                [
+                    'name' => "eventName",
+                    'type' => "string",
+                    'default' => "click.overlayerManager",
+                    'description' => "A name of the JavaScript <span class=\"code\">click</span> event that the <span class=\"code\">Hawk.AjaxOverlayerManager</span> instance should use to control buttons connected with this instance."
+                ],
+
+                [
+                    'name' => "popstateEventName",
+                    'type' => "string",
+                    'default' => "popstate.overlayerManager",
+                    'description' => "A name of the JavaScript <span class=\"code\">popstate</span> event that the <span class=\"code\">Hawk.AjaxOverlayerManager</span> instance should use to control the browser's back button."
+                ],
+
+                [
+                    'name' => "wrapperClass",
+                    'type' => "string",
+                    'default' => "overlayer__wrapper",
+                    'description' => "The class' name of the wrapper."
+                ],
+
+                [
+                    'name' => "contentContainerClass",
+                    'type' => "string",
+                    'default' => "overlayer__content-container",
+                    'description' => "The class' name of the content's container."
+                ],
+
+                [
+                    'name' => "contentClass",
+                    'type' => "string",
+                    'default' => "overlayer__content",
+                    'description' => "The class' name of the content element."
+                ],
+                [
+                    'name' => "loadingLayerClass",
+                    'type' => "string",
+                    'default' => "overlayer__loading-layer",
+                    'description' => "The class' name of the layer which is visible when the content is loading."
+                ],
+
+                [
+                    'name' => "closeButtonClass",
+                    'type' => "string",
+                    'default' => "ajax-overlayer-close",
+                    'description' => "The class' name of the element which closes the overlayer. This element needs to be inside the overlayer container (may be in the loaded part, though)."
+                ],
+
+                [
+                    'name' => "baseZIndexValue",
+                    'type' => "integer",
+                    'default' => 9000,
+                    'description' => "Base value of z-index feature that is being increased and being set for following instances of Hawk.AjaxOverlayerManager."
+                ]
+            ],
+            'callbacks' => [
+                [
+                    'name' => "onLoad",
+                    'description' => "It is invoked when the content has been loaded.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "id",
+                            'type' => "string",
+                            'description' => "ID of the loaded content."
+                        ],
+                        [
+                            'name' => "result",
+                            'type' => "object",
+                            'description' => "The whole result object returned by the server."
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onLoading",
+                    'description' => "It is invoked when the AJAX request is completed and the content is going to be changed.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "id",
+                            'type' => "string",
+                            'description' => "ID of the loaded content."
+                        ],
+                        [
+                            'name' => "result",
+                            'type' => "object",
+                            'description' => "The whole result object returned by the server."
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onShow",
+                    'description' => "It is invoked when the overlayer is being shown.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onHide",
+                    'description' => "It is invoked when the overlayer is being hidden.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "onInitialize",
+                    'description' => "It is invoked when the page has been loaded and the overlayer has already been initialized. It should process the hash and possibly load the appropriate content.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "hash",
+                            'type' => "string",
+                            'description' => "The value of the <span class=\"code\">window.location.hash</span>"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "changeContent",
+                    'description' => "It is invoked when the content is going to be put in the overlayer.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ],
+                        [
+                            'name' => "content",
+                            'type' => "jQuery object",
+                            'description' => "-"
+                        ],
+                        [
+                            'name' => "callback",
+                            'type' => "function",
+                            'description' => "The function that should be invoked when content is placed in the overlayer"
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "hide",
+                    'description' => "This function hides the overlayer.",
+                    'parameters' => [
+                        [
+                            'name' => "ajaxOverlayerManager",
+                            'type' => "Hawk.AjaxOverlayerManager",
+                            'description' => "Current instance of Hawk.AjaxOverlayerManager"
+                        ]
+                    ]
+                ]
+            ],
+            'methods' => [
+                [
+                    'name' => "getOverlayerID",
+                    'type' => "integer",
+                    'description' => "Returns the overlayer's id number.",
+                    'parameters' => [
+
+                    ]
+                ],
+                [
+                    'name' => "getLang",
+                    'type' => "string",
+                    'description' => "Returns the language code which is inferred from the <code class=\"inline-code\">lang</code> attribute of the <code class=\"inline-code\">html</code> element.",
+                    'parameters' => [
+
+                    ]
+                ],
+
+                [
+                    'name' => "hide",
+                    'type' => "void",
+                    'description' => "Closes the overlayer.",
+                    'parameters' => [
+
+                    ]
+                ],
+                [
+                    'name' => "show",
+                    'type' => "void",
+                    'description' => "Shows the overlayer.",
+                    'parameters' => [
+
+                    ]
+                ],
+
+                [
+                    'name' => "load",
+                    'type' => "void",
+                    'description' => "Loads the content. Sends the Request to the endpoint defined in the options and shows the overlayer with the already loaded content.",
+                    'parameters' => [
+                        [
+                            'name' => "id",
+                            'type' => "string",
+                            'default' => "-",
+                            'description' => "The ID of the content that should be loaded (sent with the Request). Helps the server to return the appropriate result."
+                        ],
+                        [
+                            'name' => "bundle",
+                            'type' => "object",
+                            'default' => "{}",
+                            'description' => "The extra parameters that can be used by the backend service."
+                        ]
+                    ]
+                ],
+                [
+                    'name' => "changeContent",
+                    'type' => "void",
+                    'description' => "Changes the content inside the overlayer.",
+                    'parameters' => [
+                        [
+                            'name' => "content",
+                            'type' => "string",
+                            'default' => "-",
+                            'description' => "The string containing the HTML code that is going to be shown in the overlayer."
+                        ],
+                        [
+                            'name' => "callback",
+                            'type' => "function",
+                            'default' => "null",
+                            'description' => "The callback that is being invoked after the content is changed."
+                        ]
+                    ]
+                ],
+
+                [
+                    'name' => "run",
+                    'type' => "void",
+                    'description' => "Launches the Ajax Overlayer Manager and binds the DOM elements with necessary events. ",
+                    'parameters' => [
+                    ]
+                ]
             ]
         ]);
     }
