@@ -1,0 +1,181 @@
+{% extends('index.html') %}
+
+{% block content %}
+
+<section class="site-section">
+    <div class="site-section__layer">
+        <div class="site-section__wrapper site-section__wrapper--less-top-space">
+            <div class="site-section__inner">
+                {% set presentationSection = {
+                    title: 'Items Manager',
+                    anchor: 'items-manager',
+                    listings: {
+                    html: itemsManager.listings.html,
+                    js: itemsManager.listings.js
+                    },
+                    links: [
+                    {
+                    link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/ItemsManagers/ItemsManager.Hawk.js',
+                    type: 'js',
+                    title: 'ItemsManager.Hawk.js'
+                    },
+                    {
+                    link: 'https://github.com/Rotmistrz/Hawk-Framework-v2/blob/master/public/src/js/Hawk/HawkLibrary/ItemsManagers/Enums/ItemsManagerMode.Hawk.js',
+                    type: 'js',
+                    title: 'ItemsManagerMode.Hawk.js'
+                    }
+                    ],
+
+                    properties: itemsManager.properties,
+                    callbacks: itemsManager.callbacks,
+                    methods: itemsManager.methods,
+                    request: itemsManager.request,
+                    response: itemsManager.response
+                } %}
+
+                {% embed('contents/_presentation-section-core.html') %}
+                    {% block exampleAndDescription %}
+                    <div class="text">
+                        <p>
+                            <strong>Items Manager</strong> helps to manage the contents that should be visible only when the appropriate context
+                            is active. It can be used to create simple tabs or hide and show special form fields if some option is selected.
+                        </p>
+
+                        <p>
+                            There are buttons or fields (depends on the widget's mode; let's name them <b>controls</b>) to change current items to display.
+                            They should have special <code class="inline-code">hawk-items-manager__bookmark</code> class names.
+                            The connection between the <b>controls</b> and <b>content</b> happens through the value of the <code class="inline-code">data-id</code>
+                            attribute attached to the <b>controls</b>
+                            and special classname of the <b>content</b> items which consists of constant prefix (which could be set up in the widget's options)
+                            and the same value as the related <code class="inline-code">data-id</code> attribute in the controller.
+                            Moreover the content items should have special <code class="inline-code">hawk-items-manager__item</code> class name.
+                        </p>
+
+                        <p>
+                            For instance, for the control <code class="inline-code">data-id</code> attribute's value <b>2</b>, the <b>content</b>'s
+                            classname should consists of <i>hawk-items-manager-group-</i> and <i>2</i> resulting with <b>hawk-items-manager-group-2</b> classname
+                            with the default prefix like in the example on the right.
+                        </p>
+
+                        <p>
+                            All these items should be in the one container with <code class="inline-code">hawk-items-manager</code> class name, which
+                            should have an ID to catch it in the JS code and launch the mechanism.
+                        </p>
+
+                        <p>
+                            If there are many <b>Items Managers</b> in the same block, you can use an auxiliary <code class="inline-code">data-manager-id</code> attribute
+                            for the <b>container</b> and every <b>control</b> and <b>content</b> item as in the example on the right. If there is only one <b>Items Manager</b>
+                            in the same place, it can be missed.
+                        </p>
+                    </div>
+                    {% endblock %}
+                {% endembed %}
+
+                <div class="row">
+                    <section id="exemplary-items-manager" class="hawk-items-manager">
+                        <section class="plain-bar">
+                            <ul class="tabs-bar">
+                                <li>
+                                    <label class="simple-tab-button hawk-items-manager__bookmark">
+                                        <input class="simple-tab-button__field" type="radio" name="tab-menu" value="-1" checked />
+
+                                        <div class="simple-tab-button__wrapper">
+                                            All
+                                        </div>
+                                    </label>
+                                </li>
+
+                                <li>
+                                    <label class="simple-tab-button hawk-items-manager__bookmark">
+                                        <input class="simple-tab-button__field" type="radio" name="tab-menu" value="1" />
+
+                                        <div class="simple-tab-button__wrapper">
+                                        Hussars
+                                        </div>
+                                    </label>
+                                </li>
+
+                                <li>
+                                    <label class="simple-tab-button hawk-items-manager__bookmark">
+                                        <input class="simple-tab-button__field" type="radio" name="tab-menu" value="2" />
+
+                                        <div class="simple-tab-button__wrapper">
+                                        Landscapes
+                                        </div>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <ul class="tiles-list">
+                            <li class="hawk-items-manager__item hawk-items-manager-group-2">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/jezioro-o-poranku.jpg'
+                                }
+                                } %}
+                            </li>
+
+                            <li class="hawk-items-manager__item hawk-items-manager-group-2">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/odra-wieczorem.jpg'
+                                }
+                                } %}
+                            </li>
+
+                            <li class="hawk-items-manager__item hawk-items-manager-group-1">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/husaria.jpg'
+                                }
+                                } %}
+                            </li>
+
+                            <li class="hawk-items-manager__item hawk-items-manager-group-1">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/husaria-02.jpg'
+                                }
+                                } %}
+                            </li>
+
+                            <li class="hawk-items-manager__item hawk-items-manager-group-1 hawk-items-manager-group-2">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/husaria-w-gorach.jpg'
+                                }
+                                } %}
+                            </li>
+
+                            <li class="hawk-items-manager__item hawk-items-manager-group-1">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/husarz-z-kopia.jpg'
+                                }
+                                } %}
+                            </li>
+
+                            <li class="hawk-items-manager__item hawk-items-manager-group-2">
+                                {% include('blocks/tile.html') with {
+                                tile: {
+                                type: 'clear',
+                                image: '/img/pictures/odra-za-dnia.jpg'
+                                }
+                                } %}
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -15,20 +15,20 @@ export default class ItemsManager extends SingleThreadClass {
             groupIdAttribute: 'data-id',
             managerIdAttribute: 'data-manager-id',
 
+            allValue: -1,
+
             mode: ItemsManagerMode.CLICK,
 
             getGroupClassname: (id) => {
                 return "hawk-items-manager-group-" + id;
             },
             actionShow: (items, imCallback) => {
-                $(items).removeClass('hawk-hidden');
-                $(items).addClass('hawk-shown');
+                $(items).show();
 
                 imCallback();
             },
             actionHide: (itemsToHide) => {
-                itemsToHide.removeClass('hawk-shown');
-                itemsToHide.addClass('hawk-hidden');
+                itemsToHide.hide();
             },
 
             onGroupSelected: (groupID) => {}
@@ -39,6 +39,16 @@ export default class ItemsManager extends SingleThreadClass {
         this.managerID = this.container.attr(this.options.managerIdAttribute);
     }
 
+    disableFields() {
+        const bookmarks = this.getBookmarks();
+        bookmarks.find('input').prop('disabled', true);
+    }
+
+    enableFields() {
+        const bookmarks = this.getBookmarks();
+        bookmarks.find('input').prop('disabled', false);
+    }
+
     selectItems(items) {
         if (!this.isWorking()) {
             this.startWorking();
@@ -47,6 +57,7 @@ export default class ItemsManager extends SingleThreadClass {
 
             this.options.actionShow(items, () => {
                 this.finishWorking();
+                this.enableFields();
             });
         }
     }
@@ -58,13 +69,17 @@ export default class ItemsManager extends SingleThreadClass {
     }
 
     selectItemsByGroup(groupID) {
-        let cssSelector = '.' + this.options.getGroupClassname(groupID);
+        if (groupID != this.options.allValue) {
+            let cssSelector = '.' + this.options.getGroupClassname(groupID);
 
-        if (this.hasManagerID()) {
-            cssSelector += '[' + this.options.managerIdAttribute + '="' + this.getManagerID() + '"]';
+            if (this.hasManagerID()) {
+                cssSelector += '[' + this.options.managerIdAttribute + '="' + this.getManagerID() + '"]';
+            }
+
+            var selectedItems = this.getItems().filter(cssSelector);
+        } else {
+            var selectedItems = this.getItems();
         }
-
-        const selectedItems = this.getItems().filter(cssSelector);
 
         this.selectItems(selectedItems);
 
@@ -126,6 +141,7 @@ export default class ItemsManager extends SingleThreadClass {
 
         if (this.options.mode == ItemsManagerMode.CHOICE) {
             this.bookmarks.find('input').change((e) => {
+                this.disableFields();
                 this.onFieldSelected($(e.currentTarget));
             });
         } else {

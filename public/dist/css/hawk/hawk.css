@@ -153,15 +153,19 @@
 }
 
 .simple-tab-button {
-  padding: 8px 32px;
+  display: block;
+  width: 100%;
   position: relative;
   background: none;
   border: 0;
   cursor: pointer;
   font-size: 15px;
+}
+.simple-tab-button__wrapper {
+  padding: 8px 32px;
   color: #777;
 }
-.simple-tab-button:before {
+.simple-tab-button__wrapper:before {
   content: "";
   display: block;
   position: absolute;
@@ -177,11 +181,26 @@
   transition: all 0.2s linear;
   margin: -1px 0 0 0;
 }
-
-.simple-tab-button.active {
+.simple-tab-button__field {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.simple-tab-button__field:checked ~ .simple-tab-button__wrapper {
   color: #000;
 }
-.simple-tab-button.active:before {
+.simple-tab-button__field:checked ~ .simple-tab-button__wrapper:before {
+  opacity: 1;
+}
+
+.simple-tab-button.active__wrapper {
+  color: #000;
+}
+.simple-tab-button.active__wrapper:before {
   opacity: 1;
 }
 

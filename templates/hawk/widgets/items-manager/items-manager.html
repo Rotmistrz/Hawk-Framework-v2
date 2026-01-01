@@ -1,0 +1,46 @@
+<section id="exemplary-items-manager" class="hawk-items-manager" data-manager-id="gallery">
+    <button class="simple-tab-button active hawk-items-manager__bookmark" type="button" data-id="-1" data-manager-id="gallery">
+        All
+    </button>
+
+    <button class="simple-tab-button hawk-items-manager__bookmark" type="button" data-id="1" data-manager-id="gallery">
+        Hussars
+    </button>
+
+    <button class="simple-tab-button hawk-items-manager__bookmark" type="button" data-id="2" data-manager-id="gallery">
+        Landscapes
+    </button>
+
+    <!-- (...) more groups -->
+
+    <ul class="tiles-list">
+        <li class="hawk-items-manager__item hawk-items-manager-group-2" data-manager-id="gallery">
+            {% include('blocks/tile.html') with {
+            tile: {
+            type: 'clear',
+            image: '/img/pictures/jezioro-o-poranku.jpg'
+            }
+            } %}
+        </li>
+
+        <li class="hawk-items-manager__item hawk-items-manager-group-1" data-manager-id="gallery">
+            {% include('blocks/tile.html') with {
+            tile: {
+            type: 'clear',
+            image: '/img/pictures/husaria.jpg'
+            }
+            } %}
+        </li>
+
+        <li class="hawk-items-manager__item hawk-items-manager-group-1 hawk-items-manager-group-2" data-manager-id="gallery">
+            {% include('blocks/tile.html') with {
+            tile: {
+            type: 'clear',
+            image: '/img/pictures/husaria-w-gorach.jpg'
+            }
+            } %}
+        </li>
+
+        <!-- (...) more items -->
+    </ul>
+</section>

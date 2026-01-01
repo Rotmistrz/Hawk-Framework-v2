@@ -1,4 +1,5 @@
 import Hawk from './Hawk/Bundle.Hawk';
+import ItemsManagerMode from "./Hawk/HawkLibrary/ItemsManagers/Enums/ItemsManagerMode.Hawk";
 
 $(document).ready(function() {
     var App = {
@@ -8,7 +9,8 @@ $(document).ready(function() {
             WIDGETS_DROPDOWN: "widgets/dropdown/?$",
             WIDGETS_LAYERED_SECTION: "widgets/layered-section/?$",
             MORE_CONTENT_MANAGER: "widgets/more-content-manager/?$",
-            DETAILS_LIST: "widgets/details-list?$"
+            DETAILS_LIST: "widgets/details-list?$",
+            ITEMS_MANAGER: "widgets/items-manager?$"
         },
         Widgets: {
             Overlayers: {},
@@ -41,6 +43,11 @@ $(document).ready(function() {
     } else if (Hawk.Routes.is(App.Routes.DETAILS_LIST)) {
         HawkExamples.detailsList = new Hawk.DetailsList($('#exemplary-details-list'), {});
         HawkExamples.detailsList.run();
+    } else if (Hawk.Routes.is(App.Routes.ITEMS_MANAGER)) {
+        HawkExamples.itemsManager = new Hawk.ItemsManager($('#exemplary-items-manager'), {
+            mode: ItemsManagerMode.CHOICE
+        });
+        HawkExamples.itemsManager.run();
     }
 
     $('.scrollable-section').mCustomScrollbar({
@@ -48,108 +55,108 @@ $(document).ready(function() {
                 setTop: 0
             });
 
-    HawkExamples.slidingLayerManager = new Hawk.SlidingLayerManager(1, {
-        onShow: function(slm, button, layer) {
-            var content = layer.find('.edge-section__content');
-            var currentHeight = parseInt(content.innerHeight()) - parseInt(content.css('paddingTop')) - parseInt(content.css('paddingBottom'));
-
-            layer.find('.scrollable-section').css({ height: currentHeight + "px" }).mCustomScrollbar({
-                axis: "y"
-            });
-        }
-    });
-    HawkExamples.slidingLayerManager.run();
+    // HawkExamples.slidingLayerManager = new Hawk.SlidingLayerManager(1, {
+    //     onShow: function(slm, button, layer) {
+    //         var content = layer.find('.edge-section__content');
+    //         var currentHeight = parseInt(content.innerHeight()) - parseInt(content.css('paddingTop')) - parseInt(content.css('paddingBottom'));
+    //
+    //         layer.find('.scrollable-section').css({ height: currentHeight + "px" }).mCustomScrollbar({
+    //             axis: "y"
+    //         });
+    //     }
+    // });
+    // HawkExamples.slidingLayerManager.run();
 
     var HawkVariables = {};
 
-    HawkVariables.colorFieldsController = new Hawk.FieldController($('.colors-section input'), {
-        onChange: function(field, value) {
-            console.log(field, value);
+    // HawkVariables.colorFieldsController = new Hawk.FieldController($('.colors-section input'), {
+    //     onChange: function(field, value) {
+    //         console.log(field, value);
+    //
+    //         const label = field.parents('.form-field');
+    //
+    //         console.log(label);
+    //
+    //         label.find('.color-sample').css({ backgroundColor: value });
+    //     }
+    // });
+    // HawkVariables.colorFieldsController.run();
 
-            const label = field.parents('.form-field');
 
-            console.log(label);
-
-            label.find('.color-sample').css({ backgroundColor: value });
-        }
-    });
-    HawkVariables.colorFieldsController.run();
-
-
-    HawkVariables.ajaxLoadingItemsManager = new Hawk.AjaxLoadingItemsManager($("#exemplary-ajax-loading-items-manager"), {
-        itemsPerLoading: 3
-    });
-    HawkVariables.ajaxLoadingItemsManager.run();
-    HawkVariables.ajaxLoadingItemsManager.load(0);
-
-    HawkVariables.ajaxLoadingItemsManager.container.find('.hawk-ajax-loading-items-manager__clear-button').click(function() {
-        HawkVariables.ajaxLoadingItemsManager.clear();
-    });
-
-    HawkExamples.StaticFormSender = new Hawk.StaticFormSender($('#exemplary-static-form'), [
-        new Hawk.TextFormField("chess-figure-name", {
-            validate: Hawk.Validator.isNotEmpty
-        })
-    ], (formSender) => {
-        const validationResult = formSender.validate();
-
-        if (validationResult.length == 0) {
-            const field = formSender.getField('chess-figure-name');
-            const value = field.getValue().toLowerCase();
-            const chessFigures = [
-                'knight', 'queen', 'king', 'bishop', 'tower',
-                'skoczek', 'koń', 'hetman', 'król', 'goniec', 'laufer', 'wieża'
-            ];
-
-            if (chessFigures.indexOf(value) > -1) {
-                formSender.options.onCorrect({
-                    message: "Ok, great!"
-                });
-            } else {
-                formSender.options.onError({
-                    message: "Cannot you play chess, really?"
-                });
-            }
-        } else {
-            formSender.changeMessage("Please fill the fields correctly.");
-        }
-
-        formSender.finishWorking();
-    });
-    HawkExamples.StaticFormSender.run();
-
-    HawkExamples.AjaxFormSender = new Hawk.AjaxFormSender($('#exemplary-ajax-form'), [
-        new Hawk.TextFormField("name", {
-            validate: Hawk.Validator.isNotEmpty
-        })
-    ], "/ajax/chess-figure");
-    HawkExamples.AjaxFormSender.run();
+    // HawkVariables.ajaxLoadingItemsManager = new Hawk.AjaxLoadingItemsManager($("#exemplary-ajax-loading-items-manager"), {
+    //     itemsPerLoading: 3
+    // });
+    // HawkVariables.ajaxLoadingItemsManager.run();
+    // HawkVariables.ajaxLoadingItemsManager.load(0);
+    //
+    // HawkVariables.ajaxLoadingItemsManager.container.find('.hawk-ajax-loading-items-manager__clear-button').click(function() {
+    //     HawkVariables.ajaxLoadingItemsManager.clear();
+    // });
+    //
+    // HawkExamples.StaticFormSender = new Hawk.StaticFormSender($('#exemplary-static-form'), [
+    //     new Hawk.TextFormField("chess-figure-name", {
+    //         validate: Hawk.Validator.isNotEmpty
+    //     })
+    // ], (formSender) => {
+    //     const validationResult = formSender.validate();
+    //
+    //     if (validationResult.length == 0) {
+    //         const field = formSender.getField('chess-figure-name');
+    //         const value = field.getValue().toLowerCase();
+    //         const chessFigures = [
+    //             'knight', 'queen', 'king', 'bishop', 'tower',
+    //             'skoczek', 'koń', 'hetman', 'król', 'goniec', 'laufer', 'wieża'
+    //         ];
+    //
+    //         if (chessFigures.indexOf(value) > -1) {
+    //             formSender.options.onCorrect({
+    //                 message: "Ok, great!"
+    //             });
+    //         } else {
+    //             formSender.options.onError({
+    //                 message: "Cannot you play chess, really?"
+    //             });
+    //         }
+    //     } else {
+    //         formSender.changeMessage("Please fill the fields correctly.");
+    //     }
+    //
+    //     formSender.finishWorking();
+    // });
+    // HawkExamples.StaticFormSender.run();
+    //
+    // HawkExamples.AjaxFormSender = new Hawk.AjaxFormSender($('#exemplary-ajax-form'), [
+    //     new Hawk.TextFormField("name", {
+    //         validate: Hawk.Validator.isNotEmpty
+    //     })
+    // ], "/ajax/chess-figure");
+   // HawkExamples.AjaxFormSender.run();
     // blabla
 
-    App.Blocks.ajaxRequestContainer = {
-        result: $('#exemplary-ajax-request-manager .simple-ajax-request-container__result'),
-        button: $('#exemplary-ajax-request-manager .simple-ajax-request-container__button')
-    };
-
-    App.Examples.ajaxRequestManager = new Hawk.AjaxRequestManager({
-        // options and callbacks
-    });
-
-    App.Blocks.ajaxRequestContainer.button.click(function(e) {
-        e.preventDefault();
-
-        App.Examples.ajaxRequestManager.get("/ajax/draw-a-colour", {
-            onSuccess: function(result) {
-                App.Blocks.ajaxRequestContainer.result.html(result.colour);
-            },
-            onError: function() {
-                App.Blocks.ajaxRequestContainer.result.html("");
-            },
-            onException: function() {
-                App.Blocks.ajaxRequestContainer.result.html("");
-            }
-        });
-    });
+    // App.Blocks.ajaxRequestContainer = {
+    //     result: $('#exemplary-ajax-request-manager .simple-ajax-request-container__result'),
+    //     button: $('#exemplary-ajax-request-manager .simple-ajax-request-container__button')
+    // };
+    //
+    // App.Examples.ajaxRequestManager = new Hawk.AjaxRequestManager({
+    //     // options and callbacks
+    // });
+    //
+    // App.Blocks.ajaxRequestContainer.button.click(function(e) {
+    //     e.preventDefault();
+    //
+    //     App.Examples.ajaxRequestManager.get("/ajax/draw-a-colour", {
+    //         onSuccess: function(result) {
+    //             App.Blocks.ajaxRequestContainer.result.html(result.colour);
+    //         },
+    //         onError: function() {
+    //             App.Blocks.ajaxRequestContainer.result.html("");
+    //         },
+    //         onException: function() {
+    //             App.Blocks.ajaxRequestContainer.result.html("");
+    //         }
+    //     });
+    // });
 
     App.Examples.AjaxOverlayerManager = new Hawk.AjaxOverlayerManager($('#overlayer'), {
         // options and callbacks
@@ -160,11 +167,6 @@ $(document).ready(function() {
         // options and callbacks
     });
     App.Examples.SimpleOverlayerManager.run();
-
-    App.Examples.ItemsManager = new Hawk.ItemsManager($('#exemplary-items-manager'), {
-
-    });
-    App.Examples.ItemsManager.run();
 
     // App.Examples.Pager = new Hawk.Pager($('#exemplary-pager'), {
     //     onClick: (pager, nr) => {
@@ -191,16 +193,16 @@ $(document).ready(function() {
     //
     // App.Examples.AjaxItemsManager.run(1);
 
-    Hawk.Launchers.DetailsList($('.presentation-details-list'), {
-        slideSpeed: 500,
-        autoHide: false,
-        onShow: (detailsList, header, contentContainer) => {
-            header.find('.icon-arrow').addClass('icon-arrow--north').removeClass('icon-arrow--south');
-        },
-        onHide: (detailsList, header, contentContainer) => {
-            header.find('.icon-arrow').addClass('icon-arrow--south').removeClass('icon-arrow--north');
-        }
-    });
+    // Hawk.Launchers.DetailsList($('.presentation-details-list'), {
+    //     slideSpeed: 500,
+    //     autoHide: false,
+    //     onShow: (detailsList, header, contentContainer) => {
+    //         header.find('.icon-arrow').addClass('icon-arrow--north').removeClass('icon-arrow--south');
+    //     },
+    //     onHide: (detailsList, header, contentContainer) => {
+    //         header.find('.icon-arrow').addClass('icon-arrow--south').removeClass('icon-arrow--north');
+    //     }
+    // });
 
 
     setTimeout(function() {

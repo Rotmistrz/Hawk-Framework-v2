@@ -427,17 +427,17 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 3.5%;
+    gap: 24px;
   }
 
   > li {
     @include box-sizing(border-box);
-    padding: 20px 0 0 0;
+    //padding: 20px 0 0 0;
 
     @media (min-width: $tablet-m) {
       flex-grow: 1;
-      @include strictWidth(31%);
-      padding: 3.5% 0 0 0;
+      @include strictWidth(calc(33.33% - 16px));
+      //padding: 3.5% 0 0 0;
     }
 
     &:first-child {

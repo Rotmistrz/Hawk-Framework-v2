@@ -1,30 +1,56 @@
 .simple-tab-button {
-  padding: 8px 32px;
+  display: block;
+  width: 100%;
   position: relative;
   background: none;
   border: 0;
   cursor: pointer;
   font-size: $main-font-size-00;
-  color: $light-color-06;
 
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: $primary-color;
-    height: 3px;
+  &__wrapper {
+    padding: 8px 32px;
+    color: $light-color-06;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: $primary-color;
+      height: 3px;
+      opacity: 0;
+      @include transition(all .2s linear);
+      margin: -1px 0 0 0;
+    }
+  }
+
+  &__field {
+    width: 0;
+    height: 0;
     opacity: 0;
-    @include transition(all .2s linear);
-    margin: -1px 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    &:checked ~ .simple-tab-button__wrapper {
+      color: $dark-color;
+
+      &:before {
+        opacity: 1;
+      }
+    }
   }
 }
 .simple-tab-button.active {
-  color: $dark-color;
+  &__wrapper {
+    color: $dark-color;
 
-  &:before {
-    opacity: 1;
+    &:before {
+      opacity: 1;
+    }
   }
+
 }

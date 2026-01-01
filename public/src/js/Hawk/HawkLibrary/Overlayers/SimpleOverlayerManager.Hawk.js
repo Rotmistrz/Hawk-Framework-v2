@@ -1,6 +1,7 @@
 import Hawh from '../Core.Hawk';
 import OverlayerManager from "./OverlayerManager.Hawk";
 import RequestStatus from "../Requests/RequestStatus.Hawk";
+import Hawk from "../Core.Hawk";
 
 export default class SimpleOverlayerManager extends OverlayerManager {
     constructor(container, options) {
