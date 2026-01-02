@@ -4,5 +4,25 @@
   > li {
     display: block;
     padding: 2px 0;
+
+      &:first-child {
+          padding-top: 0;
+      }
+
+      &:last-child {
+          padding-bottom: 0;
+      }
   }
+}
+
+.plain-list--more-space {
+    > li {
+        padding: 8px 0;
+    }
+}
+
+.plain-list--much-more-space {
+    > li {
+        padding: 20px 0;
+    }
 }

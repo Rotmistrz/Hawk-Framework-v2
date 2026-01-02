@@ -73,6 +73,14 @@
   }
 }
 
+.button--extra-small {
+    font-size: $small-font-size;
+
+      .button__wrapper {
+        padding: 8px 16px;
+      }
+}
+
 .button--dark {
   .button__wrapper {
     &:before {
@@ -112,9 +120,6 @@
   &:hover,
   &:focus {
     color: $light-color;
-
-    .button__wrapper {
-    }
   }
 }
 
@@ -166,3 +171,4 @@
     }
   }
 }
+

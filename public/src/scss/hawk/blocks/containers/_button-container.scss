@@ -1,3 +1,14 @@
 .button-container {
   padding: 20px 0 0 0;
 }
+.button-container--no-padding {
+    padding-top: 0;
+}
+.button-container--type-02 {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-container--bounded {
+    width: 60px;
+}

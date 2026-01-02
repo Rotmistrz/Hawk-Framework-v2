@@ -2,7 +2,7 @@
   width: 32px;
   height: 32px;
   display: block;
-  background: url('/img/icons/icon-loader.svg') no-repeat center;
+  background: url('/img/icon/loading-icon.svg') no-repeat center;
   background-size: contain;
   @include animation(Rotate 2s infinite linear);
 }
@@ -11,5 +11,10 @@
   height: 20px;
 }
 .icon-loader--light {
-  background-image: url('/img/icons/icon-loader-light.svg');
+  background-image: url('/img/icon/loading-icon-light.svg');
+}
+
+.icon-loader--large{
+  width: 40px;
+  height: 40px;
 }

@@ -7,10 +7,12 @@ $dark-color-01: #222222;
 $dark-color-02: #444444;
 $dark-color-03: #777777;
 $dark-color-04: #3d3d3d;
+$dark-color-05: #3d3d3d;
 
 $dark-color-op60: rgba($dark-color, 0.6);
 $dark-color-op30: rgba($dark-color, 0.3);
 $dark-color-op20: rgba($dark-color, 0.2);
+$dark-color-op08: rgba($dark-color, 0.08);
 
 // base light colours
 
@@ -24,9 +26,6 @@ $light-color-04: #e1e1e1;
 $light-color-05: #fefdfd;
 $light-color-06: #777;
 $light-color-07: #e5e5e5;
-$light-color-10: #ddd;
-
-
 
 // base accent colours
 
@@ -36,14 +35,13 @@ $primary-color-02: #f38630;
 $secondary-color: #69d2e7;
 $secondary-color-02: #23aaba;
 
-$tertiary-color: #1e1e1e;
+$tertiary-color: #F2F2F2;
 $tertiary-color-02: #2e2e2e;
 
 // functional colours
 
 $main-text-color: $dark-color;
 $main-bg-color: $light-color;
-$bg-color-nearly-light: $light-color-02;
 
 $error-color: #db2b39;
 $success-color: #090;
@@ -158,6 +156,14 @@ $very-large-font-size-21: 68px;
 $very-large-font-size-22: 70px;
 $very-large-font-size-23: 72px;
 $very-large-font-size-24: 74px;
+$very-large-font-size-25: 76px;
+$very-large-font-size-26: 78px;
+$very-large-font-size-27: 80px;
+$very-large-font-size-28: 82px;
+$very-large-font-size-29: 84px;
+$very-large-font-size-30: 86px;
+$very-large-font-size-31: 88px;
+$very-large-font-size-32: 90px;
 
 $extra-large-font-size: 28px;
 $extra-large-font-size-00: 30px;
@@ -264,3 +270,4 @@ $desktop-m: 1300px;
 $desktop-l: 1500px;
 $desktop-xl: 1700px;
 $desktop-xxl: 2000px;
+$monitor: 3000px;

@@ -82,6 +82,17 @@
   strong {
     font-weight: 700;
   }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 16px 0 0 0;
+
+    @media (min-width: $desktop-s) {
+      max-width: 80%;
+    }
+  }
 }
 .text--light {
   a {

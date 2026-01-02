@@ -4,6 +4,7 @@
   position: relative;
   text-indent: -10000px;
   text-align: left;
+    @include transition(all .2s linear);
 
   &:before,
   &:after {
@@ -32,5 +33,6 @@
     &:after {
       opacity: 1;
     }
+
   }
 }

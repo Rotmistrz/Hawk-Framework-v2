@@ -24,6 +24,16 @@
     }
   }
 
+  .bookmarks-manager__mobile-content {
+    display: none;
+    overflow: hidden;
+
+
+    .bookmarks-manager__content {
+      display: block;
+    }
+  }
+
   .bookmarks-manager__content-container {
     display: block;
     @include transition(all .2s linear);
@@ -33,5 +43,13 @@
   .bookmarks-manager__content-wrapper {
     padding: 0;
     @include transition(all .2s linear);
+  }
+
+  .bookmarks-manager__content {
+    display: none;
+
+    @media (min-width: $tablet-xl) {
+      display: block;
+    }
   }
 }

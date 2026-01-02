@@ -18,6 +18,7 @@
 @import "blocks/containers/_flex-container.scss";
 @import "blocks/containers/_flex-column.scss";
 
+@import "modules/_ajax-items-manager.scss";
 @import "blocks/containers/_common-ajax-items-manager.scss";
 
 /***** FORMS *****/
@@ -109,15 +110,18 @@
 @import "modules/pageable/_pager-item.scss";
 @import "modules/pageable/_std-pager.scss";
 
+@import "modules/details-list/_hawk-details-list.scss";
+@import "modules/details-list/_details-list-item.scss";
+
 @import "modules/_hawk-form.scss";
 @import "modules/_hawk-layered-section.scss";
 @import "modules/_hawk-more-content-manager.scss";
 @import "modules/_hawk-sliding-layer-section.scss";
 @import "modules/_hawk-sliding-menu.scss";
+@import "modules/_hawk-toggler.scss";
 
 @import "modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager.scss";
 @import "modules/ajax-overlayer-manager/_hawk-ajax-overlayer-manager-theme.scss";
-
-@import "modules/overlayer-manager/_hawk-simple-overlayer-manager.scss";
+@import "modules/hawk-bookmarks-manager";
 
 /** END_MODULES **/

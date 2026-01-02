@@ -67,3 +67,17 @@
     display: flex;
   }
 }
+
+.flex-container--immediately {
+    .flex-column--space {
+        padding: 0 12px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+}
