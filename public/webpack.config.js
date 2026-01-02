@@ -5,7 +5,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist/js',
-        filename: '[name].js'
+        filename: '[name]-20260101.js'
     },
     module: {
         rules: [{

@@ -45,14 +45,14 @@
                             There are buttons or fields (depends on the widget's mode; let's name them <b>controls</b>) to change current items to display.
                             They should have special <code class="inline-code">hawk-items-manager__bookmark</code> class names.
                             The connection between the <b>controls</b> and <b>content</b> happens through the value of the <code class="inline-code">data-id</code>
-                            attribute attached to the <b>controls</b>
+                            attribute attached to the <b>controls</b> or the inner input's <code class="inline-code">value</code>
                             and special classname of the <b>content</b> items which consists of constant prefix (which could be set up in the widget's options)
-                            and the same value as the related <code class="inline-code">data-id</code> attribute in the controller.
+                            and the same value of the control (<code class="inline-code">data-id</code> attribute or field's value).
                             Moreover the content items should have special <code class="inline-code">hawk-items-manager__item</code> class name.
                         </p>
 
                         <p>
-                            For instance, for the control <code class="inline-code">data-id</code> attribute's value <b>2</b>, the <b>content</b>'s
+                            For instance, for the control's value <b>2</b>, the <b>content</b>'s
                             classname should consists of <i>hawk-items-manager-group-</i> and <i>2</i> resulting with <b>hawk-items-manager-group-2</b> classname
                             with the default prefix like in the example on the right.
                         </p>
