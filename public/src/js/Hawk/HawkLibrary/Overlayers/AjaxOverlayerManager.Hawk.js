@@ -8,7 +8,8 @@ export default class AjaxOverlayerManager extends OverlayerManager {
 		this.defaultOptions = Hawk.mergeWholeObjects(this.defaultOptions, {
 			path: "/ajax/load-overlayer",
 
-			buttonClass: 'ajax-overlayer-button'
+			buttonClass: 'ajax-overlayer-button',
+            closeButtonClass: 'ajax-overlayer-close'
 		});
 
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -30,19 +31,17 @@ export default class AjaxOverlayerManager extends OverlayerManager {
 				dataType: "json",
 				data: { id: id, bundle: bundle, lang: this.getLang() },
 				success: (result) => {
-					Hawk.writeDebugInfo(result);
-
 					this.actionLoad(id, result);
 				},
 				error: (jqXHR, textStatus, errorThrown) => {
 					// here should appear error layer
 					//alert(errorThrown);
 
-					Hawk.writeDebugError(jqXHR.responseText);
+                    Hawk.writeDebugError(jqXHR.responseText);
 
 					this.hide();
 
-					this.options.onError(jqXHR.responseText);
+					this.options.onException(jqXHR.responseText);
 				},
 				complete: () => {
 					this.finishWorking();

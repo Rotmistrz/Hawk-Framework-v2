@@ -275,12 +275,15 @@ export default class FormSender extends SingleThreadClass {
   }
 
   submit() {
+
     if (!this.isWorking()) {
       this.startWorking();
 
       this.showSpinner();
 
       this.send();
+    } else {
+
     }
   }
 

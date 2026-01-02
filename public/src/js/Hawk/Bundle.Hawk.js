@@ -1,11 +1,11 @@
 import Hawk from "./HawkLibrary/Core.Hawk";
 
+import ComponentsConstants from "./HawkLibrary/Components/ComponentConstants.Hawk";
+
 import AnchorsManager from "./HawkLibrary/AnchorsManager.Hawk";
 import BookmarksManager from "./HawkLibrary/BookmarksManager.Hawk";
 import Countdown from "./HawkLibrary/Calendar/Countdown.Hawk";
 import Dropdown from "./HawkLibrary/Dropdowns/Dropdown.Hawk";
-import DropdownType from "./HawkLibrary/Dropdowns/Enums/DropdownType.Hawk";
-import DropdownDirection from "./HawkLibrary/Dropdowns/Enums/DropdownDirection.Hawk";
 import DetailsList from "./HawkLibrary/DetailsList.Hawk";
 import RequestStatus from "./HawkLibrary/Requests/RequestStatus.Hawk";
 import SimpleOverlayerManager from "./HawkLibrary/Overlayers/SimpleOverlayerManager.Hawk";
@@ -31,14 +31,15 @@ import FileFormField from "./HawkLibrary/Forms/Fields/FileFormField.Hawk";
 import AjaxFormSender from "./HawkLibrary/Forms/FormSenders/AjaxFormSender.Hawk";
 import StaticFormSender from "./HawkLibrary/Forms/FormSenders/StaticFormSender.Hawk";
 import SectionDetector from "./HawkLibrary/SectionDetector.Hawk";
+import Toggler from "./HawkLibrary/Toggler.Hawk";
+
+Hawk.ComponentsConstants = ComponentsConstants;
 
 Hawk.AnchorsManager = AnchorsManager;
 
 Hawk.BookmarksManager = BookmarksManager;
 Hawk.Countdown = Countdown;
 Hawk.Dropdown = Dropdown;
-Hawk.DropdownType = DropdownType;
-Hawk.DropdownDirection = DropdownDirection;
 Hawk.DetailsList = DetailsList;
 Hawk.Enlarging = EnlargingObject;
 Hawk.HeightAdjuster = HeightAdjuster;
@@ -70,6 +71,8 @@ Hawk.RequestStatus = RequestStatus;
 Hawk.Routes = Routes;
 
 Hawk.SectionDetector = SectionDetector;
+
+Hawk.Toggler = Toggler;
 
 Hawk.Validator = Validator;
 

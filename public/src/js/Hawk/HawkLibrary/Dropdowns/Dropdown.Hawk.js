@@ -56,16 +56,12 @@ export default function Dropdown(container, options) {
         onHiding: function(dropdown) {},
         onSelected: function(dropdown, field, silently) {
             if (field.attr('type') == 'radio') {
-                var description = field.parent().find('.dropdown-item__description').html();
-
-                dropdown.title.html(description);
-
-                dropdown.hide();
+                dropdown.defaultOnSelected(dropdown, field);
             }
 
             return true;
         },
-        onChanged: function(dropdown, field) {
+        onChanged: function(dropdown, field, silently) {
 
         }
     };
@@ -76,6 +72,18 @@ export default function Dropdown(container, options) {
 
     this.mode = this.options.mode;
     this.type = this.options.type;
+
+    this.defaultOnSelected = function(dropdown, field) {
+        var description = field.parent().find('.dropdown-item__description').html();
+
+        dropdown.changeTitle(description);
+
+        dropdown.hide();
+    }
+
+    this.changeTitle = function(title) {
+        this.title.html(title);
+    }
 
     this.isDisabled = function() {
         return this.disabled;
@@ -127,6 +135,7 @@ export default function Dropdown(container, options) {
         this.enableSearchingField();
         this.container.addClass(that.options.openClass);
 
+
         this.listContainer.velocity("slideDown", {
             duration: that.options.slideSpeed,
             easing: "linear",
@@ -157,6 +166,7 @@ export default function Dropdown(container, options) {
     }
 
     this.hide = function() {
+        this.setClosed();
         this.clearSearchingField();
         this.disableSearchingField();
 
@@ -176,7 +186,8 @@ export default function Dropdown(container, options) {
             that.options.onHiding(that);
         }
 
-        this.setClosed();
+        this.listContainer.mCustomScrollbar("destroy");
+
         this.showAllItems();
 
         return this;
@@ -184,6 +195,8 @@ export default function Dropdown(container, options) {
 
     this.select = function(field, silently) {
         if (field.length > 0) {
+            field.prop('checked', true);
+
             return this.options.onSelected(this, field, silently);
         } else {
             return false;
@@ -202,6 +215,10 @@ export default function Dropdown(container, options) {
         });
 
         return this.select(field, silently);
+    }
+
+    this.getSelected = function() {
+        return this.fields.filter(':checked');
     }
 
     this.createSensor = function(className) {

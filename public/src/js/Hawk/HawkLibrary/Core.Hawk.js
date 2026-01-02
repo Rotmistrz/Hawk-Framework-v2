@@ -33,6 +33,12 @@ Hawk.writeDebugError = function(message) {
     }
 }
 
+Hawk.writeDebugTable = function(message) {
+    if (Hawk.isDebugMode()) {
+        console.table(message);
+    }
+}
+
 Hawk.isDebugMode = function() {
     return Hawk.settings.DEBUG_MODE;
 }
@@ -119,9 +125,31 @@ Hawk.mergeObjects = function(mainObject, object) {
         return mainObject;
     }
 
-    for (var property in mainObject) {
-        if (mainObject.hasOwnProperty(property)) {
-            result[property] = (object.hasOwnProperty(property)) ? object[property] : mainObject[property];
+    result = mainObject;
+
+    for (var property in object) {
+        if (object.hasOwnProperty(property)) {
+            if (typeof object[property] === 'object' &&
+                object[property] !== null &&
+                object[property].constructor === Object) {
+                if ((mainObject.hasOwnProperty(property))) {
+                    Hawk.writeDebugInfo("going deeper...");
+                    Hawk.writeDebugInfo(object[property]);
+                    Hawk.writeDebugInfo(mainObject[property]);
+
+                    result[property] = Hawk.mergeObjects(mainObject[property], object[property]);
+
+                    Hawk.writeDebugInfo(Hawk.mergeObjects(mainObject[property], object[property]));
+                } else {
+                    Hawk.writeDebugInfo("Not going deeper...");
+
+                    result[property] = object[property];
+                }
+            } else {
+                Hawk.writeDebugInfo("Not going deeper at all...");
+
+                result[property] = (object.hasOwnProperty(property)) ? object[property] : mainObject[property];
+            }
         }
 
         //console.log("object." + property + ": " + result[property]);

@@ -7,6 +7,8 @@ export default class DetailsList extends SingleThreadClass {
 
 		this.container = $(container);
 
+        this.disabled = false;
+
 		this.current = null;
 		this.headers = null;
 		this.options = {};
@@ -18,9 +20,20 @@ export default class DetailsList extends SingleThreadClass {
 			contentClass: "hawk-details-list__content",
 			activeClass: "active",
 
-			eventName: "click.detailsList",
+            toggleSelector: null,
+            preventToggleSelector: null,
+
+            eventName: "click.detailsList",
+
+            slideSpeed: 200,
+            fadeSpeed: 200,
 
 			autoHide: true,
+
+            isDisabled: () => {
+                return false;
+            },
+
 			getContentContainer: (header) => {
 				const item = this.options.getItem(header);
 
@@ -29,10 +42,6 @@ export default class DetailsList extends SingleThreadClass {
 			getItem: (element) => {
 				return element.parents('.' + this.options.itemClass);
 			},
-
-			slideSpeed: 200,
-			fadeSpeed: 200,
-
 			onShow: (dl, header, contentContainer) => {
 				header.find('.details-list-item__icon').removeClass('icon-arrow--south').addClass('icon-arrow--north');
 			},
@@ -44,8 +53,16 @@ export default class DetailsList extends SingleThreadClass {
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
 	}
 
+    getCurrent() {
+        return this.current;
+    }
+
+    getCurrentItem() {
+        return this.options.getItem(this.getCurrent());
+    }
+
 	show(header) {
-		if (this.options.autoHide && this.current != null) {
+		if (this.options.autoHide && this.current != null && !this.current.is(header)) {
 			this.hide(this.current);
 		}
 
@@ -98,6 +115,16 @@ export default class DetailsList extends SingleThreadClass {
 		}
 	}
 
+    hideAll() {
+        const contentContainers = this.container.find('.' + this.options.contentContainerClass);
+
+        this.container.find('.' + this.options.contentContainerClass).css({ display: 'none' });
+
+        this.container.find('.' + this.options.itemClass).removeClass(this.options.activeClass);
+
+        this.options.onHide(this, this.headers, contentContainers);
+    }
+
 	refreshDependencies() {
 		if (this.headers != null) {
 			this.headers.unbind(this.options.eventName);
@@ -108,10 +135,24 @@ export default class DetailsList extends SingleThreadClass {
 		this.headers = this.container.find('.' + this.options.headerClass);
 
 		this.headers.bind(this.options.eventName, (e) => {
-			const header = $(e.currentTarget);
+            if (!this.options.isDisabled()) {
+                const header = $(e.currentTarget);
 
-			this.toggle(header);
+                this.toggle(header);
+            }
 		});
+
+        $(window).resize(() => {
+            if (this.options.isDisabled()) {
+                if (!this.disabled) {
+                    this.disabled = true;
+
+                    this.hideAll();
+                }
+            } else {
+                this.disabled = false;
+            }
+        });
 	}
 
 	run() {

@@ -27,7 +27,8 @@ export default class AjaxFormSender extends FormSender {
       contentType: false,
       dataType: "json",
       success: (result) => {
-        Hawk.writeDebugError(result);
+
+        Hawk.writeDebugInfo(result);
 
         if (result.status == Hawk.RequestStatus.SUCCESS) {
           this.clear();
@@ -48,13 +49,12 @@ export default class AjaxFormSender extends FormSender {
         }
       },
       error: (jqXHR, textStatus, errorThrown) => {
+
         Hawk.writeDebugError(jqXHR.responseText);
 
         this.changeMessage(
           "There occurred an unexpected error during processing the form. Please try again later."
         );
-
-        //console.log(errorThrown);
 
         if (typeof this.options.onException == "function") {
           this.options.onException();

@@ -6,7 +6,7 @@ Hawk.AjaxRequestManager = function(options) {
 
     this.defaultOptions = {
         onSuccess: function() {},
-        onError: function() {},
+        onException: function() {},
         onException: function() {},
         onFailure: function() {},
         onComplete: function() {}
@@ -31,7 +31,7 @@ Hawk.AjaxRequestManager = function(options) {
 
         const onSuccess = callbacks.onSuccess || this.options.onSuccess;
         const onFailure = callbacks.onFailure || this.options.onFailure;
-        const onError = callbacks.onError || this.options.onError;
+        const onError = callbacks.onException || this.options.onException;
         const onException = callbacks.onException || this.options.onException;
         const onComplete = callbacks.onComplete || this.options.onComplete;
 

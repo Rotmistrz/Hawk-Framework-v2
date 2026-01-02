@@ -1,4 +1,6 @@
-Hawk.ComponentController = class {
+import Hawk from '../../Bundle.Hawk';
+
+export default class ComponentController {
     constructor(options) {
         this.defaultOptions = {
             singleInstanceContainerClass: 'hawk-component-container', // is it necessary?
@@ -150,13 +152,13 @@ Hawk.ComponentController = class {
         // console.log("PATH: " + this.getLoadingComponentsPath(id));
         //
 
-        console.log(extraData);
+        Hawk.writeDebugInfo(extraData);
 
         if (typeof url == 'undefined') {
             url = this.getLoadingComponentsPath(id);
         }
 
-        console.log(url);
+        Hawk.writeDebugInfo(url);
 
         $.ajax({
             url: url,
@@ -167,13 +169,13 @@ Hawk.ComponentController = class {
             // contentType: false,
             dataType: "json",
             success: (result) => {
-                console.log(result);
+                Hawk.writeDebugInfo(result);
 
                 if (result.status == Hawk.RequestStatus.SUCCESS) {
                     this.options.appendComponents(this, result);
 
                     this.options.onComponentsLoad(this, id);
-                    
+
                 } else if (result.status == Hawk.RequestStatus.ERROR) {
 
                 } else {
@@ -181,7 +183,7 @@ Hawk.ComponentController = class {
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
-                console.log(jqXHR.responseText);
+                Hawk.writeDebugError(jqXHR.responseText);
 
                 //console.log(errorThrown);
             },

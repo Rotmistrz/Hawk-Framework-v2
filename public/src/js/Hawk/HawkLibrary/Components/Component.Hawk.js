@@ -1,10 +1,16 @@
-Hawk.Component = class {
+import Hawk from '../../Bundle.Hawk';
+
+export default class Component {
     constructor(id) {
         this.id = id || -1;
 
         this.instanceNew = false;
 
-        this.values = {};
+        this.values = {
+            width: 0,
+            height: 0,
+            status: 'created'
+        };
         this.properties = {};
         this.methods = {};
         this.subcomponentsFilters = {};
@@ -185,12 +191,12 @@ Hawk.Component = class {
     }
 
     refreshSubcomponents(classID) {
-        this.clearSubcomponentsContainer(classID);
-
+        // this.clearSubcomponentsContainer(classID);
+        //
         const theseSubcomponents = this.getSubcomponents(classID);
 
         for (const subcmpt of theseSubcomponents) {
-            this.showSubcomponent(subcmpt);
+            subcmpt.refreshView();
         }
     }
 
@@ -198,7 +204,7 @@ Hawk.Component = class {
         if (element.is('input')) {
             element.val(value);
         } else {
-            element.html(value);
+            element.text(value);
         }
     }
 
@@ -252,9 +258,13 @@ Hawk.Component = class {
     }
 
     refreshView() {
+        console.log('Refreshing view...');
+        console.log(this.constructor.getClassname());
+        console.log(this.getID());
+
         let element = this.getElement("id");
 
-        element.html(this.getID());
+        element.text(this.getID());
 
         this.refreshValues();
 

@@ -1,6 +1,7 @@
 import Hawk from "../Core.Hawk";
 import SingleThreadClass from "../Basements/SingleThreadClass.Hawk";
 import OverlayerManagerMode from "./Enums/OverlayerManagerMode.Hawk";
+import OverlayerManagerType from "./Enums/OverlayerManagerType";
 
 export default class OverlayerManager extends SingleThreadClass {
   static instances = 0;
@@ -29,6 +30,7 @@ export default class OverlayerManager extends SingleThreadClass {
       slideSpeed: 200,
 
       mode: OverlayerManagerMode.DEFAULT,
+        type: OverlayerManagerType.DEFAULT,
       closeOnClickOutside: false,
 
       popstateEventName: "popstate.ajaxOverlayerManager",
@@ -76,11 +78,14 @@ export default class OverlayerManager extends SingleThreadClass {
         });
       },
 
-      createAnchor: this.defaultCreateAnchor,
-
       onLoading: (aom, id, result) => {},
       onLoad: (aom, id, result) => {},
-      onError: (responseText) => {},
+        onError: (aom, id, result) => {
+            Hawk.writeDebugError(result.message);
+        },
+      onException: (responseText) => {
+        Hawk.writeDebugError(responseText);
+      },
       onShow: (aom) => {},
       onHide: (aom) => {},
       onInitialize: (aom, hash) => {
@@ -159,9 +164,15 @@ export default class OverlayerManager extends SingleThreadClass {
     this.container.velocity("fadeIn", {
       duration: this.options.fadeSpeed,
       complete: () => {
-        this.body.css({ overflow: "hidden" });
+          if (!this.isType(OverlayerManagerType.POPUP)) {
+              this.body.css({ overflow: "hidden" });
+          }
       },
     });
+  }
+
+  isType(type) {
+      return this.options.type == type
   }
 
   isOpen() {
@@ -198,11 +209,13 @@ export default class OverlayerManager extends SingleThreadClass {
 
       this.changeContent(result.html, finalCallback);
     } else {
+        this.options.onError(this, id, result);
+
       this.hide();
     }
 
     if (typeof result.anchor != "undefined" && result.anchor.length > 0) {
-      this.setHash(this.createAnchor(this, result.anchor, result.bundle));
+      this.setHash(this.createAnchor(result.anchor, result.bundle));
     }
 
     $(window).bind(this.options.popstateEventName, (e) => {
@@ -226,11 +239,7 @@ export default class OverlayerManager extends SingleThreadClass {
     return this;
   }
 
-  createAnchor(aom, anchor, bundle) {
-    return this.options.createAnchor(aom, anchor, bundle);
-  }
-
-  defaultCreateAnchor(aom, anchor, bundle) {
+  createAnchor(anchor, bundle) {
     let resultAnchor = "o/" + this.getOverlayerID() + "/" + anchor;
 
     if (typeof bundle != "undefined") {

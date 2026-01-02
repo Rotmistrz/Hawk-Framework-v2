@@ -24,7 +24,15 @@ export default class Pager {
 	        },
 
 			onPageChanged: function(pager, nr, bySystem) {
-			}
+			},
+
+            onControlActivityChange: (control, isActive) => {
+                if (isActive) {
+                    control.css({ visibility: "visible" });
+                } else {
+                    control.css({ visibility: "hidden" });
+                }
+            }
 		};
 
 		this.options = Hawk.mergeObjects(this.defaultOptions, options);
@@ -84,21 +92,8 @@ export default class Pager {
 	}
 
 	checkDependencies() {
-		if (this.isFirstPage()) {
-			this.controls.previous.css({ visibility: "hidden" });
-		} else {
-			this.controls.previous.css({ visibility: "visible" });
-		}
-
-		if (this.isLastPage()) {
-			this.controls.next.css({ visibility: "hidden" });
-		} else {
-			this.controls.next.css({ visibility: "visible" });
-		}
-
-		// if (typeof this.options.onPageChanged == 'function') {
-		// 	this.options.onPageChanged(this, this.getPage());
-		// }
+        this.options.onControlActivityChange(this.controls.previous, !this.isFirstPage());
+        this.options.onControlActivityChange(this.controls.next, !this.isLastPage());
 	}
 
 	previous(bySystem) {
@@ -128,10 +123,17 @@ export default class Pager {
 				pages = pages.add(this.options.createItem(i));
 			}
 		} else {
-			pages = pages.add(this.options.createSeparator());
-
 			let previousBound = page - Math.floor(this.options.visiblePagesNumber / 2);
+
+            if (previousBound < 1) {
+                previousBound = 1;
+            }
+
 			let rangeEnd = previousBound + this.options.visiblePagesNumber;
+
+            if (previousBound > 1) {
+                pages = pages.add(this.options.createSeparator());
+            }
 
 			for (let i = previousBound; i < rangeEnd; i++) {
 				pages = pages.add(this.options.createItem(i));
@@ -215,11 +217,15 @@ export default class Pager {
 		this.markAsActive(this.getPage());
 
 		this.controls.previous.click((e) => {
-			this.previous(false);
+            if (!this.isFirstPage()) {
+                this.previous(false);
+            }
 		});
 
 		this.controls.next.click((e) => {
-			this.next(false);
+            if (!this.isLastPage()) {
+                this.next(false);
+            }
 		});
 	}
 }
