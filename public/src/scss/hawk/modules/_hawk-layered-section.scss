@@ -1,17 +1,43 @@
 .hawk-layered-section {
   position: relative;
 
+  &__base-layer {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   &__above-layer {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+
   }
 
   &__above-layer-inner,
   &__base-layer-inner {
     @include transition(all .2s linear);
+    min-height: 0;
+    position: relative;
+  }
+}
+
+.hawk-layered-section__above-layer--full-width {
+  width: 100%;
+}
+
+.hawk-layered-section--same-height-applied {
+  .hawk-layered-section__base-layer,
+  .hawk-layered-section__above-layer {
+    height: 100%;
+  }
+
+  .hawk-layered-section__base-layer-inner,
+  .hawk-layered-section__above-layer-inner {
+    height: 100%;
   }
 }
